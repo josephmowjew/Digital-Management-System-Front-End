@@ -60,13 +60,16 @@ $(function () {
                 hideSpinner();
                 var errorResponse = JSON.parse(xhr.responseText);
                 $.each(errorResponse, function (key, value) {
-                    const elementName = key ? key.charAt(0).toUpperCase() + key.slice(1) : null;
-                    const element = $("#create_user_modal").find("form :input[name='" + (elementName || '') + "']");
-                    
-                    if (element && element.length) {
-                      element.siblings("span.text-danger").text(message);
-                    }
- 
+                    $.each(value, function (index, message) {
+                       
+                        const elementName = key ? key.charAt(0).toUpperCase() + key.slice(1) : null;
+                        const element = $("#create_role_modal").find("form :input[name='" + (elementName || '') + "']");
+                        
+                        if (element && element.length) {
+                          element.siblings("span.text-danger").text(message);
+                        }
+     
+                    });
                 });
             }
 

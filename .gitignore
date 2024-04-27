@@ -348,3 +348,9 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+
+MLS-Digital-Management-System-Front-End/obj/Debug/
+MLS-Digital-Management-System-Front-End/obj/
+.vs
+
+

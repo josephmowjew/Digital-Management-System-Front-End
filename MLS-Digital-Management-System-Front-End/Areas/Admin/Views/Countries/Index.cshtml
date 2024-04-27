@@ -1,0 +1,116 @@
+﻿@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+@{
+    ViewData["Title"] = "Countries";
+    Layout = "~/Areas/Admin/Views/shared/_Layout.cshtml";
+
+     var host = Configuration.GetSection("APIURL")["Link"];
+}
+
+
+
+<div class="card">
+    <div class="card-body">
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-info my-3" data-bs-toggle="modal" data-bs-target="#create_country_modal">
+            Create Country
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="create_country_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <partial name="_CreateCountryPartial" />
+        </div>
+
+        <div class="modal fade" id="edit_country_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <partial name="_EditCountryPartial" />
+        </div>
+
+        <h5 class="card-title fw-semibold mb-4 text-uppercase">Available Countries</h5>
+       
+        <div class="table-responsive">
+            <table class="table table-bordered " id="my_table">
+                <thead>
+                    <tr>
+                        <th>
+                            Name
+                        </th>
+                        <th>
+                            Short Code
+                        </th>
+                        <th>
+                            Action
+                        </th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+       @section Scripts{
+
+        <script>
+            var datatable;
+            var tokenValue = '@ViewBag.token';
+        </script>
+
+        <script src="~/js/Country.js" asp-append-version="true"></script>
+        <script>
+            $(document).ready(function () {
+                datatable = $('#my_table').DataTable({
+
+
+                    "processing": true,
+                    "serverSide": true,
+                    "order": [[0, "desc"]],
+                    ajax: {
+                    url: "@host/api/Countries/paged",
+                        type: 'get',
+                        datatype: 'Json',headers: {
+                                        'Authorization': 'Bearer @ViewBag.token'
+                                    }
+
+                  },
+                    columnDefs: [
+                        {
+                            defaultContent: "",
+                            targets: "_all",
+                            'orderable': true
+                        },
+                    ],
+                    columns: [
+                        {
+                            data: "name",
+                            name: "name",
+                            className: "text-left",
+                            "orderable": true,
+                        },                      
+                           {
+                            data: "shortCode",
+                            name: "shortCode",
+                            className: "text-left",
+                            "orderable": true,
+                        },                           
+                                   
+                        {
+                            data: "id",
+                            name: "id",
+                            "orderable": false,
+                            render: function (data) {
+                                return "<a href='#' onclick='EditForm(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='ti ti-pencil' title='edit' ></a> <a href='#' type='button' onclick='Delete(\"" + data + "\",\"" + tokenValue + "\")' title='delete' class='ti ti-trash red-icon' ></a>"
+                            }                     }
+                    ],
+                    responsive: true,
+                    "autoWidth": false,
+                });
+            });
+        </script>
+
+            @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+        }

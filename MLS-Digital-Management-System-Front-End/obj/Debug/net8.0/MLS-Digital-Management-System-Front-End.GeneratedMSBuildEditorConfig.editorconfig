@@ -26,6 +26,18 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = D:\Projects\Dotnet\MLS-Digital-Management-System-Front-End\MLS-Digital-Management-System-Front-End
 build_property._RazorSourceGeneratorDebug = 
 
+[D:/Projects/Dotnet/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Admin/Views/Countries/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcQ291bnRyaWVzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/Dotnet/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Admin/Views/Countries/_CreateCountryPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcQ291bnRyaWVzXF9DcmVhdGVDb3VudHJ5UGFydGlhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/Dotnet/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Admin/Views/Countries/_EditCountryPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcQ291bnRyaWVzXF9FZGl0Q291bnRyeVBhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Projects/Dotnet/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Admin/Views/Departments/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcRGVwYXJ0bWVudHNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -54,6 +66,18 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Projects/Dotnet/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Admin/Views/Roles/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcUm9sZXNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/Dotnet/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Admin/Views/Roles/_CreateRolePartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcUm9sZXNcX0NyZWF0ZVJvbGVQYXJ0aWFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/Dotnet/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Admin/Views/Roles/_EditRolePartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcUm9sZXNcX0VkaXRSb2xlUGFydGlhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Projects/Dotnet/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Admin/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -74,12 +98,32 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcVXNlcnNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Projects/Dotnet/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Admin/Views/Users/SuspendedUsers.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcVXNlcnNcU3VzcGVuZGVkVXNlcnMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/Dotnet/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Admin/Views/Users/UnconfirmedUsers.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcVXNlcnNcVW5jb25maXJtZWRVc2Vycy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Projects/Dotnet/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Admin/Views/Users/_CreateUserPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcVXNlcnNcX0NyZWF0ZVVzZXJQYXJ0aWFsLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Projects/Dotnet/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Admin/Views/Users/_EditUserPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcVXNlcnNcX0VkaXRVc2VyUGFydGlhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/Dotnet/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Admin/Views/YearOfOperations/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcWWVhck9mT3BlcmF0aW9uc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/Dotnet/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Admin/Views/YearOfOperations/_CreateYearOfOperationPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcWWVhck9mT3BlcmF0aW9uc1xfQ3JlYXRlWWVhck9mT3BlcmF0aW9uUGFydGlhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/Dotnet/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Admin/Views/YearOfOperations/_EditYearOfOperationPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcWWVhck9mT3BlcmF0aW9uc1xfRWRpdFllYXJPZk9wZXJhdGlvblBhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Projects/Dotnet/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Admin/Views/_ViewImports.cshtml]

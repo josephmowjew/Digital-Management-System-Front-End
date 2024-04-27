@@ -7,22 +7,9 @@
 
 <div class="card">
     <div class="card-body">
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-info my-3" data-bs-toggle="modal" data-bs-target="#create_user_modal">
-            Create User
-        </button>
-        <a asp-action="UnconfirmedUsers" asp-area="Admin" asp-controller="Users" class="btn btn-warning my-3 mx-1">View Unconfirmed Users</a>
+        <a asp-action="Index" asp-area="Admin" asp-controller="Users" class="btn btn-success my-3 mx-1">View Active User Accounts</a>
         <a asp-action="SuspendedUsers" asp-area="Admin" asp-controller="Users" class="btn btn-danger my-3 ">View Suspended Users</a>
-        <!-- Modal -->
-        <div class="modal fade" id="create_user_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <partial name="_CreateUserPartial" />
-        </div>
-
-        <div class="modal fade" id="edit_user_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <partial name="_EditUserPartial" />
-        </div>
-
-        <h5 class="card-title fw-semibold mb-4 text-uppercase">Available Active Users</h5>
+        <h5 class="card-title fw-semibold mb-4 text-uppercase">Unconfirmed Users</h5>
        
         <div class="table-responsive">
             <table class="table table-bordered " id="my_table">
@@ -51,10 +38,7 @@
                             Date Added
                         </th>
 
-                        <th>
-                            Last Login
-                        </th>
-
+                      
                         <th>
                             Action
                         </th>
@@ -86,7 +70,7 @@
                     "serverSide": true,
                     "order": [[0, "desc"]],
                     ajax: {
-                    url: 'http://localhost:5043/api/users/paged',
+                    url: 'http://localhost:5043/api/Users/unconfirmedUsers',
                         type: 'get',
                         datatype: 'Json',headers: {
                                         'Authorization': 'Bearer @ViewBag.token'
@@ -145,18 +129,13 @@
                             className: "text-left",
                             "orderable": true,
                         },
-                        {
-                            data: "lastLogin",
-                            name: "lastLogin",
-                            className: "text-left",
-                            "orderable": true,
-                        },
+                       
                         {
                             data: "id",
                             name: "id",
                             "orderable": false,
                             render: function (data) {
-                                return "<a href='#' onclick='EditForm(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='ti ti-pencil' title='edit' ></a> <a href='#' type='button' onclick='Delete(\"" + data + "\",\"" + tokenValue + "\")' title='delete' class='ti ti-trash red-icon' ></a>"
+                                return "<a href='#' onclick='Reactivate(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='ti ti-check' title='activate'></a> "
                             }                     }
                     ],
                     responsive: true,

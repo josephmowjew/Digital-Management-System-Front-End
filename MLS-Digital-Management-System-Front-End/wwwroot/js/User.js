@@ -283,32 +283,30 @@ function ConfirmUser(id) {
 
     });
 }
-function Reactivate(id) {
+function Reactivate(id,token) {
 
     bootbox.confirm("Are you sure you want to reactivate this user account?", function (result) {
 
-
+        console.log(token)
         if (result) {
             $.ajax({
-                url: 'reactivate/' + id,
+                url: 'http://localhost:5043/api/Users/activate/'+id,
                 type: 'GET',
+                headers: {
+                    'Authorization': "Bearer "+ token
+                }
 
             }).done(function (data) {
 
-                if (data.status == "success") {
-
-                    toastr.success(data.message)
-                }
-                else {
-                    toastr.error(data.message)
-                }
-
+               
+                    toastr.success("User has been activated sucessfully")
+              
                 datatable.ajax.reload();
 
 
             }).fail(function (response) {
 
-                toastr.error(response.responseText)
+                toastr.error("failed to activate user")
 
                 datatable.ajax.reload();
             });

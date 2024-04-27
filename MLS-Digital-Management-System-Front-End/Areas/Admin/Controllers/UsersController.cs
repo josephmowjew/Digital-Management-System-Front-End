@@ -23,6 +23,23 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Admin.Controllers
             return View();
         }
 
+        [HttpGet]
+        public async Task<IActionResult> SuspendedUsers()
+        {
+           await PopulateViewBags();
+
+            return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> UnconfirmedUsers()
+        {
+           await PopulateViewBags();
+
+            return View();
+        }
+
+
 
         private async Task PopulateViewBags()
         {

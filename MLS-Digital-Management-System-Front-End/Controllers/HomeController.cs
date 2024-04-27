@@ -28,23 +28,22 @@ namespace MLS_Digital_Management_System_Front_End.Controllers
         public IActionResult Index()
         {
                 //check if a token cookie already exist
-            if (HttpContext.Request.Cookies["token"] != null) {
+            // if (HttpContext.Request.Cookies["token"] != null) {
                 
-                //check if the token hasn't expired
-                if(!AuthHelper.IsTokenExpired(Request.Cookies["token"],HttpContext))
-                {
-                    //get the rolename from the cookie
-                    var roleName = Request.Cookies["RoleName"];
+            //     //check if the token hasn't expired
+            //     if(!AuthHelper.IsTokenExpired(Request.Cookies["token"],HttpContext))
+            //     {
+            //         //get the rolename from the cookie
+            //         var roleName = Request.Cookies["RoleName"];
 
-                    if(roleName .Equals("Administrator", StringComparison.OrdinalIgnoreCase)){
+            //         if(roleName .Equals("Administrator", StringComparison.OrdinalIgnoreCase)){
 
-                        return RedirectToAction("Index", "Home", new { Area = "Admin" });
-                    }
+            //             return RedirectToAction("Index", "Home", new { Area = "Admin" });
+            //         }
                     
                     
-                    
-                }
-            }
+            //     }
+            // }
             return View();
         }
          [HttpPost]

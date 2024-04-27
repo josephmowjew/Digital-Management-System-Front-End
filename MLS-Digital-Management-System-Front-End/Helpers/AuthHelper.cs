@@ -15,6 +15,6 @@ public static class AuthHelper
   }
 
   public static bool IsTokenExpired(string token, HttpContext httpContext) =>
-    token == null || DateTime.TryParse(httpContext.Request.Cookies["tokenExpiryTime"], out var expiryTime) && expiryTime < DateTime.UtcNow;
+    token == null || DateTime.TryParse(httpContext.Request.Cookies["tokenExpiryTime"], out var expiryTime) && DateTime.UtcNow > expiryTime;
   }
 

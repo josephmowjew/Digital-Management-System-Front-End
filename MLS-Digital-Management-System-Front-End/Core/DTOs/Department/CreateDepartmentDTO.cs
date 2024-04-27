@@ -6,5 +6,7 @@ public class CreateDepartmentDTO
 {
     [Required]
     [StringLength(maximumLength:150)]
-    public string Name { get; set; }
+    public string? Name { get; set; }
+
+    public string DataInvalid { get; set; } = "true";
 }

@@ -17,83 +17,107 @@ build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = MLS_Digital_Management_System_Front_End
 build_property.RootNamespace = MLS_Digital_Management_System_Front_End
-build_property.ProjectDir = C:\Users\Joseph-Sparc\Documents\C# Projects\MLS-Digital-Management-System-Front-End\MLS-Digital-Management-System-Front-End\
+build_property.ProjectDir = D:\Projects\Dotnet\MLS-Digital-Management-System-Front-End\MLS-Digital-Management-System-Front-End\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\Joseph-Sparc\Documents\C# Projects\MLS-Digital-Management-System-Front-End\MLS-Digital-Management-System-Front-End
+build_property.MSBuildProjectDirectory = D:\Projects\Dotnet\MLS-Digital-Management-System-Front-End\MLS-Digital-Management-System-Front-End
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/Joseph-Sparc/Documents/C\# Projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Admin/Views/Home/Index.cshtml]
+[D:/Projects/Dotnet/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Admin/Views/Departments/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcRGVwYXJ0bWVudHNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/Dotnet/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Admin/Views/Departments/_CreateDepartmentPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcRGVwYXJ0bWVudHNcX0NyZWF0ZURlcGFydG1lbnRQYXJ0aWFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/Dotnet/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Admin/Views/Departments/_EditDepartmentPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcRGVwYXJ0bWVudHNcX0VkaXREZXBhcnRtZW50UGFydGlhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/Dotnet/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Admin/Views/Firms/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcRmlybXNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/Dotnet/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Admin/Views/Firms/_CreateFirmPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcRmlybXNcX0NyZWF0ZUZpcm1QYXJ0aWFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/Dotnet/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Admin/Views/Firms/_EditFirmPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcRmlybXNcX0VkaXRGaXJtUGFydGlhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/Dotnet/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Admin/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Joseph-Sparc/Documents/C\# Projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Admin/Views/Shared/Error.cshtml]
+[D:/Projects/Dotnet/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Admin/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Joseph-Sparc/Documents/C\# Projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Admin/Views/Shared/_SideBar.cshtml]
+[D:/Projects/Dotnet/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Admin/Views/Shared/_SideBar.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcU2hhcmVkXF9TaWRlQmFyLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Joseph-Sparc/Documents/C\# Projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Admin/Views/Shared/_TopHeader.cshtml]
+[D:/Projects/Dotnet/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Admin/Views/Shared/_TopHeader.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcU2hhcmVkXF9Ub3BIZWFkZXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Joseph-Sparc/Documents/C\# Projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Admin/Views/Shared/_ValidationScriptsPartial.cshtml]
+[D:/Projects/Dotnet/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Admin/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Joseph-Sparc/Documents/C\# Projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Admin/Views/Users/Index.cshtml]
+[D:/Projects/Dotnet/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Admin/Views/Users/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcVXNlcnNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Joseph-Sparc/Documents/C\# Projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Admin/Views/Users/_CreateUserPartial.cshtml]
+[D:/Projects/Dotnet/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Admin/Views/Users/_CreateUserPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcVXNlcnNcX0NyZWF0ZVVzZXJQYXJ0aWFsLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Joseph-Sparc/Documents/C\# Projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Admin/Views/Users/_EditUserPartial.cshtml]
+[D:/Projects/Dotnet/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Admin/Views/Users/_EditUserPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcVXNlcnNcX0VkaXRVc2VyUGFydGlhbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Joseph-Sparc/Documents/C\# Projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Admin/Views/_ViewImports.cshtml]
+[D:/Projects/Dotnet/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Admin/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Joseph-Sparc/Documents/C\# Projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Admin/Views/_ViewStart.cshtml]
+[D:/Projects/Dotnet/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Admin/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Joseph-Sparc/Documents/C\# Projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Views/Home/Index.cshtml]
+[D:/Projects/Dotnet/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Joseph-Sparc/Documents/C\# Projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Views/Home/Privacy.cshtml]
+[D:/Projects/Dotnet/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Joseph-Sparc/Documents/C\# Projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Views/Shared/Error.cshtml]
+[D:/Projects/Dotnet/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Joseph-Sparc/Documents/C\# Projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Views/Shared/_ValidationScriptsPartial.cshtml]
+[D:/Projects/Dotnet/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Joseph-Sparc/Documents/C\# Projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Views/_ViewImports.cshtml]
+[D:/Projects/Dotnet/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Joseph-Sparc/Documents/C\# Projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Views/_ViewStart.cshtml]
+[D:/Projects/Dotnet/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Joseph-Sparc/Documents/C\# Projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Admin/Views/Shared/_Layout.cshtml]
+[D:/Projects/Dotnet/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Admin/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-knnqwo54lr
 
-[C:/Users/Joseph-Sparc/Documents/C\# Projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Views/Shared/_Layout.cshtml]
+[D:/Projects/Dotnet/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-n96cdh2v0m

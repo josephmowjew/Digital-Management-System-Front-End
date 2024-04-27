@@ -1,30 +1,46 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\Joseph-Sparc\\Documents\\C# Projects\\MLS-Digital-Management-System-Front-End\\",
+  "WorkspaceRootPath": "D:\\Projects\\Dotnet\\MLS-Digital-Management-System-Front-End\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{24CAFB74-11F9-4AD5-9A29-8BBBB507A68D}|MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End.csproj|c:\\users\\joseph-sparc\\documents\\c# projects\\mls-digital-management-system-front-end\\mls-digital-management-system-front-end\\areas\\admin\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{24CAFB74-11F9-4AD5-9A29-8BBBB507A68D}|MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End.csproj|solutionrelative:mls-digital-management-system-front-end\\areas\\admin\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{24CAFB74-11F9-4AD5-9A29-8BBBB507A68D}|MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End.csproj|d:\\projects\\dotnet\\mls-digital-management-system-front-end\\mls-digital-management-system-front-end\\areas\\admin\\views\\firms\\_createfirmpartial.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{24CAFB74-11F9-4AD5-9A29-8BBBB507A68D}|MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End.csproj|solutionrelative:mls-digital-management-system-front-end\\areas\\admin\\views\\firms\\_createfirmpartial.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{24CAFB74-11F9-4AD5-9A29-8BBBB507A68D}|MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End.csproj|c:\\users\\joseph-sparc\\documents\\c# projects\\mls-digital-management-system-front-end\\mls-digital-management-system-front-end\\areas\\admin\\views\\users\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{24CAFB74-11F9-4AD5-9A29-8BBBB507A68D}|MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End.csproj|solutionrelative:mls-digital-management-system-front-end\\areas\\admin\\views\\users\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{24CAFB74-11F9-4AD5-9A29-8BBBB507A68D}|MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End.csproj|c:\\users\\joseph-sparc\\documents\\c# projects\\mls-digital-management-system-front-end\\mls-digital-management-system-front-end\\areas\\admin\\views\\shared\\_sidebar.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "AbsoluteMoniker": "D:0:0:{24CAFB74-11F9-4AD5-9A29-8BBBB507A68D}|MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End.csproj|d:\\projects\\dotnet\\mls-digital-management-system-front-end\\mls-digital-management-system-front-end\\areas\\admin\\views\\shared\\_sidebar.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{24CAFB74-11F9-4AD5-9A29-8BBBB507A68D}|MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End.csproj|solutionrelative:mls-digital-management-system-front-end\\areas\\admin\\views\\shared\\_sidebar.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{24CAFB74-11F9-4AD5-9A29-8BBBB507A68D}|MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End.csproj|c:\\users\\joseph-sparc\\documents\\c# projects\\mls-digital-management-system-front-end\\mls-digital-management-system-front-end\\areas\\admin\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{24CAFB74-11F9-4AD5-9A29-8BBBB507A68D}|MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End.csproj|d:\\projects\\dotnet\\mls-digital-management-system-front-end\\mls-digital-management-system-front-end\\areas\\admin\\views\\firms\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{24CAFB74-11F9-4AD5-9A29-8BBBB507A68D}|MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End.csproj|solutionrelative:mls-digital-management-system-front-end\\areas\\admin\\views\\firms\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{24CAFB74-11F9-4AD5-9A29-8BBBB507A68D}|MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End.csproj|d:\\projects\\dotnet\\mls-digital-management-system-front-end\\mls-digital-management-system-front-end\\wwwroot\\js\\firm.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{24CAFB74-11F9-4AD5-9A29-8BBBB507A68D}|MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End.csproj|solutionrelative:mls-digital-management-system-front-end\\wwwroot\\js\\firm.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{24CAFB74-11F9-4AD5-9A29-8BBBB507A68D}|MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End.csproj|d:\\projects\\dotnet\\mls-digital-management-system-front-end\\mls-digital-management-system-front-end\\areas\\admin\\views\\firms\\_editfirmpartial.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{24CAFB74-11F9-4AD5-9A29-8BBBB507A68D}|MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End.csproj|solutionrelative:mls-digital-management-system-front-end\\areas\\admin\\views\\firms\\_editfirmpartial.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{24CAFB74-11F9-4AD5-9A29-8BBBB507A68D}|MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End.csproj|d:\\projects\\dotnet\\mls-digital-management-system-front-end\\mls-digital-management-system-front-end\\areas\\admin\\views\\users\\_createuserpartial.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{24CAFB74-11F9-4AD5-9A29-8BBBB507A68D}|MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End.csproj|solutionrelative:mls-digital-management-system-front-end\\areas\\admin\\views\\users\\_createuserpartial.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{24CAFB74-11F9-4AD5-9A29-8BBBB507A68D}|MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End.csproj|d:\\projects\\dotnet\\mls-digital-management-system-front-end\\mls-digital-management-system-front-end\\core\\dtos\\department\\readdepartmentdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{24CAFB74-11F9-4AD5-9A29-8BBBB507A68D}|MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End.csproj|solutionrelative:mls-digital-management-system-front-end\\core\\dtos\\department\\readdepartmentdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{24CAFB74-11F9-4AD5-9A29-8BBBB507A68D}|MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End.csproj|d:\\projects\\dotnet\\mls-digital-management-system-front-end\\mls-digital-management-system-front-end\\areas\\admin\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{24CAFB74-11F9-4AD5-9A29-8BBBB507A68D}|MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End.csproj|solutionrelative:mls-digital-management-system-front-end\\areas\\admin\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{24CAFB74-11F9-4AD5-9A29-8BBBB507A68D}|MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End.csproj|c:\\users\\joseph-sparc\\documents\\c# projects\\mls-digital-management-system-front-end\\mls-digital-management-system-front-end\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{24CAFB74-11F9-4AD5-9A29-8BBBB507A68D}|MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End.csproj|solutionrelative:mls-digital-management-system-front-end\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{24CAFB74-11F9-4AD5-9A29-8BBBB507A68D}|MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End.csproj|d:\\projects\\dotnet\\mls-digital-management-system-front-end\\mls-digital-management-system-front-end\\wwwroot\\js\\department.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{24CAFB74-11F9-4AD5-9A29-8BBBB507A68D}|MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End.csproj|solutionrelative:mls-digital-management-system-front-end\\wwwroot\\js\\department.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{24CAFB74-11F9-4AD5-9A29-8BBBB507A68D}|MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End.csproj|c:\\users\\joseph-sparc\\documents\\c# projects\\mls-digital-management-system-front-end\\mls-digital-management-system-front-end\\scaffoldingreadme.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{24CAFB74-11F9-4AD5-9A29-8BBBB507A68D}|MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End.csproj|solutionrelative:mls-digital-management-system-front-end\\scaffoldingreadme.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
+      "AbsoluteMoniker": "D:0:0:{24CAFB74-11F9-4AD5-9A29-8BBBB507A68D}|MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End.csproj|d:\\projects\\dotnet\\mls-digital-management-system-front-end\\mls-digital-management-system-front-end\\core\\dtos\\department\\createdepartmentdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{24CAFB74-11F9-4AD5-9A29-8BBBB507A68D}|MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End.csproj|solutionrelative:mls-digital-management-system-front-end\\core\\dtos\\department\\createdepartmentdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -34,8 +50,16 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 14,
           "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{0ad07096-bba9-4900-a651-0598d26f6d24}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:132:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
@@ -61,77 +85,138 @@
               "Name": "ST:129:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
             },
             {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "_Layout.cshtml",
-              "DocumentMoniker": "C:\\Users\\Joseph-Sparc\\Documents\\C# Projects\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\Areas\\Admin\\Views\\Shared\\_Layout.cshtml",
-              "RelativeDocumentMoniker": "MLS-Digital-Management-System-Front-End\\Areas\\Admin\\Views\\Shared\\_Layout.cshtml",
-              "ToolTip": "C:\\Users\\Joseph-Sparc\\Documents\\C# Projects\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\Areas\\Admin\\Views\\Shared\\_Layout.cshtml",
-              "RelativeToolTip": "MLS-Digital-Management-System-Front-End\\Areas\\Admin\\Views\\Shared\\_Layout.cshtml",
-              "ViewState": "AQIAAAMAAAAAAAAAAAAAAAkAAAAEAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-04-23T13:13:37.026Z",
-              "EditorCaption": ""
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\Users\\Joseph-Sparc\\Documents\\C# Projects\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\Areas\\Admin\\Views\\Users\\Index.cshtml",
-              "RelativeDocumentMoniker": "MLS-Digital-Management-System-Front-End\\Areas\\Admin\\Views\\Users\\Index.cshtml",
-              "ToolTip": "C:\\Users\\Joseph-Sparc\\Documents\\C# Projects\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\Areas\\Admin\\Views\\Users\\Index.cshtml",
-              "RelativeToolTip": "MLS-Digital-Management-System-Front-End\\Areas\\Admin\\Views\\Users\\Index.cshtml",
-              "ViewState": "AQIAAEMAAAAAAAAAAAAIwEkAAAAAAAAA",
+              "Title": "_SideBar.cshtml",
+              "DocumentMoniker": "D:\\Projects\\Dotnet\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\Areas\\Admin\\Views\\Shared\\_SideBar.cshtml",
+              "RelativeDocumentMoniker": "MLS-Digital-Management-System-Front-End\\Areas\\Admin\\Views\\Shared\\_SideBar.cshtml",
+              "ToolTip": "D:\\Projects\\Dotnet\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\Areas\\Admin\\Views\\Shared\\_SideBar.cshtml",
+              "RelativeToolTip": "MLS-Digital-Management-System-Front-End\\Areas\\Admin\\Views\\Shared\\_SideBar.cshtml",
+              "ViewState": "AQIAADkAAAAAAAAAAAAAAEkAAAAXAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-04-23T12:43:47.453Z"
+              "WhenOpened": "2024-04-27T19:15:53.789Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "UsersController.cs",
-              "DocumentMoniker": "C:\\Users\\Joseph-Sparc\\Documents\\C# Projects\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\Areas\\Admin\\Controllers\\UsersController.cs",
-              "RelativeDocumentMoniker": "MLS-Digital-Management-System-Front-End\\Areas\\Admin\\Controllers\\UsersController.cs",
-              "ToolTip": "C:\\Users\\Joseph-Sparc\\Documents\\C# Projects\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\Areas\\Admin\\Controllers\\UsersController.cs",
-              "RelativeToolTip": "MLS-Digital-Management-System-Front-End\\Areas\\Admin\\Controllers\\UsersController.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABEAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-23T12:40:24.173Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "_SideBar.cshtml",
-              "DocumentMoniker": "C:\\Users\\Joseph-Sparc\\Documents\\C# Projects\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\Areas\\Admin\\Views\\Shared\\_SideBar.cshtml",
-              "RelativeDocumentMoniker": "MLS-Digital-Management-System-Front-End\\Areas\\Admin\\Views\\Shared\\_SideBar.cshtml",
-              "ToolTip": "C:\\Users\\Joseph-Sparc\\Documents\\C# Projects\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\Areas\\Admin\\Views\\Shared\\_SideBar.cshtml",
-              "RelativeToolTip": "MLS-Digital-Management-System-Front-End\\Areas\\Admin\\Views\\Shared\\_SideBar.cshtml",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABMAAAAkAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-04-22T14:10:59.149Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\Joseph-Sparc\\Documents\\C# Projects\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\Program.cs",
-              "RelativeDocumentMoniker": "MLS-Digital-Management-System-Front-End\\Program.cs",
-              "ToolTip": "C:\\Users\\Joseph-Sparc\\Documents\\C# Projects\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\Program.cs",
-              "RelativeToolTip": "MLS-Digital-Management-System-Front-End\\Program.cs",
-              "ViewState": "AQIAAB4AAAAAAAAAAAAAACwAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-22T10:08:31.173Z"
+              "Title": "Firm.js",
+              "DocumentMoniker": "D:\\Projects\\Dotnet\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\wwwroot\\js\\Firm.js",
+              "RelativeDocumentMoniker": "MLS-Digital-Management-System-Front-End\\wwwroot\\js\\Firm.js",
+              "ToolTip": "D:\\Projects\\Dotnet\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\wwwroot\\js\\Firm.js",
+              "RelativeToolTip": "MLS-Digital-Management-System-Front-End\\wwwroot\\js\\Firm.js",
+              "ViewState": "AQIAAH4AAAAAAAAAAAAiwBwAAAAxAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2024-04-27T18:41:38.488Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 5,
-              "Title": "ScaffoldingReadMe.txt",
-              "DocumentMoniker": "C:\\Users\\Joseph-Sparc\\Documents\\C# Projects\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\ScaffoldingReadMe.txt",
-              "RelativeDocumentMoniker": "MLS-Digital-Management-System-Front-End\\ScaffoldingReadMe.txt",
-              "ToolTip": "C:\\Users\\Joseph-Sparc\\Documents\\C# Projects\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\ScaffoldingReadMe.txt",
-              "RelativeToolTip": "MLS-Digital-Management-System-Front-End\\ScaffoldingReadMe.txt",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
-              "WhenOpened": "2024-04-22T10:07:59.95Z"
+              "Title": "_CreateUserPartial.cshtml",
+              "DocumentMoniker": "D:\\Projects\\Dotnet\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\Areas\\Admin\\Views\\Users\\_CreateUserPartial.cshtml",
+              "RelativeDocumentMoniker": "MLS-Digital-Management-System-Front-End\\Areas\\Admin\\Views\\Users\\_CreateUserPartial.cshtml",
+              "ToolTip": "D:\\Projects\\Dotnet\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\Areas\\Admin\\Views\\Users\\_CreateUserPartial.cshtml",
+              "RelativeToolTip": "MLS-Digital-Management-System-Front-End\\Areas\\Admin\\Views\\Users\\_CreateUserPartial.cshtml",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAAAFgAAAASAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-04-27T18:29:02.378Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "ReadDepartmentDTO.cs",
+              "DocumentMoniker": "D:\\Projects\\Dotnet\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\Core\\DTOs\\Department\\ReadDepartmentDTO.cs",
+              "RelativeDocumentMoniker": "MLS-Digital-Management-System-Front-End\\Core\\DTOs\\Department\\ReadDepartmentDTO.cs",
+              "ToolTip": "D:\\Projects\\Dotnet\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\Core\\DTOs\\Department\\ReadDepartmentDTO.cs",
+              "RelativeToolTip": "MLS-Digital-Management-System-Front-End\\Core\\DTOs\\Department\\ReadDepartmentDTO.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAA0AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-27T18:23:47.207Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "_EditFirmPartial.cshtml",
+              "DocumentMoniker": "D:\\Projects\\Dotnet\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\Areas\\Admin\\Views\\Firms\\_EditFirmPartial.cshtml",
+              "RelativeDocumentMoniker": "MLS-Digital-Management-System-Front-End\\Areas\\Admin\\Views\\Firms\\_EditFirmPartial.cshtml",
+              "ToolTip": "D:\\Projects\\Dotnet\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\Areas\\Admin\\Views\\Firms\\_EditFirmPartial.cshtml",
+              "RelativeToolTip": "MLS-Digital-Management-System-Front-End\\Areas\\Admin\\Views\\Firms\\_EditFirmPartial.cshtml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAADgAAAAWAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-04-27T18:19:34.359Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "_CreateFirmPartial.cshtml",
+              "DocumentMoniker": "D:\\Projects\\Dotnet\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\Areas\\Admin\\Views\\Firms\\_CreateFirmPartial.cshtml",
+              "RelativeDocumentMoniker": "MLS-Digital-Management-System-Front-End\\Areas\\Admin\\Views\\Firms\\_CreateFirmPartial.cshtml",
+              "ToolTip": "D:\\Projects\\Dotnet\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\Areas\\Admin\\Views\\Firms\\_CreateFirmPartial.cshtml",
+              "RelativeToolTip": "MLS-Digital-Management-System-Front-End\\Areas\\Admin\\Views\\Firms\\_CreateFirmPartial.cshtml",
+              "ViewState": "AQIAACQAAAAAAAAAAAAAAC8AAAA4AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-04-27T18:18:32.39Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\Projects\\Dotnet\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\Areas\\Admin\\Views\\Firms\\Index.cshtml",
+              "RelativeDocumentMoniker": "MLS-Digital-Management-System-Front-End\\Areas\\Admin\\Views\\Firms\\Index.cshtml",
+              "ToolTip": "D:\\Projects\\Dotnet\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\Areas\\Admin\\Views\\Firms\\Index.cshtml",
+              "RelativeToolTip": "MLS-Digital-Management-System-Front-End\\Areas\\Admin\\Views\\Firms\\Index.cshtml",
+              "ViewState": "AQIAACoAAAAAAAAAAAAAABgAAAArAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-04-27T15:35:32.507Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Department.js",
+              "DocumentMoniker": "D:\\Projects\\Dotnet\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\wwwroot\\js\\Department.js",
+              "RelativeDocumentMoniker": "MLS-Digital-Management-System-Front-End\\wwwroot\\js\\Department.js",
+              "ToolTip": "D:\\Projects\\Dotnet\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\wwwroot\\js\\Department.js",
+              "RelativeToolTip": "MLS-Digital-Management-System-Front-End\\wwwroot\\js\\Department.js",
+              "ViewState": "AQIAAGoAAAAAAAAAAAAkwJUAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2024-04-27T15:15:25.996Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "UsersController.cs",
+              "DocumentMoniker": "D:\\Projects\\Dotnet\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\Areas\\Admin\\Controllers\\UsersController.cs",
+              "RelativeDocumentMoniker": "MLS-Digital-Management-System-Front-End\\Areas\\Admin\\Controllers\\UsersController.cs",
+              "ToolTip": "D:\\Projects\\Dotnet\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\Areas\\Admin\\Controllers\\UsersController.cs",
+              "RelativeToolTip": "MLS-Digital-Management-System-Front-End\\Areas\\Admin\\Controllers\\UsersController.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-27T15:14:12.006Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "CreateDepartmentDTO.cs",
+              "DocumentMoniker": "D:\\Projects\\Dotnet\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\Core\\DTOs\\Department\\CreateDepartmentDTO.cs",
+              "RelativeDocumentMoniker": "MLS-Digital-Management-System-Front-End\\Core\\DTOs\\Department\\CreateDepartmentDTO.cs",
+              "ToolTip": "D:\\Projects\\Dotnet\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\Core\\DTOs\\Department\\CreateDepartmentDTO.cs",
+              "RelativeToolTip": "MLS-Digital-Management-System-Front-End\\Core\\DTOs\\Department\\CreateDepartmentDTO.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAuwAoAAAA1AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-27T15:09:56.352Z",
+              "EditorCaption": ""
             }
           ]
         }

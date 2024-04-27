@@ -3,18 +3,15 @@ $(function () {
     hideSpinner();
     //hook up a click event to the login button
 
-    var createUserButton = $("#create_user_modal button[name='create_user_btn']").unbind().click(OnCreateClick);
+    var createUserButton = $("#create_role_modal button[name='create_role_btn']").unbind().click(OnCreateClick);
 
-    var edit_passwordButton = $("#edit_password_btn").unbind().click(EditPasswordModalPopUp);
-
-    var update_passwordButton = $("#update_password_btn").unbind().click(UpdatePassword);
 
     function OnCreateClick() {
 
         showSpinner();
        
         //get the form itself 
-        var form = $("#create_user_modal form");
+        var form = $("#create_role_modal form");
 
         
         var formData = {};
@@ -30,7 +27,7 @@ $(function () {
         //send the request
 
         $.ajax({
-            url:  "http://localhost:5043/api/auth/register",
+            url:  "http://localhost:5043/api/roles",
             type: 'POST',
             data: JSON.stringify(formData), // Convert formData object to JSON string
             contentType: 'application/json', // Set content type to JSON
@@ -46,9 +43,9 @@ $(function () {
                     //show success message to the user
                     var dataTable = $('#my_table').DataTable();
 
-                    toastr.success("New User addded successfully")
+                    toastr.success("New role addded successfully")
 
-                    $("#create_user_modal").modal("hide")
+                    $("#create_role_modal").modal("hide")
 
                     dataTable.ajax.reload();
 
@@ -60,13 +57,16 @@ $(function () {
                 hideSpinner();
                 var errorResponse = JSON.parse(xhr.responseText);
                 $.each(errorResponse, function (key, value) {
-                    const elementName = key ? key.charAt(0).toUpperCase() + key.slice(1) : null;
-                    const element = $("#create_user_modal").find("form :input[name='" + (elementName || '') + "']");
-                    
-                    if (element && element.length) {
-                      element.siblings("span.text-danger").text(message);
-                    }
- 
+                    $.each(value, function (index, message) {
+                       
+                        const elementName = key ? key.charAt(0).toUpperCase() + key.slice(1) : null;
+                        const element = $("#create_role_modal").find("form :input[name='" + (elementName || '') + "']");
+                        
+                        if (element && element.length) {
+                          element.siblings("span.text-danger").text(message);
+                        }
+     
+                    });
                 });
             }
 
@@ -77,96 +77,14 @@ $(function () {
 })
 
 
-function UpdatePassword() {
 
-    var userId = $("#edit_user_modal input[name='Id']").val()
-    //var id = $("#edit_password_modal input[name='Id']").val();
-    var newPassword = $("#edit_password_modal input[name='NewPassword']").val();
-    var authenticationToken = $("#edit_password_modal input[name='__RequestVerificationToken']").val();
-    var form_url = $("#edit_password_modal form").attr("action");
-
-    var userInput = {
-        __RequestVerificationToken: authenticationToken,
-        Id: userId,
-        NewPassword: newPassword
-    }
-
-    
-
-    $.ajax({
-        url: form_url,
-        type: 'POST',
-        data: userInput,
-        success: function (data) {
-
-
-            //parse whatever comes back to html
-
-            var parsedData = $.parseHTML(data)
-
-
-            //check if there is an error in the data that is coming back from the user
-
-            var isInvalid = $(parsedData).find("input[name='DataInvalid']").val() == "true"
-
-
-            if (isInvalid == true) {
-
-                //replace the form data with the data retrieved from the server
-                $("#edit_password_modal").html(data)
-
-
-                //rewire the onclick event on the form
-
-                $("#edit_password_modal button[name='update_password_btn']").unbind().click(function () { UpdatePassword() });
-
-                var form = $("#edit_password_modal")
-
-                $(form).removeData("validator")
-                $(form).removeData("unobtrusiveValidation")
-                $.validator.unobtrusive.parse(form)
-
-
-            }
-            else {
-
-
-                //show success message to the user
-                //var dataTable = $('#my_table').DataTable();
-
-                toastr.success(data.message)
-
-                $("#edit_password_modal").modal("hide")
-
-                //dataTable.ajax.reload();
-
-            }
-
-
-
-        },
-        error: function (xhr, ajaxOtions, thrownError) {
-
-            console.error(thrownError + "r\n" + xhr.statusText + "r\n" + xhr.responseText)
-        }
-
-    });
-
-
-}
-function EditPasswordModalPopUp() {
-
-    $("#edit_password_modal input[name='Id']").val($("#edit_user_modal input[name='Id']").val())
-
-    $("#edit_password_modal").modal("show");
-}
 function EditForm(id,token, area = "") {
 
     //get the record from the database
     showSpinner();
     
     $.ajax({
-        url: "http://localhost:5043/api/users/"+ id,
+        url: "http://localhost:5043/api/roles/"+ id,
         type: 'GET',
         headers: {
             'Authorization': "Bearer "+ token
@@ -185,7 +103,7 @@ function EditForm(id,token, area = "") {
         }
 
         // Iterate over the form elements and populate values dynamically
-        $("#edit_user_modal form").find('input, select').each(function(index, element) {
+        $("#edit_role_model form").find('input, select').each(function(index, element) {
             var field = $(element);
             var fieldName = field.attr('name');
             var dataKey = fieldMap[fieldName]; // Get corresponding key from data
@@ -197,28 +115,28 @@ function EditForm(id,token, area = "") {
     var day = ("0" + currentDate.getDate()).slice(-2);
     var month = ("0" + (currentDate.getMonth() + 1)).slice(-2);
     var date = currentDate.getFullYear() + "-" + (month) + "-" + (day);
-    $("#edit_user_modal input[name ='DateOfBirth']").val(date);
+    $("#edit_role_model input[name ='DateOfBirth']").val(date);
 
     // Hook up event to the update user button
-    $("#edit_user_modal button[name='update_user_btn']").unbind().click(function () { upDateUser(token) });
+    $("#edit_role_model button[name='update_user_btn']").unbind().click(function () { updateRole(token) });
 
     // Reset validation
-    var validator = $("#edit_user_modal form").validate();
+    var validator = $("#edit_role_model form").validate();
     validator.resetForm();
 
     // Show modal
-    $("#edit_user_modal").modal("show");
+    $("#edit_role_model").modal("show");
 
     })
 }
 function Delete(id,token) {
 
-    bootbox.confirm("Are you sure you want to delete this user from the system?", function (result) {
+    bootbox.confirm("Are you sure you want to delete this role from the system?", function (result) {
 
 
         if (result) {
             $.ajax({
-                url: 'http://localhost:5043/api/users/' + id,
+                url: 'http://localhost:5043/api/roles/' + id,
                 type: 'DELETE',
                 headers: {
                     'Authorization': "Bearer "+ token
@@ -227,7 +145,7 @@ function Delete(id,token) {
             }).done(function (data) {
 
               
-                    toastr.success("User has been deleted sucessfully")
+                    toastr.success("Role has been deleted sucessfully")
               
                 datatable.ajax.reload();
 
@@ -243,86 +161,17 @@ function Delete(id,token) {
 
     });
 }
-function ConfirmUser(id) {
-
-    bootbox.confirm("Are you sure you want to confirm this user from the system?", function (result) {
 
 
-        if (result) {
-            $.ajax({
-                url: 'users/ConfirmUser/' + id,
-                type: 'POST',
-
-            }).done(function (data) {
-
-                if (data.status == "success") {
-
-                    toastr.success(data.message)
-                }
-                else {
-                    toastr.error(data.message)
-                }
-
-
-
-
-                datatable.ajax.reload();
-
-
-            }).fail(function (response) {
-
-                toastr.error(response.responseText)
-
-                datatable.ajax.reload();
-            });
-        }
-
-
-    });
-}
-function Reactivate(id) {
-
-    bootbox.confirm("Are you sure you want to reactivate this user account?", function (result) {
-
-
-        if (result) {
-            $.ajax({
-                url: 'reactivate/' + id,
-                type: 'GET',
-
-            }).done(function (data) {
-
-                if (data.status == "success") {
-
-                    toastr.success(data.message)
-                }
-                else {
-                    toastr.error(data.message)
-                }
-
-                datatable.ajax.reload();
-
-
-            }).fail(function (response) {
-
-                toastr.error(response.responseText)
-
-                datatable.ajax.reload();
-            });
-        }
-
-
-    });
-}
-function upDateUser(token) {
+function updateRole(token) {
     toastr.clear()
 
     //get the authorisation token
     //upDateRole
-    var authenticationToken = $("#edit_user_modal input[name='__RequestVerificationToken']").val();
+    var authenticationToken = $("#edit_role_model input[name='__RequestVerificationToken']").val();
 
      //get the form itself 
-     var form = $("#edit_user_modal form");
+     var form = $("#edit_role_model form");
 
         
      var formData = {};
@@ -335,7 +184,7 @@ function upDateUser(token) {
          formData[fieldName] = fieldValue;
      });
 
-     let id = $("#edit_user_modal input[name='Id']").val()
+     let id = $("#edit_role_model input[name='Id']").val()
 
      // Convert formData object to an array of key-value pairs
     const formDataEntries = Object.entries(formData);
@@ -351,7 +200,7 @@ function upDateUser(token) {
     //send the request
 
     $.ajax({
-        url: "http://localhost:5043/api/users/"+id,
+        url: "http://localhost:5043/api/roles/"+id,
         type: 'PUT',
         data: formDataJson,
         contentType: 'application/json',
@@ -377,9 +226,9 @@ function upDateUser(token) {
                 //show success message to the user
                 var dataTable = $('#my_table').DataTable();
 
-                toastr.success("User updated successfully")
+                toastr.success("Role updated successfully")
 
-                $("#edit_user_modal").modal("hide")
+                $("#edit_role_model").modal("hide")
 
                 dataTable.ajax.reload();
 
@@ -396,7 +245,7 @@ function upDateUser(token) {
                 $.each(value, function (index, message) {
                    
                     const elementName = key ? key.charAt(0).toUpperCase() + key.slice(1) : null;
-                    const element = $("#edit_user_modal").find("form :input[name='" + (elementName || '') + "']");
+                    const element = $("#edit_role_model").find("form :input[name='" + (elementName || '') + "']");
                     
                     if (element && element.length) {
                       element.siblings("span.text-danger").text(message);

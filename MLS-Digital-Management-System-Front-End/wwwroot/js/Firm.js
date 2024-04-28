@@ -75,7 +75,7 @@ function EditForm(id,token, area = "") {
     showSpinner();
     
     $.ajax({
-        url: "http://localhost:5043/api/firms/"+ id,
+        url: "http://localhost:5043/api/firms/getfirm/"+ id,
         type: 'GET',
         headers: {
             'Authorization': "Bearer "+ token

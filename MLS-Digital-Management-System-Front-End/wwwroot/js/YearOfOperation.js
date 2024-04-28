@@ -3,14 +3,14 @@ $(function () {
     hideSpinner();
     //hook up a click event to the login button
 
-    var createDepartmentButton = $("#create_department_modal button[name='create_department_btn']").unbind().click(OnCreateClick);
+    var createyearOfOperationButton = $("#create_yearOfOperation_modal button[name='create_yearOfOperation_btn']").unbind().click(OnCreateClick);
 
     function OnCreateClick() {
 
         showSpinner();
        
         //get the form itself 
-        var form = $("#create_department_modal form");
+        var form = $("#create_yearOfOperation_modal form");
 
         
         var formData = {};
@@ -44,7 +44,7 @@ $(function () {
 
                     toastr.success("New Year of Operation added successfully")
 
-                    $("#create_department_modal").modal("hide")
+                    $("#create_yearOfOperation_modal").modal("hide")
 
                     dataTable.ajax.reload();
 
@@ -75,7 +75,7 @@ function EditForm(id,token, area = "") {
     showSpinner();
     
     $.ajax({
-        url: "http://localhost:5043/api/yearOfOperations/"+ id,
+        url: "http://localhost:5043/api/yearOfOperations/getyearofoperation/"+ id,
         type: 'GET',
         headers: {
             'Authorization': "Bearer "+ token
@@ -94,7 +94,7 @@ function EditForm(id,token, area = "") {
         }
 
         // Iterate over the form elements and populate values dynamically
-        $("#edit_department_modal form").find('input, select').each(function(index, element) {
+        $("#edit_yearOfOperation_modal form").find('input, select').each(function(index, element) {
             var field = $(element);
             var fieldName = field.attr('name');
             var dataKey = fieldMap[fieldName]; // Get corresponding key from data
@@ -103,14 +103,14 @@ function EditForm(id,token, area = "") {
         });
 
     // Hook up event to the update yearOfOperation button
-    $("#edit_department_modal button[name='update_department_btn']").unbind().click(function () { upDateDepartment(token) });
+    $("#edit_yearOfOperation_modal button[name='update_yearOfOperation_btn']").unbind().click(function () { updateYearOfOperation(token) });
 
     // Reset validation
-    var validator = $("#edit_department_modal form").validate();
+    var validator = $("#edit_yearOfOperation_modal form").validate();
     validator.resetForm();
 
     // Show modal
-    $("#edit_department_modal").modal("show");
+    $("#edit_yearOfOperation_modal").modal("show");
 
     })
 }
@@ -148,15 +148,15 @@ function Delete(id,token) {
 }
 
 
-function upDateDepartment(token) {
+function updateYearOfOperation(token) {
     toastr.clear()
 
     //get the authorisation token
     //upDateRole
-    var authenticationToken = $("#edit_department_modal input[name='__RequestVerificationToken']").val();
+    var authenticationToken = $("#edit_yearOfOperation_modal input[name='__RequestVerificationToken']").val();
 
      //get the form itself 
-     var form = $("#edit_department_modal form");
+     var form = $("#edit_yearOfOperation_modal form");
 
         
      var formData = {};
@@ -169,7 +169,7 @@ function upDateDepartment(token) {
          formData[fieldName] = fieldValue;
      });
 
-     let id = $("#edit_department_modal input[name='Id']").val()
+     let id = $("#edit_yearOfOperation_modal input[name='Id']").val()
 
      // Convert formData object to an array of key-value pairs
     const formDataEntries = Object.entries(formData);
@@ -213,7 +213,7 @@ function upDateDepartment(token) {
 
                 toastr.success("Year of operation updated successfully")
 
-                $("#edit_department_modal").modal("hide")
+                $("#edit_yearOfOperation_modal").modal("hide")
 
                 dataTable.ajax.reload();
 
@@ -228,13 +228,12 @@ function upDateDepartment(token) {
             var errorResponse = JSON.parse(xhr.responseText);
             $.each(errorResponse, function (key, value) {
                 $.each(value, function (index, message) {
-                    //console.log("joseph")
                    
                     const elementName = key.charAt(0).toUpperCase() + key.slice(1); // Replace with the desired element name
-                    const element = $("#edit_department_modal").find("form :input[name='" + elementName + "']");
+                    const element = $("#edit_yearOfOperation_modal").find("form :input[name='" + elementName + "']");
                    console.log(element)
                    element.siblings("span.text-danger").text(message);
-                    //$("#edit_department_modal input[name='" + key+']').siblings("span.text-danger").text(message);
+                   
                 });
             });
         }

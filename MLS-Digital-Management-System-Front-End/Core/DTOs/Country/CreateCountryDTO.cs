@@ -6,8 +6,11 @@ public class CreateCountryDTO
 {
 
     [StringLength(maximumLength: 100, MinimumLength = 2)]
+    [Display(Name = "Name")]
     public string Name { get; set; }
     [Required]
     [StringLength(maximumLength:10,MinimumLength =2)]
+    [Display(Name = "Short Code")]
     public string ShortCode { get; set; }
+    public string DataInvalid { get; set; } = "true";
 }

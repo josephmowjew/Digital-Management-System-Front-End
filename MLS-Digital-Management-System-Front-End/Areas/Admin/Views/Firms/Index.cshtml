@@ -1,7 +1,7 @@
 ﻿@using Microsoft.Extensions.Configuration
 @inject IConfiguration Configuration
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Firms";
     Layout = "~/Areas/Admin/Views/shared/_Layout.cshtml";
 
      var host = Configuration.GetSection("APIURL")["Link"];
@@ -12,53 +12,46 @@
 <div class="card">
     <div class="card-body">
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-info my-3" data-bs-toggle="modal" data-bs-target="#create_user_modal">
-            Create User
+        <button type="button" class="btn btn-info my-3" data-bs-toggle="modal" data-bs-target="#create_firm_modal">
+            Create Firm
         </button>
-        <a asp-action="UnconfirmedUsers" asp-area="Admin" asp-controller="Users" class="btn btn-warning my-3 mx-1">View Unconfirmed Users</a>
-        <a asp-action="SuspendedUsers" asp-area="Admin" asp-controller="Users" class="btn btn-danger my-3 ">View Suspended Users</a>
+
         <!-- Modal -->
-        <div class="modal fade" id="create_user_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <partial name="_CreateUserPartial" />
+        <div class="modal fade" id="create_firm_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <partial name="_CreateFirmPartial" />
         </div>
 
-        <div class="modal fade" id="edit_user_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <partial name="_EditUserPartial" />
+        <div class="modal fade" id="edit_firm_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <partial name="_EditFirmPartial" />
         </div>
 
-        <h5 class="card-title fw-semibold mb-4 text-uppercase">Available Active Users</h5>
+        <h5 class="card-title fw-semibold mb-4 text-uppercase">Available Active Firms</h5>
        
         <div class="table-responsive">
             <table class="table table-bordered " id="my_table">
                 <thead>
                     <tr>
                         <th>
-                            First Name
+                            Name
                         </th>
                         <th>
-                            Surname
+                            Postal Address
                         </th>
                         <th>
-                            Gender
+                            Physical Address
                         </th>
                         <th>
-                            Email
+                            Primary Contact Person
                         </th>
                         <th>
-                            Contact
+                            Primary Phone Number
                         </th>
                         <th>
-                            Role
+                            Secondary Contact Person
                         </th>
-
                         <th>
-                            Date Added
+                            Secondary Phone Number
                         </th>
-
-                        <th>
-                            Last Login
-                        </th>
-
                         <th>
                             Action
                         </th>
@@ -80,7 +73,7 @@
             var tokenValue = '@ViewBag.token';
         </script>
 
-        <script src="~/js/User.js" asp-append-version="true"></script>
+        <script src="~/js/Firm.js" asp-append-version="true"></script>
         <script>
             $(document).ready(function () {
                 datatable = $('#my_table').DataTable({
@@ -90,7 +83,7 @@
                     "serverSide": true,
                     "order": [[0, "desc"]],
                     ajax: {
-                    url: "@host/api/Users/paged",
+                    url: "@host/api/Firms/paged",
                         type: 'get',
                         datatype: 'Json',headers: {
                                         'Authorization': 'Bearer @ViewBag.token'
@@ -106,55 +99,48 @@
                     ],
                     columns: [
                         {
-                            data: "firstName",
-                            name: "firstName",
+                            data: "name",
+                            name: "name",
+                            className: "text-left",
+                            "orderable": true,
+                        },                      
+                           {
+                            data: "postalAddress",
+                            name: "postalAddress",
                             className: "text-left",
                             "orderable": true,
                         },
-                        {
-                            data: "lastName",
-                            name: "lastName",
+                           {
+                            data: "physicalAddress",
+                            name: "physicalAddress",
                             className: "text-left",
                             "orderable": true,
                         },
-                        {
-                            data: "gender",
-                            name: "gender",
+                           {
+                            data: "primaryContactPerson",
+                            name: "primaryContactPerson",
                             className: "text-left",
                             "orderable": true,
                         },
-                        {
-                            data: "email",
-                            name: "email",
+                           {
+                            data: "primaryPhoneNumber",
+                            name: "primaryPhoneNumber",
                             className: "text-left",
                             "orderable": true,
                         },
-                        {
-                            data: "phoneNumber",
-                            name: "contact",
+                           {
+                            data: "secondaryContactPerson",
+                            name: "secondaryContactPerson",
                             className: "text-left",
                             "orderable": true,
                         },
-                         {
-                            data: "roleName",
-                            name: "role",
+                           {
+                            data: "secondaryPhoneNumber",
+                            name: "secondaryPhoneNumber",
                             className: "text-left",
                             "orderable": true,
                         },
-
-                        
-                         {
-                            data: "createdDate",
-                            name: "createdDate",
-                            className: "text-left",
-                            "orderable": true,
-                        },
-                        {
-                            data: "lastLogin",
-                            name: "lastLogin",
-                            className: "text-left",
-                            "orderable": true,
-                        },
+                                   
                         {
                             data: "id",
                             name: "id",

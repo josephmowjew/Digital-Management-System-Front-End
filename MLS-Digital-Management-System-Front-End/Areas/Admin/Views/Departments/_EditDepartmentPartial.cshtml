@@ -1,0 +1,30 @@
+@model MLS_Digital_Management_System_Front_End.Core.DTOs.Department.UpdateDepartmentDTO;    
+<!-- Modal -->
+<div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit Department</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="DataInvalid" />
+            <div class="row row-cols-lg-2">
+                <div class="mb-3">
+                    <label asp-for="Name" class="form-label"></label>
+                    <input asp-for="Name" placeholder="Enter Department Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>              
+            </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="update_department_btn" name="update_department_btn">Update Department</button>
+            
+      </div>
+    </div>
+  </div>
+

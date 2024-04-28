@@ -84,7 +84,7 @@ function EditForm(id,token, area = "") {
     showSpinner();
     
     $.ajax({
-        url: "http://localhost:5043/api/roles/"+ id,
+        url: "http://localhost:5043/api/roles/singleRole/"+ id,
         type: 'GET',
         headers: {
             'Authorization': "Bearer "+ token
@@ -103,29 +103,24 @@ function EditForm(id,token, area = "") {
         }
 
         // Iterate over the form elements and populate values dynamically
-        $("#edit_role_model form").find('input, select').each(function(index, element) {
+        $("#edit_role_modal form").find('input, select').each(function(index, element) {
             var field = $(element);
             var fieldName = field.attr('name');
             var dataKey = fieldMap[fieldName]; // Get corresponding key from data
             var fieldValue = data[dataKey]; // Get value from data based on key
             field.val(fieldValue); // Set field value
         });
-    // Set additional fields like DateOfBirth
-    var currentDate = new Date(data.dateOfBirth);
-    var day = ("0" + currentDate.getDate()).slice(-2);
-    var month = ("0" + (currentDate.getMonth() + 1)).slice(-2);
-    var date = currentDate.getFullYear() + "-" + (month) + "-" + (day);
-    $("#edit_role_model input[name ='DateOfBirth']").val(date);
+   
 
     // Hook up event to the update user button
-    $("#edit_role_model button[name='update_user_btn']").unbind().click(function () { updateRole(token) });
+    $("#edit_role_modal button[name='update_role_btn']").unbind().click(function () { updateRole(token) });
 
     // Reset validation
-    var validator = $("#edit_role_model form").validate();
+    var validator = $("#edit_role_modal form").validate();
     validator.resetForm();
 
     // Show modal
-    $("#edit_role_model").modal("show");
+    $("#edit_role_modal").modal("show");
 
     })
 }
@@ -168,10 +163,10 @@ function updateRole(token) {
 
     //get the authorisation token
     //upDateRole
-    var authenticationToken = $("#edit_role_model input[name='__RequestVerificationToken']").val();
+    var authenticationToken = $("#edit_role_modal input[name='__RequestVerificationToken']").val();
 
      //get the form itself 
-     var form = $("#edit_role_model form");
+     var form = $("#edit_role_modal form");
 
         
      var formData = {};
@@ -184,7 +179,7 @@ function updateRole(token) {
          formData[fieldName] = fieldValue;
      });
 
-     let id = $("#edit_role_model input[name='Id']").val()
+     let id = $("#edit_role_modal input[name='Id']").val()
 
      // Convert formData object to an array of key-value pairs
     const formDataEntries = Object.entries(formData);
@@ -212,13 +207,13 @@ function updateRole(token) {
 
             //parse whatever comes back to html
 
-            var parsedData = $.parseHTML(data)
+            //var parsedData = $.parseHTML(data)
 
 
 
             //check if there is an error in the data that is coming back from the user
 
-            var isInvalid = $(parsedData).find("input[name='DataInvalid']").val() == "true"
+            //var isInvalid = $(parsedData).find("input[name='DataInvalid']").val() == "true"
 
 
            
@@ -228,7 +223,7 @@ function updateRole(token) {
 
                 toastr.success("Role updated successfully")
 
-                $("#edit_role_model").modal("hide")
+                $("#edit_role_modal").modal("hide")
 
                 dataTable.ajax.reload();
 
@@ -245,7 +240,7 @@ function updateRole(token) {
                 $.each(value, function (index, message) {
                    
                     const elementName = key ? key.charAt(0).toUpperCase() + key.slice(1) : null;
-                    const element = $("#edit_role_model").find("form :input[name='" + (elementName || '') + "']");
+                    const element = $("#edit_role_modal").find("form :input[name='" + (elementName || '') + "']");
                     
                     if (element && element.length) {
                       element.siblings("span.text-danger").text(message);

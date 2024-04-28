@@ -84,7 +84,7 @@ function EditForm(id,token, area = "") {
     showSpinner();
     
     $.ajax({
-        url: "http://localhost:5043/api/probonoclients/"+ id,
+        url: "http://localhost:5043/api/probonoclients/getclient/"+ id,
         type: 'GET',
         headers: {
             'Authorization': "Bearer "+ token
@@ -110,15 +110,10 @@ function EditForm(id,token, area = "") {
             var fieldValue = data[dataKey]; // Get value from data based on key
             field.val(fieldValue); // Set field value
         });
-    // Set additional fields like DateOfBirth
-    var currentDate = new Date(data.dateOfBirth);
-    var day = ("0" + currentDate.getDate()).slice(-2);
-    var month = ("0" + (currentDate.getMonth() + 1)).slice(-2);
-    var date = currentDate.getFullYear() + "-" + (month) + "-" + (day);
-    $("#edit_client_modal input[name ='DateOfBirth']").val(date);
+   
 
     // Hook up event to the update user button
-    $("#edit_client_modal button[name='update_user_btn']").unbind().click(function () { updateClient(token) });
+    $("#edit_client_modal button[name='update_client_btn']").unbind().click(function () { updateClient(token) });
 
     // Reset validation
     var validator = $("#edit_client_modal form").validate();

@@ -84,6 +84,8 @@ namespace MLS_Digital_Management_System_Front_End.Controllers
                     // Sign in the user
                     await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
 
+                    //await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
                     // Store the token in a cookie (optional)
                     Response.Cookies.Append("token", authData.TokenData.Token);
                     Response.Cookies.Append("tokenExpiryTime",authData.TokenData.TokenExpiryMinutes.ToString());
@@ -100,6 +102,10 @@ namespace MLS_Digital_Management_System_Front_End.Controllers
                     {
                         return RedirectToAction("Index", "Home", new { Area = "Admin" });
                     }
+                    if(authData.TokenData.Role.Equals("Secretariat", StringComparison.OrdinalIgnoreCase))
+                    {
+                        return RedirectToAction("Index", "Home", new { Area = "Secretariat" });
+                    }
                     // Redirect to authorized page
                     return RedirectToAction("Index", "Home");
                 }
@@ -108,6 +114,13 @@ namespace MLS_Digital_Management_System_Front_End.Controllers
                     ModelState.AddModelError(string.Empty, ex.Message);
                     return View("Index", model);
                 }
+        }
+
+
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Index", "Home");
         }
 
         public IActionResult Privacy()

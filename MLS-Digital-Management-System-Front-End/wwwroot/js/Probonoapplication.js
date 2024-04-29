@@ -172,7 +172,38 @@ function Delete(id,token) {
     });
 }
 
+function Activate(id,token) {
 
+    bootbox.confirm("Are you sure you want to activate this application account?", function (result) {
+
+        console.log(token)
+        if (result) {
+            $.ajax({
+                url: 'http://localhost:5043/api/probonoapplications/activate/'+id,
+                type: 'GET',
+                headers: {
+                    'Authorization': "Bearer "+ token
+                }
+
+            }).done(function (data) {
+
+               
+                    toastr.success("application has been activated sucessfully")
+              
+                datatable.ajax.reload();
+
+
+            }).fail(function (response) {
+
+                toastr.error("failed to activate user")
+
+                datatable.ajax.reload();
+            });
+        }
+
+
+    });
+}
 function updateApplication(token) {
     toastr.clear()
 

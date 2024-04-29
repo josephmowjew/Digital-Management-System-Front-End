@@ -25,6 +25,7 @@ $(function () {
             formData[fieldName] = fieldValue;
         });
         
+        console.log(formData)
         //send the request
 
         $.ajax({
@@ -159,7 +160,38 @@ function Delete(id,token) {
 
     });
 }
+function Activate(id,token) {
 
+    bootbox.confirm("Are you sure you want to activate this client account?", function (result) {
+
+        console.log(token)
+        if (result) {
+            $.ajax({
+                url: 'http://localhost:5043/api/probonoclients/activate/'+id,
+                type: 'GET',
+                headers: {
+                    'Authorization': "Bearer "+ token
+                }
+
+            }).done(function (data) {
+
+               
+                    toastr.success("client has been activated sucessfully")
+              
+                datatable.ajax.reload();
+
+
+            }).fail(function (response) {
+
+                toastr.error("failed to activate user")
+
+                datatable.ajax.reload();
+            });
+        }
+
+
+    });
+}
 function updateClient(token) {
     toastr.clear()
 

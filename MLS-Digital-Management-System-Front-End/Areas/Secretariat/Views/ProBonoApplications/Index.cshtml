@@ -141,12 +141,17 @@
                             className: "text-left",
                             "orderable": true,
                         },
-                        {
+                         {
                             data: "id",
                             name: "id",
                             "orderable": false,
-                            render: function (data) {
-                            return "<a href='#' onclick='EditForm(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='ti ti-pencil' title='edit' ></a> <a href='#' type='button' onclick='Delete(\"" + data + "\",\"" + tokenValue + "\")' title='delete' class='ti ti-trash red-icon' ></a>"
+                            render: function (data, type, row) {
+                            let links = "";
+                            if (row.applicationStatus.toLowerCase() == "pending") {
+                            links += "<a href='#' onclick='Activate(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='ti ti-check' title='activate'></a>";
+                            }
+                            links += "<a href='#' onclick='EditForm(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='ti ti-pencil' title='edit' ></a> <a href='#' type='button' onclick='Delete(\"" + data + "\",\"" + tokenValue + "\")' title='delete' class='ti ti-trash red-icon' ></a>"
+                            return links;
                             }
                         }
                         ],                    responsive: true,

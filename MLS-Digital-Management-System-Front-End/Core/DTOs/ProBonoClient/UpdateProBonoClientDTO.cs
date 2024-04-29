@@ -35,4 +35,8 @@ public class UpdateProBonoClientDTO
         [Required, Range(0, double.MaxValue)]
         [Display(Name = "Annual Income")]
         public decimal AnnualIncome { get; set; }
+        [Required]
+        [StringLength(maximumLength:30)]
+        [Display(Name = "National Id")]
+        public string  NationalId { get; set; }
 }

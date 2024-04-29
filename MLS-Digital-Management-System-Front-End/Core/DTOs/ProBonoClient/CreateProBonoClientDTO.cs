@@ -34,4 +34,8 @@ namespace MLS_Digital_Management_System_Front_End.Core.DTOs.ProBonoClient;
         [Required, Range(0, double.MaxValue)]
         [Display(Name = "Annual Income")]
         public decimal AnnualIncome { get; set; }
+        [Required]
+        [StringLength(maximumLength:30)]
+        [Display(Name = "National Id")]
+        public string  NationalId { get; set; }
 }

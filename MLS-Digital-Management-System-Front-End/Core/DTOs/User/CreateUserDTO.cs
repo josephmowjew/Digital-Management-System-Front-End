@@ -34,21 +34,16 @@ namespace MLS_Digital_Management_System_Front_End.Core.DTOs.User
         [Required]
         [Display(Name="Department Name")]
         public int DepartmentId { get; set; }
-
         [Display(Name = "Identity Type")]
         [Required]
         public int IdentityTypeId { get; set; }
-
         [Display(Name = "Title")]
         public int TitleId { get; set; }
         [Display(Name = "Country")]
         public int CountryId { get; set; }
-
         [Display(Name = "Role")]
         [Required]
         public string RoleName { get; set; }
-
-
         [Required]
         [EmailAddress]
         [StringLength(100, MinimumLength = 5)]

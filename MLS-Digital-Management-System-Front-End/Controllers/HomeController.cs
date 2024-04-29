@@ -106,6 +106,10 @@ namespace MLS_Digital_Management_System_Front_End.Controllers
                     {
                         return RedirectToAction("Index", "Home", new { Area = "Secretariat" });
                     }
+                     if(authData.TokenData.Role.Equals("Member", StringComparison.OrdinalIgnoreCase))
+                    {
+                        return RedirectToAction("Index", "Home", new { Area = "Member" });
+                    }
                     // Redirect to authorized page
                     return RedirectToAction("Index", "Home");
                 }

@@ -15,9 +15,18 @@ public class ProBonoClientService : IProBonoClientService
         throw new NotImplementedException();
     }
 
-    public Task<List<ReadProBonoClientDTO>> GetAllProBonoClientsAsync()
+    public async Task<List<ReadProBonoClientDTO>> GetAllProBonoClientsAsync()
     {
-        throw new NotImplementedException();
+         var response = await _httpClient.GetAsync($"api/probonoclients/getAll");
+        if (response.IsSuccessStatusCode)
+        {
+            var responseData = await response.Content.ReadFromJsonAsync<List<ReadProBonoClientDTO>>();
+            return responseData;
+        }
+        else
+        {
+            throw new InvalidOperationException($"Failed to get probono clients.");
+        }
     }
 
     public async Task<ReadProBonoClientDTO> GetProBonoClientByIdAsync(int id)

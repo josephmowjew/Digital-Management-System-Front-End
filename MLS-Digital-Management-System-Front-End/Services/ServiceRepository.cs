@@ -14,6 +14,8 @@ public class ServiceRepository : IServiceRepository
     private IDepartmentService _departmentService;
     private IAuthenticationService _authenticationService;
     private ICountryService _countryService;
+    private IProBonoClientService _probonoClientService;
+    private IYearOfOperationService _yearOfOperationService;
 
 
     public string Token { get; set; }
@@ -33,5 +35,7 @@ public class ServiceRepository : IServiceRepository
     public IUserService UserService => throw new NotImplementedException();
     public IDepartmentService DepartmentService => _departmentService ??= new DepartmentService(_httpClient);
     public ICountryService CountryService => _countryService ??= new CountryService(_httpClient);
+    public IProBonoClientService ProbonoClientService => _probonoClientService ??= new ProBonoClientService(_httpClient);
+    public IYearOfOperationService YearOfOperationService => _yearOfOperationService ??= new YearOfOperationService(_httpClient);
 
 }

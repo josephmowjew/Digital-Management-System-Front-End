@@ -1,59 +1,62 @@
-﻿@{
-    ViewData["Title"] = "Pro Bono Clients";
+﻿@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+@{
+    ViewData["Title"] = "Pro Bono Applications";
     Layout = "~/Areas/Secretariat/Views/shared/_Layout.cshtml";
+
+     var host = Configuration.GetSection("APIURL")["Link"];
 }
 
+@section Styles {
+
+    <link href="~/assets/css/custom_select.css" rel="stylesheet" />
+}
 
 
 <div class="card">
     <div class="card-body">
+         <div>
+            <img src="~/assets/images/91.gif" id="spinner" />
+        </div>
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-info my-3" data-bs-toggle="modal" data-bs-target="#create_client_modal">
-            Add Client
+        <button type="button" class="btn btn-info my-3" data-bs-toggle="modal" data-bs-target="#create_application_modal">
+            Create Application
         </button>
-      
+
         <!-- Modal -->
-        <div class="modal fade" id="create_client_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <partial name="_CreateProBonoClientPartial" />
+        <div class="modal fade" id="create_application_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <partial name="_CreateApplicationPartial" />
         </div>
 
-        <div class="modal fade" id="edit_client_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <partial name="_EditProBonoClientPartial" />
+        <div class="modal fade" id="edit_application_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <partial name="_EditApplicationPartial" />
         </div>
 
-        <h5 class="card-title fw-semibold mb-4 text-uppercase">Available Active Clients</h5>
+        <h5 class="card-title fw-semibold mb-4 text-uppercase">Available Applications</h5>
        
         <div class="table-responsive">
             <table class="table table-bordered " id="my_table">
                 <thead>
                     <tr>
                         <th>
-                           Name
+                            Nature Of Dispute
                         </th>
                         <th>
-                            Postal Address
+                            Client
                         </th>
                         <th>
-                            Permanent Address
+                            Application Status
                         </th>
                         <th>
-                            Residential Address
+                           Date Added
                         </th>
                         <th>
-                            Phone Number
+                           Approved Date
                         </th>
                         <th>
-                            Annual Income (MWK
+                            Comments
                         </th>
-
-                        <th>
-                           Other Contacts
-                        </th>
-
-                        <th>
-                           Occupation
-                        </th>
-
+                       
                         <th>
                             Action
                         </th>
@@ -75,7 +78,8 @@
             var tokenValue = '@ViewBag.token';
         </script>
 
-        <script src="~/js/ProBonoClient.js" asp-append-version="true"></script>
+        <script src="~/js/ProbonoApplication.js" asp-append-version="true"></script>
+        <script src="~/assets/js/custom_select.js" asp-append-version="true"></script>
         <script>
             $(document).ready(function () {
                 datatable = $('#my_table').DataTable({
@@ -85,7 +89,7 @@
                     "serverSide": true,
                     "order": [[0, "desc"]],
                     ajax: {
-                    url: 'http://localhost:5043/api/probonoclients/paged',
+                    url: "@host/api/probonoapplications/paged",
                         type: 'get',
                         datatype: 'Json',headers: {
                                         'Authorization': 'Bearer @ViewBag.token'
@@ -99,54 +103,41 @@
                             'orderable': true
                         },
                     ],
-                    columns: [
-                        {
-                            data: "name",
-                            name: "name",
-                            className: "text-left",
-                            "orderable": true,
-                        },
-                        {
-                            data: "postalAddress",
-                            name: "postalAddress",
-                            className: "text-left",
-                            "orderable": true,
-                        },
-                        {
-                            data: "permanentAddress",
-                            name: "permanentAddress",
-                            className: "text-left",
-                            "orderable": true,
-                        },
-                        {
-                            data: "residentialAddress",
-                            name: "residentialAddress",
-                            className: "text-left",
-                            "orderable": true,
-                        },
-                        {
-                            data: "phoneNumber",
-                            name: "phoneNumber",
-                            className: "text-left",
-                            "orderable": false,
-                        },
-                         {
-                            data: "annualIncome",
-                            name: "annualIncome",
-                            className: "text-left",
-                            "orderable": true,
-                        },
+                   columns: [
 
-                        
-                         {
-                            data: "otherContacts",
-                            name: "otherContacts",
+                        {
+                            data: "natureOfDispute",
+                            name: "natureOfDispute",
                             className: "text-left",
-                            "orderable": false,
+                            "orderable": true,
                         },
                         {
-                            data: "occupation",
-                            name: "occupation",
+                            data: "probonoClient.name",
+                            name: "client",
+                            className: "text-left",
+                            "orderable": true,
+                        },
+                        {
+                            data: "applicationStatus",
+                            name: "applicationStatus",
+                            className: "text-left",
+                            "orderable": true,
+                        },
+                        {
+                            data: "createdDate",
+                            name: "createdDate",
+                            className: "text-left",
+                            "orderable": true,
+                        },
+                        {
+                            data: "approvedDate",
+                            name: "approvedDate",
+                            className: "text-left",
+                            "orderable": true,
+                        },
+                        {
+                            data: "summaryOfDispute",
+                            name: "comments",
                             className: "text-left",
                             "orderable": true,
                         },
@@ -155,14 +146,17 @@
                             name: "id",
                             "orderable": false,
                             render: function (data) {
-                                return "<a href='#' onclick='EditForm(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='ti ti-pencil' title='edit' ></a> <a href='#' type='button' onclick='Delete(\"" + data + "\",\"" + tokenValue + "\")' title='delete' class='ti ti-trash red-icon' ></a>"
-                            }                     }
-                    ],
-                    responsive: true,
+                            return "<a href='#' onclick='EditForm(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='ti ti-pencil' title='edit' ></a> <a href='#' type='button' onclick='Delete(\"" + data + "\",\"" + tokenValue + "\")' title='delete' class='ti ti-trash red-icon' ></a>"
+                            }
+                        }
+                        ],                    responsive: true,
                     "autoWidth": false,
                 });
             });
         </script>
+
+        
+
 
             @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");

@@ -10,5 +10,7 @@ public interface IServiceRepository{
     IDepartmentService DepartmentService { get; }
     IAuthenticationService AuthenticationService { get; }
     ICountryService CountryService { get; }
+    IProBonoClientService ProbonoClientService { get; }
+    IYearOfOperationService YearOfOperationService { get; }
 
 }

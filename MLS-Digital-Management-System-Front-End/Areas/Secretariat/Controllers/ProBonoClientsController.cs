@@ -23,17 +23,6 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Admin.Controllers
             return View();
         }
 
-        [HttpGet]
-        public async Task<IActionResult> SuspendedUsers()
-        {
-           await PopulateViewBags();
-
-            return View();
-        }
-
-
-
-
         private async Task PopulateViewBags()
         {
             //get the token
@@ -43,23 +32,7 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Admin.Controllers
             
         }
 
-        private async Task<List<SelectListItem>> GetIdentityTypes()
-        {
-            List<SelectListItem> identityTypes = new() { new SelectListItem() { Text = "---Select Identity Type---", Value = "" } };
-
-            //get identity types from remote
-            var identityTypesFromRemote =  await this._service.IdentityTypeService.GetAllIdentityTypesAsync();
-
-            if (identityTypesFromRemote != null)
-            {
-                identityTypesFromRemote.ForEach(idType =>
-                {
-                    identityTypes.Add(new SelectListItem() { Text = idType.Name, Value = idType.Id.ToString() });
-                });
-            }
-
-            return identityTypes;
-        }
+        
 
 
 

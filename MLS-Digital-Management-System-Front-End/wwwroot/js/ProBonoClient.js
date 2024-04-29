@@ -32,6 +32,9 @@ $(function () {
             type: 'POST',
             data: JSON.stringify(formData), // Convert formData object to JSON string
             contentType: 'application/json', // Set content type to JSON
+            headers: {
+                'Authorization': "Bearer "+ tokenValue
+            },
             success: function (data) {
 
                 //parse whatever comes back to html

@@ -32,8 +32,6 @@ $(function () {
             formData.append("Attachments", attachments[i]);
         }
 
-
-        console.log(attachments)
         //send the request
 
         $.ajax({
@@ -42,6 +40,9 @@ $(function () {
             data: formData, // Convert formData object to JSON string
             processData: false, // Set processData to false to prevent automatic serialization
             contentType: false, // Prevent jQuery from processing the data (since it's already in FormData format)
+            headers: {
+                'Authorization': "Bearer "+ tokenValue
+            },
             success: function (data) {
 
                 //parse whatever comes back to html
@@ -91,6 +92,7 @@ $(function () {
 
 function EditForm(id,token, area = "") {
 
+   
     //get the record from the database
     showSpinner();
     

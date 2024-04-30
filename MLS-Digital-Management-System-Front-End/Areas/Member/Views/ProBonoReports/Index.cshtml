@@ -7,16 +7,27 @@
      var host = Configuration.GetSection("APIURL")["Link"];
 }
 
-@section Styles {
-
-    <link href="~/assets/css/custom_select.css" rel="stylesheet" />
-}
 
 
 <div class="card  w-100 h-100 d-flex justify-content-center">
     <div class="card-body">
+          <div>
+            <img src="~/assets/images/91.gif" id="spinner" />
+        </div>
         
-       
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-info my-3" data-bs-toggle="modal" data-bs-target="#create_report_modal">
+            Add Report
+        </button>
+      
+        <!-- Modal -->
+        <div class="modal fade" id="create_report_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <partial name="_CreateProBonoReportPartial" />
+        </div>
+
+        <div class="modal fade" id="edit_report_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <partial name="_EditProBonoReportPartial" />
+        </div>
         <h5 class="card-title fw-semibold mb-4 text-uppercase">Reports On Pro Bonos</h5>
        
         <div class="table-responsive">
@@ -42,6 +53,9 @@
                         <th>
                             Attachments
                         </th>
+                        <th>
+                            Action
+                        </th>
                         
                        
 
@@ -63,7 +77,7 @@
         </script>
 
         
-        <script src="~/assets/js/custom_select.js" asp-append-version="true"></script>
+         <script src="~/js/Probonoreport.js" asp-append-version="true"></script>
         <script>
             $(document).ready(function () {
                 datatable = $('#my_table').DataTable({
@@ -130,13 +144,25 @@
                         render: function(data, type, row, meta) {
                             if (data && data.length > 0) {
                             return data.map((attachment) => {
-                                return `<a href="@host/${attachment.filePath}" download="${attachment.fileName}" class='ti ti-download btn btn-outline-info'> ${attachment.fileName}</a>`;
+                                return `<a href="@host/${attachment.filePath}" target="_blank" download="${attachment.fileName}" class='ti ti-download btn btn-outline-info'> ${attachment.fileName}</a>`;
                             }).join('<br>');
                             } else {
                             return '';
                             }
                         }
+                        },
+                         {
+                        data: "id",
+                        name: "id",
+                        "orderable": false,
+                        render: function (data, type, row) {
+                            if (row.reportStatus.toLowerCase() === "pending") {
+                                return "<a href='#' onclick='EditForm(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-pencil text-lg' title='edit' >Edit</a><a href='#' type='button' onclick='Delete(\"" + data + "\",\"" + tokenValue + "\")' title='delete' class='btn btn-outline-danger my-1 btn-sm ti ti-trash red-icon' >Delete</a>"
+                            } else {
+                                return "";
+                            }
                         }
+                    }
                        
                         ],                    responsive: true,
                     "autoWidth": false,

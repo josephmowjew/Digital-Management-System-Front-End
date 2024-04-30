@@ -176,8 +176,10 @@ function Activate(id,token) {
 
     bootbox.confirm("Are you sure you want to activate this application account?", function (result) {
 
-        console.log(token)
+        
         if (result) {
+
+            showSpinner()
             $.ajax({
                 url: 'http://localhost:5043/api/probonoapplications/activate/'+id,
                 type: 'GET',
@@ -188,12 +190,16 @@ function Activate(id,token) {
             }).done(function (data) {
 
                
-                    toastr.success("application has been activated sucessfully")
+                toastr.success("application has been activated sucessfully")
               
                 datatable.ajax.reload();
 
+                hideSpinner();
+
 
             }).fail(function (response) {
+
+                hideSpinner();
 
                 toastr.error("failed to activate user")
 
@@ -203,6 +209,98 @@ function Activate(id,token) {
 
 
     });
+}
+function DenyForm(id,token) { 
+    
+    
+    //get the input field inside the edit role modal form
+
+    $("#deny_probono_application_modal input[name ='ProBonoApplicationId']").val(id)
+
+    //hook up an event to the update role button
+
+    $("#deny_probono_application_modal button[name='deny_probono_application_btn']").unbind().click(function () { DenyApplication() })
+
+
+    
+    $("#deny_probono_application_modal").modal("show");
+  }
+
+
+  function DenyApplication() {
+
+    showSpinner();
+
+    toastr.clear()
+
+    //send the request
+
+
+
+    var form = $("#deny_probono_application_modal form")[0];
+
+    // Create a new FormData object
+    var formData = new FormData();
+  
+          // Append the form field values
+          $(form).find('input, select, textarea').each(function(index, element) {
+              var field = $(element);
+              var fieldName = field.attr('name');
+              var fieldValue = field.val();
+              formData.append(fieldName, fieldValue);
+          });
+  
+  
+          //send the request
+  
+          $.ajax({
+              url:  "http://localhost:5043/api/probonoapplications/denyApplication",
+              type: 'POST',
+              data: formData, // Convert formData object to JSON string
+              processData: false, // Set processData to false to prevent automatic serialization
+              contentType: false, // Prevent jQuery from processing the data (since it's already in FormData format)
+              headers: {
+                  'Authorization': "Bearer "+ tokenValue
+              },
+              success: function (data) {
+
+  
+                  hideSpinner();
+  
+                 
+                      //show success message to the user
+                      var dataTable = $('#my_table').DataTable();
+  
+                      toastr.success("Pro bono application has been denied")
+  
+                      $("#deny_probono_application_modal").modal("hide")
+  
+                      dataTable.ajax.reload();
+  
+                  
+  
+  
+              },
+              error: function (xhr, ajaxOtions, thrownError) {
+                  hideSpinner();
+                  var errorResponse = JSON.parse(xhr.responseText);
+                  $.each(errorResponse, function (key, value) {
+                      $.each(value, function (index, message) {
+                         
+                          const elementName = key ? key.charAt(0).toUpperCase() + key.slice(1) : null;
+                          const element = $("#deny_probono_application_modal").find("form :input[name='" + (elementName || '') + "']");
+                          
+                          if (element && element.length) {
+                            element.siblings("span.text-danger").text(message);
+                          }
+       
+                      });
+                  });
+              }
+  
+          });
+
+
 }
 function updateApplication(token) {
     toastr.clear()

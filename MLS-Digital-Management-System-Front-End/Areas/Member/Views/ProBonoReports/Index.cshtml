@@ -15,47 +15,35 @@
 
 <div class="card  w-100 h-100 d-flex justify-content-center">
     <div class="card-body">
-         <div>
-            <img src="~/assets/images/91.gif" id="spinner" />
-        </div>
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-info my-3" data-bs-toggle="modal" data-bs-target="#create_application_modal">
-            Create Application
-        </button>
-
-        <!-- Modal -->
-        <div class="modal fade" id="create_application_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <partial name="_CreateApplicationPartial" />
-        </div>
-
-        <div class="modal fade" id="edit_application_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <partial name="_EditApplicationPartial" />
-        </div>
-
-        <h5 class="card-title fw-semibold mb-4 text-uppercase">Available Applications</h5>
+        
+       
+        <h5 class="card-title fw-semibold mb-4 text-uppercase">Reports On Pro Bonos</h5>
        
         <div class="table-responsive">
             <table class="table table-bordered table-hover" id="my_table">
                 <thead>
                     <tr>
-                        <th>
-                            Nature Of Dispute
+                         <th>
+                           Pro Bono ID
                         </th>
                         <th>
-                            Client
+                            Report Status
                         </th>
-                       
                         <th>
-                           Date Added
+                            Proposed Hours
+                        </th>
+                        <th>
+                            Approved Hours
+                        </th>
+                          <th>
+                            Description
                         </th>
                         
                         <th>
-                            Case Details
+                            Attachments
                         </th>
+                        
                        
-                        <th>
-                            Action
-                        </th>
 
                     </tr>
                 </thead>
@@ -74,7 +62,7 @@
             var tokenValue = '@ViewBag.token';
         </script>
 
-        <script src="~/js/ProbonoApplication.js" asp-append-version="true"></script>
+        
         <script src="~/assets/js/custom_select.js" asp-append-version="true"></script>
         <script>
             $(document).ready(function () {
@@ -85,12 +73,12 @@
                     "serverSide": true,
                     "order": [[0, "desc"]],
                     ajax: {
-                    url: "@host/api/probonoapplications/paged",
+                    url: "@host/api/ProBonoReports/paged?probonoId="+@ViewBag.probonoId,
                         type: 'get',
                         datatype: 'Json',headers: {
                                         'Authorization': 'Bearer @ViewBag.token'
                                     },
-                                    
+                                  
 
                   },
                     columnDefs: [
@@ -103,43 +91,53 @@
                    columns: [
 
                         {
-                            data: "natureOfDispute",
-                            name: "natureOfDispute",
+                            data: "proBono.fileNumber",
+                            name: "proBono.fileNumber",
+                            className: "text-left",
+                            "orderable": false,
+                        },
+
+                        {
+                            data: "reportStatus",
+                            name: "reportStatus",
                             className: "text-left",
                             "orderable": true,
                         },
                         {
-                            data: "probonoClient.name",
-                            name: "client",
+                            data: "proBonoProposedHours",
+                            name: "proBonoProposedHours",
                             className: "text-left",
-                            "orderable": true,
+                            "orderable": false,
                         },
-                        
                         {
-                            data: "createdDate",
-                            name: "createdDate",
+                            data: "proBonoHours",
+                            name: "proBonoHours",
                             className: "text-left",
-                            "orderable": true,
+                            "orderable": false,
                         },
-                       
+                         {
+                            data: "description",
+                            name: "description",
+                            className: "text-left",
+                            "orderable": false,
+                        },
+
                         {
-                            data: "summaryOfDispute",
-                            name: "comments",
-                            className: "text-left",
-                            "orderable": true,
-                        },
-                       {
-                        data: "id",
-                        name: "id",
-                        "orderable": false,
-                        render: function (data, type, row) {
-                            if (row.applicationStatus.toLowerCase() === "pending") {
-                                return "<a href='#' onclick='EditForm(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-pencil text-lg' title='edit' >Edit</a><a href='#' type='button' onclick='Delete(\"" + data + "\",\"" + tokenValue + "\")' title='delete' class='btn btn-outline-danger my-1 btn-sm ti ti-trash red-icon' >Delete</a>"
+                        data: "attachments",
+                        name: "attachments",
+                        className: "text-left",
+                        "orderable": true,
+                        render: function(data, type, row, meta) {
+                            if (data && data.length > 0) {
+                            return data.map((attachment) => {
+                                return `<a href="@host/${attachment.filePath}" download="${attachment.fileName}" class='ti ti-download btn btn-outline-info'> ${attachment.fileName}</a>`;
+                            }).join('<br>');
                             } else {
-                                return "";
+                            return '';
                             }
                         }
-                    }
+                        }
+                       
                         ],                    responsive: true,
                     "autoWidth": false,
                 });

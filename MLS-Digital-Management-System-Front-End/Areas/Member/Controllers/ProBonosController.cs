@@ -4,14 +4,14 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using MLS_Digital_Management_System_Front_End.Helpers;
 using MLS_Digital_Management_System_Front_End.Services.Interfaces;
 
-namespace MLS_Digital_Management_System_Front_End.Areas.Secretariat.Controllers
+namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
 {
     [Authorize]
-    [Area("Secretariat")]
-    public class ProBonoClientsController : Controller
+    [Area("Member")]
+    public class ProBonosController : Controller
     {
         private readonly IServiceRepository _service;
-        public ProBonoClientsController(IServiceRepository serviceRepository)
+        public ProBonosController(IServiceRepository serviceRepository)
         {
             _service = serviceRepository;
         }
@@ -23,17 +23,20 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Secretariat.Controllers
             return View();
         }
 
+
         private async Task PopulateViewBags()
         {
             //get the token
             string token = AuthHelper.GetToken(HttpContext);
             ViewBag.token = token;
             this._service.Token = token;
+
             
         }
 
         
 
+       
 
 
     }

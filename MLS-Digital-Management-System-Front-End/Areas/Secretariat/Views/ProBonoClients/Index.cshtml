@@ -5,7 +5,7 @@
 
 
 
-<div class="card">
+<div class="card ">
     <div class="card-body">
         <!-- Button trigger modal -->
         <button type="button" class="btn btn-info my-3" data-bs-toggle="modal" data-bs-target="#create_client_modal">
@@ -53,7 +53,7 @@
                         <th>
                            Occupation
                         </th>
-
+                        
                         <th>
                             Action
                         </th>
@@ -150,6 +150,7 @@
                             className: "text-left",
                             "orderable": true,
                         },
+                        
 
                         {
                             data: "id",
@@ -160,7 +161,7 @@
                             if (row.status.toLowerCase() == "pending") {
                             links += "<a href='#' onclick='Activate(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='ti ti-check' title='activate'></a>";
                             }
-                            links += "<a href='#' onclick='EditForm(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='ti ti-pencil' title='edit' ></a> <a href='#' type='button' onclick='Delete(\"" + data + "\",\"" + tokenValue + "\")' title='delete' class='ti ti-trash red-icon' ></a>"
+                            links += "<a href='#' onclick='EditForm(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='btn btn-outline-primary my-1 btn-sm ti ti-pencil' title='edit' >Edit</a> <a href='#' type='button' onclick='Delete(\"" + data + "\",\"" + tokenValue + "\")' title='delete' class='ti ti-trash red-icon btn btn-outline-danger btn-sm'>Delete</a>"
                             return links;
                             }
                         }

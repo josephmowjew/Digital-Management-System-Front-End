@@ -2,7 +2,7 @@
 @inject IConfiguration Configuration
 @{
     ViewData["Title"] = "Pro Bono Applications";
-    Layout = "~/Areas/Secretariat/Views/shared/_Layout.cshtml";
+    Layout = "~/Areas/Member/Views/shared/_Layout.cshtml";
 
      var host = Configuration.GetSection("APIURL")["Link"];
 }
@@ -13,46 +13,38 @@
 }
 
 
-<div class="card">
+<div class="card  w-100 h-100 d-flex justify-content-center">
     <div class="card-body">
          <div>
             <img src="~/assets/images/91.gif" id="spinner" />
         </div>
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-info my-3" data-bs-toggle="modal" data-bs-target="#create_application_modal">
-            Create Application
-        </button>
-
-        <!-- Modal -->
-        <div class="modal fade" id="create_application_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <partial name="_CreateApplicationPartial" />
-        </div>
-
-        <div class="modal fade" id="edit_application_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <partial name="_EditApplicationPartial" />
-        </div>
-
-        <h5 class="card-title fw-semibold mb-4 text-uppercase">Available Applications</h5>
+       
+        <h5 class="card-title fw-semibold mb-4 text-uppercase">My Pro Bono Cases</h5>
        
         <div class="table-responsive">
-            <table class="table table-bordered " id="my_table">
+            <table class="table table-bordered table-hover" id="my_table">
                 <thead>
                     <tr>
+                         <th>
+                            File Number
+                        </th>
                         <th>
                             Nature Of Dispute
                         </th>
                         <th>
-                            Client
+                            Client Name
                         </th>
-                    
                         <th>
-                           Date Added
+                            Year of Operation
                         </th>
-                       
+                          <th>
+                            Accumulated Hours
+                        </th>
+                        
                         <th>
                             Case Details
                         </th>
-                       
+                        
                         <th>
                             Action
                         </th>
@@ -85,7 +77,7 @@
                     "serverSide": true,
                     "order": [[0, "desc"]],
                     ajax: {
-                    url: "@host/api/probonoapplications/paged",
+                    url: "@host/api/ProBonos/paged",
                         type: 'get',
                         datatype: 'Json',headers: {
                                         'Authorization': 'Bearer @ViewBag.token'
@@ -102,6 +94,13 @@
                    columns: [
 
                         {
+                            data: "fileNumber",
+                            name: "fileNumber",
+                            className: "text-left",
+                            "orderable": true,
+                        },
+
+                        {
                             data: "natureOfDispute",
                             name: "natureOfDispute",
                             className: "text-left",
@@ -111,33 +110,33 @@
                             data: "probonoClient.name",
                             name: "client",
                             className: "text-left",
-                            "orderable": true,
+                            "orderable": false,
                         },
-                       
                         {
-                            data: "createdDate",
-                            name: "createdDate",
+                            data: "yearOfOperation.formatedDate",
+                            name: "yearOfOperation",
+                            className: "text-left",
+                            "orderable": false,
+                        },
+                         {
+                            data: "proBonoHoursAccoumulated",
+                            name: "proBonoHoursAccoumulated",
+                            className: "text-left",
+                            "orderable": false,
+                        },
+                        {
+                            data: "caseDetails",
+                            name: "caseDetails",
                             className: "text-left",
                             "orderable": true,
                         },
                         
                         {
-                            data: "summaryOfDispute",
-                            name: "summaryOfDispute",
-                            className: "text-left",
-                            "orderable": true,
-                        },
-                         {
                             data: "id",
                             name: "id",
                             "orderable": false,
-                            render: function (data, type, row) {
-                            let links = "";
-                            if (row.applicationStatus.toLowerCase() == "pending") {
-                            links += "<a href='#' onclick='Activate(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='ti ti-check' title='activate'></a>";
-                            }
-                            links += "<a href='#' onclick='EditForm(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-pencil' title='edit' >Edit</a> <a href='#' type='button' onclick='Delete(\"" + data + "\",\"" + tokenValue + "\")' title='delete' class='ti ti-trash red-icon btn btn-outline-danger my-1 btn-sm' >Delete</a>"
-                            return links;
+                            render: function (data) {
+                            return "<a href='#' type='button' onclick='Delete(\"" + data + "\",\"" + tokenValue + "\")' title='delete' class='btn btn-outline-danger my-1 btn-sm ti ti-trash red-icon' >Delete</a>"
                             }
                         }
                         ],                    responsive: true,

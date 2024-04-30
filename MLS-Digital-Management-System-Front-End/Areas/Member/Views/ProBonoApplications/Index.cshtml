@@ -13,7 +13,7 @@
 }
 
 
-<div class="card">
+<div class="card  w-100 h-100 d-flex justify-content-center">
     <div class="card-body">
          <div>
             <img src="~/assets/images/91.gif" id="spinner" />
@@ -35,7 +35,7 @@
         <h5 class="card-title fw-semibold mb-4 text-uppercase">Available Applications</h5>
        
         <div class="table-responsive">
-            <table class="table table-bordered " id="my_table">
+            <table class="table table-bordered table-hover" id="my_table">
                 <thead>
                     <tr>
                         <th>
@@ -44,17 +44,13 @@
                         <th>
                             Client
                         </th>
-                        <th>
-                            Application Status
-                        </th>
+                       
                         <th>
                            Date Added
                         </th>
+                        
                         <th>
-                           Approved Date
-                        </th>
-                        <th>
-                            Comments
+                            Case Details
                         </th>
                        
                         <th>
@@ -117,24 +113,14 @@
                             className: "text-left",
                             "orderable": true,
                         },
-                        {
-                            data: "applicationStatus",
-                            name: "applicationStatus",
-                            className: "text-left",
-                            "orderable": true,
-                        },
+                        
                         {
                             data: "createdDate",
                             name: "createdDate",
                             className: "text-left",
                             "orderable": true,
                         },
-                        {
-                            data: "approvedDate",
-                            name: "approvedDate",
-                            className: "text-left",
-                            "orderable": true,
-                        },
+                       
                         {
                             data: "summaryOfDispute",
                             name: "comments",
@@ -146,7 +132,7 @@
                             name: "id",
                             "orderable": false,
                             render: function (data) {
-                            return "<a href='#' onclick='EditForm(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='ti ti-pencil' title='edit' ></a> <a href='#' type='button' onclick='Delete(\"" + data + "\",\"" + tokenValue + "\")' title='delete' class='ti ti-trash red-icon' ></a>"
+                            return "<a href='#' onclick='EditForm(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-pencil text-lg' title='edit' >Edit</a><a href='#' type='button' onclick='Delete(\"" + data + "\",\"" + tokenValue + "\")' title='delete' class='btn btn-outline-danger my-1 btn-sm ti ti-trash red-icon' >Delete</a>"
                             }
                         }
                         ],                    responsive: true,

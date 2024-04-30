@@ -241,7 +241,7 @@ function updateApplication(token) {
     //send the request
 
     $.ajax({
-        url: "http://localhost:5043/api/probonoapplications/getprobonoapplication/"+id,
+        url: "http://localhost:5043/api/probonoapplications/"+id,
         type: 'PUT',
         data: formDataJson,
         contentType: 'application/json',

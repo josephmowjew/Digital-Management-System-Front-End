@@ -174,7 +174,7 @@ function Delete(id,token) {
 
 function Activate(id,token) {
 
-    bootbox.confirm("Are you sure you want to activate this application account?", function (result) {
+    bootbox.confirm("Are you sure you want to accept this application?", function (result) {
 
         
         if (result) {
@@ -190,7 +190,7 @@ function Activate(id,token) {
             }).done(function (data) {
 
                
-                toastr.success("application has been activated sucessfully")
+                toastr.success("application has been accepted sucessfully")
               
                 datatable.ajax.reload();
 
@@ -201,7 +201,7 @@ function Activate(id,token) {
 
                 hideSpinner();
 
-                toastr.error("failed to activate user")
+                toastr.error("failed to accept application")
 
                 datatable.ajax.reload();
             });

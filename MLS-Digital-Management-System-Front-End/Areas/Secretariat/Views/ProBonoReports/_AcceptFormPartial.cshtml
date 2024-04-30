@@ -1,0 +1,47 @@
+@model MLS_Digital_Management_System_Front_End.Core.DTOs.ProBonoReport.AcceptProBonoReportDTO;
+
+<!-- Modal -->
+<div class="modal-dialog modal-lg">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">Accept Report Form</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+
+    <div class="modal-body">
+      <form asp-action="Edit">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="Id" />
+         <input asp-for="ProBonoReportId" disabled type="hidden"  />
+        <div class="row row-cols-lg-2">
+          
+          <div class="mb-3">
+            <label asp-for="Description" class="form-label"></label>
+            <textarea asp-for="Description" disabled placeholder="Enter Description" class="form-control"></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+          </div>
+
+          <div class="mb-3">
+            <label asp-for="ProBonoProposedHours" class="form-label"></label>
+            <input asp-for="ProBonoProposedHours" disabled type="number" step="0.01"  class="form-control" />
+            <span asp-validation-for="ProBonoProposedHours" class="text-danger"></span>  
+          </div>
+
+          <div class="mb-3">
+            <label asp-for="ProBonoHours" class="form-label"></label>
+            <input asp-for="ProBonoHours" type="number" step="0.01"  class="form-control" />
+            <span asp-validation-for="ProBonoHours" class="text-danger"></span>  
+          </div>
+          
+          
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      <button type="button" class="btn btn-primary" id="accept_probono_report_btn" name="accept_probono_report_btn">Accept Report</button>
+    </div>
+
+  </div>
+</div>
+

@@ -1,0 +1,174 @@
+﻿@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+@{
+    ViewData["Title"] = "Pro Bono Applications";
+    Layout = "~/Areas/Member/Views/shared/_Layout.cshtml";
+
+     var host = Configuration.GetSection("APIURL")["Link"];
+}
+
+
+
+<div class="card  w-100 h-100 d-flex justify-content-center">
+    <div class="card-body">
+          <div>
+            <img src="~/assets/images/91.gif" id="spinner" />
+        </div>
+        
+
+        <div class="modal fade" id="accept_report_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <partial name="_AcceptFormPartial" />
+        </div>
+
+        <div class="modal fade" id="deny_probono_report_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <partial name="_DenyFormPartial" />
+        </div>
+        <h5 class="card-title fw-semibold mb-4 text-uppercase">Reports On Pro Bonos</h5>
+       
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover" id="my_table">
+                <thead>
+                    <tr>
+                         <th>
+                           Pro Bono ID
+                        </th>
+                        <th>
+                            Report Status
+                        </th>
+                        <th>
+                            Proposed Hours
+                        </th>
+                        <th>
+                            Approved Hours
+                        </th>
+                          <th>
+                            Description
+                        </th>
+                        
+                        <th>
+                            Attachments
+                        </th>
+                        <th>
+                            Action
+                        </th>
+                        
+                       
+
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+       @section Scripts{
+
+        <script>
+            var datatable;
+            var tokenValue = '@ViewBag.token';
+        </script>
+
+        
+         <script src="~/js/Probonoreport.js" asp-append-version="true"></script>
+        <script>
+            $(document).ready(function () {
+                datatable = $('#my_table').DataTable({
+
+
+                    "processing": true,
+                    "serverSide": true,
+                    "order": [[0, "desc"]],
+                    ajax: {
+                    url: "@host/api/ProBonoReports/paged?probonoId="+@ViewBag.probonoId,
+                        type: 'get',
+                        datatype: 'Json',headers: {
+                                        'Authorization': 'Bearer @ViewBag.token'
+                                    },
+                                  
+
+                  },
+                    columnDefs: [
+                        {
+                            defaultContent: "",
+                            targets: "_all",
+                            'orderable': true
+                        },
+                    ],
+                   columns: [
+
+                        {
+                            data: "proBono.fileNumber",
+                            name: "proBono.fileNumber",
+                            className: "text-left",
+                            "orderable": false,
+                        },
+
+                        {
+                            data: "reportStatus",
+                            name: "reportStatus",
+                            className: "text-left",
+                            "orderable": true,
+                        },
+                        {
+                            data: "proBonoProposedHours",
+                            name: "proBonoProposedHours",
+                            className: "text-left",
+                            "orderable": false,
+                        },
+                        {
+                            data: "proBonoHours",
+                            name: "proBonoHours",
+                            className: "text-left",
+                            "orderable": false,
+                        },
+                         {
+                            data: "description",
+                            name: "description",
+                            className: "text-left",
+                            "orderable": false,
+                        },
+
+                        {
+                        data: "attachments",
+                        name: "attachments",
+                        className: "text-left",
+                        "orderable": true,
+                        render: function(data, type, row, meta) {
+                            if (data && data.length > 0) {
+                            return data.map((attachment) => {
+                                return `<a href="@host/${attachment.filePath}" target="_blank" download="${attachment.fileName}" class='ti ti-download btn btn-outline-info'> ${attachment.fileName}</a>`;
+                            }).join('<br>');
+                            } else {
+                            return '';
+                            }
+                        }
+                        },
+                         {
+                        data: "id",
+                        name: "id",
+                        "orderable": false,
+                        render: function (data, type, row) {
+                            if (row.reportStatus.toLowerCase() === "pending") {
+                                return "<a href='#' onclick='AcceptForm(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='btn btn-outline-success mx-1 btn-sm ti ti-check' title='activate'>Activate</a><a href='#' onclick='DenyForm(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='btn btn-outline-danger mx-1 btn-sm ti ti-hand-stop' title='Deny'>Deny</a><a href='#' onclick='EditForm(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-pencil text-lg' title='edit' >Edit</a><a href='#' type='button' onclick='Delete(\"" + data + "\",\"" + tokenValue + "\")' title='delete' class='btn btn-outline-danger my-1 btn-sm ti ti-trash red-icon' >Delete</a>"
+                            } else {
+                                return "";
+                            }
+                        }
+                    }
+                       
+                        ],                    responsive: true,
+                    "autoWidth": false,
+                });
+            });
+        </script>
+
+        
+
+
+            @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+        }

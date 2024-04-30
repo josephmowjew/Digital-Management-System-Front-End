@@ -173,62 +173,150 @@ function Delete(id,token) {
     });
 }
 
-function Activate(id,token) {
-
-    bootbox.confirm("Are you sure you want to activate this application account?", function (result) {
-
-        
-        if (result) {
-
-            showSpinner()
-            $.ajax({
-                url: 'http://localhost:5043/api/probonoapplications/activate/'+id,
-                type: 'GET',
-                headers: {
-                    'Authorization': "Bearer "+ token
-                }
-
-            }).done(function (data) {
-
-               
-                toastr.success("application has been activated sucessfully")
-              
-                datatable.ajax.reload();
-
-                hideSpinner();
+function AcceptForm(id,token) {
 
 
-            }).fail(function (response) {
-
-                hideSpinner();
-
-                toastr.error("failed to activate user")
-
-                datatable.ajax.reload();
-            });
+    //get the record from the database
+    showSpinner();
+    
+    $.ajax({
+        url: "http://localhost:5043/api/probonoreports/getprobonoreport/"+ id,
+        type: 'GET',
+        headers: {
+            'Authorization': "Bearer "+ token
         }
 
+    }).done(function (data) {
+        
+        hideSpinner();
+        // Iterate over the keys of the data object and map them to form field names dynamically
+        var fieldMap = {};
+        for (var key in data) {
+            if (data.hasOwnProperty(key)) {
+                var formFieldName = key.charAt(0).toUpperCase() + key.slice(1); // Convert first character to uppercase
+                fieldMap[formFieldName] = key; // Map form field name to data key
+            }
+        }
 
-    });
+        // Iterate over the form elements and populate values dynamically
+        $("#accept_report_modal form").find('input, select, textarea').each(function(index, element) {
+            var field = $(element);
+            var fieldName = field.attr('name');
+            var dataKey = fieldMap[fieldName]; // Get corresponding key from data
+            var fieldValue = data[dataKey]; // Get value from data based on key
+            field.val(fieldValue); // Set field value
+        });
+
+        
+        $("#accept_report_modal input[name ='ProBonoReportId']").val(id)
+
+    })
+
+ //get the input field inside the accept report modal form
+
+
+ //hook up an event to the update  button
+
+ $("#accept_report_modal button[name='accept_probono_report_btn']").unbind().click(function () { AcceptReport() })
+
+
+
+ 
+ $("#accept_report_modal").modal("show");
+
 }
 function DenyForm(id,token) { 
     
+   
     
-    //get the input field inside the edit role modal form
+    //get the input field inside the deny report modal form
 
-    $("#deny_probono_application_modal input[name ='ProBonoApplicationId']").val(id)
+    $("#deny_probono_report_modal input[name ='ProBonoReportId']").val(id)
 
-    //hook up an event to the update role button
+    //hook up an event to the update  button
 
-    $("#deny_probono_application_modal button[name='deny_probono_application_btn']").unbind().click(function () { DenyApplication() })
+    $("#deny_probono_report_modal button[name='deny_probono_report_btn']").unbind().click(function () { DenyReport() })
 
 
     
-    $("#deny_probono_application_modal").modal("show");
+    $("#deny_probono_report_modal").modal("show");
   }
 
+  function AcceptReport() {
 
-  function DenyApplication() {
+    showSpinner();
+
+    toastr.clear()
+
+    //send the request
+
+    var form = $("#accept_report_modal form")[0];
+
+    // Create a new FormData object
+    var formData = new FormData();
+
+      // Append the form field values
+      $(form).find('input, select, textarea').each(function(index, element) {
+          var field = $(element);
+          var fieldName = field.attr('name');
+          var fieldValue = field.val();
+          formData.append(fieldName, fieldValue);
+      });
+
+
+      //send the request
+
+      $.ajax({
+          url:  "http://localhost:5043/api/probonoreports/acceptReport",
+          type: 'POST',
+          data: formData, // Convert formData object to JSON string
+          processData: false, // Set processData to false to prevent automatic serialization
+          contentType: false, // Prevent jQuery from processing the data (since it's already in FormData format)
+          headers: {
+              'Authorization': "Bearer "+ tokenValue
+          },
+          success: function (data) {
+
+
+              hideSpinner();
+
+             
+                  //show success message to the user
+                  var dataTable = $('#my_table').DataTable();
+
+                  toastr.success("Pro bono report has been accepted sucessfully")
+
+                  $("#accept_report_modal").modal("hide")
+
+                  dataTable.ajax.reload();
+
+              
+
+
+          },
+          error: function (xhr, ajaxOtions, thrownError) {
+              hideSpinner();
+              var errorResponse = JSON.parse(xhr.responseText);
+              $.each(errorResponse, function (key, value) {
+                  $.each(value, function (index, message) {
+                     
+                      const elementName = key ? key.charAt(0).toUpperCase() + key.slice(1) : null;
+                      const element = $("#accept_report_modal").find("form :input[name='" + (elementName || '') + "']");
+                      
+                      if (element && element.length) {
+                        element.siblings("span.text-danger").text(message);
+                      }
+   
+                  });
+              });
+          }
+
+      });
+
+
+}
+
+  function DenyReport() {
 
         showSpinner();
 
@@ -236,7 +324,7 @@ function DenyForm(id,token) {
 
         //send the request
 
-        var form = $("#deny_probono_application_modal form")[0];
+        var form = $("#deny_probono_report_modal form")[0];
 
         // Create a new FormData object
         var formData = new FormData();
@@ -253,7 +341,7 @@ function DenyForm(id,token) {
           //send the request
   
           $.ajax({
-              url:  "http://localhost:5043/api/probonoapplications/denyApplication",
+              url:  "http://localhost:5043/api/probonoreports/denyreport",
               type: 'POST',
               data: formData, // Convert formData object to JSON string
               processData: false, // Set processData to false to prevent automatic serialization
@@ -270,9 +358,9 @@ function DenyForm(id,token) {
                       //show success message to the user
                       var dataTable = $('#my_table').DataTable();
   
-                      toastr.success("Pro bono application has been denied")
+                      toastr.success("Pro bono report has been denied")
   
-                      $("#deny_probono_application_modal").modal("hide")
+                      $("#deny_probono_report_modal").modal("hide")
   
                       dataTable.ajax.reload();
   
@@ -287,7 +375,7 @@ function DenyForm(id,token) {
                       $.each(value, function (index, message) {
                          
                           const elementName = key ? key.charAt(0).toUpperCase() + key.slice(1) : null;
-                          const element = $("#deny_probono_application_modal").find("form :input[name='" + (elementName || '') + "']");
+                          const element = $("#deny_probono_report_modal").find("form :input[name='" + (elementName || '') + "']");
                           
                           if (element && element.length) {
                             element.siblings("span.text-danger").text(message);

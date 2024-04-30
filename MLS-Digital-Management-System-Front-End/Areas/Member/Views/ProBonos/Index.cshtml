@@ -64,7 +64,7 @@
             var tokenValue = '@ViewBag.token';
         </script>
 
-        <script src="~/js/Probono.js" asp-append-version="true"></script>
+        
         <script src="~/assets/js/custom_select.js" asp-append-version="true"></script>
         <script>
             $(document).ready(function () {
@@ -134,7 +134,7 @@
                             name: "id",
                             "orderable": false,
                             render: function (data) {
-                            return "<a href='/Member/ProBonoReports/Index?probonoId=" + data + "' type='button' onclick='ViewReportsModal(\"" + data + "\",\"" + tokenValue + "\")' title='manage report' class='btn btn-outline-info my-1 btn-sm' >Manage Reports</a>"
+                            return "<a href='/Member/ProBonoReports/Index?probonoId=" + data + "' type='button' title='manage report' class='btn btn-outline-info my-1 btn-sm' >Manage Reports</a>"
                             }
                         }
                         ],                    responsive: true,

@@ -1,17 +1,17 @@
-@model MLS_Digital_Management_System_Front_End.Core.DTOs.ProBonoApplications.DenyProBonoApplicationDTO;
+@model MLS_Digital_Management_System_Front_End.Core.DTOs.ProBonoReport.DenyProReportDTO;
 
 <!-- Modal -->
 <div class="modal-dialog modal-lg">
   <div class="modal-content">
     <div class="modal-header">
-      <h5 class="modal-title" id="exampleModalLabel">Deny Application Form</h5>
+      <h5 class="modal-title" id="exampleModalLabel">Deny Report Form</h5>
       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
     </div>
 
     <div class="modal-body">
       <form asp-action="Edit">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <input type="hidden" asp-for="ProBonoApplicationId"/>
+        <input type="hidden" asp-for="ProBonoReportId"/>
        
 
           <div class="mb-3">
@@ -25,7 +25,7 @@
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-      <button type="button" class="btn btn-primary" id="deny_probono_application_btn" name="deny_probono_application_btn">Deny Application</button>
+      <button type="button" class="btn btn-primary" id="deny_probono_report_btn" name="deny_probono_report_btn">Deny Application</button>
     </div>
 
   </div>

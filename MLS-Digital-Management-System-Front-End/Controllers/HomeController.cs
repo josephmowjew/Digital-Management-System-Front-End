@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authentication;
 using IAuthenticationService = MLS_Digital_Management_System_Front_End.Services.Interfaces.IAuthenticationService;
 using MLS_Digital_Management_System_Front_End.Services;
 using MLS_Digital_Management_System_Front_End.Helpers;
+using MLS_Digital_Management_System_Front_End.Core.DTOs.User;
 
 namespace MLS_Digital_Management_System_Front_End.Controllers
 {
@@ -126,6 +127,16 @@ namespace MLS_Digital_Management_System_Front_End.Controllers
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Index", "Home");
+        }
+
+        public IActionResult ResetPassword()
+        {
+            return View();
+        }
+
+        public IActionResult ForgotPassword()
+        {
+            return View();
         }
 
         public IActionResult Privacy()

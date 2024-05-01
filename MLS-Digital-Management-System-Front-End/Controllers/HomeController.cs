@@ -92,6 +92,7 @@ namespace MLS_Digital_Management_System_Front_End.Controllers
                     Response.Cookies.Append("RoleName", authData.TokenData.Role);
                     Response.Cookies.Append("FirstName", authData.TokenData.FirstName);
                     Response.Cookies.Append("LastName", authData.TokenData.LastName);
+                    Response.Cookies.Append("UserId",authData.TokenData.UserId);
 
                     //HttpContext.Session.SetString("token", authData.TokenData.Token);
 

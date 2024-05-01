@@ -6,8 +6,9 @@ using MLS_Digital_Management_System_Front_End.Services.Interfaces;
 
 namespace MLS_Digital_Management_System_Front_End.Areas.Admin.Controllers
 {
-    [Authorize]
+    
     [Area("Admin")]
+    [Authorize]
     public class UsersController : Controller
     {
         private readonly IServiceRepository _service;
@@ -73,7 +74,7 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Admin.Controllers
             return identityTypes;
         }
 
-         private async Task<List<SelectListItem>> GetPersonalTitles()
+        private async Task<List<SelectListItem>> GetPersonalTitles()
         {
             List<SelectListItem> personalTitlesList = new() { new SelectListItem() { Text = "---Select Title---", Value = "" } };
             //get identity types from remote
@@ -89,7 +90,7 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Admin.Controllers
             return personalTitlesList;
         }
 
-         private async Task<List<SelectListItem>> GetRoles()
+        private async Task<List<SelectListItem>> GetRoles()
         {
             List<SelectListItem> rolesList = new() { new SelectListItem() { Text = "---Select Role---", Value = "" } };
             //get identity types from remote
@@ -105,7 +106,7 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Admin.Controllers
             return rolesList;
         }
 
-          private async Task<List<SelectListItem>> GetDepartments()
+        private async Task<List<SelectListItem>> GetDepartments()
         {
             List<SelectListItem> departmentsList = new() { new SelectListItem() { Text = "---Select Departments---", Value = "" } };
             //get identity types from remote
@@ -120,7 +121,7 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Admin.Controllers
             }
             return departmentsList;
         }
-           private async Task<List<SelectListItem>> GetCountries()
+        private async Task<List<SelectListItem>> GetCountries()
         {
             List<SelectListItem> countriesList = new() { new SelectListItem() { Text = "---Select Country---", Value = "" } };
             //get countries  from remote

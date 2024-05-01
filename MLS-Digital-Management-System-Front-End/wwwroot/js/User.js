@@ -157,6 +157,8 @@ function UpdatePassword() {
 
 
 }
+
+
 function EditPasswordModalPopUp() {
 
     $("#edit_password_modal input[name='Id']").val($("#edit_user_modal input[name='Id']").val())

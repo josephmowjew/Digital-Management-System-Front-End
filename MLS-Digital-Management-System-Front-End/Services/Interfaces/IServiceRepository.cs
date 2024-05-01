@@ -12,5 +12,7 @@ public interface IServiceRepository{
     ICountryService CountryService { get; }
     IProBonoClientService ProbonoClientService { get; }
     IYearOfOperationService YearOfOperationService { get; }
+    IMemberService MemberService { get; }
+    IQualificationTypeService QualificationTypeService { get; }
 
 }

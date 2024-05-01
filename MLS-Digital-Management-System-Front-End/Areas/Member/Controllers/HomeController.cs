@@ -25,11 +25,21 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
         public async Task<IActionResult> Profile()
         {
 
-           
 
             await PopulateViewBags();
 
-            ViewBag.userId = HttpContext.Request.Cookies["UserId"];
+            return View();
+        }
+
+        public async Task<IActionResult> ViewMember()
+        {
+            await PopulateViewBagsMinimal();
+
+            //get member record to pass to the view
+            var member = await _service.MemberService.GetMemberByUserIdAsync(HttpContext.Request.Cookies["UserId"]);
+
+            ViewBag.member = member;
+           
 
             return View();
         }
@@ -47,6 +57,23 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
             ViewBag.rolesList = await GetRoles();
             ViewBag.departmentsList = await GetDepartments();
             ViewBag.countriesList = await GetCountries();
+            ViewBag.qualificationTypesList = await GetQualificationTypes();
+
+            ViewBag.userId = HttpContext.Request.Cookies["UserId"];
+            ViewBag.roleName = HttpContext.Request.Cookies["RoleName"];
+        }
+
+        private async Task PopulateViewBagsMinimal()
+        {
+             //get the token
+            string token = AuthHelper.GetToken(HttpContext);
+            ViewBag.token = token;
+            this._service.Token = token;
+
+            ViewBag.userId = HttpContext.Request.Cookies["UserId"];
+            ViewBag.roleName = HttpContext.Request.Cookies["RoleName"];
+
+            ViewBag.qualificationTypesList = await GetQualificationTypes();
         }
         
         private async Task<List<SelectListItem>> GetIdentityTypes()
@@ -66,6 +93,24 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
 
             return identityTypes;
         }
+         private async Task<List<SelectListItem>> GetQualificationTypes()
+        {
+            List<SelectListItem> qualificationTypesList = new() { new SelectListItem() { Text = "---Select Qualification Type---", Value = "" } };
+
+            //get identity types from remote
+            var qualificationTypeFromRemote =  (await this._service.QualificationTypeService.GetAllAsync()).ToList();
+
+            if (qualificationTypeFromRemote != null)
+            {
+                qualificationTypeFromRemote.ForEach(q =>
+                {
+                    qualificationTypesList.Add(new SelectListItem() { Text = q.Name, Value = q.Id.ToString() });
+                });
+            }
+
+            return qualificationTypesList;
+        }
+
 
         private async Task<List<SelectListItem>> GetPersonalTitles()
         {

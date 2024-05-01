@@ -4,8 +4,15 @@
 <div class="card  w-100 h-100 d-flex justify-content-center ">
     <div class="card-body">
          <div>
-                <img src="~/assets/images/91.gif" id="spinner" />
+            <img src="~/assets/images/91.gif" id="spinner" />
         </div>
+        @if((ViewBag.roleName).ToLower() == "member")
+        {
+         <a asp-action="ViewMember" class="btn btn-secondary my-3 " asp-area="member" asp-controller="Home" >View Member Details</a>
+
+        }
+     
+         
          <h5 class="card-title fw-semibold mb-4 text-uppercase">My Profile</h5>
          <div id="edit_user_form">
              <form asp-action="Edit">
@@ -78,6 +85,7 @@
                     </div>
                     <div class="mb-3">
                         <button type="button" class="btn btn-primary" id="update_user_btn" name="update_user_btn">Update Profile</button>
+                       
                     </div>
                 
                 </div>
@@ -93,6 +101,7 @@
             var datatable;
             var tokenValue = '@ViewBag.token';
             var userIdGlobal = '@ViewBag.userId';
+            var roleNameGlobal = '@ViewBag.roleName';
         </script>
 
         <script src="~/js/Profile.js" asp-append-version="true"></script>

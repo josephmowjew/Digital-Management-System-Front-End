@@ -16,6 +16,8 @@ public class ServiceRepository : IServiceRepository
     private ICountryService _countryService;
     private IProBonoClientService _probonoClientService;
     private IYearOfOperationService _yearOfOperationService;
+    private IMemberService _memberService;
+    private IQualificationTypeService _qualificationTypeService;
 
 
     public string Token 
@@ -38,6 +40,8 @@ public class ServiceRepository : IServiceRepository
             _countryService = new CountryService(_httpClient);
             _probonoClientService = new ProBonoClientService(_httpClient);
             _yearOfOperationService = new YearOfOperationService(_httpClient);
+            _memberService = new MemberService(_httpClient);
+            _qualificationTypeService = new QualificationTypeService(_httpClient);
         } 
     } 
 
@@ -59,5 +63,7 @@ public class ServiceRepository : IServiceRepository
     public ICountryService CountryService => _countryService ??= new CountryService(_httpClient);
     public IProBonoClientService ProbonoClientService => _probonoClientService ??= new ProBonoClientService(_httpClient);
     public IYearOfOperationService YearOfOperationService => _yearOfOperationService ??= new YearOfOperationService(_httpClient);
+    public IMemberService MemberService => _memberService ??= new MemberService(_httpClient);
+    public IQualificationTypeService QualificationTypeService => _qualificationTypeService ??= new QualificationTypeService(_httpClient);
 
 }

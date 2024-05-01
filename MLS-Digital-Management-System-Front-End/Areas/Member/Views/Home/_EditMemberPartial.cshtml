@@ -1,0 +1,56 @@
+@model MLS_Digital_Management_System_Front_End.Core.DTOs.Member.UpdateMemberDTO
+
+<!-- Modal -->
+<div class="modal-dialog modal-lg">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">Edit Member</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+ 
+      <div class="modal-body">
+        <form asp-action="Edit">
+          <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+          <input type="hidden" asp-for="Id" value="@(ViewBag.member?.Id ?? "")" />
+        
+
+          <div class="row">
+            <div class="mb-3 col-md-6">
+              <label asp-for="PostalAddress" class="form-label"></label>
+              <input asp-for="PostalAddress" class="form-control" placeholder="Enter Postal Address"/>
+              <span asp-validation-for="PostalAddress" class="text-danger"></span>
+            </div>
+            
+            <div class="mb-3 col-md-6">
+              <label asp-for="PermanentAddress" class="form-label"></label>
+              <input asp-for="PermanentAddress" class="form-control" placeholder="Enter Permanent Address"/>
+              <span asp-validation-for="PermanentAddress" class="text-danger"></span>
+            </div>
+            
+            <div class="mb-3 col-md-6">
+              <label asp-for="ResidentialAddress" class="form-label"></label>
+              <input asp-for="ResidentialAddress" class="form-control" placeholder="Enter Residential Address"/>
+              <span asp-validation-for="ResidentialAddress" class="text-danger"></span>
+            </div>
+            
+            <div class="mb-3 col-md-6">
+              <label asp-for="DateOfAdmissionToPractice" class="form-label"></label>
+              <input asp-for="DateOfAdmissionToPractice" class="form-control" placeholder="Enter Date of Admission to Practice"/>
+              <span asp-validation-for="DateOfAdmissionToPractice" class="text-danger"></span>  
+            </div>
+          </div>
+          
+        </form>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" name="update_member_btn"  id="update_member_btn"  class="btn btn-primary">Update Member</button>    
+      </div>
+    
+    
+
+  </div>
+</div>
+

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MLS-Digital-Management-System-Front-End")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a9be6d55016235f8660c8350f6370f30885e9aad")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+dd2d8f2f4fc31db9a2d1758498c9727af77da8bb")]
 [assembly: System.Reflection.AssemblyProductAttribute("MLS-Digital-Management-System-Front-End")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MLS-Digital-Management-System-Front-End")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

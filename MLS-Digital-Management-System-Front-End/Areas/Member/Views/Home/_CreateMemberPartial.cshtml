@@ -1,0 +1,56 @@
+@model MLS_Digital_Management_System_Front_End.Core.DTOs.Member.CreateMemberDTO
+
+<!-- Modal -->
+<div class="modal-dialog modal-lg">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">Create Member</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+
+    <div class="modal-body">
+        <div id="create_member_modal">
+                  <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input asp-for="UserId" value="@ViewBag.userId" disabled hidden placeholder="Enter UserId" class="form-control" />
+
+                    <div class="row row-cols-lg-2">
+                    
+                    <div class="mb-3">
+                        <label asp-for="PostalAddress" class="form-label"></label>
+                        <input asp-for="PostalAddress" placeholder="Enter Postal Address" class="form-control" />
+                        <span asp-validation-for="PostalAddress" class="text-danger"></span>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label asp-for="PermanentAddress" class="form-label"></label>
+                        <input asp-for="PermanentAddress" placeholder="Enter Permanent Address" class="form-control" />
+                        <span asp-validation-for="PermanentAddress" class="text-danger"></span>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label asp-for="ResidentialAddress" class="form-label"></label>
+                        <input asp-for="ResidentialAddress" placeholder="Enter Residential Address" class="form-control" />
+                        <span asp-validation-for="ResidentialAddress" class="text-danger"></span>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label asp-for="DateOfAdmissionToPractice" class="form-label"></label>
+                        <input asp-for="DateOfAdmissionToPractice" type="date" placeholder="Enter Date of Admission to Practice" class="form-control" />
+                        <span asp-validation-for="DateOfAdmissionToPractice" class="text-danger"></span>
+                    </div>
+                    
+                    </div>
+                  </form>
+        </div>
+
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      <button type="button" class="btn btn-primary" name="create_member_btn" id="create_member_btn">Create Member</button>
+    </div>
+
+  </div>
+</div>
+

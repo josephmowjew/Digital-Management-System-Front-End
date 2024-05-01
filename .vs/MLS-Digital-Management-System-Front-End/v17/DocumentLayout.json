@@ -1,45 +1,45 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "D:\\Projects\\Dotnet\\MLS-Digital-Management-System-Front-End\\",
+  "WorkspaceRootPath": "C:\\Users\\Joseph-Sparc\\Documents\\C# Projects\\MLS-Digital-Management-System-Front-End\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{24CAFB74-11F9-4AD5-9A29-8BBBB507A68D}|MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End.csproj|d:\\projects\\dotnet\\mls-digital-management-system-front-end\\mls-digital-management-system-front-end\\wwwroot\\js\\auth.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "AbsoluteMoniker": "D:0:0:{24CAFB74-11F9-4AD5-9A29-8BBBB507A68D}|MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End.csproj|c:\\users\\joseph-sparc\\documents\\c# projects\\mls-digital-management-system-front-end\\mls-digital-management-system-front-end\\wwwroot\\js\\auth.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
       "RelativeMoniker": "D:0:0:{24CAFB74-11F9-4AD5-9A29-8BBBB507A68D}|MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End.csproj|solutionrelative:mls-digital-management-system-front-end\\wwwroot\\js\\auth.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{24CAFB74-11F9-4AD5-9A29-8BBBB507A68D}|MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End.csproj|d:\\projects\\dotnet\\mls-digital-management-system-front-end\\mls-digital-management-system-front-end\\wwwroot\\js\\firm.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "AbsoluteMoniker": "D:0:0:{24CAFB74-11F9-4AD5-9A29-8BBBB507A68D}|MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End.csproj|c:\\users\\joseph-sparc\\documents\\c# projects\\mls-digital-management-system-front-end\\mls-digital-management-system-front-end\\wwwroot\\js\\firm.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
       "RelativeMoniker": "D:0:0:{24CAFB74-11F9-4AD5-9A29-8BBBB507A68D}|MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End.csproj|solutionrelative:mls-digital-management-system-front-end\\wwwroot\\js\\firm.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{24CAFB74-11F9-4AD5-9A29-8BBBB507A68D}|MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End.csproj|d:\\projects\\dotnet\\mls-digital-management-system-front-end\\mls-digital-management-system-front-end\\wwwroot\\js\\user.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "AbsoluteMoniker": "D:0:0:{24CAFB74-11F9-4AD5-9A29-8BBBB507A68D}|MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End.csproj|c:\\users\\joseph-sparc\\documents\\c# projects\\mls-digital-management-system-front-end\\mls-digital-management-system-front-end\\wwwroot\\js\\user.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
       "RelativeMoniker": "D:0:0:{24CAFB74-11F9-4AD5-9A29-8BBBB507A68D}|MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End.csproj|solutionrelative:mls-digital-management-system-front-end\\wwwroot\\js\\user.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{24CAFB74-11F9-4AD5-9A29-8BBBB507A68D}|MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End.csproj|d:\\projects\\dotnet\\mls-digital-management-system-front-end\\mls-digital-management-system-front-end\\views\\home\\forgotpassword.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "AbsoluteMoniker": "D:0:0:{24CAFB74-11F9-4AD5-9A29-8BBBB507A68D}|MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End.csproj|c:\\users\\joseph-sparc\\documents\\c# projects\\mls-digital-management-system-front-end\\mls-digital-management-system-front-end\\views\\home\\forgotpassword.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{24CAFB74-11F9-4AD5-9A29-8BBBB507A68D}|MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End.csproj|solutionrelative:mls-digital-management-system-front-end\\views\\home\\forgotpassword.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{24CAFB74-11F9-4AD5-9A29-8BBBB507A68D}|MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End.csproj|d:\\projects\\dotnet\\mls-digital-management-system-front-end\\mls-digital-management-system-front-end\\views\\home\\resetpassword.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "AbsoluteMoniker": "D:0:0:{24CAFB74-11F9-4AD5-9A29-8BBBB507A68D}|MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End.csproj|c:\\users\\joseph-sparc\\documents\\c# projects\\mls-digital-management-system-front-end\\mls-digital-management-system-front-end\\views\\home\\resetpassword.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{24CAFB74-11F9-4AD5-9A29-8BBBB507A68D}|MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End.csproj|solutionrelative:mls-digital-management-system-front-end\\views\\home\\resetpassword.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{24CAFB74-11F9-4AD5-9A29-8BBBB507A68D}|MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End.csproj|d:\\projects\\dotnet\\mls-digital-management-system-front-end\\mls-digital-management-system-front-end\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "AbsoluteMoniker": "D:0:0:{24CAFB74-11F9-4AD5-9A29-8BBBB507A68D}|MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End.csproj|c:\\users\\joseph-sparc\\documents\\c# projects\\mls-digital-management-system-front-end\\mls-digital-management-system-front-end\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{24CAFB74-11F9-4AD5-9A29-8BBBB507A68D}|MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End.csproj|solutionrelative:mls-digital-management-system-front-end\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{24CAFB74-11F9-4AD5-9A29-8BBBB507A68D}|MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End.csproj|d:\\projects\\dotnet\\mls-digital-management-system-front-end\\mls-digital-management-system-front-end\\areas\\member\\views\\probonoapplications\\_createapplicationpartial.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "AbsoluteMoniker": "D:0:0:{24CAFB74-11F9-4AD5-9A29-8BBBB507A68D}|MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End.csproj|c:\\users\\joseph-sparc\\documents\\c# projects\\mls-digital-management-system-front-end\\mls-digital-management-system-front-end\\areas\\member\\views\\probonoapplications\\_createapplicationpartial.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{24CAFB74-11F9-4AD5-9A29-8BBBB507A68D}|MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End.csproj|solutionrelative:mls-digital-management-system-front-end\\areas\\member\\views\\probonoapplications\\_createapplicationpartial.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{24CAFB74-11F9-4AD5-9A29-8BBBB507A68D}|MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End.csproj|d:\\projects\\dotnet\\mls-digital-management-system-front-end\\mls-digital-management-system-front-end\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{24CAFB74-11F9-4AD5-9A29-8BBBB507A68D}|MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End.csproj|c:\\users\\joseph-sparc\\documents\\c# projects\\mls-digital-management-system-front-end\\mls-digital-management-system-front-end\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{24CAFB74-11F9-4AD5-9A29-8BBBB507A68D}|MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End.csproj|solutionrelative:mls-digital-management-system-front-end\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{24CAFB74-11F9-4AD5-9A29-8BBBB507A68D}|MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End.csproj|d:\\projects\\dotnet\\mls-digital-management-system-front-end\\mls-digital-management-system-front-end\\core\\dtos\\user\\resetpassworddto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{24CAFB74-11F9-4AD5-9A29-8BBBB507A68D}|MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End.csproj|c:\\users\\joseph-sparc\\documents\\c# projects\\mls-digital-management-system-front-end\\mls-digital-management-system-front-end\\core\\dtos\\user\\resetpassworddto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{24CAFB74-11F9-4AD5-9A29-8BBBB507A68D}|MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End.csproj|solutionrelative:mls-digital-management-system-front-end\\core\\dtos\\user\\resetpassworddto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{24CAFB74-11F9-4AD5-9A29-8BBBB507A68D}|MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End.csproj|d:\\projects\\dotnet\\mls-digital-management-system-front-end\\mls-digital-management-system-front-end\\core\\dtos\\country\\updatecountrydto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{24CAFB74-11F9-4AD5-9A29-8BBBB507A68D}|MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End.csproj|c:\\users\\joseph-sparc\\documents\\c# projects\\mls-digital-management-system-front-end\\mls-digital-management-system-front-end\\core\\dtos\\country\\updatecountrydto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{24CAFB74-11F9-4AD5-9A29-8BBBB507A68D}|MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End.csproj|solutionrelative:mls-digital-management-system-front-end\\core\\dtos\\country\\updatecountrydto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
@@ -50,16 +50,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 12,
+          "SelectedChildIndex": 9,
           "Children": [
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{0ad07096-bba9-4900-a651-0598d26f6d24}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:128:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
-            },
             {
               "$type": "Bookmark",
               "Name": "ST:132:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
@@ -85,55 +77,48 @@
               "Name": "ST:129:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
             },
             {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
-            },
-            {
               "$type": "Document",
               "DocumentIndex": 1,
               "Title": "Firm.js",
-              "DocumentMoniker": "D:\\Projects\\Dotnet\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\wwwroot\\js\\Firm.js",
+              "DocumentMoniker": "C:\\Users\\Joseph-Sparc\\Documents\\C# Projects\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\wwwroot\\js\\Firm.js",
               "RelativeDocumentMoniker": "MLS-Digital-Management-System-Front-End\\wwwroot\\js\\Firm.js",
-              "ToolTip": "D:\\Projects\\Dotnet\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\wwwroot\\js\\Firm.js",
+              "ToolTip": "C:\\Users\\Joseph-Sparc\\Documents\\C# Projects\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\wwwroot\\js\\Firm.js",
               "RelativeToolTip": "MLS-Digital-Management-System-Front-End\\wwwroot\\js\\Firm.js",
               "ViewState": "AQIAABMAAAAAAAAAAAAQwBwAAAAyAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2024-05-01T14:51:16.195Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-01T14:51:16.195Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
               "Title": "User.js",
-              "DocumentMoniker": "D:\\Projects\\Dotnet\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\wwwroot\\js\\User.js",
+              "DocumentMoniker": "C:\\Users\\Joseph-Sparc\\Documents\\C# Projects\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\wwwroot\\js\\User.js",
               "RelativeDocumentMoniker": "MLS-Digital-Management-System-Front-End\\wwwroot\\js\\User.js",
-              "ToolTip": "D:\\Projects\\Dotnet\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\wwwroot\\js\\User.js",
+              "ToolTip": "C:\\Users\\Joseph-Sparc\\Documents\\C# Projects\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\wwwroot\\js\\User.js",
               "RelativeToolTip": "MLS-Digital-Management-System-Front-End\\wwwroot\\js\\User.js",
               "ViewState": "AQIAAAIAAAAAAAAAAAAAwAcAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2024-05-01T14:48:43.338Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-01T14:48:43.338Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
               "Title": "ForgotPassword.cshtml",
-              "DocumentMoniker": "D:\\Projects\\Dotnet\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\Views\\Home\\ForgotPassword.cshtml",
+              "DocumentMoniker": "C:\\Users\\Joseph-Sparc\\Documents\\C# Projects\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\Views\\Home\\ForgotPassword.cshtml",
               "RelativeDocumentMoniker": "MLS-Digital-Management-System-Front-End\\Views\\Home\\ForgotPassword.cshtml",
-              "ToolTip": "D:\\Projects\\Dotnet\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\Views\\Home\\ForgotPassword.cshtml",
+              "ToolTip": "C:\\Users\\Joseph-Sparc\\Documents\\C# Projects\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\Views\\Home\\ForgotPassword.cshtml",
               "RelativeToolTip": "MLS-Digital-Management-System-Front-End\\Views\\Home\\ForgotPassword.cshtml",
               "ViewState": "AQIAAB4AAAAAAAAAAAAAAC0AAAAaAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-05-01T14:13:05.743Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-01T14:13:05.743Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "Auth.js",
-              "DocumentMoniker": "D:\\Projects\\Dotnet\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\wwwroot\\js\\Auth.js",
+              "DocumentMoniker": "C:\\Users\\Joseph-Sparc\\Documents\\C# Projects\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\wwwroot\\js\\Auth.js",
               "RelativeDocumentMoniker": "MLS-Digital-Management-System-Front-End\\wwwroot\\js\\Auth.js",
-              "ToolTip": "D:\\Projects\\Dotnet\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\wwwroot\\js\\Auth.js",
+              "ToolTip": "C:\\Users\\Joseph-Sparc\\Documents\\C# Projects\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\wwwroot\\js\\Auth.js",
               "RelativeToolTip": "MLS-Digital-Management-System-Front-End\\wwwroot\\js\\Auth.js",
               "ViewState": "AQIAAF0AAAAAAAAAAAAgwGQAAAADAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
@@ -144,74 +129,69 @@
               "$type": "Document",
               "DocumentIndex": 6,
               "Title": "_CreateApplicationPartial.cshtml",
-              "DocumentMoniker": "D:\\Projects\\Dotnet\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\Areas\\Member\\Views\\ProBonoApplications\\_CreateApplicationPartial.cshtml",
+              "DocumentMoniker": "C:\\Users\\Joseph-Sparc\\Documents\\C# Projects\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\Areas\\Member\\Views\\ProBonoApplications\\_CreateApplicationPartial.cshtml",
               "RelativeDocumentMoniker": "MLS-Digital-Management-System-Front-End\\Areas\\Member\\Views\\ProBonoApplications\\_CreateApplicationPartial.cshtml",
-              "ToolTip": "D:\\Projects\\Dotnet\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\Areas\\Member\\Views\\ProBonoApplications\\_CreateApplicationPartial.cshtml",
+              "ToolTip": "C:\\Users\\Joseph-Sparc\\Documents\\C# Projects\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\Areas\\Member\\Views\\ProBonoApplications\\_CreateApplicationPartial.cshtml",
               "RelativeToolTip": "MLS-Digital-Management-System-Front-End\\Areas\\Member\\Views\\ProBonoApplications\\_CreateApplicationPartial.cshtml",
               "ViewState": "AQIAACcAAAAAAAAAAAAAADgAAAAEAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-05-01T13:49:30.778Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-01T13:49:30.778Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 5,
               "Title": "Index.cshtml",
-              "DocumentMoniker": "D:\\Projects\\Dotnet\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\Views\\Home\\Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Joseph-Sparc\\Documents\\C# Projects\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\Views\\Home\\Index.cshtml",
               "RelativeDocumentMoniker": "MLS-Digital-Management-System-Front-End\\Views\\Home\\Index.cshtml",
-              "ToolTip": "D:\\Projects\\Dotnet\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\Views\\Home\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Joseph-Sparc\\Documents\\C# Projects\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\Views\\Home\\Index.cshtml",
               "RelativeToolTip": "MLS-Digital-Management-System-Front-End\\Views\\Home\\Index.cshtml",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAAAhAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-05-01T13:32:41.304Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-01T13:32:41.304Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
               "Title": "ResetPassword.cshtml",
-              "DocumentMoniker": "D:\\Projects\\Dotnet\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\Views\\Home\\ResetPassword.cshtml",
+              "DocumentMoniker": "C:\\Users\\Joseph-Sparc\\Documents\\C# Projects\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\Views\\Home\\ResetPassword.cshtml",
               "RelativeDocumentMoniker": "MLS-Digital-Management-System-Front-End\\Views\\Home\\ResetPassword.cshtml",
-              "ToolTip": "D:\\Projects\\Dotnet\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\Views\\Home\\ResetPassword.cshtml",
+              "ToolTip": "C:\\Users\\Joseph-Sparc\\Documents\\C# Projects\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\Views\\Home\\ResetPassword.cshtml",
               "RelativeToolTip": "MLS-Digital-Management-System-Front-End\\Views\\Home\\ResetPassword.cshtml",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAAeAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-05-01T13:32:37.869Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-01T13:32:37.869Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 7,
               "Title": "HomeController.cs",
-              "DocumentMoniker": "D:\\Projects\\Dotnet\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\Controllers\\HomeController.cs",
+              "DocumentMoniker": "C:\\Users\\Joseph-Sparc\\Documents\\C# Projects\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\Controllers\\HomeController.cs",
               "RelativeDocumentMoniker": "MLS-Digital-Management-System-Front-End\\Controllers\\HomeController.cs",
-              "ToolTip": "D:\\Projects\\Dotnet\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\Controllers\\HomeController.cs",
+              "ToolTip": "C:\\Users\\Joseph-Sparc\\Documents\\C# Projects\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\Controllers\\HomeController.cs",
               "RelativeToolTip": "MLS-Digital-Management-System-Front-End\\Controllers\\HomeController.cs",
               "ViewState": "AQIAADcAAAAAAAAAAAAmwIgAAAArAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-01T13:31:46.976Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-01T13:31:46.976Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 8,
               "Title": "ResetPasswordDTO.cs",
-              "DocumentMoniker": "D:\\Projects\\Dotnet\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\Core\\DTOs\\User\\ResetPasswordDTO.cs",
+              "DocumentMoniker": "C:\\Users\\Joseph-Sparc\\Documents\\C# Projects\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\Core\\DTOs\\User\\ResetPasswordDTO.cs",
               "RelativeDocumentMoniker": "MLS-Digital-Management-System-Front-End\\Core\\DTOs\\User\\ResetPasswordDTO.cs",
-              "ToolTip": "D:\\Projects\\Dotnet\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\Core\\DTOs\\User\\ResetPasswordDTO.cs",
+              "ToolTip": "C:\\Users\\Joseph-Sparc\\Documents\\C# Projects\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\Core\\DTOs\\User\\ResetPasswordDTO.cs",
               "RelativeToolTip": "MLS-Digital-Management-System-Front-End\\Core\\DTOs\\User\\ResetPasswordDTO.cs",
               "ViewState": "AQIAAA0AAAAAAAAAAAAQwBMAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-01T13:28:29.121Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-01T13:28:29.121Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 9,
               "Title": "UpdateCountryDTO.cs",
-              "DocumentMoniker": "D:\\Projects\\Dotnet\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\Core\\DTOs\\Country\\UpdateCountryDTO.cs",
+              "DocumentMoniker": "C:\\Users\\Joseph-Sparc\\Documents\\C# Projects\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\Core\\DTOs\\Country\\UpdateCountryDTO.cs",
               "RelativeDocumentMoniker": "MLS-Digital-Management-System-Front-End\\Core\\DTOs\\Country\\UpdateCountryDTO.cs",
-              "ToolTip": "D:\\Projects\\Dotnet\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\Core\\DTOs\\Country\\UpdateCountryDTO.cs",
+              "ToolTip": "C:\\Users\\Joseph-Sparc\\Documents\\C# Projects\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\Core\\DTOs\\Country\\UpdateCountryDTO.cs",
               "RelativeToolTip": "MLS-Digital-Management-System-Front-End\\Core\\DTOs\\Country\\UpdateCountryDTO.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAIAAAAKAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",

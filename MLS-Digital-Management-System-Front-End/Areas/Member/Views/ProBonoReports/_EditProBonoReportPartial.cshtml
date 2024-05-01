@@ -27,7 +27,7 @@
           <div class="mb-3">
             <label asp-for="Attachments" class="form-label"></label>
             <input asp-for="Attachments" type="file" multiple class="form-control" />
-            <span asp-validation-for="Attachments" class="text-danger"></span>
+            <span asp-validation-for="Attachments" accept="application/pdf, application/msword, application/vnd.ms-excel, text/plain" class="text-danger"></span>
           </div>
         </div>
       </form>

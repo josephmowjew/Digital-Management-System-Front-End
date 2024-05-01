@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Projects\\Dotnet\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End.csproj": {}
+    "C:\\Users\\Joseph-Sparc\\Documents\\C# Projects\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End.csproj": {}
   },
   "projects": {
-    "D:\\Projects\\Dotnet\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End.csproj": {
+    "C:\\Users\\Joseph-Sparc\\Documents\\C# Projects\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Projects\\Dotnet\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End.csproj",
+        "projectUniqueName": "C:\\Users\\Joseph-Sparc\\Documents\\C# Projects\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End.csproj",
         "projectName": "MLS-Digital-Management-System-Front-End",
-        "projectPath": "D:\\Projects\\Dotnet\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End.csproj",
-        "packagesPath": "C:\\Users\\James Simbi\\.nuget\\packages\\",
-        "outputPath": "D:\\Projects\\Dotnet\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\obj\\",
+        "projectPath": "C:\\Users\\Joseph-Sparc\\Documents\\C# Projects\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End.csproj",
+        "packagesPath": "C:\\Users\\Joseph-Sparc\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Joseph-Sparc\\Documents\\C# Projects\\MLS-Digital-Management-System-Front-End\\MLS-Digital-Management-System-Front-End\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\James Simbi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Joseph-Sparc\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -27,8 +27,7 @@
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "C:\\Program Files\\dotnet\\library-packs": {},
-          "https://api.nuget.org/v3/index.json": {},
-          "https://nuget.devexpress.com/ZFaBk7CsRfyJ9bdr9wql8XXdL4rCQrmJsRdNyFgATdkE823klc/api": {}
+          "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
@@ -79,7 +78,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

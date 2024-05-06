@@ -31,5 +31,25 @@ namespace MLS_Digital_Management_System_Front_End.Services
             throw new InvalidOperationException("Invalid email or password.");
         }
     }
-  }
+
+    public async Task<AuthData> GoogleLoginAsync(string email)
+    {
+        var loginData = new { Email = email, Password = "", AuthProvider = "Google" };
+        var json = JsonConvert.SerializeObject(loginData);
+        var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+        var response = await _httpClient.PostAsync("/api/auth/login", content);
+        if (response.IsSuccessStatusCode)
+        {
+            var responseText = await response.Content.ReadAsStringAsync();
+            var responseData = await response.Content.ReadFromJsonAsync<AuthData>();
+
+            return responseData;
+        }
+        else
+        {
+            throw new InvalidOperationException("Invalid email or password.");
+        }
+    }
+    }
 }

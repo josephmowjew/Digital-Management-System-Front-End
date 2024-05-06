@@ -1,5 +1,9 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+
+    string message = TempData["response"] as string;
+
+    string errorMessage = TempData["errorResponse"] as string;
 }
 
 <div class="position-relative overflow-hidden radial-gradient min-vh-100 d-flex align-items-center justify-content-center">
@@ -12,7 +16,32 @@
 
                             <img src="~/assets/images/logos/mls_logo.png" width="180" alt="" />
                         </a>
-                        
+                        <div>
+                            @if (!string.IsNullOrEmpty(message))
+                            {
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    @message
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                                <div>
+                                </div>
+                            }
+
+                            @if (!string.IsNullOrEmpty(errorMessage))
+                            {
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill" /></svg>
+                                    <div>
+                                        @errorMessage
+
+                                    </div>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                                <div>
+                                </div>
+                            }
+
+                        </div>
                         <form asp-action="Login" asp-antiforgery="true" method="post">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <div class="mb-3">
@@ -33,10 +62,14 @@
                                 <a class="text-primary fw-bold" asp-controller="Home" asp-action="ForgotPassword">Forgot Password ?</a>
                             </div>
                             <button type="submit" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">Sign In</button>
-                            <div class="d-flex align-items-center justify-content-center">
+                            <a asp-action="GoogleLogin" asp-area="" asp-route-returnurl="http://localhost:5281/signin-google" asp-controller="home" type="submit" class="btn d-flex justify-content-center align-items-center w-100 py-8 fs-4 mb-4 rounded-2 bg-white">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google Logo" class="me-2" style="height: 24px;">
+                                <span class="text-dark">Sign in with Google</span>
+                            </a>
+                            @* <div class="d-flex align-items-center justify-content-center">
                                 <p class="fs-4 mb-0 fw-bold">New to MLS?</p>
                                 <a class="text-primary fw-bold ms-2" href="#">Create an account</a>
-                            </div>
+                            </div> *@
                         </form>
                     </div>
                 </div>

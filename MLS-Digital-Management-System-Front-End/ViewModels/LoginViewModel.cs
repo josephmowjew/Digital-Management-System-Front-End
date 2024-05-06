@@ -13,6 +13,6 @@ namespace MLS_Digital_Management_System_Front_End.ViewModels
 
         [Required(ErrorMessage = "Password is required")]
         public string Password { get; set; }
-        public string RememberMe { get; set; }
+        public string? RememberMe { get; set; } 
     }
 }

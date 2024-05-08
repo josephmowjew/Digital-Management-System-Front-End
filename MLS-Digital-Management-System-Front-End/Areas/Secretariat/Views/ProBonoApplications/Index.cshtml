@@ -48,6 +48,9 @@
                         <th>
                             Client
                         </th>
+                         <th>
+                            Created By
+                        </th>
                     
                         <th>
                            Date Added
@@ -116,6 +119,12 @@
                             name: "client",
                             className: "text-left",
                             "orderable": true,
+                        },
+                          {
+                            data: "createdBy.fullName",
+                            name: "createdBy.fullName",
+                            className: "text-left",
+                            "orderable": false,
                         },
                        
                         {

@@ -18,6 +18,26 @@
         border-radius: 10px;
         box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
         background: linear-gradient(145deg, #e6e6e6, #ffffff);
+        perspective: 1000px; /* add perspective to create a 3D effect */
+        }
+
+        .profile-card .card-face {
+        position: relative;
+        z-index: 1;
+        transform: translateY(20px); /* add a slight translation to create a 3D effect */
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .profile-card .card-face::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(145deg, #e6e6e6, #ffffff);
+        transform: skewY(-10deg); /* add a skew effect to create a 3D feel */
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
         }
 
         .profile-card .card-title {
@@ -25,11 +45,7 @@
         font-weight: 600;
         }
 
-        .profile-card .form-label {
-        color: #555;
-        }
-    using MLS_Digital_Management_System_Front_End.Core.DTOs.Member;
-
+ 
         .profile-card .card-text {
         color: #777;
         }
@@ -37,55 +53,65 @@
         .profile-card .btn-primary {
         background-color: #007bff;
         border-color: #007bff;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
         }
 
         .profile-card .btn-secondary {
         background-color: #6c757d;
         border-color: #6c757d;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .profile-card .form-label {
+        font-weight: 700; /* Increase font weight to make it heavier */
+        color: #333; /* Darken the text color for better contrast */
+        font-size: 1.1rem; /* Slightly increase font size for better readability */
+        text-transform: uppercase; /* Convert text to uppercase for a cleaner look */
+        letter-spacing: 0.05rem; /* Add a small amount of letter spacing for better spacing */
         }
     </style>
 }
 
 <div class="card profile-card mx-auto">
   <div class="card-body">
-    <div>
-        <img src="~/assets/images/91.gif" id="spinner" />
+    <div class="card-face">
+      <img src="~/assets/images/91.gif" id="spinner" />
     </div>
     <h5 class="card-title text-center mb-4">Member Profile</h5>
 
-    @if(ViewBag.member as ReadMemberDTO != null)
+    @if (ViewBag.member as ReadMemberDTO != null)
     {
-           
-            <div class="mb-3">
-                <label class="form-label fw-bold">Postal Address</label>
-                <p class="card-text">@ViewBag.member.PostalAddress</p>
-            </div>
-            <div class="mb-3">
-                <label class="form-label fw-bold">Permanent Address</label>
-                <p class="card-text">@ViewBag.member.PermanentAddress</p>
-            </div>
-            <div class="mb-3">
-                <label class="form-label fw-bold">Residential Address</label>
-                <p class="card-text">@ViewBag.member.ResidentialAddress</p>
-            </div>
-            <div class="mb-3">
-                <label class="form-label fw-bold">Date of Admission to Practice</label>
-                <p class="card-text">@ViewBag.member.DateOfAdmissionToPractice</p>
-            </div>
-    }else{
-        <p class="card-text">Please Enter Your Member Records By Clicking The "Create Member" Button</p>
+      <div class="mb-3">
+        <label class="form-label fw-bold">Postal Address</label>
+        <p class="card-text">@ViewBag.member.PostalAddress</p>
+      </div>
+      <div class="mb-3">
+        <label class="form-label fw-bold">Permanent Address</label>
+        <p class="card-text">@ViewBag.member.PermanentAddress</p>
+      </div>
+      <div class="mb-3">
+        <label class="form-label fw-bold">Residential Address</label>
+        <p class="card-text">@ViewBag.member.ResidentialAddress</p>
+      </div>
+      <div class="mb-3">
+        <label class="form-label fw-bold">Date of Admission to Practice</label>
+        <p class="card-text">@ViewBag.member.DateOfAdmissionToPractice</p>
+      </div>
+    }
+    else
+    {
+      <p class="card-text">Please Enter Your Member Records By Clicking The "Create Member" Button</p>
     }
 
-
     <div class="d-flex justify-content-center mt-4">
-        @if(ViewBag.member as ReadMemberDTO == null)
-        {
-            <button name="create_member_btn" data-bs-toggle="modal" data-bs-target="#create_member_modal" id="create_member_btn" class="btn btn-primary me-3">Create Member</button>
-
-        }else{
-            <button name="edit_member_btn" id="edit_member_btn" class="btn btn-secondary">Edit Member</button>
-
-        }
+      @if (ViewBag.member as ReadMemberDTO == null)
+      {
+        <button name="create_member_btn" data-bs-toggle="modal" data-bs-target="#create_member_modal" id="create_member_btn" class="btn btn-primary me-3">Create Member</button>
+      }
+      else
+      {
+        <button name="edit_member_btn" id="edit_member_btn" class="btn btn-secondary">Edit Member</button>
+      }
     </div>
   </div>
 </div>

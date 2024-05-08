@@ -1,0 +1,162 @@
+@model MLS_Digital_Management_System_Front_End.Core.DTOs.LicenseApplication.UpdateLicenseApplicationDTO
+
+<!-- Modal -->
+<div class="modal-dialog modal-lg">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">Edit License Application</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+
+    <div class="modal-body">
+      <form asp-action="Edit">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="Id">
+        <div class="row row-cols-lg-2">
+          
+          <div class="mb-3">
+            <label asp-for="YearOfOperationId" class="form-label"></label>
+            <input asp-for="YearOfOperationId" placeholder="Enter Year Of Operation Id" class="form-control" />
+            <span asp-validation-for="YearOfOperationId" class="text-danger"></span>
+          </div>
+          
+
+          
+          <div class="mb-3">
+            <label asp-for="CurrentApprovalLevelID" class="form-label"></label>
+            <input asp-for="CurrentApprovalLevelID" placeholder="Enter Current Approval Level ID" class="form-control" />
+            <span asp-validation-for="CurrentApprovalLevelID" class="text-danger"></span>
+          </div>
+          
+        
+          
+          <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" asp-for="FirstApplicationForLicense">
+            <label class="form-check-label" asp-for="FirstApplicationForLicense">First Application For License</label>
+          </div>
+          
+          <div class="mb-3 form-check">  
+            <input type="checkbox" class="form-check-input" asp-for="RenewedLicensePreviousYear">
+            <label class="form-check-label" asp-for="RenewedLicensePreviousYear">Renewed License Previous Year</label>
+          </div>
+          
+          <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" asp-for="ObtainedLeaveToRenewLicenseOutOfTime">
+            <label class="form-check-label" asp-for="ObtainedLeaveToRenewLicenseOutOfTime">Obtained Leave To Renew License Out Of Time</label>
+          </div>
+          
+          <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" asp-for="PaidAnnualSubscriptionToSociety">
+            <label class="form-check-label" asp-for="PaidAnnualSubscriptionToSociety">Paid Annual Subscription To Society</label>
+          </div>
+          
+          <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" asp-for="MadeContributionToFidelityFund">
+            <label class="form-check-label" asp-for="MadeContributionToFidelityFund">Made Contribution To Fidelity Fund</label>
+          </div>
+          
+          <div class="mb-3">
+            <label asp-for="ExplanationForNoContributionToFidelityFund" class="form-label"></label>
+            <input asp-for="ExplanationForNoContributionToFidelityFund" placeholder="Enter Explanation For No Contribution To Fidelity Fund" class="form-control" />
+            <span asp-validation-for="ExplanationForNoContributionToFidelityFund" class="text-danger"></span>
+          </div>
+          
+          <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" asp-for="RemittedSocietysLevy">
+            <label class="form-check-label" asp-for="RemittedSocietysLevy">Remitted Society's Levy</label>
+          </div>
+          
+          <div class="mb-3">
+            <label asp-for="ExplanationForNoSocietysLevy" class="form-label"></label>
+            <input asp-for="ExplanationForNoSocietysLevy" placeholder="Enter Explanation For No Society's Levy" class="form-control" />
+            <span asp-validation-for="ExplanationForNoSocietysLevy" class="text-danger"></span>
+          </div>
+          
+          <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" asp-for="MadeContributionToMLSBuildingProjectFund">
+            <label class="form-check-label" asp-for="MadeContributionToMLSBuildingProjectFund">Made Contribution To MLS Building Project Fund</label>
+          </div>
+          
+          <div class="mb-3">
+            <label asp-for="ExplanationForNoContributionToMLSBuildingProjectFund" class="form-label"></label>
+            <input asp-for="ExplanationForNoContributionToMLSBuildingProjectFund" placeholder="Enter Explanation For No Contribution To MLS Building Project Fund" class="form-control" />
+            <span asp-validation-for="ExplanationForNoContributionToMLSBuildingProjectFund" class="text-danger"></span>
+          </div>
+          
+          <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" asp-for="PerformedFullMandatoryProBonoWork">
+            <label class="form-check-label" asp-for="PerformedFullMandatoryProBonoWork">Performed Full Mandatory Pro Bono Work</label>
+          </div>
+          
+          <div class="mb-3">
+            <label asp-for="ExplanationForNoFullMandatoryProBonoWork" class="form-label"></label>
+            <input asp-for="ExplanationForNoFullMandatoryProBonoWork" placeholder="Enter Explanation For No Full Mandatory Pro Bono Work" class="form-control" />
+            <span asp-validation-for="ExplanationForNoFullMandatoryProBonoWork" class="text-danger"></span>
+          </div>
+          
+          <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" asp-for="AttainedMinimumNumberOfCLEUnits">
+            <label class="form-check-label" asp-for="AttainedMinimumNumberOfCLEUnits">Attained Minimum Number Of CLE Units</label>
+          </div>
+          
+          <div class="mb-3">
+            <label asp-for="ExplanationForNoMinimumNumberOfCLEUnits" class="form-label"></label>
+            <input asp-for="ExplanationForNoMinimumNumberOfCLEUnits" placeholder="Enter Explanation For No Minimum Number Of CLE Units" class="form-control" />
+            <span asp-validation-for="ExplanationForNoMinimumNumberOfCLEUnits" class="text-danger"></span>
+          </div>
+          
+          <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" asp-for="HasValidAnnualProfessionalIndemnityInsuranceCover">
+            <label class="form-check-label" asp-for="HasValidAnnualProfessionalIndemnityInsuranceCover">Has Valid Annual Professional Indemnity Insurance Cover</label>
+          </div>
+          
+          <div class="mb-3">
+            <label asp-for="ExplanationForNoProfessionalIndemnityInsuranceCover" class="form-label"></label>
+            <input asp-for="ExplanationForNoProfessionalIndemnityInsuranceCover" placeholder="Enter Explanation For No Professional Indemnity Insurance Cover" class="form-control" />
+            <span asp-validation-for="ExplanationForNoProfessionalIndemnityInsuranceCover" class="text-danger"></span>
+          </div>
+          
+          <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" asp-for="SubmittedValidTaxClearanceCertificate">
+            <label class="form-check-label" asp-for="SubmittedValidTaxClearanceCertificate">Submitted Valid Tax Clearance Certificate</label>
+          </div>
+          
+          <div class="mb-3">
+            <label asp-for="ExplanationForNoValidTaxClearanceCertificate" class="form-label"></label>
+            <input asp-for="ExplanationForNoValidTaxClearanceCertificate" placeholder="Enter Explanation For No Valid Tax Clearance Certificate" class="form-control" />
+            <span asp-validation-for="ExplanationForNoValidTaxClearanceCertificate" class="text-danger"></span>
+          </div>
+          
+          <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" asp-for="SubmittedAccountantsCertificate">
+            <label class="form-check-label" asp-for="SubmittedAccountantsCertificate">Submitted Accountant's Certificate</label>
+          </div>
+          
+          <div class="mb-3">
+            <label asp-for="ExplanationForNoAccountantsCertificate" class="form-label"></label>
+            <input asp-for="ExplanationForNoAccountantsCertificate" placeholder="Enter Explanation For No Accountant's Certificate" class="form-control" />
+            <span asp-validation-for="ExplanationForNoAccountantsCertificate" class="text-danger"></span>
+          </div>
+          
+          <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" asp-for="CompliedWithPenaltiesImposedUnderTheAct">
+            <label class="form-check-label" asp-for="CompliedWithPenaltiesImposedUnderTheAct">Complied With Penalties Imposed Under The Act</label>
+          </div>
+          
+          <div class="mb-3">
+            <label asp-for="ExplanationForNoComplianceWithPenalties" class="form-label"></label>
+            <input asp-for="ExplanationForNoComplianceWithPenalties" placeholder="Enter Explanation For No Compliance With Penalties" class="form-control" />
+            <span asp-validation-for="ExplanationForNoComplianceWithPenalties" class="text-danger"></span>
+          </div>
+          
+        </div>
+      </form>
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      <button type="button" class="btn btn-primary" id="update_application_btn" name="update_application_btn">Update License Application</button>
+    </div>
+
+  </div>
+</div>

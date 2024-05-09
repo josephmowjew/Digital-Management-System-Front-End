@@ -412,5 +412,49 @@ function hideSpinner() {
     }
 }
 
+function openClientDetailsModal(id)
+{
+    //get the record from the database
+    showSpinner();
+    
+    $.ajax({
+        url: "http://localhost:5043/api/probonoclients/getclient/"+ id,
+        type: 'GET',
+        headers: {
+            'Authorization': "Bearer "+ tokenValue
+        }
+
+    }).done(function (data) {
+        
+        
+        hideSpinner();
+        // Iterate over the keys of the data object and map them to form field names dynamically
+        var fieldMap = {};
+        for (var key in data) {
+            if (data.hasOwnProperty(key)) {
+                var formFieldName = key.charAt(0).toUpperCase() + key.slice(1); // Convert first character to uppercase
+                fieldMap[formFieldName] = key; // Map form field name to data key
+            }
+        }
+
+        
+
+        $("#view_client_modal form").find('input, select').each(function(index, element) {
+            var field = $(element);
+            var fieldName = field.attr('name');
+            var dataKey = fieldMap[fieldName]; // Get corresponding key from data
+            var fieldValue = data[dataKey]; // Get value from data based on key
+            field.val(fieldValue); // Set field value
+            field.prop('disabled', true); // Disable the field
+        });
+   
+
+
+    // Show modal
+    $("#view_client_modal").modal("show");
+
+    })
+}
+
 
 

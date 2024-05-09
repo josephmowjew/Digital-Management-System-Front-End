@@ -64,7 +64,7 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
             {
                 probonoClientsFromRemote.ForEach(client =>
                 {
-                    probonoClientList.Add(new SelectListItem() { Text = client.Name, Value = client.Id.ToString() });
+                    probonoClientList.Add(new SelectListItem() { Text = client.Name + " - "+client.NationalId, Value = client.Id.ToString() });
                 });
             }
 

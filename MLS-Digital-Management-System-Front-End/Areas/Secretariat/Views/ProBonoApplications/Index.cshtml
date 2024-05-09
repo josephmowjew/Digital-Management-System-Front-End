@@ -114,11 +114,28 @@
                             className: "text-left",
                             "orderable": true,
                         },
-                        {
+                         {
                             data: "probonoClient.name",
                             name: "client",
                             className: "text-left",
-                            "orderable": true,
+                            orderable: true,
+                            render: function(data, type, row) {
+                                // Create an anchor element with the client's name
+                                var anchor = $('<a>', {
+                                    href: '#',
+                                    text: data
+                                });
+
+                                // Attach a click event handler to the anchor
+                                anchor.on('click', function(e) {
+                                    e.preventDefault(); // Prevent the default link behavior
+
+                                    // Call the method to open the modal with the client's details
+                                    openClientDetailsModal(row.probonoClient.id);
+                                });
+
+                                return anchor.prop('outerHTML'); // Return the HTML string of the anchor
+                            }
                         },
                           {
                             data: "createdBy.fullName",

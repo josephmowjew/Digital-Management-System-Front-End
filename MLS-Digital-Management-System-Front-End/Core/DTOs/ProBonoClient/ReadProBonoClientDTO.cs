@@ -21,4 +21,6 @@ public class ReadProBonoClientDTO
     public string Occupation { get; set; }
 
     public decimal AnnualIncome { get; set; }
+
+    public string NationalId { get; set; }
 }

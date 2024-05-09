@@ -32,6 +32,9 @@
             <partial name="_EditApplicationPartial" />
         </div>
 
+        <div class="modal fade" id="view_client_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <partial name="_ViewProBonoClientPartial" />
+        </div>
         <h5 class="card-title fw-semibold mb-4 text-uppercase">Available Applications</h5>
        
         <div class="table-responsive">
@@ -109,10 +112,19 @@
                             "orderable": true,
                         },
                         {
-                            data: "probonoClient.name",
-                            name: "client",
-                            className: "text-left",
-                            "orderable": true,
+                        data: "probonoClient.name",
+                        name: "client",
+                        className: "text-left",
+                        orderable: true,
+                        render: function(data, type, row) {
+                            return '<a href="javascript:void(0)" class="client-name">' + data + '</a>';
+                        },
+                        createdCell: function(td, cellData, rowData, row, col) {
+                            $(td).find('a.client-name').on('click', function(e) {
+                            e.preventDefault();
+                            openClientDetailsModal(rowData.probonoClient.id);
+                            });
+                        }
                         },
                         
                         {

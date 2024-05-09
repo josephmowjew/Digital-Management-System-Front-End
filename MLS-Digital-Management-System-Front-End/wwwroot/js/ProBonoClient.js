@@ -25,7 +25,6 @@ $(function () {
             formData[fieldName] = fieldValue;
         });
         
-        console.log(formData)
         //send the request
 
         $.ajax({

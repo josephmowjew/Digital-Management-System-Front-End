@@ -138,7 +138,7 @@ $(function () {
     }
 
 
-})// Wait for the DOM to load
+})
 // Wait for the DOM to load
 document.addEventListener('DOMContentLoaded', function() {
   // Get all file attachment fields

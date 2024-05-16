@@ -14,5 +14,7 @@ public interface IServiceRepository{
     IYearOfOperationService YearOfOperationService { get; }
     IMemberService MemberService { get; }
     IQualificationTypeService QualificationTypeService { get; }
+    IFirmService FirmService { get; }
+    ILicenseApplicationService LicenseApplicationService{ get; }
 
 }

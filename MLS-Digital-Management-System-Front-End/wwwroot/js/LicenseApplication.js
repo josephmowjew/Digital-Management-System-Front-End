@@ -1,51 +1,65 @@
+setupFormBehavior();
+
 $(function () {
 
     hideSpinner();
     //hook up a click event to the login button
 
-    var createApplicationButton = $("#create_application_modal button[name='create_application_btn']").unbind().click(OnCreateClick);
+   $("#create_application_modal button[name='create_application_btn']").unbind().click(onCreateClick);
+   $("#create_application_modal button[name='save_application_btn']").unbind().click(onSaveDraft);
 
 
-    function OnCreateClick() {
+    function onCreateClick() {
 
         showSpinner();
        
-        
-       
-    // Get the form itself
-    var form = $("#create_application_modal form")[0];
+        // Get the form itself
+        var form = $("#create_application_modal form")[0];
 
-    //Clear any existing error messages
-      const errorMessages = form.querySelectorAll('.error-message');
-      errorMessages.forEach(function(errorMessage) {
-      errorMessage.remove();
-    });
+
+
+        //Clear any existing error messages
+        const errorMessages = form.querySelectorAll('.error-message');
+        errorMessages.forEach(function(errorMessage) {
+        errorMessage.remove();
+        });
 
       if (!form.checkValidity()) {
       
         //hide spinner
         hideSpinner();
-        //If the form is not valid, display error messages for invalid fields
-        const invalidFields = form.querySelectorAll(':invalid');
-        invalidFields.forEach(function(field) {
-        const errorMessage = document.createElement('div');
-        errorMessage.innerHTML = field.validationMessage;
-        errorMessage.classList.add('error-message'); // Add a class to the error message
-        errorMessage.style.color = 'red';
-        field.after(errorMessage);
+        // If the form is not valid, display error messages for invalid fields
+        const invalidFields = document.querySelectorAll(':invalid');
 
-        // Set focus and cursor to the last error message
-        const lastErrorMessage = form.querySelectorAll('.error-message')[form.querySelectorAll('.error-message').length - 1];
-        lastErrorMessage.focus();
-        const range = document.createRange();
-        const selection = window.getSelection();
-        range.selectNodeContents(lastErrorMessage);
-        selection.removeAllRanges();
-        selection.addRange(range);
+        invalidFields.forEach(function(field) {
+        const validationMessage = field.validationMessage;
+        
+        if (validationMessage) { // Check if the validation message is not empty
+            const errorMessage = document.createElement('div');
+            errorMessage.innerHTML = validationMessage;
+            errorMessage.classList.add('error-message'); // Add a class to the error message
+            errorMessage.style.color = 'red';
+            field.after(errorMessage);
+
+            // Scroll the invalid field into view
+            field.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+            // Focus on the invalid field
+            field.focus();
+
+            // Switch to the tab where the error occurs
+            const tab = field.closest('.tab-pane'); // Get the tab pane element
+            if (tab) {
+            const tabId = tab.id; // Get the tab ID
+            const tabButton = document.querySelector(`[data-bs-target="#${tabId}"]`); // Get the tab button
+            tabButton.click(); // Switch to the tab
+            }
+        }
         });
 
       }
       else{
+
     
             // Create a new FormData object
             var formData = new FormData();
@@ -53,34 +67,39 @@ $(function () {
             // Append the form field values and make sure there are not duplicates
             //Make sure there are no duplicates being added
             var seen = {};
-            $(form).find('input, select, textarea').each(function(index, element) {
-              var field = $(element);
-              var fieldName = field.attr('name');
-              
-              // Check if it's a file input
-              if (field.attr('type') === 'file') {
-                  var files = field.prop('files');
-                  if (files.length > 0) {
-                      for (var i = 0; i < files.length; i++) {
-                          formData.append(fieldName, files[i]);
-                      }
-                  }
-              } else {
-                  var fieldValue = field.val();
-                  if (!seen[fieldName]) {
-                      formData.append(fieldName, fieldValue);
-                      seen[fieldName] = true;
-                  }
-              }
-          });
+            $(form).find('input, select, textarea, checkbox').each(function(index, element) {
+                var field = $(element);
+                var fieldName = field.attr('name');
+                
+                // Check if it's a file input
+                if (field.attr('type') === 'file') {
+                    var files = field.prop('files');
+                    if (files.length > 0) {
+                        for (var i = 0; i < files.length; i++) {
+                            formData.append(fieldName, files[i]);
+                        }
+                    }
+                } else if (field.attr('type') === 'checkbox') {
+                    if (field.prop('checked')) {
+                        formData.append(fieldName, 'true');
+                    } else {
+                        formData.append(fieldName, 'false');
+                    }
+                } else {
+                    var fieldValue = field.val();
+                    if (!seen[fieldName]) {
+                        formData.append(fieldName, fieldValue);
+                        seen[fieldName] = true;
+                    }
+                }
+            });
+
+
+        //add actionType form data field
+        formData.append("actionType", "Submit");
+          
+
            
-    
-            // // Append the file attachments
-            // var attachments = $("#create_application_modal input[name='Attachments']")[0].files;
-            // for (var i = 0; i < attachments.length; i++) {
-            //     formData.append("Attachments", attachments[i]);
-            // }
-    
             //send the request
     
             $.ajax({
@@ -139,133 +158,105 @@ $(function () {
 
 
 })
-// Wait for the DOM to load
-document.addEventListener('DOMContentLoaded', function() {
-  // Get all file attachment fields
-  const attachmentFields = document.querySelectorAll('div input[type="file"]');
 
-  // Hide all file attachment fields and their labels by default
-  attachmentFields.forEach(function(field) {
-      field.style.display = 'none';
-      field.required = false;
-      const label = field.previousElementSibling;
-      if (label) {
-          label.style.display = 'none';
-      }
-  });
-
-  // Get all explanation fields
-  const explanationFields = document.querySelectorAll('input[type="text"], textarea');
-
-  // Show all explanation fields and their labels by default
-  explanationFields.forEach(function(field) {
-      field.style.display = 'block';
-      field.required = true;
-      const label = field.previousElementSibling;
-      if (label) {
-          label.style.display = 'inline-block';
-      }
-  });
-
-  // Get all checkbox elements
-  const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-
-  // Add event listeners to checkboxes
-  checkboxes.forEach(function(checkbox) {
-      checkbox.addEventListener('change', toggleAttachmentField);
-  });
-
-  // Function to toggle attachment field visibility
-  function toggleAttachmentField() {
-      const attachmentFieldName = this.name + 'Attachment';
-      const attachmentField = document.querySelector(`input[name="${attachmentFieldName}"]`);
-      const attachmentFieldLabel = attachmentField.previousElementSibling;
-      const explanationFieldContainer = this.closest('.form-check').nextElementSibling;
-
-      let explanationField = null;
-      let explanationFieldLabel = null;
-
-      if (explanationFieldContainer) {
-          explanationField = explanationFieldContainer.querySelector('input[type="text"], textarea');
-          if (explanationField) {
-              explanationFieldLabel = explanationField.previousElementSibling;
-          }
-      }
-
-      if (this.checked) {
-          attachmentField.style.display = 'block';
-          attachmentField.required = true;
-          attachmentFieldLabel.style.display = 'inline-block';
-          if (explanationField) {
-              explanationField.style.display = 'none';
-              explanationField.required = false;
-              explanationFieldLabel.style.display = 'none';
-              explanationField.value = ''; // Clear the explanation field value
-          }
-      } else {
-          attachmentField.style.display = 'none';
-          attachmentField.required = false;
-          attachmentFieldLabel.style.display = 'none';
-          attachmentField.value = ''; // Clear the attachment field value
-          if (explanationField) {
-              explanationField.style.display = 'block';
-              explanationField.required = true;
-              if (explanationFieldLabel) {
-                  explanationFieldLabel.style.display = 'inline-block';
-              }
-          }
-      }
-  }
-});
-function EditForm(id,token, area = "") {
+function editForm(id,token, area = "") {
 
    
     //get the record from the database
     showSpinner();
     
-    $.ajax({
-        url: "http://localhost:5043/api/licenseapplication/getapplication/"+ id,
-        type: 'GET',
-        headers: {
-            'Authorization': "Bearer "+ token
-        }
 
-    }).done(function (data) {
-        
-        hideSpinner();
-        // Iterate over the keys of the data object and map them to form field names dynamically
-        var fieldMap = {};
-        for (var key in data) {
-            if (data.hasOwnProperty(key)) {
-                var formFieldName = key.charAt(0).toUpperCase() + key.slice(1); // Convert first character to uppercase
-                fieldMap[formFieldName] = key; // Map form field name to data key
+    //automatically fetch previous data if the id is greater than 0
+    if(id > 0){
+
+        //fetch previous data
+
+        $.ajax({
+            url: "http://localhost:5043/api/LicenseApplications/"+ id,
+            type: 'GET',
+            headers: {
+                'Authorization': "Bearer "+ token
             }
-        }
+    
+        }).done(function (data) {
+            
+            hideSpinner();
+            // Iterate over the keys of the data object and map them to form field names dynamically
+            var fieldMap = {};
+            for (var key in data) {
+                if (data.hasOwnProperty(key)) {
+                    var formFieldName = key.charAt(0).toUpperCase() + key.slice(1); // Convert first character to uppercase
+                    fieldMap[formFieldName] = key; // Map form field name to data key
+                }
+            }
+    
 
         // Iterate over the form elements and populate values dynamically
-        $("#edit_application_modal form").find('input, select, textarea').each(function(index, element) {
+        $("#create_application_modal form").find('input, select, textarea, checkbox').each(function(index, element) {
             var field = $(element);
             var fieldName = field.attr('name');
             var dataKey = fieldMap[fieldName]; // Get corresponding key from data
             var fieldValue = data[dataKey]; // Get value from data based on key
-            field.val(fieldValue); // Set field value
+            
+            if (field.is(':checkbox')) {
+                field.prop('checked', fieldValue === true || fieldValue === 'true'); // Set checkbox value
+                var event = new Event('change');
+                field[0].dispatchEvent(event); // Trigger the change event
+            } else if (field.is(':file')) {
+                
+                const attachment = data.attachments.find(attachment => attachment.propertyName === fieldName);
+                if (attachment && attachment !== null && attachment !== undefined) {
+                    const fileURL = attachment.filePath;
+                    fetch(fileURL,{headers: {
+                        'Accept': 'application/octet-stream',
+                        'Access-Control-Request-Method': 'GET',
+                        'Origin': 'http://localhost:5281'
+                      }})
+                        .then(response => response.blob())
+                        .then(blob => { 
+                            const file = new File([blob], attachment.fileName, attachment.fileType);
+                            const dataTransfer = new DataTransfer();
+                            dataTransfer.items.add(file);
+                            const inputElement = field[0]; // Get the underlying input element
+                            inputElement.files = dataTransfer.files;
+                            const event = new Event('change', { bubbles: true });
+                            inputElement.dispatchEvent(event); // Trigger change event
+        
+                        });
+                }
+             } else {
+                field.val(fieldValue); // Set field value
+            }
         });
 
+               // Reset validation
+            var validator = $("#create_application_modal form").validate();
+            validator.resetForm();
 
+            // Show modal
+            $("#create_application_modal").modal("show");
+
+
+        }).fail(function (xhr, status, error) {
+            hideSpinner();
+            console.log(error);
+        });
+       
+    }
    
-
-    // Hook up event to the update user button
-    $("#edit_application_modal button[name='update_application_btn']").unbind().click(function () { updateApplication(token) });
-
-    // Reset validation
-    var validator = $("#edit_application_modal form").validate();
-    validator.resetForm();
-
-    // Show modal
-    $("#edit_application_modal").modal("show");
-
-    })
 }
+
+function dataURItoBlob(dataURI) {
+    const binaryString = atob(dataURI.split(',')[1]);
+    const arrayBuffer = new ArrayBuffer(binaryString.length);
+    const uint8Array = new Uint8Array(arrayBuffer);
+    
+    for (let i = 0; i < binaryString.length; i++) {
+      uint8Array[i] = binaryString.charCodeAt(i);
+    }
+    
+    return new Blob([uint8Array], { type: dataURI.split(',')[0].split(':')[1] });
+  }
 function Delete(id,token) {
 
     bootbox.confirm("Are you sure you want to delete this application from the system?", function (result) {
@@ -538,5 +529,181 @@ function hideSpinner() {
     }
 }
 
+function onSaveDraft() {
+
+    showSpinner();
+
+     // Get the form itself
+    var form = $("#create_application_modal form")[0];
+    // Create a new FormData object
+    var formData = new FormData();
+
+    // Append the form field values and make sure there are not duplicates
+    //Make sure there are no duplicates being added
+    var seen = {};
+    $(form).find('input, select, textarea, checkbox').each(function(index, element) {
+        var field = $(element);
+        var fieldName = field.attr('name');
+        
+        // Check if it's a file input
+        if (field.attr('type') === 'file') {
+            var files = field.prop('files');
+            if (files.length > 0) {
+                for (var i = 0; i < files.length; i++) {
+                    formData.append(fieldName, files[i]);
+                }
+            }
+        } else if (field.attr('type') === 'checkbox') {
+            if (field.prop('checked')) {
+                formData.append(fieldName, 'true');
+            } else {
+                formData.append(fieldName, 'false');
+            }
+        } else {
+            var fieldValue = field.val();
+            if (!seen[fieldName]) {
+                formData.append(fieldName, fieldValue);
+                seen[fieldName] = true;
+            }
+        }
+    });
+
+
+    //add actionType form data field
+    formData.append("actionType", "Draft");
+    
+    //send the request
+
+    $.ajax({
+        url:  "http://localhost:5043/api/LicenseApplications",
+        type: 'POST',
+        data: formData, // Convert formData object to JSON string
+        processData: false, // Set processData to false to prevent automatic serialization
+        contentType: false, // Prevent jQuery from processing the data (since it's already in FormData format)
+        headers: {
+            'Authorization': "Bearer "+ tokenValue
+        },
+        success: function (data) {
+
+            //parse whatever comes back to html
+
+            //var parsedData = $.parseHTML(data)
+
+            hideSpinner();
+
+            
+                //show success message to the user
+                var dataTable = $('#my_table').DataTable();
+
+                toastr.success("Application saved successfully")
+
+                $("#create_application_modal").modal("hide")
+
+                dataTable.ajax.reload();
+
+            
+
+
+        },
+        error: function (xhr, ajaxOtions, thrownError) {
+            hideSpinner();
+            var errorResponse = JSON.parse(xhr.responseText);
+            $.each(errorResponse, function (key, value) {
+                $.each(value, function (index, message) {
+                    
+                    const elementName = key ? key.charAt(0).toUpperCase() + key.slice(1) : null;
+                    const element = $("#create_application_modal").find("form :input[name='" + (elementName || '') + "']");
+                    
+                    if (element && element.length) {
+                        element.siblings("span.text-danger").text(message);
+                    }
+
+                });
+            });
+        }
+
+    });
+}
+
+function setupFormBehavior() {
+    // Wait for the DOM to load
+    document.addEventListener('DOMContentLoaded', function() {
+      // Get all file attachment fields
+      const attachmentFields = document.querySelectorAll('div input[type="file"]');
+    
+      // Hide all file attachment fields and their labels by default
+      attachmentFields.forEach(function(field) {
+          field.style.display = 'none';
+          field.required = false;
+          const label = field.previousElementSibling;
+          if (label) {
+              label.style.display = 'none';
+          }
+      });
+    
+      // Get all explanation fields
+      const explanationFields = document.querySelectorAll('input[type="text"], textarea');
+    
+      // Show all explanation fields and their labels by default
+      explanationFields.forEach(function(field) {
+          field.style.display = 'block';
+          field.required = true;
+          const label = field.previousElementSibling;
+          if (label) {
+              label.style.display = 'inline-block';
+          }
+      });
+    
+      // Get all checkbox elements
+      const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    
+      // Add event listeners to checkboxes
+      checkboxes.forEach(function(checkbox) {
+          checkbox.addEventListener('change', toggleAttachmentField);
+      });
+    
+      // Function to toggle attachment field visibility
+      function toggleAttachmentField() {
+          const attachmentFieldName = this.name + 'Attachment';
+          const attachmentField = document.querySelector(`input[name="${attachmentFieldName}"]`);
+          const attachmentFieldLabel = attachmentField.previousElementSibling;
+          const explanationFieldContainer = this.closest('.form-check').nextElementSibling;
+    
+          let explanationField = null;
+          let explanationFieldLabel = null;
+    
+          if (explanationFieldContainer) {
+              explanationField = explanationFieldContainer.querySelector('input[type="text"], textarea');
+              if (explanationField) {
+                  explanationFieldLabel = explanationField.previousElementSibling;
+              }
+          }
+    
+          if (this.checked) {
+              attachmentField.style.display = 'block';
+              attachmentField.required = true;
+              attachmentFieldLabel.style.display = 'inline-block';
+              if (explanationField) {
+                  explanationField.style.display = 'none';
+                  explanationField.required = false;
+                  explanationFieldLabel.style.display = 'none';
+                  explanationField.value = ''; // Clear the explanation field value
+              }
+          } else {
+              attachmentField.style.display = 'none';
+              attachmentField.required = false;
+              attachmentFieldLabel.style.display = 'none';
+              attachmentField.value = ''; // Clear the attachment field value
+              if (explanationField) {
+                  explanationField.style.display = 'block';
+                  explanationField.required = true;
+                  if (explanationFieldLabel) {
+                      explanationFieldLabel.style.display = 'inline-block';
+                  }
+              }
+          }
+      }
+    });
+  }
 
 

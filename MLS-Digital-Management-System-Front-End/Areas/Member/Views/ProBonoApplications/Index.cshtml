@@ -112,19 +112,19 @@
                             "orderable": true,
                         },
                         {
-                        data: "probonoClient.name",
-                        name: "client",
-                        className: "text-left",
-                        orderable: true,
-                        render: function(data, type, row) {
-                            return '<a href="javascript:void(0)" class="client-name">' + data + '</a>';
-                        },
-                        createdCell: function(td, cellData, rowData, row, col) {
-                            $(td).find('a.client-name').on('click', function(e) {
-                            e.preventDefault();
-                            openClientDetailsModal(rowData.probonoClient.id);
-                            });
-                        }
+                            data: "probonoClient.name",
+                            name: "client",
+                            className: "text-left",
+                            orderable: true,
+                            render: function(data, type, row) {
+                                return '<a href="javascript:void(0)" class="client-name">' + data + '</a>';
+                            },
+                            createdCell: function(td, cellData, rowData, row, col) {
+                                    $(td).find('a.client-name').on('click', function(e) {
+                                    e.preventDefault();
+                                    openClientDetailsModal(rowData.probonoClient.id);
+                                    });
+                                }
                         },
                         
                         {
@@ -145,7 +145,7 @@
                         name: "id",
                         "orderable": false,
                         render: function (data, type, row) {
-                            if (row.applicationStatus.toLowerCase() === "pending") {
+                            if (row.applicationStatus.toLowerCase() === "pending" ) {
                                 return "<a href='#' onclick='EditForm(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-pencil text-lg' title='edit' >Edit</a><a href='#' type='button' onclick='Delete(\"" + data + "\",\"" + tokenValue + "\")' title='delete' class='btn btn-outline-danger my-1 btn-sm ti ti-trash red-icon' >Delete</a>"
                             } else {
                                 return "";

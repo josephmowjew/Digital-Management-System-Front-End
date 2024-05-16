@@ -2,7 +2,7 @@
 @inject IConfiguration Configuration
 @{
     ViewData["Title"] = "Firms";
-    Layout = "~/Areas/Admin/Views/shared/_Layout.cshtml";
+    Layout = "~/Areas/Member/Views/shared/_Layout.cshtml";
 
      var host = Configuration.GetSection("APIURL")["Link"];
 }
@@ -27,9 +27,7 @@
         <div class="modal fade" id="edit_firm_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <partial name="_EditFirmPartial" />
         </div>
-        <div class="modal fade" id="deny_firm_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <partial name="_DenyFormPartial" />
-        </div>
+
         <h5 class="card-title fw-semibold mb-4 text-uppercase">Available Active Firms</h5>
        
         <div class="table-responsive">
@@ -155,22 +153,18 @@
                             className: "text-left",
                             "orderable": false,
                         },
-                                   
-                       {
-                            data: "id",
-                            name: "id",
-                            "orderable": false,
-                            render: function (data, type, row) {
-                            let links = "";
-                            if (row.status.toLowerCase() == "pending") {
-                            links += "<a href='#' onclick='Activate(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='btn btn-outline-success mx-1 btn-sm ti ti-check' title='activate'>Activate</a>";
-                            links += "<a href='#' onclick='DenyForm(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='btn btn-outline-danger mx-1 btn-sm ti ti-hand-stop' title='Deny'>Deny</a>";
-                            
-                            }
-                              links += "<a href='#' onclick='EditForm(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-pencil' title='edit' >Edit</a> <a href='#' type='button' onclick='Delete(\"" + data + "\",\"" + tokenValue + "\")' title='delete' class='ti ti-trash red-icon btn btn-outline-danger my-1 btn-sm' >Delete</a>"
-                            return links;
+                        {
+                        data: "id",
+                        name: "id",
+                        "orderable": false,
+                        render: function (data, type, row) {
+                            if (row.status.toLowerCase() === "pending") {
+                                return "<a href='#' onclick='EditForm(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-pencil text-lg' title='edit' >Edit</a><a href='#' type='button' onclick='Delete(\"" + data + "\",\"" + tokenValue + "\")' title='delete' class='btn btn-outline-danger my-1 btn-sm ti ti-trash red-icon' >Delete</a>"
+                            } else {
+                                return "";
                             }
                         }
+                    }
                     ],
                     responsive: true,
                     "autoWidth": false,

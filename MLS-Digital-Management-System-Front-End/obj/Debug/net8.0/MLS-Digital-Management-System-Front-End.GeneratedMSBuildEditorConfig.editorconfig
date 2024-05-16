@@ -58,6 +58,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcRmlybXNcX0NyZWF0ZUZpcm1QYXJ0aWFsLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Joseph-Sparc/Documents/C\# Projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Admin/Views/Firms/_DenyFormPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcRmlybXNcX0RlbnlGb3JtUGFydGlhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Joseph-Sparc/Documents/C\# Projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Admin/Views/Firms/_EditFirmPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcRmlybXNcX0VkaXRGaXJtUGFydGlhbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -134,6 +138,18 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Joseph-Sparc/Documents/C\# Projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Member/Views/Firms/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWVtYmVyXFZpZXdzXEZpcm1zXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Joseph-Sparc/Documents/C\# Projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Member/Views/Firms/_CreateFirmPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWVtYmVyXFZpZXdzXEZpcm1zXF9DcmVhdGVGaXJtUGFydGlhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Joseph-Sparc/Documents/C\# Projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Member/Views/Firms/_EditFirmPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWVtYmVyXFZpZXdzXEZpcm1zXF9FZGl0RmlybVBhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Joseph-Sparc/Documents/C\# Projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Member/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWVtYmVyXFZpZXdzXEhvbWVcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -172,6 +188,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/Joseph-Sparc/Documents/C\# Projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Member/Views/LicenseApplications/_EditApplicationPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWVtYmVyXFZpZXdzXExpY2Vuc2VBcHBsaWNhdGlvbnNcX0VkaXRBcHBsaWNhdGlvblBhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Joseph-Sparc/Documents/C\# Projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Member/Views/LicenseApplications/_NewApplicationPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWVtYmVyXFZpZXdzXExpY2Vuc2VBcHBsaWNhdGlvbnNcX05ld0FwcGxpY2F0aW9uUGFydGlhbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Joseph-Sparc/Documents/C\# Projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Member/Views/ProBonoApplications/Index.cshtml]
@@ -260,6 +280,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/Joseph-Sparc/Documents/C\# Projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Secretariat/Views/ProBonoApplications/_EditApplicationPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU2VjcmV0YXJpYXRcVmlld3NcUHJvQm9ub0FwcGxpY2F0aW9uc1xfRWRpdEFwcGxpY2F0aW9uUGFydGlhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Joseph-Sparc/Documents/C\# Projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Secretariat/Views/ProBonoApplications/_ViewProBonoClientPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU2VjcmV0YXJpYXRcVmlld3NcUHJvQm9ub0FwcGxpY2F0aW9uc1xfVmlld1Byb0Jvbm9DbGllbnRQYXJ0aWFsLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Joseph-Sparc/Documents/C\# Projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Secretariat/Views/ProBonoClients/Index.cshtml]

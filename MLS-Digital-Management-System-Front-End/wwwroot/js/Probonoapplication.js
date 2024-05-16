@@ -227,7 +227,7 @@ function DenyForm(id,token) {
   }
 
 
-  function DenyApplication() {
+function DenyApplication() {
 
     showSpinner();
 

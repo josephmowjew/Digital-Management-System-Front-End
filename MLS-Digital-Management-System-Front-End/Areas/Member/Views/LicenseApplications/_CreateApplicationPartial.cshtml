@@ -4,12 +4,13 @@
 <div class="modal-dialog modal-lg">
   <div class="modal-content">
     <div class="modal-header">
-      <h5 class="modal-title" id="exampleModalLabel">Create License Application</h5>
+      <h5 class="modal-title" id="exampleModalLabel">Renew License Application</h5>
       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
     </div>
 
     <div class="modal-body">
     <form id="myForm" asp-action="Create">
+        <input asp-for="Id" type="hidden"/>
         <ul class="nav nav-tabs" id="myTab" role="tablist">
         
             <li class="nav-item" role="presentation">
@@ -24,6 +25,22 @@
             <div class="tab-pane fade show active" id="financial" role="tabpanel" aria-labelledby="financial-tab">
                 <div id="tab1" class="tab-content mt-3">
                 <!-- Financial Contributions fields -->
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" asp-for="ObtainedLeaveToRenewLicenseOutOfTime" class="form-check-input">
+                        <label class="form-check-label" for="ObtainedLeaveToRenewLicenseOutOfTime">Obtained Leave To Renew License Out Of Time</label>
+                        <div class="mt-3">
+                            <label for="ObtainedLeaveToRenewLicenseOutOfTimeAttachment" class="form-label">Enter Reason </label>
+                            <input asp-for="ObtainedLeaveToRenewLicenseOutOfTimeAttachment" type="file" class="form-control" />
+                        </div>
+                    </div>
+                      <div class="mb-3 form-check">
+                        <input type="checkbox" asp-for="PerformedFullMandatoryProBonoWork" class="form-check-input">
+                        <label class="form-check-label" for="PerformedFullMandatoryProBonoWork">Performed Full Mandatory Pro Bono Work</label>
+                        <div class="mt-3">
+                            <label for="PerformedFullMandatoryProBonoWorkAttachment" class="form-label">Enter Reason for not perfomining mandatory pro bono work </label>
+                            <input asp-for="PerformedFullMandatoryProBonoWorkAttachment" type="file" class="form-control" />
+                        </div>
+                    </div>
                     <div class="mb-3 form-check">
                         <input type="checkbox" asp-for="PaidAnnualSubscriptionToSociety" class="form-check-input">
                         <label class="form-check-label" for="PaidAnnualSubscriptionToSociety">Paid Annual Subscription To Society</label>
@@ -141,6 +158,28 @@
                     <label for="ExplanationForNoComplianceWithPenalties" class="form-label">Explanation For No Compliance With Penalties</label>
                     <textarea asp-for="ExplanationForNoComplianceWithPenalties" placeholder="Enter Explanation For No Compliance With Penalties" class="form-control"></textarea>
                 </div>
+                <div>
+                    
+                </div>
+                <div class="mb-3 form-check">
+                    <input type="checkbox" class="form-check-input" asp-for="CertificateOfAdmission">
+                    <label class="form-check-label" for="CertificateOfAdmission">Submitted Certificate Of Admission</label>
+                    <div class="mt-3">
+                        <label for="CertificateOfAdmissionAttachment" class="form-label">Certificate Of Admission Attachment</label>
+                        <input asp-for="CertificateOfAdmissionAttachment" type="file" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="mb-3 ">
+                    <label for="ExplanationForNotSubmittingCertificateOfAdmission" class="form-label">Explanation For Not Submitting Certificate Of Admission</label>
+                    <textarea asp-for="ExplanationForNotSubmittingCertificateOfAdmission" placeholder="Enter Explanation For Not Submitting Certificate Of Admission" class="form-control"></textarea>
+                </div>
+                  <div class="mb-3">
+                        <label asp-for="FirmId" class="form-label"></label>
+                        <select required asp-for="FirmId" asp-items="@ViewBag.firmsList" class="form-control"></select>
+                        <span asp-validation-for="FirmId" class="text-danger"></span>
+                  </div>
+
                 </div>
             </div>
         </div>
@@ -150,7 +189,9 @@
 
     <div class="modal-footer">
       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-      <button type="button" class="btn btn-primary" id="create_application_btn" name="create_application_btn">Create License Application</button>
+      <button type="button" class="btn btn-warning" id="save_application_btn" name="save_application_btn">Save Draft</button>
+      @* <button type="button" class="btn btn-success" id="resume_application_btn" name="resume_application_btn">Resume Application</button> *@
+      <button type="button" class="btn btn-primary" id="create_application_btn" name="create_application_btn">Submit Application</button>
     </div>
 
   </div>

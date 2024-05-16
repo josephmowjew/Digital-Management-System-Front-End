@@ -1,6 +1,9 @@
 using System.Net.Http.Headers;
 using MLS_Digital_Management_System_Front_End.Helpers;
 using MLS_Digital_Management_System_Front_End.Services.Interfaces;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
+
 
 namespace MLS_Digital_Management_System_Front_End.Services;
 
@@ -18,6 +21,10 @@ public class ServiceRepository : IServiceRepository
     private IYearOfOperationService _yearOfOperationService;
     private IMemberService _memberService;
     private IQualificationTypeService _qualificationTypeService;
+    private IFirmService _firmService;
+    private  IConfiguration _configuration;
+    private ILicenseApplicationService _licenseApplicationService;
+
 
 
     public string Token 
@@ -28,7 +35,7 @@ public class ServiceRepository : IServiceRepository
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", value);
             // Create a new HttpClient instance with the token
             _httpClient = new HttpClient();
-            _httpClient.BaseAddress = new Uri("http://localhost:5043");
+            _httpClient.BaseAddress = new Uri(_configuration.GetSection("APIURL")["Link"]);
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", value);
 
             // Update properties that rely on _httpClient
@@ -42,18 +49,22 @@ public class ServiceRepository : IServiceRepository
             _yearOfOperationService = new YearOfOperationService(_httpClient);
             _memberService = new MemberService(_httpClient);
             _qualificationTypeService = new QualificationTypeService(_httpClient);
+            _firmService = new FirmService(_httpClient);
+            _licenseApplicationService = new LicenseApplicationService(_httpClient);
         } 
     } 
 
 
-    public ServiceRepository(IHttpClientFactory httpClientFactory)
+    public ServiceRepository(IHttpClientFactory httpClientFactory, IConfiguration configuration)
     {
         this._httpClient = httpClientFactory.CreateClient();
-        _httpClient.BaseAddress = new Uri("http://localhost:5043");
+        this._configuration = configuration;
+
+        _httpClient.BaseAddress = new Uri(_configuration.GetSection("APIURL")["Link"]);
        
       
     }
-
+    
     public IIdentityTypeService IdentityTypeService => _identityTypeService ??= new IdentityTypeService(_httpClient);
     public ITitleService TitleService => _titleService??= new TitleService(_httpClient);
     public IRoleService RoleService => _roleService ??= new RoleService(_httpClient);
@@ -65,5 +76,8 @@ public class ServiceRepository : IServiceRepository
     public IYearOfOperationService YearOfOperationService => _yearOfOperationService ??= new YearOfOperationService(_httpClient);
     public IMemberService MemberService => _memberService ??= new MemberService(_httpClient);
     public IQualificationTypeService QualificationTypeService => _qualificationTypeService ??= new QualificationTypeService(_httpClient);
+    public IFirmService FirmService => _firmService ??= new FirmService(_httpClient);
+    public ILicenseApplicationService LicenseApplicationService => _licenseApplicationService ??= new LicenseApplicationService(_httpClient);
 
+   
 }

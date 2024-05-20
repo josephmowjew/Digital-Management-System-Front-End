@@ -133,10 +133,12 @@ class FormHandler {
             });
         } else {
             const formData = new FormData(form);
+            const id = form.querySelector('input[name="Id"]').value;
             const stringToBoolean = (str) => str === "True" ? true : false;
             let hasPreviousLicenseApplication = stringToBoolean(hasPreviousLicenseApplicationVar);
             formData.append("hasPreviousLicenseApplication", hasPreviousLicenseApplication);
             formData.append("actionType", "Submit");
+            formData.append("Id", id);
 
             this.sendAjaxRequest(formData, 'POST', "http://localhost:5043/api/LicenseApplications", this.handleCreateApplicationSuccess.bind(this), this.handleError.bind(this));
         }
@@ -146,11 +148,14 @@ class FormHandler {
         this.showSpinner();
 
         const form = document.querySelector("#create_application_modal form");
+        const id = form.querySelector('input[name="Id"]').value;
         const formData = new FormData(form);
         const stringToBoolean = (str) => str === "True" ? true : false;
         let hasPreviousLicenseApplication = stringToBoolean(hasPreviousLicenseApplicationVar);
         formData.append("hasPreviousLicenseApplication", hasPreviousLicenseApplication);
         formData.append("actionType", "Draft");
+        formData.append("Id", id);
+        
 
         this.sendAjaxRequest(formData, 'POST', "http://localhost:5043/api/LicenseApplications", this.handleSaveDraftSuccess.bind(this), this.handleError.bind(this));
     }

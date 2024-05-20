@@ -2,7 +2,7 @@
 @inject IConfiguration Configuration
 @{
     ViewData["Title"] = "License Applications";
-    Layout = "~/Areas/Member/Views/shared/_Layout.cshtml";
+    Layout = "~/Areas/Executive/Views/shared/_Layout.cshtml";
 
     var host = Configuration.GetSection("APIURL")["Link"];
 }
@@ -21,44 +21,28 @@
 
 <div class="card  w-100 h-100 d-flex justify-content-center">
     <div class="card-body">
-        <div>
-            <img src="~/assets/images/91.gif" id="spinner" />
-        </div>
+      
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-info my-3" data-bs-toggle="modal" data-bs-target="#create_application_modal">
-            
-        @if(ViewBag.hasPreviousLicenseApplication == true ){
-            <span>Renew Application</span>
-            }
-            else{
-                <span>New Application</span>
-            }
-        </button>
+    
 
-        
-        <!-- Modal -->
-        <div class="modal fade" id="create_application_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <partial name="_CreateApplicationPartial" />
-        </div>
-
-        
-
-        <h5 class="card-title fw-semibold mb-4 text-uppercase">Available Applications</h5>
+        <h5 class="card-title fw-semibold mb-4 text-uppercase">Available Applications </h5>
 
         <div class="table-responsive">
             <table class="table table-bordered table-hover" id="my_table">
                 <thead>
                     <tr>
                         <th>
-                            Year Of Operation
+                            Member Name
                         </th>
-                        
+                        <th>
+                            Operating Year
+                        </th>
+                         <th>
+                            Approval Level
+                        </th>
                         <th>
                             Application Status
                         </th>
-                       <th>
-                            License Number
-                       </th>
                         <th>
                             Action
                         </th>
@@ -77,11 +61,7 @@
     <script>
         var datatable;
         var tokenValue = '@ViewBag.token';
-        var hasPreviousLicenseApplicationVar = `@ViewBag.hasPreviousLicenseApplication`;
     </script>
-
-    <script src="~/js/LicenseApplication2.js" asp-append-version="true"></script>
-    <script src="~/assets/js/custom_select.js" asp-append-version="true"></script>
     <script>
         $(document).ready(function () {
             datatable = $('#my_table').DataTable({
@@ -96,6 +76,7 @@
                     datatype: 'Json', headers: {
                         'Authorization': 'Bearer @ViewBag.token'
                     },
+
                    
 
                 },
@@ -107,10 +88,21 @@
                     },
                 ],
                 columns: [
-
+                    {
+                        data: "member.user.fullName",
+                        name: "member",
+                        className: "text-left",
+                        "orderable": false,
+                    },
                     {
                         data: "yearOfOperation.formatedDate",
                         name: "yearOfOperation.Id",
+                        className: "text-left",
+                        "orderable": false,
+                    },
+                    {
+                        data: "currentApprovalLevel.level",
+                        name: "currentApprovalLevel.level",
                         className: "text-left",
                         "orderable": false,
                     },
@@ -120,24 +112,14 @@
                         className: "text-left",
                         "orderable": true,
                     },
-                     {
-                        data: "license.licenseNumber",
-                        name: "license",
-                        className: "text-left",
-                        "orderable": false,
-                    },
                   
                     {
                         data: "id",
                         name: "id",
                         "orderable": false,
                         render: function (data, type, row) {
-                            if (row.applicationStatus.toLowerCase() === "pending" || row.applicationStatus.toLowerCase() === "draft" || row.applicationStatus.toLowerCase() === "denied") {
-                                return "<a href='#' onclick='formHandler.editForm(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-pencil text-lg' title='edit' >Edit</a><a href='#' type='button' onclick='Delete(\"" + data + "\",\"" + tokenValue + "\")' title='delete' class='btn btn-outline-danger my-1 btn-sm ti ti-trash red-icon' >Delete</a>"
-                            } else {
-                                return "";
-                            }
-                        }
+                                    return "<a href='LicenseApplications/Details/" + data + "' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-pencil text-lg' title='show details' >Show Details</a>"
+                                }
                     }
                 ],
                 responsive: true,

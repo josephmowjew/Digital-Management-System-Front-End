@@ -3,7 +3,7 @@
 @model MLS_Digital_Management_System_Front_End.Core.DTOs.LicenseApplication.ReadLicenseApplicationDTO;
 @{
     ViewData["Title"] = "License Applications";
-    Layout = "~/Areas/Secretariat/Views/shared/_Layout.cshtml";
+    Layout = "~/Areas/Complaints/Views/shared/_Layout.cshtml";
 
     var host = Configuration.GetSection("APIURL")["Link"];
 }
@@ -205,30 +205,7 @@
             </dd>
         </div>
         }
-        <div class="item">
-            <dt>Paid Annual Subscription to Society</dt>
-            <dd>
-                <span class="status-label @(Model.PaidAnnualSubscriptionToSociety ? "status-yes" : "status-no")">
-                    @(Model.PaidAnnualSubscriptionToSociety ? "Yes" : "No")
-                </span>
-                @if (Model.PaidAnnualSubscriptionToSociety && Model.Attachments.Any(a => a.PropertyName.Contains("PaidAnnualSubscriptionToSocietyAttachment")))
-                {
-                    <button class="collapsible">Attachments</button>
-                    <div class="content attachment-container">
-                        @foreach (var attachment in Model.Attachments.Where(a => a.PropertyName.Contains("PaidAnnualSubscriptionToSocietyAttachment")))
-                        {
-                           <a href="@attachment.FilePath" target="_blank" class="attachment-card"><i class="fa fa-paperclip"></i> @attachment.FileName</a>
-                        }
-                    </div>
-                }
-                else if(!Model.PaidAnnualSubscriptionToSociety && !Model.FirstApplicationForLicense && !string.IsNullOrEmpty(Model.ExplanationForNoAnnualSubscriptionToSociety)){
-                    <div class="my-3 text-warning"><strong>Explanation:</strong>
-                        <span class=text-muted>@Model.ExplanationForNoAnnualSubscriptionToSociety</span>
-                    </div>
-                   
-                }
-            </dd>
-        </div>
+
         @if(!Model.FirstApplicationForLicense){
         <div class="item">
             <dt>Complied With Penalties Imposed Under The Act</dt>
@@ -255,132 +232,12 @@
         </div>
         }
 
-        <div class="item">
-            <dt>Made Contribution to Fidelity Fund</dt>
-            <dd>
-                <span class="status-label @(Model.MadeContributionToFidelityFund ? "status-yes" : "status-no")">
-                    @(Model.MadeContributionToFidelityFund ? "Yes" : "No")
-                </span>
-                @if (Model.MadeContributionToFidelityFund && Model.Attachments.Any(a => a.PropertyName.Contains("MadeContributionToFidelityFundAttachment")))
-                {
-                    <button class="collapsible">Attachments</button>
-                    <div class="content attachment-container">
-                        @foreach (var attachment in Model.Attachments.Where(a => a.PropertyName.Contains("MadeContributionToFidelityFundAttachment")))
-                        { 
-                                
-                             <a href="@attachment.FilePath" target="_blank" class="attachment-card"><i class="fa fa-paperclip"></i> @attachment.FileName</a>
-                        }
-                    </div>
-                }
-                else if(!Model.MadeContributionToFidelityFund && !string.IsNullOrEmpty(Model.ExplanationForNoContributionToFidelityFund)){
-                    <div class="my-3 text-warning"><strong>Explanation:</strong>
-                        <span class=text-muted>@Model.ExplanationForNoContributionToFidelityFund</span>
-                    </div>
-                   
-                }
-            </dd>
-        </div>
-        @if(!Model.FirstApplicationForLicense){
-        <div class="item">
-            <dt>Remitted Society's Levy</dt>
-            <dd>
-                <span class="status-label @(Model.RemittedSocietysLevy ? "status-yes" : "status-no")">
-                    @(Model.RemittedSocietysLevy ? "Yes" : "No")
-                </span>
-                @if (Model.RemittedSocietysLevy && Model.Attachments.Any(a => a.PropertyName.Contains("RemittedSocietysLevyAttachment")))
-                {
-                    <button class="collapsible">Attachments</button>
-                    <div class="content attachment-container">
-                        @foreach (var attachment in Model.Attachments.Where(a => a.PropertyName.Contains("RemittedSocietysLevyAttachment")))
-                        {
-                            <a href="@attachment.FilePath" target="_blank" class="attachment-card"><i class="fa fa-paperclip"></i> @attachment.FileName</a>
-                        }
-                    </div>
-                }
-                 else if(!Model.RemittedSocietysLevy && !string.IsNullOrEmpty(Model.ExplanationForNoSocietysLevy)){
-                    <div class="my-3 text-warning"><strong>Explanation:</strong>
-                        <span class=text-muted>@Model.ExplanationForNoSocietysLevy</span>
-                    </div>
-                   
-                }
-            </dd>
-        </div>
-        }
 
-        <div class="item">
-            <dt>Made Contribution to MLS Building Project Fund</dt>
-            <dd>
-                <span class="status-label @(Model.MadeContributionToMLSBuildingProjectFund ? "status-yes" : "status-no")">
-                    @(Model.MadeContributionToMLSBuildingProjectFund ? "Yes" : "No")
-                </span>
-                @if (Model.MadeContributionToMLSBuildingProjectFund && Model.Attachments.Any(a => a.PropertyName.Contains("MadeContributionToMLSBuildingProjectFundAttachment")))
-                {
-                    <button class="collapsible">Attachments</button>
-                    <div class="content attachment-container">
-                        @foreach (var attachment in Model.Attachments.Where(a => a.PropertyName.Contains("MadeContributionToMLSBuildingProjectFundAttachment")))
-                        {
-                          
-                            <a href="@attachment.FilePath" target="_blank" class="attachment-card"> <i class="fa fa-paperclip"></i> @attachment.FileName</a>
-                            
-                        }
-                    </div>
-                }
-                 else if(!Model.MadeContributionToMLSBuildingProjectFund && !string.IsNullOrEmpty(Model.ExplanationForNoContributionToMLSBuildingProjectFund)){
-                    <div class="my-3 text-warning"><strong>Explanation:</strong>
-                        <span class=text-muted>@Model.ExplanationForNoContributionToMLSBuildingProjectFund</span>
-                    </div>
-                   
-                }
-            </dd>
-        </div>
 
-        @if(!Model.FirstApplicationForLicense){
-        <div class="item">
-            <dt>Performed Full Mandatory Pro Bono Work</dt>
-            <dd>
-                <span class="status-label @(Model.PerformedFullMandatoryProBonoWork ? "status-yes" : "status-no")">
-                    @(Model.PerformedFullMandatoryProBonoWork ? "Yes" : "No")
-                </span>
-                @if (Model.PerformedFullMandatoryProBonoWork && Model.Attachments.Any(a => a.PropertyName.Contains("PerformedFullMandatoryProBonoWorkAttachment")))
-                {
-                    <button class="collapsible">Attachments</button>
-                    <div class="content attachment-container">
-                        @foreach (var attachment in Model.Attachments.Where(a => a.PropertyName.Contains("PerformedFullMandatoryProBonoWorkAttachment")))
-                        {
-                            <div class="attachment-card">
-                                <i class="fa fa-paperclip"></i> @attachment.FileName
-                                <a href="@attachment.FilePath" target="_blank" class="btn btn-primary btn-sm">View Attachment</a>
-                            </div>
-                        }
-                    </div>
-                }
-                 else if(!Model.PerformedFullMandatoryProBonoWork && !string.IsNullOrEmpty(Model.ExplanationForNoFullMandatoryProBonoWork)){
-                    <div class="my-3 text-warning"><strong>Explanation:</strong>
-                        <span class=text-muted>@Model.ExplanationForNoFullMandatoryProBonoWork</span>
-                    </div>
-                   
-                }
-            </dd>
-        </div>
-        }
 
-        @if(!Model.FirstApplicationForLicense){
-        <div class="item">
-            <dt>Attained Minimum Number of CLE Units</dt>
-            <dd>
-                <span class="status-label @(Model.AttainedMinimumNumberOfCLEUnits ? "status-yes" : "status-no")">
-                    @(Model.AttainedMinimumNumberOfCLEUnits ? "Yes" : "No")
-                </span>
-                 @if(!Model.AttainedMinimumNumberOfCLEUnits && !string.IsNullOrEmpty(Model.ExplanationForNoMinimumNumberOfCLEUnits)){
-                    <div class="my-3 text-warning"><strong>Explanation:</strong>
-                        <span class=text-muted>@Model.ExplanationForNoMinimumNumberOfCLEUnits</span>
-                    </div>
-                   
-                }
-            </dd>
-        </div>
-        }
-        @if(Model.ApplicationStatus !="Denied" && Model.ApplicationStatus !="Approved" && Model.CurrentApprovalLevel.Department.Name.Equals("Administration and Operations", StringComparison.OrdinalIgnoreCase)){
+ 
+
+        @if(Model.ApplicationStatus !="Denied" && Model.ApplicationStatus !="Approved" && Model.CurrentApprovalLevel.Department.Name.Equals("Complaints", StringComparison.OrdinalIgnoreCase)){
             <div class="item">
                 <button id="approve_license_application_btn"  class="btn btn-success" onclick="formHandler.acceptApplication('@Model.Id')">Approve Application</button>
                 <button id="reject_license_application_btn" class="btn btn-danger" onclick="formHandler.denyForm('@Model.Id')">Deny Application</button>

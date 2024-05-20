@@ -116,6 +116,18 @@ namespace MLS_Digital_Management_System_Front_End.Controllers
                     {
                         return RedirectToAction("Index", "Home", new { Area = "Member" });
                     }
+                    if(authData.TokenData.Role.Equals("Finance Officer", StringComparison.OrdinalIgnoreCase))
+                    {
+                        return RedirectToAction("Index", "Home", new { Area = "Finance" });
+                    }
+                     if(authData.TokenData.Role.Equals("Complaints officer", StringComparison.OrdinalIgnoreCase))
+                    {
+                        return RedirectToAction("Index", "Home", new { Area = "Complaints" });
+                    }
+                     if(authData.TokenData.Role.Equals("President", StringComparison.OrdinalIgnoreCase))
+                    {
+                        return RedirectToAction("Index", "Home", new { Area = "Executive" });
+                    }
                     // Redirect to authorized page
                     return RedirectToAction("Index", "Home");
                 }

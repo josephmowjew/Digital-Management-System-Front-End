@@ -1,4 +1,6 @@
 using System.ComponentModel.DataAnnotations;
+using MLS_Digital_Management_System_Front_End.Core.DTOs.Firm;
+using MLS_Digital_Management_System_Front_End.Core.DTOs.User;
 
 namespace MLS_Digital_Management_System_Front_End.Core.DTOs.Member;
 
@@ -20,5 +22,10 @@ namespace MLS_Digital_Management_System_Front_End.Core.DTOs.Member;
 
     [Required] 
     public DateOnly DateOfAdmissionToPractice { get; set; }
+
+    public ReadUserDTO User { get; set; }
+
+    public int? FirmId { get; set; }
+    public ReadFirmDTO Firm { get; set; }
     
   }

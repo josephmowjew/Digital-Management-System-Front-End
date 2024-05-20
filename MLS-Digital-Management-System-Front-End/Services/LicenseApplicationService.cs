@@ -24,4 +24,18 @@ public class LicenseApplicationService : ILicenseApplicationService
             throw new InvalidOperationException($"Failed to check if previous application exists for user {userId}.");
         }
     }
+
+    public async Task<ReadLicenseApplicationDTO> GetLicenseApplication(int id)
+    {
+        var response = await _httpClient.GetAsync($"api/licenseApplications/{id}");
+        if (response.IsSuccessStatusCode)
+        {
+            var responseData = await response.Content.ReadFromJsonAsync<ReadLicenseApplicationDTO>();
+            return responseData;
+        }
+        else
+        {
+            throw new InvalidOperationException($"Failed to get license application with ID {id}.");
+        }
+    }
 }

@@ -20,4 +20,5 @@ public class ReadUserDTO{
         public string Email { get; set; }
         public DateOnly LastLogin { get; set; }
         public DateOnly CreatedDate { get; set; }
+        public string FullName { get; set; }
 }

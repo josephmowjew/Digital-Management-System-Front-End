@@ -1,11 +1,17 @@
 class FormHandler {
     constructor() {
         this.hideSpinner();
-        this.setupFormBehavior();
+        
         this.bindEvents();
-        this.hideFormFields();
-        this.form = document.querySelector("#create_application_modal form");
-        this.formElements = this.form.querySelectorAll('input, select, textarea, checkbox');
+      
+       
+         this.form = document.querySelector("#create_application_modal form");
+        if (this.form) {
+            this.formElements = this.form.querySelectorAll('input, select, textarea, checkbox');
+            this.setupFormBehavior();
+            this.hideFormFields();
+        }
+       
     }
 
     setupFormBehavior() {
@@ -82,9 +88,15 @@ class FormHandler {
     bindEvents() {
         const createApplicationBtn = document.querySelector("#create_application_modal button[name='create_application_btn']");
         const saveApplicationBtn = document.querySelector("#create_application_modal button[name='save_application_btn']");
-
-        createApplicationBtn.addEventListener('click', this.onCreateClick.bind(this));
-        saveApplicationBtn.addEventListener('click', this.onSaveDraft.bind(this));
+        
+        
+        if (createApplicationBtn) {
+            createApplicationBtn.addEventListener('click', this.onCreateClick.bind(this));
+        }
+        
+        if (saveApplicationBtn) {
+            saveApplicationBtn.addEventListener('click', this.onSaveDraft.bind(this));
+        }
     }
 
     onCreateClick() {
@@ -177,6 +189,7 @@ class FormHandler {
 
     handleError(xhr) {
         this.hideSpinner();
+        this.hideLicenseApplicationButtons();
         const errorResponse = JSON.parse(xhr.responseText);
      
         $.each(errorResponse, (key, value) => {
@@ -339,25 +352,30 @@ class FormHandler {
         dataTable.ajax.reload();
     }
 
-    activate(id, token) {
+    acceptApplication(id) {
+        
         bootbox.confirm("Are you sure you want to accept this application?", result => {
+            
             if (result) {
                 this.showSpinner();
-                this.sendAjaxRequest(null, 'GET', `http://localhost:5043/api/licenseapplication/accept/${id}`, this.handleActivateSuccess.bind(this), this.handleError.bind(this), {
-                    'Authorization': `Bearer ${token}`
+                this.hideLicenseApplicationButtons();
+                this.sendAjaxRequest(null, 'GET', `http://localhost:5043/api/LicenseApplications/accept/${id}`, this.handleAcceptApplicationSuccess.bind(this), this.handleError.bind(this), {
+                    'Authorization': `Bearer ${tokenValue}`
                 });
             }
         });
     }
 
-    handleActivateSuccess(response) {
+    handleAcceptApplicationSuccess(response) {
         this.hideSpinner();
-        toastr.success("application has been accepted successfully");
-        const dataTable = $('#my_table').DataTable();
-        dataTable.ajax.reload();
+        toastr.success("application has been approved accepted successfully");
+
+       
+       
+       
     }
 
-    denyForm(id, token) {
+    denyForm(id) {
         const denyModal = document.querySelector("#deny_license_application_modal");
         const denyInput = denyModal.querySelector('input[name="LicenseApplicationId"]');
         const denyButton = denyModal.querySelector('button[name="deny_license_application_btn"]');
@@ -365,7 +383,34 @@ class FormHandler {
         denyInput.value = id;
         denyButton.removeEventListener('click', this.denyApplication.bind(this));
         denyButton.addEventListener('click', this.denyApplication.bind(this));
-        denyModal.style.display = 'block';
+        
+        $("#deny_license_application_modal").modal("show");
+    }
+
+    hideLicenseApplicationButtons() {
+        const $approveLicenseButton = $('#approve_license_application_btn');
+        const $rejectLicenseButton = $('#reject_license_application_btn');
+
+        if ($approveLicenseButton.length) {
+            $approveLicenseButton.hide();
+        }
+
+        if ($rejectLicenseButton.length) {
+            $rejectLicenseButton.hide();
+        }
+    }
+
+    showLicenseApplicationButtons() {
+        const $approveLicenseButton = $('#approve_license_application_btn');
+        const $rejectLicenseButton = $('#reject_license_application_btn');
+
+        if ($approveLicenseButton.length) {
+            $approveLicenseButton.show();
+        }
+
+        if ($rejectLicenseButton.length) {
+            $rejectLicenseButton.show();
+        }
     }
 
     denyApplication() {
@@ -376,18 +421,18 @@ class FormHandler {
         const form = denyModal.querySelector('form');
         const formData = new FormData(form);
 
-        this.sendAjaxRequest(formData, 'POST', "http://localhost:5043/api/licenseapplication/denyApplication", this.handleDenyApplicationSuccess.bind(this), this.handleError.bind(this), {
+        this.sendAjaxRequest(formData, 'POST', "http://localhost:5043/api/licenseapplications/deny", this.handleDenyApplicationSuccess.bind(this), this.handleError.bind(this), {
             'Authorization': `Bearer ${tokenValue}`
         });
     }
 
     handleDenyApplicationSuccess(response) {
         this.hideSpinner();
-        const dataTable = $('#my_table').DataTable();
         toastr.success("Application has been denied");
-        const denyModal = document.querySelector("#deny_license_application_modal");
-        denyModal.style.display = 'none';
-        dataTable.ajax.reload();
+
+        $("#deny_license_application_modal").modal("hide");
+        
+
     }
 
     updateApplication(token) {

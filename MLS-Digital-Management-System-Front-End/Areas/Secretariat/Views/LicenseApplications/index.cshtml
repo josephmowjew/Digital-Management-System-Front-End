@@ -1,0 +1,134 @@
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+@{
+    ViewData["Title"] = "License Applications";
+    Layout = "~/Areas/Member/Views/shared/_Layout.cshtml";
+
+    var host = Configuration.GetSection("APIURL")["Link"];
+}
+
+@section Styles {
+
+    <style>
+           .hidden {
+  display: none;
+}
+    </style>
+
+    <link href="~/assets/css/custom_select.css" rel="stylesheet" />
+}
+
+
+<div class="card  w-100 h-100 d-flex justify-content-center">
+    <div class="card-body">
+      
+        <!-- Button trigger modal -->
+    
+
+        <h5 class="card-title fw-semibold mb-4 text-uppercase">Available Applications </h5>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover" id="my_table">
+                <thead>
+                    <tr>
+                        <th>
+                            Member Name
+                        </th>
+                        <th>
+                            Operating Year
+                        </th>
+                         <th>
+                            Approval Level
+                        </th>
+                        <th>
+                            Application Status
+                        </th>
+                        <th>
+                            Action
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+
+    <script>
+        var datatable;
+        var tokenValue = '@ViewBag.token';
+    </script>
+    <script>
+        $(document).ready(function () {
+            datatable = $('#my_table').DataTable({
+
+
+                "processing": true,
+                "serverSide": true,
+                "order": [[0, "desc"]],
+                ajax: {
+                    url: "@host/api/licenseapplications/paged",
+                    type: 'get',
+                    datatype: 'Json', headers: {
+                        'Authorization': 'Bearer @ViewBag.token'
+                    },
+
+                   
+
+                },
+                columnDefs: [
+                    {
+                        defaultContent: "",
+                        targets: "_all",
+                        'orderable': true
+                    },
+                ],
+                columns: [
+                    {
+                        data: "member.user.fullName",
+                        name: "member",
+                        className: "text-left",
+                        "orderable": false,
+                    },
+                    {
+                        data: "yearOfOperation.formatedDate",
+                        name: "yearOfOperation.Id",
+                        className: "text-left",
+                        "orderable": false,
+                    },
+                    {
+                        data: "currentApprovalLevel.level",
+                        name: "currentApprovalLevel.level",
+                        className: "text-left",
+                        "orderable": false,
+                    },
+                    {
+                        data: "applicationStatus",
+                        name: "applicationStatus",
+                        className: "text-left",
+                        "orderable": true,
+                    },
+                  
+                    {
+                        data: "id",
+                        name: "id",
+                        "orderable": false,
+                        render: function (data, type, row) {
+                                    return "<a href='LicenseApplications/Details/" + data + "' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-pencil text-lg' title='show details' >Show Details</a>"
+                                }
+                    }
+                ],
+                responsive: true,
+                "autoWidth": false,
+            });
+        });
+    </script>
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

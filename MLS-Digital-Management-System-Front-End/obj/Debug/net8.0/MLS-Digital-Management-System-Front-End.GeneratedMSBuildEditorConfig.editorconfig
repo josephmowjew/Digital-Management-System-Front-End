@@ -266,6 +266,18 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU2VjcmV0YXJpYXRcVmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Joseph-Sparc/Documents/C\# Projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Secretariat/Views/LicenseApplications/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU2VjcmV0YXJpYXRcVmlld3NcTGljZW5zZUFwcGxpY2F0aW9uc1xEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Joseph-Sparc/Documents/C\# Projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Secretariat/Views/LicenseApplications/index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU2VjcmV0YXJpYXRcVmlld3NcTGljZW5zZUFwcGxpY2F0aW9uc1xpbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Joseph-Sparc/Documents/C\# Projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Secretariat/Views/LicenseApplications/_DenyFormPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU2VjcmV0YXJpYXRcVmlld3NcTGljZW5zZUFwcGxpY2F0aW9uc1xfRGVueUZvcm1QYXJ0aWFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Joseph-Sparc/Documents/C\# Projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Secretariat/Views/ProBonoApplications/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU2VjcmV0YXJpYXRcVmlld3NcUHJvQm9ub0FwcGxpY2F0aW9uc1xJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 

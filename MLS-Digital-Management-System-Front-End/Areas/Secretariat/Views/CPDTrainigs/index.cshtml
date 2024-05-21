@@ -15,33 +15,50 @@
 }
     </style>
 
-    <link href="~/assets/css/custom_select.css" rel="stylesheet" />
+
 }
 
 
 <div class="card  w-100 h-100 d-flex justify-content-center">
     <div class="card-body">
       
+       <div>
+            <img src="~/assets/images/91.gif" id="spinner" />
+        </div>
         <!-- Button trigger modal -->
-    
+        <button type="button" class="btn btn-info my-3" data-bs-toggle="modal" data-bs-target="#create_cpd_modal">
+            Add New CPD Training
+        </button>
 
-        <h5 class="card-title fw-semibold mb-4 text-uppercase">Available Applications </h5>
+         <!-- Modal -->
+        <div class="modal fade" id="create_cpd_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <partial name="_CreateCPDPartial" />
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="edit_cpd_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <partial name="_EditCPDPartial" />
+        </div>
+
+        <h5 class="card-title fw-semibold mb-4 text-uppercase text-center"> CPD's In Operating Year <strong>(@ViewBag.YearOfOperation.FormatedDate)</strong></h5>
 
         <div class="table-responsive">
-            <table class="table table-bordered table-hover" id="my_table">
+            <table class="table table-bordered table-hover" id="cpd_table">
                 <thead>
                     <tr>
                         <th>
-                            Member Name
+                           Title
                         </th>
                         <th>
-                            Operating Year
-                        </th>
-                         <th>
-                            Approval Level
+                           Duration(Hours)
                         </th>
                         <th>
-                            Application Status
+                            Event Date
+                        </th>
+                        <th>
+                            Units Awarded
+                        </th>
+                        <th>
+                            AccreditingInstitution
                         </th>
                         <th>
                             Action
@@ -62,16 +79,17 @@
         var datatable;
         var tokenValue = '@ViewBag.token';
     </script>
+     <script src="~/js/CPDTraining.js" asp-append-version="true"></script>
     <script>
         $(document).ready(function () {
-            datatable = $('#my_table').DataTable({
+            datatable = $('#cpd_table').DataTable({
 
 
                 "processing": true,
                 "serverSide": true,
                 "order": [[0, "desc"]],
                 ajax: {
-                    url: "@host/api/licenseapplications/paged",
+                    url: "@host/api/CPDTrainings/paged",
                     type: 'get',
                     datatype: 'Json', headers: {
                         'Authorization': 'Bearer @ViewBag.token'
@@ -89,26 +107,32 @@
                 ],
                 columns: [
                     {
-                        data: "member.user.fullName",
-                        name: "member",
+                        data: "title",
+                        name: "title",
                         className: "text-left",
                         "orderable": false,
                     },
                     {
-                        data: "yearOfOperation.formatedDate",
-                        name: "yearOfOperation.Id",
+                        data: "duration",
+                        name: "duration",
                         className: "text-left",
                         "orderable": false,
                     },
                     {
-                        data: "currentApprovalLevel.level",
-                        name: "currentApprovalLevel.level",
+                        data: "dateToBeConducted",
+                        name: "dateToBeConducted",
                         className: "text-left",
                         "orderable": false,
                     },
                     {
-                        data: "applicationStatus",
-                        name: "applicationStatus",
+                        data: "cpdUnitsAwarded",
+                        name: "cpdUnitsAwarded",
+                        className: "text-left",
+                        "orderable": true,
+                    },
+                     {
+                        data: "accreditingInstitution",
+                        name: "accreditingInstitution",
                         className: "text-left",
                         "orderable": true,
                     },
@@ -118,7 +142,8 @@
                         name: "id",
                         "orderable": false,
                         render: function (data, type, row) {
-                                    return "<a href='LicenseApplications/Details/" + data + "' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-pencil text-lg' title='show details' >Show Details</a>"
+                                    
+                                    return "<a href='#' onclick='cpdTrainingHandler.editForm(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='btn btn-outline-primary my-1 btn-sm ti ti-pencil' title='edit' >Edit</a> <a href='#' type='button' onclick='Delete(\"" + data + "\",\"" + tokenValue + "\")' title='delete' class='ti ti-trash red-icon btn btn-outline-danger btn-sm'>Delete</a>"
                                 }
                     }
                 ],

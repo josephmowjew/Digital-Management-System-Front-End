@@ -23,4 +23,18 @@ public class YearOfOperationService : IYearOfOperationService
             throw new InvalidOperationException($"Failed to get years of operationW.");
         }
     }
+
+    public async Task<ReadYearOfOperationDTO> GetCurrentYearOfOperationAsync()
+    {
+         var response = await _httpClient.GetAsync($"api/YearOfOperations/currentOperatingYear");
+        if (response.IsSuccessStatusCode)
+        {
+            var responseData = await response.Content.ReadFromJsonAsync<ReadYearOfOperationDTO>();
+            return responseData;
+        }
+        else
+        {
+            throw new InvalidOperationException($"Failed to get years of operationW.");
+        }
+    }
 }

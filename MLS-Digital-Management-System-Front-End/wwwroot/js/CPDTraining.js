@@ -117,6 +117,23 @@ class CPDTrainingHandler {
     $("#edit_cpd_modal").modal("show");
   }
 
+  delete(id, token) {
+    bootbox.confirm("Are you sure you want to delete this CPD Training from the system?", result => {
+      if (result) {
+        this.sendAjaxRequest(null, 'DELETE', `http://localhost:5043/api/CPDTrainings/${id}`, this.handleDeleteSuccess.bind(this), this.handleError.bind(this), {
+          'Authorization': `Bearer ${token}`
+        });
+      }
+    });
+  }
+  
+  handleDeleteSuccess(response) {
+    toastr.success("CPD Training has been deleted successfully");
+    const dataTable = $('#cpd_table').DataTable();
+    dataTable.ajax.reload();
+  }
+  
+
   handleFileUpload(fileInput, attachments, fieldName) {
     const attachment = attachments.find(attachment => attachment.propertyName === fieldName);
     if (attachment) {

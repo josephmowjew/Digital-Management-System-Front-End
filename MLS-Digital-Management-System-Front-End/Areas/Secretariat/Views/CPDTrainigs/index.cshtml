@@ -143,7 +143,7 @@
                         "orderable": false,
                         render: function (data, type, row) {
                                     
-                                    return "<a href='#' onclick='cpdTrainingHandler.editForm(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='btn btn-outline-primary my-1 btn-sm ti ti-pencil' title='edit' >Edit</a> <a href='#' type='button' onclick='Delete(\"" + data + "\",\"" + tokenValue + "\")' title='delete' class='ti ti-trash red-icon btn btn-outline-danger btn-sm'>Delete</a>"
+                                    return "<a href='#' onclick='cpdTrainingHandler.editForm(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='btn btn-outline-primary my-1 btn-sm ti ti-pencil' title='edit' >Edit</a> <a href='#' type='button' onclick='cpdTrainingHandler.delete(\"" + data + "\",\"" + tokenValue + "\")' title='delete' class='ti ti-trash red-icon btn btn-outline-danger btn-sm'>Delete</a>"
                                 }
                     }
                 ],

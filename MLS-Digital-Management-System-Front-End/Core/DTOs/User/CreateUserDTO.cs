@@ -12,10 +12,9 @@ namespace MLS_Digital_Management_System_Front_End.Core.DTOs.User
         [StringLength(maximumLength: 100)]
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
-        [Required]
         [StringLength(maximumLength: 100)]
         [Display(Name = "Other Name")]
-        public string OtherName { get; set; }
+        public string? OtherName { get; set; }
         [Required]
         [StringLength(maximumLength: 15)]
         public string Gender { get; set; }

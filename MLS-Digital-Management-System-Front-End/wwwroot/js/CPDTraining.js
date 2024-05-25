@@ -277,11 +277,43 @@ handleMarkAttendanceSuccess(response) {
         "POST",
         `http://localhost:5043/api/CPDTrainingRegistrations`,
         this.handleRegisterSuccess.bind(this),
-        this.handleError.bind(this),
+        this.handleRegisterError.bind(this),
         { 'Authorization': `Bearer ${tokenValue}` }
       );
     }
   }
+
+  handleRegisterError(xhr) {
+
+  
+    this.hideSpinner();
+    
+    // Parse the error response
+    const errorResponse = JSON.parse(xhr.responseText);
+    const form = document.querySelector("#register_cpd_training_modal form");
+
+   
+    // Remove any existing error messages
+    const errorMessages = form.querySelectorAll(".error-message");
+    errorMessages.forEach(errorMessage => errorMessage.remove());
+  
+    // Display new error messages
+    for (const [key, messages] of Object.entries(errorResponse)) {
+      const elementName = key.charAt(0).toUpperCase() + key.slice(1);
+      const element = form.querySelector(`[name="${elementName}"]`);
+      console.log(elementName)
+      if (element) {
+        messages.forEach(message => {
+          const errorMessage = document.createElement("div");
+          errorMessage.innerHTML = message;
+          errorMessage.classList.add("error-message");
+          errorMessage.style.color = "red";
+          element.after(errorMessage);
+        });
+      }
+    }
+  }
+  
 
   updateClicked() {
     this.showSpinner();
@@ -446,7 +478,12 @@ handleMarkAttendanceSuccess(response) {
       title: "Provide a reason for denying this CPD Training Registration:",
       inputType: 'textarea',
       callback: (result) => {
-        if (result) {
+        if (result === null) {
+          // User clicked Cancel
+          return;
+        }
+
+        if (result.length > 0) {
           const registrationId = id
           this.showSpinner();
           const formData = new FormData();
@@ -466,6 +503,16 @@ handleMarkAttendanceSuccess(response) {
             this.handleError.bind(this),
             { 'Authorization': `Bearer ${tokenValue}` }
           );
+        }
+        else {
+          // Display an error message within the prompt
+          bootbox.alert({
+            title: "Error",
+            message: "You must provide a reason for denial.",
+            callback: () => {
+              this.denyRegistration(); // Re-open the prompt
+            }
+          });
         }
       }
     });

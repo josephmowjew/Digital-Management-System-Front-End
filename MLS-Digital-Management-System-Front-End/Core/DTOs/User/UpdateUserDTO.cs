@@ -13,10 +13,10 @@ public class UpdateUserDTO
         [StringLength(maximumLength: 100)]
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
-        [Required]
+
         [StringLength(maximumLength: 100)]
         [Display(Name = "Other Name")]
-        public string OtherName { get; set; }
+        public string? OtherName { get; set; }
         [Required]
         [StringLength(maximumLength: 15)]
         public string Gender { get; set; }

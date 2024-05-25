@@ -30,7 +30,7 @@ public class CreateCPDTrainingDTO
 
         [StringLength(maximumLength: 200)]
         [Display(Name = "Accrediting Institution")]
-        public string AccreditingInstitution { get; set; }
+        public string? AccreditingInstitution { get; set; }
 
         public List<IFormFile?> Attachments = new List<IFormFile>();
     }

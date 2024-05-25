@@ -54,7 +54,7 @@
                            CPD Units 
                         </th>
                         <th>
-                            AccreditingInstitution
+                            Accrediting Institution
                         </th>
                         <th>
                             Reg Status
@@ -186,7 +186,9 @@
                         name: "id",
                         "orderable": false,
                         render: function (data, type, row) {
-                                    if(row.cpdTrainingRegistration.length < 1){
+                                    var memberRegistration = row.cpdTrainingRegistration.find(registration => registration.memberId == @ViewBag.MemberId);
+                                    
+                                    if(memberRegistration == null || memberRegistration == undefined) {
                                         
                                      return "<a href='#' onclick='cpdTrainingHandler.registerForm(\"" + data + "\",\"" + row.trainingFee + "\")' type='button' class='btn btn-outline-primary my-1 btn-sm ti ti-file' title='register' > Register</a> "
                                         

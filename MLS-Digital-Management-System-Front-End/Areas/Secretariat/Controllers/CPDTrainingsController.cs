@@ -10,10 +10,10 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Secretariat.Controllers
 {
   
     [Area("Secretariat")]
-    public class CPDTrainigsController : Controller
+    public class CPDTrainingsController : Controller
     {
         private readonly IServiceRepository _service;
-        public CPDTrainigsController(IServiceRepository serviceRepository)
+        public CPDTrainingsController(IServiceRepository serviceRepository)
         {
             _service = serviceRepository;
         }

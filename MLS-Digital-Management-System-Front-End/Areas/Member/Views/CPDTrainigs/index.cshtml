@@ -19,6 +19,7 @@
 }
 
 
+
 <div class="card  w-100 h-100 d-flex justify-content-center">
     <div class="card-body">
       
@@ -50,7 +51,7 @@
                             Fee
                         </th>
                         <th>
-                            Units Awarded
+                           CPD Units 
                         </th>
                         <th>
                             AccreditingInstitution
@@ -77,6 +78,11 @@
         var datatable;
         var tokenValue = '@ViewBag.token';
     </script>
+    <script>
+      $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+        })
+     </script>
      <script src="~/js/CPDTraining.js" asp-append-version="true"></script>
     <script>
         $(document).ready(function () {
@@ -152,27 +158,27 @@
                         name: "cpdTrainingRegistration",
                         "orderable": false,
                         render: function (data, type, row) {
-                                   
-                                   if (row.cpdTrainingRegistration.length > 0) {
-                                    var memberRegistration = row.cpdTrainingRegistration.find(registration => registration.memberId == @ViewBag.MemberId);
-                                        if (memberRegistration){
-                                            if(memberRegistration.registrationStatus == "Approved") {
-                                                return `<span class='badge bg-success bg-opacity-85 rounded-pill'>${memberRegistration.registrationStatus}<span>`
-                                            }
-                                            else if(memberRegistration.registrationStatus == "Denied"){
-                                                return `<span class='badge bg-danger bg-opacity-85 rounded-pill'>${memberRegistration.registrationStatus}<span>`
-                                            }
-                                            else{
-                                                return `<span class='badge bg-warning bg-opacity-85 rounded-pill'>${memberRegistration.registrationStatus}<span>`
-                                            }
-                                        }
+                            if (row.cpdTrainingRegistration.length > 0) {
+                                var memberRegistration = row.cpdTrainingRegistration.find(registration => registration.memberId == @ViewBag.MemberId);
+                                if (memberRegistration) {
+                                    if (memberRegistration.registrationStatus == "Attended") {
+                                        return `<span class='badge bg-success bg-opacity-85 rounded-pill'>${memberRegistration.registrationStatus}</span>`
                                     }
-    
-                                    else{
-                                        return "<span class='badge bg-danger bg-opacity-85 rounded-pill'>Not Registered<span>"
+                                    if (memberRegistration.registrationStatus == "Pending") {
+                                        return `<span class='badge bg-secondary bg-opacity-85 rounded-pill'>${memberRegistration.registrationStatus}</span>`
+                                    }
+                                    else if (memberRegistration.registrationStatus == "Denied") {
+                                        return `<span class='badge bg-danger bg-opacity-85 rounded-pill' data-toggle='tooltip' data-placement='right' title='${memberRegistration.deniedReason}'>${memberRegistration.registrationStatus}</span>`
+                                    }
+                                    else {
+                                        return `<span class='badge bg-warning bg-opacity-85 rounded-pill'>${memberRegistration.registrationStatus}</span>`
                                     }
                                 }
-                                
+                            }
+                            else {
+                                return "<span class='badge bg-danger bg-opacity-85 rounded-pill'>Not Registered</span>"
+                            }
+                        }
                     },
                   
                     {

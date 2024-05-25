@@ -394,20 +394,20 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWVtYmVyXFZpZXdzXF9WaWV3U3RhcnQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Joseph-Sparc/Documents/C\# Projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Secretariat/Views/CPDTrainigs/index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU2VjcmV0YXJpYXRcVmlld3NcQ1BEVHJhaW5pZ3NcaW5kZXguY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/Joseph-Sparc/Documents/C\# Projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Secretariat/Views/CPDTrainigs/_CreateCPDPartial.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU2VjcmV0YXJpYXRcVmlld3NcQ1BEVHJhaW5pZ3NcX0NyZWF0ZUNQRFBhcnRpYWwuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/Joseph-Sparc/Documents/C\# Projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Secretariat/Views/CPDTrainigs/_EditCPDPartial.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU2VjcmV0YXJpYXRcVmlld3NcQ1BEVHJhaW5pZ3NcX0VkaXRDUERQYXJ0aWFsLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/Joseph-Sparc/Documents/C\# Projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Secretariat/Views/CPDTrainingRegistrations/index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU2VjcmV0YXJpYXRcVmlld3NcQ1BEVHJhaW5pbmdSZWdpc3RyYXRpb25zXGluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Joseph-Sparc/Documents/C\# Projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Secretariat/Views/CPDTrainings/index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU2VjcmV0YXJpYXRcVmlld3NcQ1BEVHJhaW5pbmdzXGluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Joseph-Sparc/Documents/C\# Projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Secretariat/Views/CPDTrainings/_CreateCPDPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU2VjcmV0YXJpYXRcVmlld3NcQ1BEVHJhaW5pbmdzXF9DcmVhdGVDUERQYXJ0aWFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Joseph-Sparc/Documents/C\# Projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Secretariat/Views/CPDTrainings/_EditCPDPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU2VjcmV0YXJpYXRcVmlld3NcQ1BEVHJhaW5pbmdzXF9FZGl0Q1BEUGFydGlhbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Joseph-Sparc/Documents/C\# Projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Secretariat/Views/Home/Index.cshtml]

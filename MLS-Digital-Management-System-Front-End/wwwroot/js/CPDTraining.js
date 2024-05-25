@@ -2,11 +2,14 @@ class CPDTrainingHandler {
   constructor() {
     this.hideSpinner();
     this.bindEvents();
+    this.bindCheckboxEvents();
     this.form = document.querySelector("#create_cpd_modal form");
     if (this.form) {
       this.formElements = this.form.querySelectorAll("input, select, textarea");
       this.setupFormBehavior();
     }
+
+    this.selectedCPDTrainingIds = []; // Initialize the array
   }
 
   setupFormBehavior() {
@@ -30,21 +33,81 @@ class CPDTrainingHandler {
     }
 
     const updateCPDBtn = document.querySelector(
-        "#edit_cpd_modal button[name='update_cpd_btn']"
-      );
-      if (updateCPDBtn) {
-        updateCPDBtn.addEventListener("click", this.updateClicked.bind(this));
-      }
+      "#edit_cpd_modal button[name='update_cpd_btn']"
+    );
+    if (updateCPDBtn) {
+      updateCPDBtn.addEventListener("click", this.updateClicked.bind(this));
+    }
 
-      const registerCPDTrainingBtn = document.querySelector(
-        "#register_cpd_training_modal button[name='register_training_btn']"
-      );
-      if (registerCPDTrainingBtn) {
-        registerCPDTrainingBtn.addEventListener("click", this.registerTrainingClicked.bind(this));
-      }
+    const registerCPDTrainingBtn = document.querySelector(
+      "#register_cpd_training_modal button[name='register_training_btn']"
+    );
+    if (registerCPDTrainingBtn) {
+      registerCPDTrainingBtn.addEventListener("click", this.registerTrainingClicked.bind(this));
+    }
+
+    // // Bind events for accept and deny buttons
+    // const acceptBtn = document.querySelector("button[name='accept_registration_btn']");
+    // if (acceptBtn) {
+    //   acceptBtn.addEventListener("click", this.acceptRegistration.bind(this));
+    // }
+
+    // const denyBtn = document.querySelector("button[name='deny_registration_btn']");
+    // if (denyBtn) {
+    //   denyBtn.addEventListener("click", this.denyRegistration.bind(this));
+    // }
+
+    
+
 
   }
 
+  bindCheckboxEvents() {
+    $('#cpd_table').on('change', '.cpdTrainingCheckbox', function() {
+        const checkbox = $(this);
+        const cpdTrainingId = checkbox.data('id');
+        const isChecked = checkbox.is(':checked');
+
+        if (isChecked) {
+            cpdTrainingHandler.selectedCPDTrainingIds.push(cpdTrainingId);
+        } else {
+            cpdTrainingHandler.selectedCPDTrainingIds = cpdTrainingHandler.selectedCPDTrainingIds.filter(id => id !== cpdTrainingId);
+        }
+
+        //console.log('Selected CPD Training IDs:', cpdTrainingHandler.selectedCPDTrainingIds);
+    });
+}
+markAttendance() {
+  const selectedCount = this.selectedCPDTrainingIds.length;
+
+  if (selectedCount < 1) {
+      bootbox.alert("You cannot proceed to marking attendance with no selected members.");
+  } else {
+      bootbox.confirm(`Do you want to proceed with marking attendance of the selected ${selectedCount} members as present?`, (result) => {
+          if (result) {
+              const formData = new FormData();
+             
+              formData.append('ids', JSON.stringify(this.selectedCPDTrainingIds));
+              console.log(formData)
+              this.sendAjaxRequest(
+                  formData,
+                  "POST",
+                  "http://localhost:5043/api/CPDTrainingRegistrations/MarkAttendance",
+                  this.handleMarkAttendanceSuccess.bind(this),
+                  this.handleError.bind(this),
+                  { 'Authorization': `Bearer ${tokenValue}` }
+              );
+          }
+      });
+  }
+}
+handleMarkAttendanceSuccess(response) {
+  this.hideSpinner();
+  toastr.success("Attendance marked successfully");
+  const dataTable = $('#cpd_table').DataTable();
+  dataTable.ajax.reload();
+  this.selectedCPDTrainingIds = []; // Clear the selected IDs
+}
   onCreateClick() {
     this.showSpinner();
 
@@ -91,20 +154,18 @@ class CPDTrainingHandler {
       });
     }
   }
-  
+
   handleEditFormSuccess(response) {
-    
     const editform = document.querySelector("#edit_cpd_modal form");
     const data = JSON.parse(response);
     const fieldMap = this.createFieldMap(data);
     const editformElements = [...editform.querySelectorAll('input, select, textarea, checkbox, label, textarea')];
-  
-      editformElements.forEach(element => {
+
+    editformElements.forEach(element => {
       const fieldName = element.getAttribute('name');
       const dataKey = fieldMap[fieldName];
       let fieldValue = data[dataKey];
 
-      
       if (element.type === 'checkbox') {
         this.setCheckboxValue(element, fieldValue);
       } else if (element.type === 'file') {
@@ -118,45 +179,30 @@ class CPDTrainingHandler {
         element.value = fieldValue;
       }
     });
-  
+
     // Show modal
     $("#edit_cpd_modal").modal("show");
   }
 
-  registerForm(trainingId,trainingFee)
-  {
+  registerForm(trainingId, trainingFee) {
     const cpdRegisterform = document.querySelector("#register_cpd_training_modal form");
-    //set the training Id on the form
     const trainingIdInput = cpdRegisterform.querySelector('input[name="CPDTrainingId"]');
-
     trainingIdInput.value = trainingId;
 
-  
-    if(trainingFee != null && trainingFee != undefined && trainingFee > 0)
-      {
-        //set a disclainer on the form that the user has to pay
-        //make sure it is surrounded by <strong> tag
-        cpdRegisterform.querySelector("#cpd_training_amount").innerHTML = `<strong>MWK${trainingFee} </strong>`;
-        cpdRegisterform.querySelector("#cpd_training_no_payment_alert").style.display = "none";
-
+    if (trainingFee != null && trainingFee != undefined && trainingFee > 0) {
+      cpdRegisterform.querySelector("#cpd_training_amount").innerHTML = `<strong>MWK${trainingFee} </strong>`;
+      cpdRegisterform.querySelector("#cpd_training_no_payment_alert").style.display = "none";
+    } else {
+      cpdRegisterform.querySelector("#cpd_training_payment_alert").style.display = "none";
+      const attachmentsField = cpdRegisterform.querySelector('div input[type="file"]');
+      attachmentsField.style.display = "none";
+      const label = attachmentsField.previousElementSibling;
+      if (label) {
+        label.style.display = "none";
       }
-      else{
+    }
 
-        //hide disclaimer 
-        cpdRegisterform.querySelector("#cpd_training_payment_alert").style.display = "none";
-        //hide the attachments field
-        const attachmentsField = cpdRegisterform.querySelector('div input[type="file"]');
-        attachmentsField.style.display = "none";
-        const label = attachmentsField.previousElementSibling;
-        if (label) {
-          label.style.display = "none";
-        }
-      } 
-
-    //show the modal
     $("#register_cpd_training_modal").modal("show");
-
-    
   }
 
   delete(id, token) {
@@ -168,13 +214,12 @@ class CPDTrainingHandler {
       }
     });
   }
-  
+
   handleDeleteSuccess(response) {
     toastr.success("CPD Training has been deleted successfully");
     const dataTable = $('#cpd_table').DataTable();
     dataTable.ajax.reload();
   }
-  
 
   handleFileUpload(fileInput, attachments, fieldName) {
     const attachment = attachments.find(attachment => attachment.propertyName === fieldName);
@@ -187,23 +232,22 @@ class CPDTrainingHandler {
           'Origin': 'http://localhost:5281'
         }
       })
-        .then(response => response.blob())
-        .then(blob => {
-          const file = new File([blob], attachment.fileName, attachment.fileType);
-          const dataTransfer = new DataTransfer();
-          dataTransfer.items.add(file);
-          fileInput.files = dataTransfer.files;
-          const event = new Event('change', { bubbles: true });
-          fileInput.dispatchEvent(event);
-        })
-        .catch(error => {
-          console.error(`Error fetching file ${fileURL}:`, error);
-        });
+      .then(response => response.blob())
+      .then(blob => {
+        const file = new File([blob], attachment.fileName, attachment.fileType);
+        const dataTransfer = new DataTransfer();
+        dataTransfer.items.add(file);
+        fileInput.files = dataTransfer.files;
+        const event = new Event('change', { bubbles: true });
+        fileInput.dispatchEvent(event);
+      })
+      .catch(error => {
+        console.error(`Error fetching file ${fileURL}:`, error);
+      });
     }
   }
-  
-  registerTrainingClicked()
-  {
+
+  registerTrainingClicked() {
     const form = document.querySelector("#register_cpd_training_modal form");
     const errorMessages = form.querySelectorAll(".error-message");
     errorMessages.forEach(errorMessage => errorMessage.remove());
@@ -211,17 +255,17 @@ class CPDTrainingHandler {
     if (!form.checkValidity()) {
       this.hideSpinner();
       const invalidFields = document.querySelectorAll(":invalid");
-  
+
       invalidFields.forEach(field => {
         const validationMessage = field.validationMessage;
-  
+
         if (validationMessage) {
           const errorMessage = document.createElement("div");
           errorMessage.innerHTML = validationMessage;
           errorMessage.classList.add("error-message");
           errorMessage.style.color = "red";
           field.after(errorMessage);
-  
+
           field.scrollIntoView({ behavior: "smooth", block: "center" });
           field.focus();
         }
@@ -237,30 +281,30 @@ class CPDTrainingHandler {
         { 'Authorization': `Bearer ${tokenValue}` }
       );
     }
-
   }
+
   updateClicked() {
     this.showSpinner();
-  
+
     const form = document.querySelector("#edit_cpd_modal form");
     const id = document.querySelector("#edit_cpd_modal form input[name='Id']").value;
     const errorMessages = form.querySelectorAll(".error-message");
     errorMessages.forEach(errorMessage => errorMessage.remove());
-  
+
     if (!form.checkValidity()) {
       this.hideSpinner();
       const invalidFields = document.querySelectorAll(":invalid");
-  
+
       invalidFields.forEach(field => {
         const validationMessage = field.validationMessage;
-  
+
         if (validationMessage) {
           const errorMessage = document.createElement("div");
           errorMessage.innerHTML = validationMessage;
           errorMessage.classList.add("error-message");
           errorMessage.style.color = "red";
           field.after(errorMessage);
-  
+
           field.scrollIntoView({ behavior: "smooth", block: "center" });
           field.focus();
         }
@@ -285,7 +329,7 @@ class CPDTrainingHandler {
     $("#register_cpd_training_modal").modal("hide");
     dataTable.ajax.reload();
   }
-  
+
   handleUpdateSuccess(response) {
     this.hideSpinner();
     const dataTable = $("#cpd_table").DataTable();
@@ -293,7 +337,7 @@ class CPDTrainingHandler {
     $("#edit_cpd_modal").modal("hide");
     dataTable.ajax.reload();
   }
-  
+
   createFieldMap(data) {
     return Object.entries(data).reduce((map, [key, value]) => {
       const formFieldName = key.charAt(0).toUpperCase() + key.slice(1);
@@ -371,6 +415,60 @@ class CPDTrainingHandler {
     } else {
       console.error('Spinner element with id "spinner" was not found');
     }
+  }
+
+  acceptRegistration(id) {
+    const registrationId = id
+    bootbox.confirm("Are you sure you want to accept this CPD Training Registration?", result => {
+      if (result) {
+        this.showSpinner();
+        this.sendAjaxRequest(
+          null,
+          "GET",
+          `http://localhost:5043/api/CPDTrainingRegistrations/AcceptCPDTrainingRegistration/${registrationId}`,
+          (response) => {
+            this.hideSpinner();
+            toastr.success("CPD Training Registration accepted");
+            $("#register_cpd_training_modal").modal("hide");
+            const dataTable = $("#cpd_table").DataTable();
+            dataTable.ajax.reload();
+          },
+          this.handleError.bind(this),
+          { 'Authorization': `Bearer ${tokenValue}` }
+        );
+      }
+    });
+  }
+
+  denyRegistration(id) {
+
+    bootbox.prompt({
+      title: "Provide a reason for denying this CPD Training Registration:",
+      inputType: 'textarea',
+      callback: (result) => {
+        if (result) {
+          const registrationId = id
+          this.showSpinner();
+          const formData = new FormData();
+          formData.append('reason', result);
+          formData.append('Id', registrationId);
+          this.sendAjaxRequest(
+            formData,
+            "PUT",
+            `http://localhost:5043/api/CPDTrainingRegistrations/RejectCPDTrainingRegistration/${id}`,
+            (response) => {
+              this.hideSpinner();
+              toastr.success("CPD Training Registration denied");
+              $("#register_cpd_training_modal").modal("hide");
+              const dataTable = $("#cpd_table").DataTable();
+              dataTable.ajax.reload();
+            },
+            this.handleError.bind(this),
+            { 'Authorization': `Bearer ${tokenValue}` }
+          );
+        }
+      }
+    });
   }
 }
 

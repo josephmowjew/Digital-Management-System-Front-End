@@ -8,16 +8,19 @@
 }
 
 
-
+<a asp-action="index" asp-controller="cpdtrainings" asp-area="secretariat" class="btn btn-secondary mx-2 my-2">Back To Trainings List</a>
 <div class="card ">
     <div class="card-body">
       
         <h5 class="card-title fw-semibold mb-4 text-uppercase text-center">Available Registered Members</h5>
        
         <div class="table-responsive">
-            <table class="table table-bordered " id="my_table">
+            <table class="table table-bordered " id="cpd_table">
                 <thead>
                     <tr>
+                        <th>
+                            
+                        </th>
                         <th>
                            Member Name
                         </th>
@@ -41,6 +44,9 @@
             </table>
         </div>
     </div>
+    <div class="card-footer">
+        <button type="button" class="btn btn-success my-3" onclick="cpdTrainingHandler.markAttendance()" >Mark Attendance</button>
+    </div>
 </div>
 
 
@@ -54,7 +60,7 @@
         <script src="~/js/CPDTraining.js" asp-append-version="true"></script>
         <script>
             $(document).ready(function () {
-                datatable = $('#my_table').DataTable({
+                datatable = $('#cpd_table').DataTable({
 
 
                     "processing": true,
@@ -76,6 +82,17 @@
                         },
                     ],
                     columns: [
+
+                        {
+                            data: "id",
+                            name: "id",
+                            className: "text-center",
+                            orderable: false,
+                            defaultContent: "",
+                            render: function(data, type, row) {
+                                return `<input type="checkbox" class="cpdTrainingCheckbox" data-id="${row.id}">`;
+                            }
+                        },
                         {
                             data: "member.user.fullName",
                             name: "member",
@@ -91,9 +108,26 @@
                         {
                             data: "registrationStatus",
                             name: "registrationStatus",
-                            className: "text-left",
-                            "orderable": true,
-                        },
+                            "orderable": false,
+                            render: function (data, type, row) {
+
+                                    if (data == "Attended") {
+                                        return `<span class='badge bg-success bg-opacity-85 rounded-pill'>${data}</span>`
+                                    }
+                                    if (data == "Pending") {
+                                        return `<span class='badge bg-secondary bg-opacity-85 rounded-pill'>${data}</span>`
+                                    }
+                                    else if (data == "Denied") {
+                                        return `<span class='badge bg-danger bg-opacity-85 rounded-pill' data-toggle='tooltip' data-placement='right' title='${row.deniedReason}'>${data}</span>`
+                                    }
+                                    else {
+                                        return `<span class='badge bg-warning bg-opacity-85 rounded-pill'>${data}</span>`
+                                    }
+                                
+                            
+                           
+                        }
+                    },
                         {
                         data: "attachments",
                         name: "attachments",
@@ -116,12 +150,13 @@
                             name: "id",
                             "orderable": false,
                             render: function (data, type, row) {
-                                console.log(row);
+                                
                             let links = "";
                             if (row.registrationStatus.toLowerCase() == "pending") {
-                            links += "<a href='#' onclick='AcceptRegistration(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='ti ti-check btn btn-outline-success my-1 btn-sm mx-1' title='accept'>Accept</a>";
+                            links += "<a href='#' onclick='cpdTrainingHandler.acceptRegistration(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='ti ti-check btn btn-outline-success my-1 btn-sm mx-1' title='accept'>Accept</a>";
+                             links += "<a href='#' onclick='cpdTrainingHandler.denyRegistration(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='btn btn-outline-danger my-1 btn-sm ti ti-pencil' title='deny' >Deny</a> "
                             }
-                            links += "<a href='#' onclick='DenyRegistration(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='btn btn-outline-danger my-1 btn-sm ti ti-pencil' title='deny' >Deny</a> "
+                           
                             return links;
                             }
                         }

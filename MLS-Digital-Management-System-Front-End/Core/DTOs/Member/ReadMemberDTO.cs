@@ -6,7 +6,7 @@ namespace MLS_Digital_Management_System_Front_End.Core.DTOs.Member;
 
   public class ReadMemberDTO
   {
-    public string Id { get; set; }
+    public int Id { get; set; }
 
     [Required]
     [MaxLength(250)]
@@ -27,5 +27,7 @@ namespace MLS_Digital_Management_System_Front_End.Core.DTOs.Member;
 
     public int? FirmId { get; set; }
     public ReadFirmDTO Firm { get; set; }
+    //public List<ReadLicenseDTO> Licenses { get; set; }
+    //public ReadLicenseDTO CurrentLicense { get; set; }
     
   }

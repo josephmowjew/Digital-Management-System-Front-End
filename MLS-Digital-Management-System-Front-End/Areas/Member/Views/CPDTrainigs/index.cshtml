@@ -2,7 +2,7 @@
 @inject IConfiguration Configuration
 @{
     ViewData["Title"] = "License Applications";
-    Layout = "~/Areas/Secretariat/Views/shared/_Layout.cshtml";
+    Layout = "~/Areas/Member/Views/shared/_Layout.cshtml";
 
     var host = Configuration.GetSection("APIURL")["Link"];
 }
@@ -25,18 +25,10 @@
        <div>
             <img src="~/assets/images/91.gif" id="spinner" />
         </div>
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-info my-3" data-bs-toggle="modal" data-bs-target="#create_cpd_modal">
-            Add New CPD Training
-        </button>
-
+        
          <!-- Modal -->
-        <div class="modal fade" id="create_cpd_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <partial name="_CreateCPDPartial" />
-        </div>
-        <!-- Modal -->
-        <div class="modal fade" id="edit_cpd_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <partial name="_EditCPDPartial" />
+        <div class="modal fade" id="register_cpd_training_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <partial name="_RegisterTrainingPartial" />
         </div>
 
         <h5 class="card-title fw-semibold mb-4 text-uppercase text-center"> CPD's In Operating Year <strong>(@ViewBag.YearOfOperation.FormatedDate)</strong></h5>
@@ -54,11 +46,17 @@
                         <th>
                             Event Date
                         </th>
+                         <th>
+                            Fee
+                        </th>
                         <th>
                             Units Awarded
                         </th>
                         <th>
                             AccreditingInstitution
+                        </th>
+                        <th>
+                            Reg Status
                         </th>
                         <th>
                             Action
@@ -94,6 +92,7 @@
                     datatype: 'Json', headers: {
                         'Authorization': 'Bearer @ViewBag.token'
                     },
+                    
 
                    
 
@@ -117,12 +116,24 @@
                         name: "duration",
                         className: "text-left",
                         "orderable": false,
+                        render: function(data, type, row) {
+                            return data;
+                        }
                     },
                     {
                         data: "dateToBeConducted",
                         name: "dateToBeConducted",
                         className: "text-left",
                         "orderable": false,
+                    },
+                   {
+                    data: "trainingFee",
+                    name: "trainingFee",
+                    className: "text-left",
+                    "orderable": false,
+                    render: function(data, type, row) {
+                        return '<span class="badge bg-primary bg-opacity-85 rounded-pill">MWK ' + data + '</span>';
+                    }
                     },
                     {
                         data: "cpdUnitsAwarded",
@@ -136,14 +147,44 @@
                         className: "text-left",
                         "orderable": true,
                     },
+                    {
+                        data: "cpdTrainingRegistration",
+                        name: "cpdTrainingRegistration",
+                        "orderable": false,
+                        render: function (data, type, row) {
+                                   
+                                   if (row.cpdTrainingRegistration.length > 0) {
+                                    var memberRegistration = row.cpdTrainingRegistration.find(registration => registration.memberId == @ViewBag.MemberId);
+                                        if (memberRegistration){
+                                            if(memberRegistration.registrationStatus == "Approved") {
+                                                return `<span class='badge bg-success bg-opacity-85 rounded-pill'>${memberRegistration.registrationStatus}<span>`
+                                            }
+                                            else if(memberRegistration.registrationStatus == "Denied"){
+                                                return `<span class='badge bg-danger bg-opacity-85 rounded-pill'>${memberRegistration.registrationStatus}<span>`
+                                            }
+                                            else{
+                                                return `<span class='badge bg-warning bg-opacity-85 rounded-pill'>${memberRegistration.registrationStatus}<span>`
+                                            }
+                                        }
+                                    }
+    
+                                    else{
+                                        return "<span class='badge bg-danger bg-opacity-85 rounded-pill'>Not Registered<span>"
+                                    }
+                                }
+                                
+                    },
                   
                     {
                         data: "id",
                         name: "id",
                         "orderable": false,
                         render: function (data, type, row) {
-                                    
-                                    return "<a href='#' onclick='cpdTrainingHandler.editForm(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='btn btn-outline-primary my-1 mx-1 btn-sm ti ti-pencil' title='edit' >Edit</a> <a href='#' type='button' onclick='cpdTrainingHandler.delete(\"" + data + "\",\"" + tokenValue + "\")' title='delete' class='ti ti-trash red-icon btn btn-outline-danger btn-sm'>Delete</a><a class='btn btn-outline-primary btn-sm mx-1' href='/Secretariat/CPDTrainingRegistrations?cpdTrainingId=" + data + "' type='button'>View Applications</a>"
+                                    if(row.cpdTrainingRegistration.length < 1){
+                                        
+                                     return "<a href='#' onclick='cpdTrainingHandler.registerForm(\"" + data + "\",\"" + row.trainingFee + "\")' type='button' class='btn btn-outline-primary my-1 btn-sm ti ti-file' title='register' > Register</a> "
+                                        
+                                    }
                                 }
                     }
                 ],

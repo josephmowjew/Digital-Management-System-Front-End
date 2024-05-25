@@ -24,6 +24,7 @@ public class ServiceRepository : IServiceRepository
     private IFirmService _firmService;
     private  IConfiguration _configuration;
     private ILicenseApplicationService _licenseApplicationService;
+    private ILicenseApprovalHistoryService _licenseApprovalHistoryService;
 
 
 
@@ -51,6 +52,7 @@ public class ServiceRepository : IServiceRepository
             _qualificationTypeService = new QualificationTypeService(_httpClient);
             _firmService = new FirmService(_httpClient);
             _licenseApplicationService = new LicenseApplicationService(_httpClient);
+            _licenseApprovalHistoryService = new LicenseApprovalHistoryService(_httpClient);
         } 
     } 
 
@@ -78,6 +80,7 @@ public class ServiceRepository : IServiceRepository
     public IQualificationTypeService QualificationTypeService => _qualificationTypeService ??= new QualificationTypeService(_httpClient);
     public IFirmService FirmService => _firmService ??= new FirmService(_httpClient);
     public ILicenseApplicationService LicenseApplicationService => _licenseApplicationService ??= new LicenseApplicationService(_httpClient);
+    public ILicenseApprovalHistoryService LicenseApprovalHistoryService => _licenseApprovalHistoryService ??= new LicenseApprovalHistoryService(_httpClient);
 
    
 }

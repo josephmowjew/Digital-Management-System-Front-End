@@ -64,6 +64,13 @@
         </div>
 
         <div class="row">
+            <div class="col-md-4">
+               <div class="mb-3 form-check">
+                    <label asp-for="TrainingFee" class="control-label"></label>
+                    <input asp-for="TrainingFee" type="number" step="0.01" placeholder="Enter Training Fee" class="form-control" />
+                    <span asp-validation-for="TrainingFee" class="text-danger"></span>
+                </div>
+            </div>
             <div class="col-md-8">
                 <div class="mb-3 form-check">
                     <label class="control-label">Attachments</label>

@@ -1,0 +1,138 @@
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+@{
+    ViewData["Title"] = "CPD Trainings";
+    Layout = "~/Areas/Secretariat/Views/shared/_Layout.cshtml";
+
+    var host = Configuration.GetSection("APIURL")["Link"];
+}
+
+
+
+<div class="card ">
+    <div class="card-body">
+      
+        <h5 class="card-title fw-semibold mb-4 text-uppercase text-center">Available Registered Members</h5>
+       
+        <div class="table-responsive">
+            <table class="table table-bordered " id="my_table">
+                <thead>
+                    <tr>
+                        <th>
+                           Member Name
+                        </th>
+                        <th>
+                            License Number
+                        </th>
+                        <th>
+                            License Registration Status
+                        </th>
+                        <th>
+                            Payment Proof
+                        </th>
+                        <th>
+                            Action
+                        </th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+       @section Scripts{
+
+        <script>
+            var datatable;
+            var tokenValue = '@ViewBag.token';
+        </script>
+
+        <script src="~/js/CPDTraining.js" asp-append-version="true"></script>
+        <script>
+            $(document).ready(function () {
+                datatable = $('#my_table').DataTable({
+
+
+                    "processing": true,
+                    "serverSide": true,
+                    "order": [[0, "desc"]],
+                    ajax: {
+                    url: 'http://localhost:5043/api/cpdtrainingregistrations/paged?cpdtrainingId=@ViewBag.cpdTrainingId',
+                        type: 'get',
+                        datatype: 'Json',headers: {
+                                        'Authorization': 'Bearer @ViewBag.token'
+                                    }
+
+                  },
+                    columnDefs: [
+                        {
+                            defaultContent: "",
+                            targets: "_all",
+                            'orderable': true
+                        },
+                    ],
+                    columns: [
+                        {
+                            data: "member.user.fullName",
+                            name: "member",
+                            className: "text-left",
+                            "orderable": false,
+                        },
+                        {
+                            data: "member.currentLicense.licenseNumber",
+                            name: "member",
+                            className: "text-left",
+                            "orderable": false,
+                        },
+                        {
+                            data: "registrationStatus",
+                            name: "registrationStatus",
+                            className: "text-left",
+                            "orderable": true,
+                        },
+                        {
+                        data: "attachments",
+                        name: "attachments",
+                        className: "text-left",
+                        "orderable": true,
+                        render: function(data, type, row, meta) {
+                            if (data && data.length > 0) {
+                            return data.map((attachment) => {
+                                return `<a href="@host/${attachment.filePath}" target="_blank" download="${attachment.fileName}" class='ti ti-download btn btn-outline-info'> ${attachment.fileName}</a>`;
+                            }).join('<br>');
+                            } else {
+                            return '';
+                            }
+                        }
+                        },
+                        
+
+                        {
+                            data: "id",
+                            name: "id",
+                            "orderable": false,
+                            render: function (data, type, row) {
+                                console.log(row);
+                            let links = "";
+                            if (row.registrationStatus.toLowerCase() == "pending") {
+                            links += "<a href='#' onclick='AcceptRegistration(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='ti ti-check btn btn-outline-success my-1 btn-sm mx-1' title='accept'>Accept</a>";
+                            }
+                            links += "<a href='#' onclick='DenyRegistration(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='btn btn-outline-danger my-1 btn-sm ti ti-pencil' title='deny' >Deny</a> "
+                            return links;
+                            }
+                        }
+                    ],
+                    responsive: true,
+                    "autoWidth": false,
+                });
+            });
+        </script>
+
+            @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+        }

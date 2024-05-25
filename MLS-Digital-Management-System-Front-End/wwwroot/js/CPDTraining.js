@@ -36,6 +36,12 @@ class CPDTrainingHandler {
         updateCPDBtn.addEventListener("click", this.updateClicked.bind(this));
       }
 
+      const registerCPDTrainingBtn = document.querySelector(
+        "#register_cpd_training_modal button[name='register_training_btn']"
+      );
+      if (registerCPDTrainingBtn) {
+        registerCPDTrainingBtn.addEventListener("click", this.registerTrainingClicked.bind(this));
+      }
 
   }
 
@@ -87,7 +93,7 @@ class CPDTrainingHandler {
   }
   
   handleEditFormSuccess(response) {
-  
+    
     const editform = document.querySelector("#edit_cpd_modal form");
     const data = JSON.parse(response);
     const fieldMap = this.createFieldMap(data);
@@ -115,6 +121,42 @@ class CPDTrainingHandler {
   
     // Show modal
     $("#edit_cpd_modal").modal("show");
+  }
+
+  registerForm(trainingId,trainingFee)
+  {
+    const cpdRegisterform = document.querySelector("#register_cpd_training_modal form");
+    //set the training Id on the form
+    const trainingIdInput = cpdRegisterform.querySelector('input[name="CPDTrainingId"]');
+
+    trainingIdInput.value = trainingId;
+
+  
+    if(trainingFee != null && trainingFee != undefined && trainingFee > 0)
+      {
+        //set a disclainer on the form that the user has to pay
+        //make sure it is surrounded by <strong> tag
+        cpdRegisterform.querySelector("#cpd_training_amount").innerHTML = `<strong>MWK${trainingFee} </strong>`;
+        cpdRegisterform.querySelector("#cpd_training_no_payment_alert").style.display = "none";
+
+      }
+      else{
+
+        //hide disclaimer 
+        cpdRegisterform.querySelector("#cpd_training_payment_alert").style.display = "none";
+        //hide the attachments field
+        const attachmentsField = cpdRegisterform.querySelector('div input[type="file"]');
+        attachmentsField.style.display = "none";
+        const label = attachmentsField.previousElementSibling;
+        if (label) {
+          label.style.display = "none";
+        }
+      } 
+
+    //show the modal
+    $("#register_cpd_training_modal").modal("show");
+
+    
   }
 
   delete(id, token) {
@@ -160,6 +202,43 @@ class CPDTrainingHandler {
     }
   }
   
+  registerTrainingClicked()
+  {
+    const form = document.querySelector("#register_cpd_training_modal form");
+    const errorMessages = form.querySelectorAll(".error-message");
+    errorMessages.forEach(errorMessage => errorMessage.remove());
+
+    if (!form.checkValidity()) {
+      this.hideSpinner();
+      const invalidFields = document.querySelectorAll(":invalid");
+  
+      invalidFields.forEach(field => {
+        const validationMessage = field.validationMessage;
+  
+        if (validationMessage) {
+          const errorMessage = document.createElement("div");
+          errorMessage.innerHTML = validationMessage;
+          errorMessage.classList.add("error-message");
+          errorMessage.style.color = "red";
+          field.after(errorMessage);
+  
+          field.scrollIntoView({ behavior: "smooth", block: "center" });
+          field.focus();
+        }
+      });
+    } else {
+      const formData = new FormData(form);
+      this.sendAjaxRequest(
+        formData,
+        "POST",
+        `http://localhost:5043/api/CPDTrainingRegistrations`,
+        this.handleRegisterSuccess.bind(this),
+        this.handleError.bind(this),
+        { 'Authorization': `Bearer ${tokenValue}` }
+      );
+    }
+
+  }
   updateClicked() {
     this.showSpinner();
   
@@ -197,6 +276,14 @@ class CPDTrainingHandler {
         { 'Authorization': `Bearer ${tokenValue}` }
       );
     }
+  }
+
+  handleRegisterSuccess(response) {
+    this.hideSpinner();
+    const dataTable = $("#cpd_table").DataTable();
+    toastr.success("CPD Training Registration successful");
+    $("#register_cpd_training_modal").modal("hide");
+    dataTable.ajax.reload();
   }
   
   handleUpdateSuccess(response) {

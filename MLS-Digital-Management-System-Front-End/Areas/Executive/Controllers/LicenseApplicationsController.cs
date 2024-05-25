@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using MLS_Digital_Management_System_Front_End.Core.DTOs.LicenseApprovalHistory;
 using MLS_Digital_Management_System_Front_End.Helpers;
 using MLS_Digital_Management_System_Front_End.Services.Interfaces;
 
@@ -34,6 +35,7 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Executive.Controllers
                 return NotFound();
             }
             await PopulateViewBags();
+            ViewBag.licenseApprovalHistoryList = await GetLicenseApprovalHistory(id);
 
             ViewBag.licenseApplication = licenseApplication;
 
@@ -47,11 +49,8 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Executive.Controllers
             string token = AuthHelper.GetToken(HttpContext);
             ViewBag.token = token;
             this._service.Token = token;
-             //ViewBag.firmsList = await GetFirms();
-             //ViewBag.hasPreviousLicenseApplication = await HasPreviousLicenseApplication();
-
-           
             
+         
         }
        
         
@@ -63,6 +62,13 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Executive.Controllers
             return hasPreviousLicenseApplication;
 
         }
+
+         private async Task<List<ReadLicenseApprovalHistoryDTO>> GetLicenseApprovalHistory(int id)
+        {
+            var licenseApprovalHistory = await this._service.LicenseApprovalHistoryService.GetLicenseApprovalHistoryByIdAsync(id);
+            return licenseApprovalHistory;
+        }
+
 
 
 

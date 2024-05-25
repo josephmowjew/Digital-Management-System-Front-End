@@ -4,7 +4,7 @@ namespace MLS_Digital_Management_System_Front_End.Core.DTOs.Member;
 
   public class UpdateMemberDTO
   {
-    public string Id { get; set; }
+    public int Id { get; set; }
 
     [Required]
     [MaxLength(250)]

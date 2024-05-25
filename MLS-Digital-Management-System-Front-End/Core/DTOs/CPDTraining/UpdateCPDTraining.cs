@@ -11,6 +11,9 @@ public class UpdateCPDTrainingDTO
         [StringLength(250)]
         public string Description { get; set; }
         public double Duration { get; set; }
+
+        [Display(Name = "Training Fee (MWK)")]
+        public double? TrainingFee { get; set; }
         public DateTime DateToBeConducted { get; set; }
         public int ProposedUnits { get; set; }
         public int CPDUnitsAwarded { get; set; }

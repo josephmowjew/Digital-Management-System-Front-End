@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.CodeAnalysis.Elfie.Serialization;
+using MLS_Digital_Management_System_Front_End.Core.DTOs.LicenseApprovalHistory;
 using MLS_Digital_Management_System_Front_End.Helpers;
 using MLS_Digital_Management_System_Front_End.Services.Interfaces;
 
@@ -36,6 +38,22 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
            
             
         }
+         public async Task<IActionResult> Details(int id)
+        {
+            //get the license application record from remote 
+             await PopulateViewBags();
+            var licenseApplication = await _service.LicenseApplicationService.GetLicenseApplication(id);
+
+            if(licenseApplication == null)
+            {
+                return NotFound();
+            }
+            await PopulateViewBags();
+            ViewBag.licenseApprovalHistoryList = await GetLicenseApprovalHistory(id);
+            ViewBag.licenseApplication = licenseApplication;
+
+            return View(licenseApplication);
+        }
          private async Task<List<SelectListItem>> GetFirms()
         {
             List<SelectListItem> firmsList = new() { new SelectListItem() { Text = "---Select Firm---", Value = "" } };
@@ -53,7 +71,6 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
 
             return firmsList;
         }
-        
         private async Task<bool> HasPreviousLicenseApplication()
         {
             string userId = AuthHelper.GetUserId(HttpContext);
@@ -64,13 +81,11 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
 
         }
 
-
-
-
-
-       
-
-
+        private async Task<List<ReadLicenseApprovalHistoryDTO>> GetLicenseApprovalHistory(int id)
+        {
+            var licenseApprovalHistory = await this._service.LicenseApprovalHistoryService.GetLicenseApprovalHistoryByIdAsync(id);
+            return licenseApprovalHistory;
+        }
 
     }
 }

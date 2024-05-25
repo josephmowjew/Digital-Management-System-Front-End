@@ -21,6 +21,8 @@ public class CreateCPDTrainingDTO
         [Required]
         [Display(Name = "Proposed Units")]
         public int ProposedUnits { get; set; }
+        [Display(Name = "Training Fee (MWK)")]
+        public double? TrainingFee { get; set; }
 
         [Required]
         [Display(Name = "CPD Units Awarded")]

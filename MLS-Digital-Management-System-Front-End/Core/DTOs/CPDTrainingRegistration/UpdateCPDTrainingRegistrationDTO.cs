@@ -7,4 +7,6 @@ public class UpdateCPDTrainingRegistrationDTO
     public int Id { get; set; }
     public int CPDTrainingId { get; set; }
     public List<IFormFile?> Attachments { get; set; }
+    [Display(Name = "Date of Payment")]
+    public DateTime? DateOfPayment { get; set; }
 }

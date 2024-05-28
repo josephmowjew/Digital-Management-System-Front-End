@@ -16,6 +16,7 @@ public interface IServiceRepository{
     IQualificationTypeService QualificationTypeService { get; }
     IFirmService FirmService { get; }
     ILicenseApplicationService LicenseApplicationService{ get; }
-    ILicenseApprovalHistoryService LicenseApprovalHistoryService { get; } //i
+    ILicenseApprovalHistoryService LicenseApprovalHistoryService { get; }
+    ICpdUnitsEarnedService CpdUnitsEarnedService { get; }
 
 }

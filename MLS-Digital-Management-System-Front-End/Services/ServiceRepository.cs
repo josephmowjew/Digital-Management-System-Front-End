@@ -25,6 +25,7 @@ public class ServiceRepository : IServiceRepository
     private  IConfiguration _configuration;
     private ILicenseApplicationService _licenseApplicationService;
     private ILicenseApprovalHistoryService _licenseApprovalHistoryService;
+    private ICpdUnitsEarnedService _cpdUnitsEarnedService;
 
 
 
@@ -53,6 +54,7 @@ public class ServiceRepository : IServiceRepository
             _firmService = new FirmService(_httpClient);
             _licenseApplicationService = new LicenseApplicationService(_httpClient);
             _licenseApprovalHistoryService = new LicenseApprovalHistoryService(_httpClient);
+            _cpdUnitsEarnedService = new CpdUnitsEarnedService(_httpClient);
         } 
     } 
 
@@ -81,6 +83,7 @@ public class ServiceRepository : IServiceRepository
     public IFirmService FirmService => _firmService ??= new FirmService(_httpClient);
     public ILicenseApplicationService LicenseApplicationService => _licenseApplicationService ??= new LicenseApplicationService(_httpClient);
     public ILicenseApprovalHistoryService LicenseApprovalHistoryService => _licenseApprovalHistoryService ??= new LicenseApprovalHistoryService(_httpClient);
+    public ICpdUnitsEarnedService CpdUnitsEarnedService => _cpdUnitsEarnedService ??= new CpdUnitsEarnedService(_httpClient);
 
    
 }

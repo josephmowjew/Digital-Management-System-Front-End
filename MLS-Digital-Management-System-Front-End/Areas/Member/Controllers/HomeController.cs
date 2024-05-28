@@ -16,9 +16,11 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
         {
             _service = serviceRepository;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {   
-    
+            string token = this.GetToken();
+            this._service.Token = token;
+            ViewBag.summedUnits = await this.GetSummedCPDUnits();
             return View();
         }
 
@@ -66,7 +68,7 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
         private async Task PopulateViewBagsMinimal()
         {
              //get the token
-            string token = AuthHelper.GetToken(HttpContext);
+            string token = this.GetToken();
             ViewBag.token = token;
             this._service.Token = token;
 
@@ -75,7 +77,13 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
 
             ViewBag.qualificationTypesList = await GetQualificationTypes();
         }
-        
+
+
+        private string GetToken()
+        {
+             return AuthHelper.GetToken(HttpContext);
+            
+        }
         private async Task<List<SelectListItem>> GetIdentityTypes()
         {
             List<SelectListItem> identityTypes = new() { new SelectListItem() { Text = "---Select Identity Type---", Value = "" } };
@@ -175,7 +183,20 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
             return countriesList;
         }
 
+        private async Task<int> GetSummedCPDUnits()
+        {
+            var member = await _service.MemberService.GetMemberByUserIdAsync(HttpContext.Request.Cookies["UserId"]);
 
+            if(member == null)
+            {
+               return 0;
+            }
+            
+            //get member record to pass to the view
+            var summedUnits = await _service.CpdUnitsEarnedService.GetCpdSummedUnitsEarnedById(member.Id);
+
+            return summedUnits;
+        }
        
     
     }

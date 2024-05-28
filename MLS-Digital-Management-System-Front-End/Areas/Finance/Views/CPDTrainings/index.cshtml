@@ -2,7 +2,7 @@
 @inject IConfiguration Configuration
 @{
     ViewData["Title"] = "License Applications";
-    Layout = "~/Areas/Secretariat/Views/shared/_Layout.cshtml";
+    Layout = "~/Areas/Finance/Views/shared/_Layout.cshtml";
 
     var host = Configuration.GetSection("APIURL")["Link"];
 }
@@ -24,19 +24,6 @@
       
        <div>
             <img src="~/assets/images/91.gif" id="spinner" />
-        </div>
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-info my-3" data-bs-toggle="modal" data-bs-target="#create_cpd_modal">
-            Add New CPD Training
-        </button>
-
-         <!-- Modal -->
-        <div class="modal fade" id="create_cpd_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <partial name="_CreateCPDPartial" />
-        </div>
-        <!-- Modal -->
-        <div class="modal fade" id="edit_cpd_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <partial name="_EditCPDPartial" />
         </div>
 
         <h5 class="card-title fw-semibold mb-4 text-uppercase text-center"> CPD's In Operating Year <strong>(@ViewBag.YearOfOperation.FormatedDate)</strong></h5>
@@ -160,8 +147,8 @@
                         name: "id",
                         "orderable": false,
                         render: function (data, type, row) {
-                                    
-                                    return `<a href='#' onclick='cpdTrainingHandler.editForm(${data},${tokenValue})' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-pencil' title='edit' >Edit</a> <a href='#' type='button' onclick='cpdTrainingHandler.delete(${data}, ${tokenValue})' title='delete' class='ti ti-trash red-icon btn btn-outline-danger btn-sm my-1 mx-1'>Delete</a><a class='btn btn-outline-primary btn-sm mx-1 position-relative' href='/Secretariat/CPDTrainingRegistrations?cpdTrainingId='${data}' type='button'> <span class='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary'>${row.numberOfPendingRegistrations}</span> View Applications</a>`
+                                   
+                                    return `<a class='btn btn-outline-primary btn-sm mx-1 position-relative' href='/Finance/CPDTrainingRegistrations?cpdTrainingId=${data}' type='button'> <span class='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary'>${row.numberOfPendingRegistrations}</span> View Applications</a>`
                                 }
                     }
                 ],

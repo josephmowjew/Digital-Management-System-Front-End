@@ -7,4 +7,6 @@ public class CreateCPDTrainingRegistrationDTO
     public int CPDTrainingId { get; set; }
     [Display(Name = "Upload Proof of Payment")]
     public List<IFormFile?> Attachments { get; set; }
+    [Display(Name = "Date of Payment")]
+    public DateTime? DateOfPayment { get; set; }
 }

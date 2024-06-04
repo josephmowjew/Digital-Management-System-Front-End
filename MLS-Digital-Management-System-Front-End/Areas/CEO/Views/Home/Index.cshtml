@@ -1,11 +1,12 @@
-﻿@{
+﻿@using MLS_Digital_Management_System_Front_End.Core.DTOs.YearOfOperation
+@{
     ViewData["Title"] = "Index";
-    Layout = "~/Areas/Member/Views/shared/_Layout.cshtml";
+    Layout = "~/Areas/CEO/Views/shared/_Layout.cshtml";
 }
 
 <div class="card">
             <div class="card-body">
-                <h4 class="card-title text-center">Stats For 2024 - 2025 Year</h4>
+                <h4 class="card-title text-center">Stats For Practicing Year @ViewBag.currentYear.FormatedDate </h4>
                 <div class="row mt-4">
                     <!-- Column -->
                     <div class="col-md-6 col-lg-3 col-xlg-3">
@@ -13,7 +14,7 @@
                             <div class="card card-hover">
                                 <div class="p-2 rounded bg-light-primary text-center">
                                     <h1 class="fw-light text-primary">5</h1>
-                                    <p class="text-primary">Total Pro Bono Applications</p> 
+                                    <p class="text-primary">Licence Applications</p> 
                                 </div>
                             </div>
                         </a>
@@ -23,8 +24,8 @@
                         <a href="#" aria-expanded="false">
                             <div class="card card-hover">
                                 <div class="p-2 rounded bg-light-primary text-center">
-                                    <h1 class="fw-light text-secondary">6hrs</h1>
-                                    <h6 class="text-primary">Pro Bono Hours Clocked</h6>
+                                    <h1 class="fw-light text-secondary">15</h1>
+                                    <h6 class="text-primary">Pro Bono Cases Registered</h6>
                                 </div>
                             </div>
                         </a>
@@ -34,8 +35,8 @@
                         <a href="#" aria-expanded="false">
                             <div class="card card-hover">
                                 <div class="p-2 rounded bg-light-success text-center">
-                                    <h1 class="fw-light text-success">@ViewBag.summedUnits</h1>
-                                    <h6 class="text-success">Total CPD Units</h6>
+                                    <h1 class="fw-light text-success">8</h1>
+                                    <h6 class="text-success">Events Created</h6>
                                 </div>
                             </div>
                         </a>
@@ -45,8 +46,8 @@
                         <a asp-area="Clerk" asp-controller="Tickets" asp-action="Index" asp-route-type="Re-opened" aria-expanded="false">
                             <div class="card card-hover">
                                 <div class="p-2 rounded bg-light-warning text-center">
-                                    <h1 class="fw-light text-warning">6</h1>
-                                    <h6 class="text-warning">Events Attended</h6>
+                                    <h1 class="fw-light text-warning">10</h1>
+                                    <h6 class="text-warning">CPD Units Available</h6>
                                 </div>
                             </div>
                         </a>

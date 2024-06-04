@@ -5,10 +5,10 @@ using MLS_Digital_Management_System_Front_End.Core.DTOs.LicenseApprovalHistory;
 using MLS_Digital_Management_System_Front_End.Helpers;
 using MLS_Digital_Management_System_Front_End.Services.Interfaces;
 
-namespace MLS_Digital_Management_System_Front_End.Areas.Executive.Controllers
+namespace MLS_Digital_Management_System_Front_End.Areas.CEO.Controllers
 {
   
-    [Area("Executive")]
+    [Area("CEO")]
     public class LicenseApplicationsController : Controller
     {
         private readonly IServiceRepository _service;
@@ -34,12 +34,11 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Executive.Controllers
             {
                 return NotFound();
             }
-        
+           
             ViewBag.licenseApprovalHistoryList = await GetLicenseApprovalHistory(id);
 
             ViewBag.licenseApplication = licenseApplication;
-
-            ViewBag.roleName = AuthHelper.GetRole(HttpContext);
+            ViewBag.roleName = HttpContext.Request.Cookies["RoleName"];
 
             return View(licenseApplication);
         }

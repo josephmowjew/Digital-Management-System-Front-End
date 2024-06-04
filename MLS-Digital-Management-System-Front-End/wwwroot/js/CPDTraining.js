@@ -156,8 +156,12 @@ handleMarkAttendanceSuccess(response) {
   }
 
   handleEditFormSuccess(response) {
+
+    
     const editform = document.querySelector("#edit_cpd_modal form");
     const data = JSON.parse(response);
+
+  
     const fieldMap = this.createFieldMap(data);
     const editformElements = [...editform.querySelectorAll('input, select, textarea, checkbox, label, textarea')];
 

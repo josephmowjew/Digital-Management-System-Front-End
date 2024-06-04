@@ -41,6 +41,9 @@
                             Approval Level
                         </th>
                         <th>
+                            Current Department Handling
+                        </th>
+                        <th>
                             Application Status
                         </th>
                         <th>
@@ -103,6 +106,12 @@
                     {
                         data: "currentApprovalLevel.level",
                         name: "currentApprovalLevel.level",
+                        className: "text-left",
+                        "orderable": false,
+                    },
+                     {
+                        data: "currentApprovalLevel.department.name",
+                        name: "currentApprovalLevel.department.name",
                         className: "text-left",
                         "orderable": false,
                     },

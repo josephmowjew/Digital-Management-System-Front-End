@@ -26,5 +26,16 @@ public static class AuthHelper
         }
         return userId;
     }
+
+    public static string GetRole(HttpContext httpContext)
+    {
+        string role = null;
+        if (httpContext.Request.Cookies["RoleName"] != null)
+        {
+            role = httpContext.Request.Cookies["RoleName"];
+        }
+
+        return role;
+    }
 }
 

@@ -2,7 +2,7 @@
 @inject IConfiguration Configuration
 @{
     ViewData["Title"] = "License Applications";
-    Layout = "~/Areas/Finance/Views/shared/_Layout.cshtml";
+    Layout = "~/Areas/CEO/Views/shared/_Layout.cshtml";
 
     var host = Configuration.GetSection("APIURL")["Link"];
 }
@@ -40,7 +40,7 @@
                          <th>
                             Approval Level
                         </th>
-                         <th>
+                        <th>
                             Current Department Handling
                         </th>
                         <th>
@@ -109,7 +109,7 @@
                         className: "text-left",
                         "orderable": false,
                     },
-                      {
+                    {
                         data: "currentApprovalLevel.department.name",
                         name: "currentApprovalLevel.department.name",
                         className: "text-left",
@@ -127,7 +127,7 @@
                         name: "id",
                         "orderable": false,
                         render: function (data, type, row) {
-                                    return "<a href='LicenseApplications/Details/" + data + "' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-pencil text-lg' title='show details' >Show Details</a>"
+                                    return "<a href='LicenseApplications/Details/" + data + "' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-eye text-lg' title='show details' > Show Details</a>"
                                 }
                     }
                 ],

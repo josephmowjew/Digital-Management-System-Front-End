@@ -4,7 +4,7 @@
 @model MLS_Digital_Management_System_Front_End.Core.DTOs.LicenseApplication.ReadLicenseApplicationDTO;
 @{
     ViewData["Title"] = "License Applications";
-    Layout = "~/Areas/Executive/Views/shared/_Layout.cshtml";
+    Layout = "~/Areas/CEO/Views/shared/_Layout.cshtml";
 
     var host = Configuration.GetSection("APIURL")["Link"];
     var spanStyle = "";
@@ -407,11 +407,12 @@
             </div>
             }
 
-                            @if(Model.ApplicationStatus !="Denied" && Model.ApplicationStatus !="Approved" && Model.CurrentApprovalLevel.Department.Name.Equals("Executive", StringComparison.OrdinalIgnoreCase) && (!(ViewBag.roleName as string).Equals("CEO", StringComparison.CurrentCultureIgnoreCase))){
-                    <div class="item">
-                        <button id="approve_license_application_btn"  class="btn btn-success" onclick="formHandler.acceptApplication('@Model.Id')">Approve Application</button>
-                        <button id="reject_license_application_btn" class="btn btn-danger" onclick="formHandler.denyForm('@Model.Id')">Deny Application</button>
-                    </div>
+                    @if (Model.ApplicationStatus != "Denied" && Model.ApplicationStatus != "Approved" && Model.CurrentApprovalLevel.Department.Name.Equals("Executive", StringComparison.OrdinalIgnoreCase) && (ViewBag.roleName as string).Equals("CEO", StringComparison.CurrentCultureIgnoreCase))
+                    {
+                            <div class="item">
+                                <button id="approve_license_application_btn"  class="btn btn-success" onclick="formHandler.acceptApplication('@Model.Id')">Approve Application</button>
+                                <button id="reject_license_application_btn" class="btn btn-danger" onclick="formHandler.denyForm('@Model.Id')">Deny Application</button>
+                            </div>
                 }
             
                 <div class="item">

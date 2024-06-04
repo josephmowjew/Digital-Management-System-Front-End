@@ -128,8 +128,14 @@ namespace MLS_Digital_Management_System_Front_End.Controllers
                     {
                         return RedirectToAction("Index", "Home", new { Area = "Executive" });
                     }
+                    if (authData.TokenData.Role.Equals("CEO", StringComparison.OrdinalIgnoreCase))
+                    {
+                        return RedirectToAction("Index", "Home", new { Area = "CEO" });
+                    }
+
+                ModelState.AddModelError(string.Empty, "Sorry, could not find your dashboard");
                     // Redirect to authorized page
-                    return RedirectToAction("Index", "Home");
+                    return View("Index",model);
                 }
                 catch (InvalidOperationException ex)
                 {

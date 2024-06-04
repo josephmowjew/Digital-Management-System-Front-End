@@ -55,6 +55,9 @@
                             Event Date
                         </th>
                         <th>
+                            Fee
+                        </th>
+                        <th>
                             Units Awarded
                         </th>
                         <th>
@@ -127,6 +130,15 @@
                         className: "text-left",
                         "orderable": false,
                     },
+                     {
+                    data: "trainingFee",
+                    name: "trainingFee",
+                    className: "text-left",
+                    "orderable": false,
+                    render: function(data, type, row) {
+                        return '<span class="badge bg-primary bg-opacity-85 rounded-pill">MWK ' + data + '</span>';
+                    }
+                    },
                     {
                         data: "cpdUnitsAwarded",
                         name: "cpdUnitsAwarded",
@@ -160,8 +172,8 @@
                         name: "id",
                         "orderable": false,
                         render: function (data, type, row) {
-                                    
-                                    return `<a href='#' onclick='cpdTrainingHandler.editForm(${data},${tokenValue})' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-pencil' title='edit' >Edit</a> <a href='#' type='button' onclick='cpdTrainingHandler.delete(${data}, ${tokenValue})' title='delete' class='ti ti-trash red-icon btn btn-outline-danger btn-sm my-1 mx-1'>Delete</a><a class='btn btn-outline-primary btn-sm mx-1 position-relative' href='/Secretariat/CPDTrainingRegistrations?cpdTrainingId='${data}' type='button'> <span class='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary'>${row.numberOfPendingRegistrations}</span> View Applications</a>`
+                                    console.log(data)
+                                    return `<a href='#' onclick='cpdTrainingHandler.editForm(${data},"${tokenValue}")' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-pencil' title='edit' >Edit</a> <a href='#' type='button' onclick='cpdTrainingHandler.delete(${data}, ${tokenValue})' title='delete' class='ti ti-trash red-icon btn btn-outline-danger btn-sm my-1 mx-1'>Delete</a><a class='btn btn-outline-primary btn-sm mx-1 position-relative' href='/Secretariat/CPDTrainingRegistrations?cpdTrainingId=${data}' type='button'> <span class='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary'>${row.numberOfPendingRegistrations}</span> View Applications</a>`
                                 }
                     }
                 ],

@@ -10,14 +10,33 @@ public class UpdateCPDTrainingDTO
         public string Title { get; set; }
         [StringLength(250)]
         public string Description { get; set; }
+        [Display(Name = "Duration (in hours)")]
         public double Duration { get; set; }
+        [Display(Name = "Physical Venue")]
+        [StringLength(maximumLength:250)]
+        public string? PhysicalVenue { get; set; }
 
-        [Display(Name = "Training Fee (MWK)")]
-        public double? TrainingFee { get; set; }
+        [Display(Name="Member Physical Attendance Fee (MWK)")]
+        public double? MemberPhysicalAttendanceFee { get; set; } 
+        [Display(Name = "Member Virtual Attendance Fee (MWK)")]
+        public double? MemberVirtualAttendanceFee { get; set; } 
+        [Display(Name = "Non-Member Physical Attendance Fee (MWK)")]
+        public double? NonMemberPhysicalAttendanceFee { get; set; } 
+        [Display(Name = "Non-Member Virtual Attendance Fee (MWK)")]
+         public double? NonMemberVirtualAttandanceFee { get; set; }
+        [Display(Name = "Registration Due Date")]
+        [DataType(DataType.Date)]
+        public DateTime? RegistrationDueDate { get; set; }
+        [Display(Name = "Date to be Conducted")]
+        [DataType(DataType.Date)]
         public DateTime DateToBeConducted { get; set; }
+        [Display(Name = "Proposed Units")]
         public int ProposedUnits { get; set; }
+        [Display(Name = "CPD Units Awarded")]
         public int CPDUnitsAwarded { get; set; }
         [StringLength(200)]
+        [Display(Name = "Accrediting Institution")]
         public string? AccreditingInstitution { get; set; }
+        [Display(Name = "Poster")]
         public List<IFormFile> Attachments = new List<IFormFile>();
     }

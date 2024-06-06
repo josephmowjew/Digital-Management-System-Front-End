@@ -88,7 +88,7 @@ markAttendance() {
               const formData = new FormData();
              
               formData.append('ids', JSON.stringify(this.selectedCPDTrainingIds));
-              console.log(formData)
+             
               this.sendAjaxRequest(
                   formData,
                   "POST",
@@ -157,11 +157,9 @@ handleMarkAttendanceSuccess(response) {
 
   handleEditFormSuccess(response) {
 
-    
+    this.hideSpinner();
     const editform = document.querySelector("#edit_cpd_modal form");
     const data = JSON.parse(response);
-
-  
     const fieldMap = this.createFieldMap(data);
     const editformElements = [...editform.querySelectorAll('input, select, textarea, checkbox, label, textarea')];
 
@@ -179,6 +177,11 @@ handleMarkAttendanceSuccess(response) {
       {
           element.value = data.cpdUnitsAwarded;
       }
+      else if(fieldName == "RegistrationDueDate")
+      {
+          
+          element.value = data.registrationDueDate.substring(0, 10);
+      }
       else {
         element.value = fieldValue;
       }
@@ -188,19 +191,56 @@ handleMarkAttendanceSuccess(response) {
     $("#edit_cpd_modal").modal("show");
   }
 
-  registerForm(trainingId, trainingFee) {
+  registerForm(trainingId, cpdObject) {
+    
+    var rowObject = JSON.parse(cpdObject);
     const cpdRegisterform = document.querySelector("#register_cpd_training_modal form");
     const trainingIdInput = cpdRegisterform.querySelector('input[name="CPDTrainingId"]');
     trainingIdInput.value = trainingId;
 
-    if (trainingFee != null && trainingFee != undefined && trainingFee > 0) {
-      cpdRegisterform.querySelector("#cpd_training_amount").innerHTML = `<strong>MWK${trainingFee} </strong>`;
-      cpdRegisterform.querySelector("#cpd_training_no_payment_alert").style.display = "none";
-    } else {
-      cpdRegisterform.querySelector("#cpd_training_payment_alert").style.display = "none";
-      const attachmentsField = cpdRegisterform.querySelector('div input[type="file"]');
-      attachmentsField.style.display = "none";
-      const label = attachmentsField.previousElementSibling;
+    const errorMessages = cpdRegisterform.querySelectorAll(".error-message");
+    errorMessages.forEach(errorMessage => errorMessage.remove());
+
+      if (rowObject.isFree == false) {
+        cpdRegisterform.querySelector("#cpd_training_payment_alert").style.display = "block";
+        cpdRegisterform.querySelector("#cpd_training_no_payment_alert").style.display = "none";
+        const attachmentsField = cpdRegisterform.querySelector('div input[type="file"]').style.display = "block";
+        //get the attendance mode select 
+        const attendanceModeSelect = cpdRegisterform.querySelector('select[name="AttendanceMode"]');
+
+        //attach an event listener to the attandance mode select to display either physical attendance fee or virual attandance fee based on AttandanceMode value
+        attendanceModeSelect.addEventListener('change', function() {
+          const selectedOption = this.options[this.selectedIndex];
+          const selectedValue = selectedOption.value;
+          
+          if (selectedValue === 'Physical') {
+            const fee = rowObject.memberPhysicalAttendanceFee;
+            const formattedFee = new Intl.NumberFormat('en-MW', {
+              style: 'currency',
+              currency: 'MWK',
+              minimumFractionDigits: 0
+            }).format(fee);
+            cpdRegisterform.querySelector("#cpd_training_amount").innerHTML = `<strong>${formattedFee}</strong>`;
+          } else {
+            const fee = rowObject.memberVirtualAttendanceFee;
+            const formattedFee = new Intl.NumberFormat('en-MW', {
+              style: 'currency',
+              currency: 'MWK',
+              minimumFractionDigits: 0
+            }).format(fee);
+            cpdRegisterform.querySelector("#cpd_training_amount").innerHTML = `<strong>${formattedFee}</strong>`;
+          }
+        });
+        
+        // cpdRegisterform.querySelector("#cpd_training_amount").innerHTML = `<strong>MWK${rowObject.physicalAttendanceFee} </strong>`;
+        // cpdRegisterform.querySelector("#cpd_training_no_payment_alert").style.display = "none";
+      } 
+      else {
+        cpdRegisterform.querySelector("#cpd_training_no_payment_alert").style.display = "block";
+        cpdRegisterform.querySelector("#cpd_training_payment_alert").style.display = "none";
+        const attachmentsField = cpdRegisterform.querySelector('div input[type="file"]');
+        attachmentsField.style.display = "none";
+        const label = attachmentsField.previousElementSibling;
       if (label) {
         label.style.display = "none";
       }
@@ -305,7 +345,7 @@ handleMarkAttendanceSuccess(response) {
     for (const [key, messages] of Object.entries(errorResponse)) {
       const elementName = key.charAt(0).toUpperCase() + key.slice(1);
       const element = form.querySelector(`[name="${elementName}"]`);
-      console.log(elementName)
+      
       if (element) {
         messages.forEach(message => {
           const errorMessage = document.createElement("div");
@@ -352,7 +392,7 @@ handleMarkAttendanceSuccess(response) {
         "PUT",
         `http://localhost:5043/api/CPDTrainings/${id}`,
         this.handleUpdateSuccess.bind(this),
-        this.handleError.bind(this),
+        this.handleEditError.bind(this),
         { 'Authorization': `Bearer ${tokenValue}` }
       );
     }
@@ -417,6 +457,35 @@ handleMarkAttendanceSuccess(response) {
         const element = elementName
           ? document.querySelector(
               `#create_cpd_modal form input[name="${elementName}"]`
+            )
+          : null;
+
+        if (element) {
+          const errorSpan = element.nextElementSibling;
+          if (errorSpan && errorSpan.classList.contains("text-danger")) {
+            errorSpan.textContent = message;
+          } else {
+            const newErrorSpan = document.createElement("span");
+            newErrorSpan.textContent = message;
+            newErrorSpan.classList.add("text-danger");
+            element.after(newErrorSpan);
+          }
+        }
+      });
+    });
+  }
+
+  handleEditError(xhr) {
+    this.hideSpinner();
+    const errorResponse = JSON.parse(xhr.responseText);
+    $.each(errorResponse, (key, value) => {
+      $.each(value, (index, message) => {
+        const elementName = key
+          ? key.charAt(0).toUpperCase() + key.slice(1)
+          : null;
+        const element = elementName
+          ? document.querySelector(
+              `#edit_cpd_modal form input[name="${elementName}"]`
             )
           : null;
 

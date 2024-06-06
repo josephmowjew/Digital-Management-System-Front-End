@@ -37,6 +37,13 @@ class PenaltyHandler {
     );
     if (updatePenaltyBtn) {
       updatePenaltyBtn.addEventListener("click", this.updateClicked.bind(this));
+      }
+
+    const deletePenaltyBtn = document.querySelector(
+          "#create_penalty_modal button[name='delete_penalty_btn']"
+    );
+    if (deletePenaltyBtn) {
+      deletePenaltyBtn.addEventListener("click", this.deleteClicked.bind(this));
     }
 
     /*const registerCPDTrainingBtn = document.querySelector(
@@ -61,46 +68,6 @@ class PenaltyHandler {
 
 
   }
-
-/*  bindCheckboxEvents() {
-    $('#cpd_table').on('change', '.cpdTrainCheckbox', function() {
-        const checkbox = $(this);
-        const cpdTrainingId = checkbox.data('id');
-        const isChecked = checkbox.is(':checked');
-
-        if (isChecked) {
-            cpdTrainingHandler.selectedCPDTrainingIds.push(cpdTrainingId);
-        } else {
-            cpdTrainingHandler.selectedCPDTrainingIds = cpdTrainingHandler.selectedCPDTrainingIds.filter(id => id !== cpdTrainingId);
-        }
-
-        //console.log('Selected CPD Training IDs:', cpdTrainingHandler.selectedCPDTrainingIds);
-    });
-}*/
-/*markAttendance() {
-  const selectedCount = this.selectedPenaltiyIds.length;
-
-  if (selectedCount < 1) {
-      bootbox.alert("You cannot proceed to marking attendance with no selected members.");
-  } else {
-      bootbox.confirm(`Do you want to proceed with marking attendance of the selected ${selectedCount} members as present?`, (result) => {
-          if (result) {
-              const formData = new FormData();
-             
-              formData.append('ids', JSON.stringify(this.selectedPenaltyIds));
-              console.log(formData)
-              this.sendAjaxRequest(
-                  formData,
-                  "POST",
-                  "http://localhost:5043/api/CPDTrainingRegistrations/MarkAttendance",
-                  this.handleMarkAttendanceSuccess.bind(this),
-                  this.handleError.bind(this),
-                  { 'Authorization': `Bearer ${tokenValue}` }
-              );
-          }
-      });
-  }
-}*/
 
   onCreateClick() {
     this.showSpinner();
@@ -145,24 +112,22 @@ class PenaltyHandler {
     }
   }
 
-  /*editForm(id, token) {
+  editForm(id, token) {
     this.showSpinner();
 
     if (id > 0) {
-      this.sendAjaxRequest(null, 'GET', `http://localhost:5043/api/CPDTrainings/GetCPDTrainingById/${id}`, this.handleEditFormSuccess.bind(this), this.handleError.bind(this), {
+      this.sendAjaxRequest(null, 'GET', `http://localhost:5043/api/Penalties/GetPenaltyById/${id}`, this.handleEditFormSuccess.bind(this), this.handleError.bind(this), {
         'Authorization': `Bearer ${token}`
       });
     }
-  }*/
+  }
 
-  /*handleEditFormSuccess(response) {
-
-    
-    const editform = document.querySelector("#edit_cpd_modal form");
+  handleEditFormSuccess(response) {
+    const editform = document.querySelector("#edit_penalty_modal form");
     const data = JSON.parse(response);
+    console.log(response)
 
-  
-    const fieldMap = this.createFieldMap(data);
+        const fieldMap = this.createFieldMap(data);
     const editformElements = [...editform.querySelectorAll('input, select, textarea, checkbox, label, textarea')];
 
     editformElements.forEach(element => {
@@ -173,11 +138,8 @@ class PenaltyHandler {
       if (element.type === 'checkbox') {
         this.setCheckboxValue(element, fieldValue);
       } else if (element.type === 'file') {
-        this.handleFileUpload(element, data.attachments, fieldName);
-      } 
-      else if(fieldName == "CPDUnitsAwarded")
-      {
-          element.value = data.cpdUnitsAwarded;
+          console.log(data.attachments)
+          this.handleFileUpload(element, data.attachments, fieldName);
       }
       else {
         element.value = fieldValue;
@@ -185,31 +147,12 @@ class PenaltyHandler {
     });
 
     // Show modal
-    $("#edit_cpd_modal").modal("show");
-  }*/
-
-  /*registerForm(trainingId, trainingFee) {
-    const cpdRegisterform = document.querySelector("#register_cpd_training_modal form");
-    const trainingIdInput = cpdRegisterform.querySelector('input[name="CPDTrainingId"]');
-    trainingIdInput.value = trainingId;
-
-    if (trainingFee != null && trainingFee != undefined && trainingFee > 0) {
-      cpdRegisterform.querySelector("#cpd_training_amount").innerHTML = `<strong>MWK${trainingFee} </strong>`;
-      cpdRegisterform.querySelector("#cpd_training_no_payment_alert").style.display = "none";
-    } else {
-      cpdRegisterform.querySelector("#cpd_training_payment_alert").style.display = "none";
-      const attachmentsField = cpdRegisterform.querySelector('div input[type="file"]');
-      attachmentsField.style.display = "none";
-      const label = attachmentsField.previousElementSibling;
-      if (label) {
-        label.style.display = "none";
-      }
-    }
-
-    $("#register_cpd_training_modal").modal("show");
-  }*/
+      $("#edit_penalty_modal").modal("show");
+      this.hideSpinner()
+  }
 
   delete(id, token) {
+    console.log("we here")
     bootbox.confirm("Are you sure you want to delete this Penalty from the system?", result => {
       if (result) {
         this.sendAjaxRequest(null, 'DELETE', `http://localhost:5043/api/Penalties/${id}`, this.handleDeleteSuccess.bind(this), this.handleError.bind(this), {
@@ -225,105 +168,42 @@ class PenaltyHandler {
     dataTable.ajax.reload();
   }
 
-  /*handleFileUpload(fileInput, attachments, fieldName) {
+  handleFileUpload(fileInput, attachments, fieldName) {
+    //console.log("We here")
+    //console.log(fieldName)
     const attachment = attachments.find(attachment => attachment.propertyName === fieldName);
+    //console.log(attachment)
     if (attachment) {
-      const fileURL = attachment.filePath;
-      fetch(fileURL, {
-        headers: {
-          'Accept': 'application/octet-stream',
-          'Access-Control-Request-Method': 'GET',
-          'Origin': 'http://localhost:5281'
-        }
-      })
-      .then(response => response.blob())
-      .then(blob => {
-        const file = new File([blob], attachment.fileName, attachment.fileType);
-        const dataTransfer = new DataTransfer();
-        dataTransfer.items.add(file);
-        fileInput.files = dataTransfer.files;
-        const event = new Event('change', { bubbles: true });
-        fileInput.dispatchEvent(event);
-      })
-      .catch(error => {
-        console.error(`Error fetching file ${fileURL}:`, error);
-      });
+          //console.log(attachment)
+          const fileURL = attachment.filePath;
+          fetch(fileURL, {
+            headers: {
+              'Accept': 'application/octet-stream',
+              'Access-Control-Request-Method': 'GET',
+              'Origin': 'http://localhost:5281'
+            }
+          })
+          .then(response => response.blob())
+          .then(blob => {
+            const file = new File([blob], attachment.fileName, attachment.fileType);
+            const dataTransfer = new DataTransfer();
+            dataTransfer.items.add(file);
+            fileInput.files = dataTransfer.files;
+            const event = new Event('change', { bubbles: true });
+            fileInput.dispatchEvent(event);
+          })
+          .catch(error => {
+            console.error(`Error fetching file ${fileURL}:`, error);
+          });
     }
-  }*/
-
-  /*registerTrainingClicked() {
-    const form = document.querySelector("#register_cpd_training_modal form");
-    const errorMessages = form.querySelectorAll(".error-message");
-    errorMessages.forEach(errorMessage => errorMessage.remove());
-
-    if (!form.checkValidity()) {
-      this.hideSpinner();
-      const invalidFields = document.querySelectorAll(":invalid");
-
-      invalidFields.forEach(field => {
-        const validationMessage = field.validationMessage;
-
-        if (validationMessage) {
-          const errorMessage = document.createElement("div");
-          errorMessage.innerHTML = validationMessage;
-          errorMessage.classList.add("error-message");
-          errorMessage.style.color = "red";
-          field.after(errorMessage);
-
-          field.scrollIntoView({ behavior: "smooth", block: "center" });
-          field.focus();
-        }
-      });
-    } else {
-      const formData = new FormData(form);
-      this.sendAjaxRequest(
-        formData,
-        "POST",
-        `http://localhost:5043/api/CPDTrainingRegistrations`,
-        this.handleRegisterSuccess.bind(this),
-        this.handleRegisterError.bind(this),
-        { 'Authorization': `Bearer ${tokenValue}` }
-      );
-    }
-  }*/
-
-  /*handleRegisterError(xhr) {
-
-  
-    this.hideSpinner();
-    
-    // Parse the error response
-    const errorResponse = JSON.parse(xhr.responseText);
-    const form = document.querySelector("#register_cpd_training_modal form");
-
-   
-    // Remove any existing error messages
-    const errorMessages = form.querySelectorAll(".error-message");
-    errorMessages.forEach(errorMessage => errorMessage.remove());
-  
-    // Display new error messages
-    for (const [key, messages] of Object.entries(errorResponse)) {
-      const elementName = key.charAt(0).toUpperCase() + key.slice(1);
-      const element = form.querySelector(`[name="${elementName}"]`);
-      console.log(elementName)
-      if (element) {
-        messages.forEach(message => {
-          const errorMessage = document.createElement("div");
-          errorMessage.innerHTML = message;
-          errorMessage.classList.add("error-message");
-          errorMessage.style.color = "red";
-          element.after(errorMessage);
-        });
-      }
-    }
-  }*/
+  }
   
 
-  /*updateClicked() {
+  updateClicked() {
     this.showSpinner();
 
-    const form = document.querySelector("#edit_cpd_modal form");
-    const id = document.querySelector("#edit_cpd_modal form input[name='Id']").value;
+    const form = document.querySelector("#edit_penalty_modal form");
+    const id = document.querySelector("#edit_penalty_modal form input[name='Id']").value;
     const errorMessages = form.querySelectorAll(".error-message");
     errorMessages.forEach(errorMessage => errorMessage.remove());
 
@@ -347,16 +227,17 @@ class PenaltyHandler {
       });
     } else {
       const formData = new FormData(form);
+
       this.sendAjaxRequest(
         formData,
         "PUT",
-        `http://localhost:5043/api/CPDTrainings/${id}`,
+        `http://localhost:5043/api/Penalties/${id}`,
         this.handleUpdateSuccess.bind(this),
         this.handleError.bind(this),
         { 'Authorization': `Bearer ${tokenValue}` }
       );
     }
-  }*/
+  }
 
   /*handleRegisterSuccess(response) {
     this.hideSpinner();
@@ -366,21 +247,21 @@ class PenaltyHandler {
     dataTable.ajax.reload();
   }*/
 
-  /*handleUpdateSuccess(response) {
+  handleUpdateSuccess(response) {
     this.hideSpinner();
     const dataTable = $("#penalty_table").DataTable();
     toastr.success("Penalty updated successfully");
     $("#edit_penalty_modal").modal("hide");
     dataTable.ajax.reload();
-  }*/
+  }
 
-  /*createFieldMap(data) {
+  createFieldMap(data) {
     return Object.entries(data).reduce((map, [key, value]) => {
       const formFieldName = key.charAt(0).toUpperCase() + key.slice(1);
       map[formFieldName] = key;
       return map;
     }, {});
-  }*/
+  }
 
   sendAjaxRequest(formData, method, url, successCallback, errorCallback) {
     const xhr = new XMLHttpRequest();
@@ -404,7 +285,7 @@ class PenaltyHandler {
     toastr.success("New Penalty added successfully");
     $("#create_penalty_modal").modal("hide");
     dataTable.ajax.reload();
-  }
+    }
 
   handleError(xhr) {
     this.hideSpinner();
@@ -452,75 +333,6 @@ class PenaltyHandler {
       console.error('Spinner element with id "spinner" was not found');
     }
   }
-
-  /*acceptRegistration(id) {
-    const registrationId = id
-    bootbox.confirm("Are you sure you want to accept this CPD Training Registration?", result => {
-      if (result) {
-        this.showSpinner();
-        this.sendAjaxRequest(
-          null,
-          "GET",
-          `http://localhost:5043/api/CPDTrainingRegistrations/AcceptCPDTrainingRegistration/${registrationId}`,
-          (response) => {
-            this.hideSpinner();
-            toastr.success("CPD Training Registration accepted");
-            $("#register_cpd_training_modal").modal("hide");
-            const dataTable = $("#cpd_table").DataTable();
-            dataTable.ajax.reload();
-          },
-          this.handleError.bind(this),
-          { 'Authorization': `Bearer ${tokenValue}` }
-        );
-      }
-    });
-  }*/
-
-  /*denyRegistration(id) {
-
-    bootbox.prompt({
-      title: "Provide a reason for denying this CPD Training Registration:",
-      inputType: 'textarea',
-      callback: (result) => {
-        if (result === null) {
-          // User clicked Cancel
-          return;
-        }
-
-        if (result.length > 0) {
-          const registrationId = id
-          this.showSpinner();
-          const formData = new FormData();
-          formData.append('reason', result);
-          formData.append('Id', registrationId);
-          this.sendAjaxRequest(
-            formData,
-            "PUT",
-            `http://localhost:5043/api/CPDTrainingRegistrations/RejectCPDTrainingRegistration/${id}`,
-            (response) => {
-              this.hideSpinner();
-              toastr.success("CPD Training Registration denied");
-              $("#register_cpd_training_modal").modal("hide");
-              const dataTable = $("#cpd_table").DataTable();
-              dataTable.ajax.reload();
-            },
-            this.handleError.bind(this),
-            { 'Authorization': `Bearer ${tokenValue}` }
-          );
-        }
-        else {
-          // Display an error message within the prompt
-          bootbox.alert({
-            title: "Error",
-            message: "You must provide a reason for denial.",
-            callback: () => {
-              this.denyRegistration(); // Re-open the prompt
-            }
-          });
-        }
-      }
-    });
-  }*/
 }
 
 window.penaltyHandler = new PenaltyHandler();

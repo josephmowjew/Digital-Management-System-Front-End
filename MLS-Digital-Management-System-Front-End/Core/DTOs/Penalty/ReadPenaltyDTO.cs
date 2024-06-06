@@ -13,8 +13,6 @@ namespace MLS_Digital_Management_System_Front_End.Core.DTOs.Penalty
         [StringLength(maximumLength: 250)]
         public string Reason { get; set; }
         [Required]
-        public string CreatedById { get; set; }
-        [Required]
         public int YearOfOperationId { get; set; }
         public List<IFormFile>? Attachments { get; set; }
     }

@@ -157,10 +157,12 @@ handleMarkAttendanceSuccess(response) {
 
   handleEditFormSuccess(response) {
 
+    //console.log(response)
     
     const editform = document.querySelector("#edit_cpd_modal form");
     const data = JSON.parse(response);
 
+      //console.log(data);
   
     const fieldMap = this.createFieldMap(data);
     const editformElements = [...editform.querySelectorAll('input, select, textarea, checkbox, label, textarea')];
@@ -225,7 +227,7 @@ handleMarkAttendanceSuccess(response) {
     dataTable.ajax.reload();
   }
 
-  handleFileUpload(fileInput, attachments, fieldName) {
+    handleFileUpload(fileInput, attachments, fieldName) {
     const attachment = attachments.find(attachment => attachment.propertyName === fieldName);
     if (attachment) {
       const fileURL = attachment.filePath;

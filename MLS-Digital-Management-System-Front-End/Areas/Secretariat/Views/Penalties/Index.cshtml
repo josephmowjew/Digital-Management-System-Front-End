@@ -1,0 +1,136 @@
+﻿@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+@{
+    ViewData["Title"] = "License Applications";
+    Layout = "~/Areas/Secretariat/Views/shared/_Layout.cshtml";
+
+    var host = Configuration.GetSection("APIURL")["Link"];
+}
+
+@section Styles {
+
+    <style>
+        .hidden {
+            display: none;
+        }
+    </style>
+
+
+}
+
+<div class="card  w-100 h-100 d-flex justify-content-center">
+    <div class="card-body">
+
+        <div>
+            <img src="~/assets/images/91.gif" id="spinner" />
+        </div>
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-info my-3" data-bs-toggle="modal" data-bs-target="#create_penalty_modal">
+            Add New Penalty
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="create_penalty_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <partial name="_CreatePenaltyPartial" />
+        </div>
+        <!-- Modal -->
+        <!--<div class="modal fade" id="edit_cpd_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <partial name="_EditPenaltyPartial" />
+        </div>-->
+
+        <h5 class="card-title fw-semibold mb-4 text-uppercase text-center"> Penalties In Operating Year <strong>(@ViewBag.YearOfOperation.FormatedDate)</strong></h5>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover" id="penalty_table">
+                <thead>
+                    <tr>
+                        <th>
+                            Description
+                        </th>
+                        <th>
+                            Fee
+                        </th>
+                        <th>
+                            Comment
+                        </th>
+                        <th>
+                            Penalty Status
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+
+    <script>
+        var datatable;
+        var tokenValue = '@ViewBag.token';
+    </script>
+    <script src="~/js/Penalty.js" asp-append-version="true"></script>
+    <script>
+        $(document).ready(function () {
+            datatable = $('#penalty_table').DataTable({
+
+
+                "processing": true,
+                "serverSide": true,
+                "order": [[0, "desc"]],
+                ajax: {
+                    url: "@host/api/Penalties/paged",
+                    type: 'get',
+                    datatype: 'Json', headers: {
+                        'Authorization': 'Bearer @ViewBag.token'
+                    },
+
+
+
+                },
+                columnDefs: [
+                    {
+                        defaultContent: "",
+                        targets: "_all",
+                        'orderable': true
+                    },
+                ],
+                columns: [
+                    {
+                        data: "reason",
+                        name: "reason",
+                        className: "text-left",
+                        "orderable": false,
+                    },
+                    {
+                        data: "fee",
+                        name: "fee",
+                        className: "text-left",
+                        "orderable": false,
+                    },
+                    {
+                        data: "resolutionComment",
+                        name: "resolutionComment",
+                        className: "text-left",
+                        "orderable": false,
+                    },
+                    {
+                        data: "penaltyStatus",
+                        name: "penaltyStatus",
+                        className: "text-left",
+                        "orderable": false,
+                    },
+                ],
+                responsive: true,
+                "autoWidth": false,
+            });
+        });
+    </script>
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

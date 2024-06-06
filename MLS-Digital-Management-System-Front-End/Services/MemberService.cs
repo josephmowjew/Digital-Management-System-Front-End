@@ -13,6 +13,25 @@ public class MemberService : IMemberService
         _httpClient = httpClient;
     }
 
+    public async  Task<List<ReadMemberDTO>> GetAllMembersAsync()
+    {
+        var response = await _httpClient.GetAsync($"api/Members/getAll");
+        if (response.IsSuccessStatusCode)
+        {
+            var responseData = await response.Content.ReadFromJsonAsync<List<ReadMemberDTO>>();
+            return responseData;
+        }
+        else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+        {
+
+            return null;
+        }
+        else
+        {
+            throw new InvalidOperationException($"Failed to get members");
+        }
+    }
+
     public async Task<ReadMemberDTO> GetMemberByUserIdAsync(string id)
     {
         var response = await _httpClient.GetAsync($"api/Members/getByUserId/{id}");

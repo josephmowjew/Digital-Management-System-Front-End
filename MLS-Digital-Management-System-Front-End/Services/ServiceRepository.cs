@@ -26,6 +26,8 @@ public class ServiceRepository : IServiceRepository
     private ILicenseApplicationService _licenseApplicationService;
     private ILicenseApprovalHistoryService _licenseApprovalHistoryService;
     private ICpdUnitsEarnedService _cpdUnitsEarnedService;
+    private IPenaltyTypeService _penaltyTypeService;
+    private IPenaltyService _penaltyService;
 
 
 
@@ -55,6 +57,8 @@ public class ServiceRepository : IServiceRepository
             _licenseApplicationService = new LicenseApplicationService(_httpClient);
             _licenseApprovalHistoryService = new LicenseApprovalHistoryService(_httpClient);
             _cpdUnitsEarnedService = new CpdUnitsEarnedService(_httpClient);
+            _penaltyService = new PenaltyService(_httpClient);
+            _penaltyTypeService = new PenaltyTypeService(_httpClient);
         } 
     } 
 
@@ -84,6 +88,7 @@ public class ServiceRepository : IServiceRepository
     public ILicenseApplicationService LicenseApplicationService => _licenseApplicationService ??= new LicenseApplicationService(_httpClient);
     public ILicenseApprovalHistoryService LicenseApprovalHistoryService => _licenseApprovalHistoryService ??= new LicenseApprovalHistoryService(_httpClient);
     public ICpdUnitsEarnedService CpdUnitsEarnedService => _cpdUnitsEarnedService ??= new CpdUnitsEarnedService(_httpClient);
-
+    public IPenaltyService PenaltyService => _penaltyService ??= new PenaltyService(_httpClient);
+    public IPenaltyTypeService PenaltyTypeService => _penaltyTypeService ??= new PenaltyTypeService(_httpClient);
    
 }

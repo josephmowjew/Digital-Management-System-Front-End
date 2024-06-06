@@ -45,28 +45,6 @@ class PenaltyHandler {
     if (deletePenaltyBtn) {
       deletePenaltyBtn.addEventListener("click", this.deleteClicked.bind(this));
     }
-
-    /*const registerCPDTrainingBtn = document.querySelector(
-      "#register_penalty_training_modal button[name='register_training_btn']"
-    );
-    if (registerCPDTrainingBtn) {
-      registerCPDTrainingBtn.addEventListener("click", this.registerTrainingClicked.bind(this));
-    }*/
-
-    // // Bind events for accept and deny buttons
-    // const acceptBtn = document.querySelector("button[name='accept_registration_btn']");
-    // if (acceptBtn) {
-    //   acceptBtn.addEventListener("click", this.acceptRegistration.bind(this));
-    // }
-
-    // const denyBtn = document.querySelector("button[name='deny_registration_btn']");
-    // if (denyBtn) {
-    //   denyBtn.addEventListener("click", this.denyRegistration.bind(this));
-    // }
-
-    
-
-
   }
 
   onCreateClick() {
@@ -162,7 +140,8 @@ class PenaltyHandler {
     });
   }
 
-  handleDeleteSuccess(response) {
+    handleDeleteSuccess(response) {
+        console.log(response)
     toastr.success("Penalty has been deleted successfully");
     const dataTable = $('#penalty_table').DataTable();
     dataTable.ajax.reload();
@@ -239,14 +218,6 @@ class PenaltyHandler {
     }
   }
 
-  /*handleRegisterSuccess(response) {
-    this.hideSpinner();
-    const dataTable = $("#cpd_table").DataTable();
-    toastr.success("CPD Training Registration successful");
-    $("#register_cpd_training_modal").modal("hide");
-    dataTable.ajax.reload();
-  }*/
-
   handleUpdateSuccess(response) {
     this.hideSpinner();
     const dataTable = $("#penalty_table").DataTable();
@@ -275,7 +246,9 @@ class PenaltyHandler {
           errorCallback(xhr);
         }
       }
-    };
+      };
+
+      console.log(formData)
     xhr.send(formData);
   }
 

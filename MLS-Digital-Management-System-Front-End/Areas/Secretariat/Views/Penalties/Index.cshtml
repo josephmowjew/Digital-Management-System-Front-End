@@ -110,6 +110,9 @@
                         name: "fee",
                         className: "text-left",
                         "orderable": false,
+                        render: function (data, type, row) {
+                            return '<span class="badge bg-primary bg-opacity-85 rounded-pill">MWK ' + data + '</span>';
+                        }
                     },
                     {
                         data: "resolutionComment",
@@ -129,7 +132,14 @@
                         "orderable": false,
                         render: function (data, type, row) {
                             console.log(data)
-                            return `<a href='#' onclick='penaltyHandler.editForm(${data},"${tokenValue}")' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-pencil' title='edit'>Edit</a> <a href='#' type='button' onclick='penaltdelete(${data}, ${tokenValue})' title='delete' class='ti ti-trash red-icon btn btn-outline-danger btn-sm my-1 mx-1'>Delete</a><a href='#' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-eye text-lg' title='show details' > Show Details</a>`
+                            return `
+                            
+                            <a href='#' onclick='penaltyHandler.editForm(${data},"${tokenValue}")' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-pencil' title='edit'>Edit</a> 
+                            
+                            <a href='#' onclick='penaltyHandler.delete(${data}, "${tokenValue}")' type='buttion' title='delete' class='ti ti-trash red-icon btn btn-outline-danger btn-sm my-1 mx-1'>Delete</a>
+
+                            <a href='#' type='button' class='btn btn-outline-success mx-1 btn-sm ti ti-eye text-lg' title='show details' > Show Details</a>
+                            `
                         }
                     }
                 ],

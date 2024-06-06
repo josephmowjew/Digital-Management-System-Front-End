@@ -34,6 +34,15 @@
             <input asp-for="Attachments" type="file" accept="image/*" multiple class="form-control" />
             <span asp-validation-for="Attachments" class="text-danger"></span>
           </div>
+          <div class="mb-3">
+            <label asp-for="AttendanceMode" class="form-label"></label>
+            <select asp-for="AttendanceMode" required class="form-control">
+                <option value="">Please Select Mode Of Attendance</option>
+                <option value="Virtual">Virtual</option>
+                <option value="Physical">Physical</option>
+            </select>
+            <span asp-validation-for="AttendanceMode" class="text-danger"></span>
+          </div>
            <div class="mb-3">
             <label asp-for="DateOfPayment" class="form-label"></label>
             <input asp-for="DateOfPayment" type="date" class="form-control" />

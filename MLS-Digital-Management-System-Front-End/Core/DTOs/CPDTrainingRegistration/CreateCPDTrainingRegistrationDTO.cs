@@ -9,4 +9,6 @@ public class CreateCPDTrainingRegistrationDTO
     public List<IFormFile?> Attachments { get; set; }
     [Display(Name = "Date of Payment")]
     public DateTime? DateOfPayment { get; set; }
+    [Display(Name = "Mode of Attandance")]
+    public string AttendanceMode { get; set; }
 }

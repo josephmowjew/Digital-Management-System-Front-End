@@ -14,6 +14,7 @@ namespace MLS_Digital_Management_System_Front_End.Core.DTOs.Penalty
         [StringLength(250)]
         public string Reason { get; set; }
         [Required]
+        [Display(Name = "Practicing Year")]
         public int YearOfOperationId { get; set; }
         public List<IFormFile>? Attachments { get; set; }
     }

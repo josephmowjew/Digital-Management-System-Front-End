@@ -3,7 +3,7 @@ class PenaltyHandler {
     this.hideSpinner();
     this.bindEvents();
     //this.bindCheckboxEvents();
-    this.form = document.querySelector("#create_penalty_modal form");
+    this.form = document.querySelector("#create_penaltyType_modal form");
     if (this.form) {
       this.formElements = this.form.querySelectorAll("input, select, textarea");
       this.setupFormBehavior();
@@ -14,50 +14,49 @@ class PenaltyHandler {
 
   setupFormBehavior() {
     document.addEventListener("DOMContentLoaded", () => {
-      const attachmentField = document.querySelector('div input[type="file"]');
-      attachmentField.style.display = "block";
-      attachmentField.required = true;
-      const label = attachmentField.previousElementSibling;
-      if (label) {
-        label.style.display = "inline-block";
+      const attachmentField = document.querySelector('div input[type="file"] ');
+      if (attachmentField) { 
+        attachmentField.style.display = "block";
+        attachmentField.required = true;
+        const label = attachmentField.previousElementSibling;
+        if (label) {
+           label.style.display = "inline-block";
+        }
       }
     });
   }
 
-  bindEvents() {
-    const createPenaltyBtn = document.querySelector(
-      "#create_penalty_modal button[name='create_penalty_btn']"
-    );
-    if (createPenaltyBtn) {
-      createPenaltyBtn.addEventListener("click", this.onCreateClick.bind(this));
-    }
+    bindEvents() {
+    const createPenaltyTypeBtn = document.querySelector(
+      "#create_penaltyType_modal button[name='create_penaltyType_btn']"
+        );
+    if (createPenaltyTypeBtn) {
+      createPenaltyTypeBtn.addEventListener("click", this.onCreateClick.bind(this));
+  }
 
-    const updatePenaltyBtn = document.querySelector(
-      "#edit_penalty_modal button[name='update_penalty_btn']"
+    const updatePenaltyTypeBtn = document.querySelector(
+      "#edit_penaltyType_modal button[name='update_penaltyType_btn']"
     );
-    if (updatePenaltyBtn) {
-      updatePenaltyBtn.addEventListener("click", this.updateClicked.bind(this));
+    if (updatePenaltyTypeBtn) {
+      updatePenaltyTypeBtn.addEventListener("click", this.updateClicked.bind(this));
       }
 
-    const deletePenaltyBtn = document.querySelector(
-          "#create_penalty_modal button[name='delete_penalty_btn']"
+    /*const deletePenaltyBtn = document.querySelector(
+          "#create_penaltyType_modal button[name='delete_penaltyType_btn']"
     );
     if (deletePenaltyBtn) {
       deletePenaltyBtn.addEventListener("click", this.deleteClicked.bind(this));
-    }
+    }*/
   }
 
   onCreateClick() {
     this.showSpinner();
-
-      const form = document.querySelector("#create_penalty_modal form");
-
-     
+    const form = document.querySelector("#create_penaltyType_modal form");
     const errorMessages = form.querySelectorAll(".error-message");
     errorMessages.forEach((errorMessage) => errorMessage.remove());
-
      
-    if (!form.checkValidity()) {
+      if (!form.checkValidity()) {
+        console.log(form)
       this.hideSpinner();
       const invalidFields = document.querySelectorAll(":invalid");
 
@@ -76,36 +75,40 @@ class PenaltyHandler {
         }
       });
     } else {
-       
-        const formData = new FormData(form)
-       
-        
+      const formData = new FormData(form)
       this.sendAjaxRequest(
         formData,
         "POST",
-        "http://localhost:5043/api/Penalties",
-        this.handleCreatePenaltySuccess.bind(this),
+        "http://localhost:5043/api/PenaltyType",
+        this.handleCreatePenaltyTypeSuccess.bind(this),
         this.handleError.bind(this)
       );
     }
   }
 
+  handleCreatePenaltyTypeSuccess(response) {
+     this.hideSpinner();
+     const dataTable = $("#penaltyType_table").DataTable();
+     toastr.success("New Penalty Type added successfully");
+     $("#create_penaltyType_modal").modal("hide");
+      dataTable.ajax.reload();
+      this.form.reset();
+  }
+
   editForm(id, token) {
-    this.showSpinner();
+     this.showSpinner();
 
     if (id > 0) {
-      this.sendAjaxRequest(null, 'GET', `http://localhost:5043/api/Penalties/GetPenaltyById/${id}`, this.handleEditFormSuccess.bind(this), this.handleError.bind(this), {
+        this.sendAjaxRequest(null, 'GET', `http://localhost:5043/api/PenaltyType/GetPenaltyTypeById/${id}`, this.handleEditFormSuccess.bind(this), this.handleError.bind(this), {
         'Authorization': `Bearer ${token}`
       });
     }
   }
 
   handleEditFormSuccess(response) {
-    const editform = document.querySelector("#edit_penalty_modal form");
+    const editform = document.querySelector("#edit_penaltyType_modal form");
     const data = JSON.parse(response);
-    console.log(response)
-
-        const fieldMap = this.createFieldMap(data);
+    const fieldMap = this.createFieldMap(data);
     const editformElements = [...editform.querySelectorAll('input, select, textarea, checkbox, label, textarea')];
 
     editformElements.forEach(element => {
@@ -125,64 +128,32 @@ class PenaltyHandler {
     });
 
     // Show modal
-      $("#edit_penalty_modal").modal("show");
+      $("#edit_penaltyType_modal").modal("show");
       this.hideSpinner()
   }
 
   delete(id, token) {
-    console.log("we here")
     bootbox.confirm("Are you sure you want to delete this Penalty from the system?", result => {
       if (result) {
-        this.sendAjaxRequest(null, 'DELETE', `http://localhost:5043/api/Penalties/${id}`, this.handleDeleteSuccess.bind(this), this.handleError.bind(this), {
+        this.sendAjaxRequest(null, 'DELETE', `http://localhost:5043/api/PenaltyType/${id}`, this.handleDeleteSuccess.bind(this), this.handleError.bind(this), {
           'Authorization': `Bearer ${token}`
         });
       }
     });
   }
 
-    handleDeleteSuccess(response) {
-        console.log(response)
+  handleDeleteSuccess(response) {
     toastr.success("Penalty has been deleted successfully");
-    const dataTable = $('#penalty_table').DataTable();
+    const dataTable = $('#penaltyType_table').DataTable();
     dataTable.ajax.reload();
   }
 
-  handleFileUpload(fileInput, attachments, fieldName) {
-    //console.log("We here")
-    //console.log(fieldName)
-    const attachment = attachments.find(attachment => attachment.propertyName === fieldName);
-    //console.log(attachment)
-    if (attachment) {
-          //console.log(attachment)
-          const fileURL = attachment.filePath;
-          fetch(fileURL, {
-            headers: {
-              'Accept': 'application/octet-stream',
-              'Access-Control-Request-Method': 'GET',
-              'Origin': 'http://localhost:5281'
-            }
-          })
-          .then(response => response.blob())
-          .then(blob => {
-            const file = new File([blob], attachment.fileName, attachment.fileType);
-            const dataTransfer = new DataTransfer();
-            dataTransfer.items.add(file);
-            fileInput.files = dataTransfer.files;
-            const event = new Event('change', { bubbles: true });
-            fileInput.dispatchEvent(event);
-          })
-          .catch(error => {
-            console.error(`Error fetching file ${fileURL}:`, error);
-          });
-    }
-  }
-  
 
   updateClicked() {
     this.showSpinner();
 
-    const form = document.querySelector("#edit_penalty_modal form");
-    const id = document.querySelector("#edit_penalty_modal form input[name='Id']").value;
+    const form = document.querySelector("#edit_penaltyType_modal form");
+    const id = document.querySelector("#edit_penaltyType_modal form input[name='Id']").value;
     const errorMessages = form.querySelectorAll(".error-message");
     errorMessages.forEach(errorMessage => errorMessage.remove());
 
@@ -206,11 +177,10 @@ class PenaltyHandler {
       });
     } else {
       const formData = new FormData(form);
-
       this.sendAjaxRequest(
         formData,
         "PUT",
-        `http://localhost:5043/api/Penalties/${id}`,
+        `http://localhost:5043/api/PenaltyType/${id}`,
         this.handleUpdateSuccess.bind(this),
         this.handleError.bind(this),
         { 'Authorization': `Bearer ${tokenValue}` }
@@ -220,11 +190,11 @@ class PenaltyHandler {
 
   handleUpdateSuccess(response) {
     this.hideSpinner();
-    const dataTable = $("#penalty_table").DataTable();
-    toastr.success("Penalty updated successfully");
-    $("#edit_penalty_modal").modal("hide");
-      dataTable.ajax.reload();
-      this.form.reset();
+    const dataTable = $("#penaltyType_table").DataTable();
+    toastr.success("Penalty Type updated successfully");
+    $("#edit_penaltyType_modal").modal("hide");
+    dataTable.ajax.reload();
+    this.form.reset();
   }
 
   createFieldMap(data) {
@@ -247,20 +217,9 @@ class PenaltyHandler {
           errorCallback(xhr);
         }
       }
-      };
-
-      console.log(formData)
+    };
     xhr.send(formData);
   }
-
-  handleCreatePenaltySuccess(response) {
-    this.hideSpinner();
-    const dataTable = $("#penalty_table").DataTable();
-    toastr.success("New Penalty added successfully");
-    $("#create_penalty_modal").modal("hide");
-      dataTable.ajax.reload();
-      this.form.reset();
-    }
 
   handleError(xhr) {
     this.hideSpinner();
@@ -272,7 +231,7 @@ class PenaltyHandler {
           : null;
         const element = elementName
           ? document.querySelector(
-              `#create_penalty_modal form input[name="${elementName}"]`
+              `#create_penaltyType_modal form input[name="${elementName}"]`
             )
           : null;
 

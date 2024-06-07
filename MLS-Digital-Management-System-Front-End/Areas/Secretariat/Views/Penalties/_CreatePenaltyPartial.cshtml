@@ -12,7 +12,7 @@
        <div class="row">
             <div class="col-md-6">
                 <div class="mb-3 form-check">
-                    <label asp-for="Reason" class="control-label"></label>
+                    <label asp-for="Reason" class="form-label"></label>
                     <input asp-for="Reason" placeholder="Enter Reason" class="form-control" />
                     <span asp-validation-for="Reason" class="text-danger"></span>
                 </div>
@@ -32,7 +32,7 @@
             <div class="col-md-6">
                 <div class="mb-3 form-check">
                     <div class="custom-file">
-                        <label class="custom-file-label" asp-for="Attachments"></label>
+                        <label class="form-label" asp-for="Attachments"></label>
                         <input multiple class="form-control custom-file-input" id="Attachments" accept="image/*" name="Attachments" type="file">
                     </div>
                 </div>
@@ -40,7 +40,7 @@
 
             <div class="col-md-6">
                 <div class="mb-3 form-check">
-                    <label asp-for="Fee" class="control-label"></label>
+                    <label asp-for="Fee" class="form-label"></label>
                     <input asp-for="Fee" type="number" step="1" placeholder="Enter amount (MWK)" class="form-control" />
                     <span asp-validation-for="Fee" class="text-danger"></span>
                 </div>

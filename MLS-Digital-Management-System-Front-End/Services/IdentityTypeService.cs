@@ -27,7 +27,7 @@ public class IdentityTypeService : IIdentityTypeService
         }
         else
         {
-            throw new InvalidOperationException("Invalid email or password.");
+            throw new InvalidOperationException("Invalid credentials .");
         }
     }
 

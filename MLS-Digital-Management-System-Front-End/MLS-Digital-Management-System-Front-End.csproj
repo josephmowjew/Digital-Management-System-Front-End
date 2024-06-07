@@ -22,10 +22,8 @@
     <Folder Include="Areas\Member\Data\" />
     <Folder Include="Areas\Member\Models\" />
     <Folder Include="Areas\Member\Views\" />
-    <Folder Include="Areas\Secretariat\Controllers\" />
     <Folder Include="Areas\Secretariat\Data\" />
     <Folder Include="Areas\Secretariat\Models\" />
-    <Folder Include="Areas\Secretariat\Views\" />
   </ItemGroup>
 
   <ItemGroup>

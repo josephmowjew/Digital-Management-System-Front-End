@@ -7,7 +7,7 @@ public interface IMemberService
 {
     Task<List<ReadMemberDTO>> GetAllMembersAsync();
 
-    //Task<List<ReadMemberDTO>> GetAllMembersAsync();
+
 
     Task<ReadMemberDTO> GetMemberByUserIdAsync(string id);
 

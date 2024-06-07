@@ -1,0 +1,44 @@
+@model MLS_Digital_Management_System_Front_End.Core.DTOs.Committe.CreateCommitteeDTO
+
+<!-- Modal -->
+<div class="modal-dialog modal-lg">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">New Committee</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+
+    <div class="modal-body">
+    <form id="myForm" asp-action="Create">
+        <div class="mb-3">
+            <label asp-for="CommitteeName" class="form-label">Committee Name</label>
+            <input asp-for="CommitteeName" class="form-control" placeholder="Enter Committee Name" />
+            <span asp-validation-for="CommitteeName" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Description" class="form-label">Description</label>
+            <textarea asp-for="Description" class="form-control" placeholder="Enter Description"></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="ChairpersonID" class="form-label">Chairperson</label>
+            <select asp-for="ChairpersonID" asp-items="@ViewBag.membersList" class="form-control">
+                <option value="">Select Chairperson</option>
+            </select>
+            <span asp-validation-for="ChairpersonID" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="YearOfOperationId" class="form-label">Year of Operation</label>
+            <select asp-for="YearOfOperationId" asp-items="@ViewBag.YearOfOperationList" class="form-control"></select>
+            <span asp-validation-for="YearOfOperationId" class="text-danger"></span>
+        </div>
+    </form>
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      <button type="button" class="btn btn-primary" name="create_committee_btn" id="create_committee_btn">Create Committee</button>
+    </div>
+
+  </div>
+</div>

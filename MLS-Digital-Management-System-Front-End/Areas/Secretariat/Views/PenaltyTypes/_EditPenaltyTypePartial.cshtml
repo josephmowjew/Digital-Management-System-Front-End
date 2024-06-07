@@ -1,0 +1,38 @@
+@model MLS_Digital_Management_System_Front_End.Core.DTOs.PenaltyType.UpdatePenaltyTypeDTO
+<!-- Modal -->
+<div class="modal-dialog modal-lg">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">Update Penalty Type</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+       <form asp-action="Create">
+           <input type="hidden" asp-for="Id"/>
+           <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+           <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3 form-check">
+                        <label asp-for="Name" class="control-label"></label>
+                        <input asp-for="Name" placeholder="Enter Reason" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="mb-3 form-check">
+                        <label asp-for="Description" class="form-label"></label>
+                        <select asp-for="Description" asp-items="@ViewBag.penaltyTypeList" class="form-control"></select>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                </div>
+            
+           </div>
+       </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-warning" name="update_penaltyType_btn" id="update_penaltyType_btn">Update Penalty Type</button>
+    </div>
+  </div>
+</div>

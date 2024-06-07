@@ -138,7 +138,7 @@
                         "orderable": false,
                     },
 
-                                       {
+                    {
                         data: null,
                         name: "fees",
                         title: "Fees",
@@ -185,7 +185,7 @@
 
                         return fees.length > 0 ? fees.join('') : 'Free CPD';
                         }
-                    }
+                    },
                     {
                         data: "cpdUnitsAwarded",
                         name: "cpdUnitsAwarded",
@@ -206,7 +206,7 @@
                         render: function(data, type, row, meta) {
                             if (data && data.length > 0) {
                             return data.map((attachment) => {
-                                return `<a href="@host/${attachment.filePath}" title="${attachment.fileName}" target="_blank"> <img src="@host/${attachment.filePath}" alt="cpd poster" class="w-50 h-50"> </a>`;
+                                return `<a href="@host/${attachment.filePath}" data-lightbox="image-1" title="${attachment.fileName}" > <img src="@host/${attachment.filePath}"  alt="cpd poster"  class="w-50 h-50"> </a>`;
                             }).join('<br>');
                             } else {
                             return '';

@@ -81,7 +81,7 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Secretariat.Controllers
 
         private async Task<List<SelectListItem>> GetYearOfOperations()
         {
-            List<SelectListItem> yearOperationsList = new() { new SelectListItem() { Text = "---Select Year Of Operation---", Value = "" } };
+            List<SelectListItem> yearOperationsList = new() { new SelectListItem() { Text = "---Select Practicing Year---", Value = "" } };
 
             //get identity types from remote
             var yearsOfOperationFromRemote = await this._service.YearOfOperationService.GetAllYearOfOperationsAsync();

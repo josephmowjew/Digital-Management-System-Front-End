@@ -184,14 +184,24 @@
                         orderable: false,
                         render: function(data, type, row) {
                             const registration = row.cpdTrainingRegistration.find(reg => reg.memberId === @ViewBag.MemberId);
-                            if (!registration) return "<span class='badge bg-danger bg-opacity-85 rounded-pill'>Not Registered</span>";
+                            if (!registration) {
+                            const dueDate = new Date(row.registrationDueDate);
+                            const today = new Date();
+                            const dueDateOnly = dueDate.getDate();
+                            const todayOnly = today.getDate()
+                            if (todayOnly > dueDateOnly) {
+                                return "<span class='badge bg-danger bg-opacity-85 rounded-pill'>Registration Closed</span>";
+                            } else {
+                                return "<span class='badge bg-danger bg-opacity-85 rounded-pill'>Not Registered</span>";
+                            }
+                            }
 
                             const { registrationStatus, deniedReason } = registration;
                             const badgeClasses = {
-                                Attended: "bg-success",
-                                Pending: "bg-secondary",
-                                Denied: "bg-danger",
-                                default: "bg-warning"
+                            Attended: "bg-success",
+                            Pending: "bg-secondary",
+                            Denied: "bg-danger",
+                            default: "bg-warning"
                             }[registrationStatus] || "bg-warning";
 
                             const badge = `<span class='badge ${badgeClasses} bg-opacity-85 rounded-pill' ${registrationStatus === "Denied" ? `data-toggle='tooltip' data-placement='right' title='${deniedReason}'` : ""}>${registrationStatus}</span>`;
@@ -199,21 +209,28 @@
                         }
                     },
                   
-                    {
-                        data: "id",
-                        name: "id",
-                        "orderable": false,
-                        render: function (data, type, row) {  
-                                   
-                                    var memberRegistration = row.cpdTrainingRegistration.find(registration => registration.memberId == @ViewBag.MemberId);
-                                    
-                                    if(memberRegistration == null || memberRegistration == undefined) {
-                                        
-                                     return "<a href='#' onclick='cpdTrainingHandler.registerForm(\"" + data + "\",\"" + JSON.stringify(row).replace(/"/g, "\\\"")  + "\")' type='button' class='btn btn-outline-primary my-1 btn-sm ' title='register' ><span class='bi bi-file-plus' style='font-size: 0.9rem;'></span> Register</a> "
-                                        
-                                    }
-                                }
+                   {
+                    data: "id",
+                    name: "id",
+                    "orderable": false,
+                    render: function (data, type, row) {  
+                        const dueDate = new Date(row.registrationDueDate);
+                        const today = new Date();
+                        const dueDateOnly = dueDate.getDate();
+                        const todayOnly = today.getDate();
+
+                        var memberRegistration = row.cpdTrainingRegistration.find(registration => registration.memberId == @ViewBag.MemberId);
+                        
+                        if(memberRegistration == null || memberRegistration == undefined) {
+                        if (todayOnly <= dueDateOnly) {
+                            return "<a href='#' onclick='cpdTrainingHandler.registerForm(\"" + data + "\",\"" + JSON.stringify(row).replace(/"/g, "\\\"")  + "\")' type='button' class='btn btn-outline-primary my-1 btn-sm ' title='register' ><span class='bi bi-file-plus' style='font-size: 0.9rem;'></span> Register</a> "
+                        } 
+                        else {
+                            return "";
+                            }
+                        }
                     }
+                }
                 ],
                 responsive: true,
                 "autoWidth": false,

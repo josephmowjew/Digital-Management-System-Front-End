@@ -15,7 +15,7 @@ public class MemberService : IMemberService
 
     public async Task<List<ReadMemberDTO>> GetAllMembersAsync()
     {
-       var response = await _httpClient.GetAsync("api/Members/getAllMembers");
+       var response = await _httpClient.GetAsync("api/Members/getAll");
         if (response.IsSuccessStatusCode)
         {
             var responseData = await response.Content.ReadFromJsonAsync<List<ReadMemberDTO>>();

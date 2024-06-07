@@ -15,6 +15,6 @@ public class CreateCommitteeDTO
     public string Description { get; set; }
 
     public int? ChairpersonID { get; set; }
-    [Display(Name = "Year of Operation")]
+    [Display(Name = "Practicing Year")]
     public int YearOfOperationId { get; set; }
 }

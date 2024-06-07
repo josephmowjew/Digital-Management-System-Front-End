@@ -22,7 +22,7 @@ public class UpdateCommitteeDTO
     [Display(Name = "Chairperson")]
     public int? ChairpersonID { get; set; }
 
-    [Display(Name = "Year of Operation")]
+   [Display(Name = "Practicing Year")]
     public int YearOfOperationId { get; set; }
     
 }

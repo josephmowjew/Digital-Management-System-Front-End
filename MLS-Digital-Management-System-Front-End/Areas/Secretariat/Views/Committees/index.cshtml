@@ -59,6 +59,9 @@
                            Description
                         </th>
                         <th>
+                            Practicing Year
+                        </th>
+                        <th>
                             Chairperson
                         </th>
                         
@@ -121,6 +124,12 @@
                         className: "text-left",
                         "orderable": false,
                     },
+                     {
+                        data: "yearOfOperation.formatedDate",
+                        name: "yearOfOperation",
+                        className: "text-left",
+                        "orderable": false,
+                    },
                     {
                         data: "chairperson.user.fullName",
                         name: "chairperson.user.fullName",
@@ -134,7 +143,7 @@
                         name: "id",
                         "orderable": false,
                         render: function (data, type, row) {
-                                   
+                                    console.log(row)
                                     return `<a href='#' onclick='committeeHandler.editForm(${data},"${tokenValue}")' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-pencil' title='edit'>Edit</a>
                                 <a href='#' data-id='${data}' data-token='${tokenValue}' type='button' onclick='committeeHandler.delete(event)' title='delete' class='ti ti-trash red-icon btn btn-outline-danger btn-sm my-1 mx-1'>Delete</a>`;
                                 }

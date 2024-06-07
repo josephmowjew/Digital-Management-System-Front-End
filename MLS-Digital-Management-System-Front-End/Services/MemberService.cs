@@ -23,6 +23,7 @@ public class MemberService : IMemberService
         }
         else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
         {
+   
 
             return null;
         }

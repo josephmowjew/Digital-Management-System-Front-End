@@ -35,6 +35,7 @@ class CPDTrainingHandler {
     const updateCPDBtn = document.querySelector(
       "#edit_cpd_modal button[name='update_cpd_btn']"
     );
+ 
     if (updateCPDBtn) {
       updateCPDBtn.addEventListener("click", this.updateClicked.bind(this));
     }
@@ -46,20 +47,7 @@ class CPDTrainingHandler {
       registerCPDTrainingBtn.addEventListener("click", this.registerTrainingClicked.bind(this));
     }
 
-    // // Bind events for accept and deny buttons
-    // const acceptBtn = document.querySelector("button[name='accept_registration_btn']");
-    // if (acceptBtn) {
-    //   acceptBtn.addEventListener("click", this.acceptRegistration.bind(this));
-    // }
-
-    // const denyBtn = document.querySelector("button[name='deny_registration_btn']");
-    // if (denyBtn) {
-    //   denyBtn.addEventListener("click", this.denyRegistration.bind(this));
-    // }
-
-    
-
-
+   
   }
 
   bindCheckboxEvents() {
@@ -74,7 +62,6 @@ class CPDTrainingHandler {
             cpdTrainingHandler.selectedCPDTrainingIds = cpdTrainingHandler.selectedCPDTrainingIds.filter(id => id !== cpdTrainingId);
         }
 
-        //console.log('Selected CPD Training IDs:', cpdTrainingHandler.selectedCPDTrainingIds);
     });
 }
 markAttendance() {

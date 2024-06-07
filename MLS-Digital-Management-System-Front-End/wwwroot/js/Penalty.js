@@ -223,7 +223,8 @@ class PenaltyHandler {
     const dataTable = $("#penalty_table").DataTable();
     toastr.success("Penalty updated successfully");
     $("#edit_penalty_modal").modal("hide");
-    dataTable.ajax.reload();
+      dataTable.ajax.reload();
+      this.form.reset();
   }
 
   createFieldMap(data) {
@@ -257,7 +258,8 @@ class PenaltyHandler {
     const dataTable = $("#penalty_table").DataTable();
     toastr.success("New Penalty added successfully");
     $("#create_penalty_modal").modal("hide");
-    dataTable.ajax.reload();
+      dataTable.ajax.reload();
+      this.form.reset();
     }
 
   handleError(xhr) {

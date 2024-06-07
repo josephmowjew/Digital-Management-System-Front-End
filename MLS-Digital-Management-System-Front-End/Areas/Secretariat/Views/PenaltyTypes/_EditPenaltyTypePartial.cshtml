@@ -7,26 +7,25 @@
       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
     </div>
     <div class="modal-body">
-       <form asp-action="Create">
+       <form asp-action="Update">
            <input type="hidden" asp-for="Id"/>
            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
            <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <div class="mb-3 form-check">
-                        <label asp-for="Name" class="control-label"></label>
+                        <label asp-for="Name" class="form-label">Title</label>
                         <input asp-for="Name" placeholder="Enter Reason" class="form-control" />
                         <span asp-validation-for="Name" class="text-danger"></span>
                     </div>
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <div class="mb-3 form-check">
                         <label asp-for="Description" class="form-label"></label>
-                        <select asp-for="Description" asp-items="@ViewBag.penaltyTypeList" class="form-control"></select>
+                        <textarea asp-for="Description" placeholder="Enter description" class="form-control"></textarea>
                         <span asp-validation-for="Description" class="text-danger"></span>
                     </div>
                 </div>
-            
            </div>
        </form>
     </div>

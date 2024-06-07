@@ -25,23 +25,23 @@
             <img src="~/assets/images/91.gif" id="spinner" />
         </div>
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-info my-3" data-bs-toggle="modal" data-bs-target="#create_penalty_modal">
+        <button type="button" class="btn btn-info my-3" data-bs-toggle="modal" data-bs-target="#create_penaltyType_modal">
             Add New Penalty Type
         </button>
 
         <!-- Modal -->
-        <div class="modal fade" id="create_penalty_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="create_penaltyType_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <partial name="_CreatePenaltyTypePartial" />
         </div>
         <!-- Modal -->
-        <!--<div class="modal fade" id="edit_penalty_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <partial name="_EditPenaltyPartial" />
-        </div>-->
+        <div class="modal fade" id="edit_penaltyType_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <partial name="_EditPenaltyTypePartial" />
+        </div>
 
-        <h5 class="card-title fw-semibold mb-4 text-uppercase text-center"> Penalty Types In Operating Year <strong>(@ViewBag.YearOfOperation.FormatedDate)</strong></h5>
+        <h5 class="card-title fw-semibold mb-4 text-uppercase text-center"> Penalty Types In Year of Practice <strong>(@ViewBag.YearOfOperation.FormatedDate)</strong></h5>
 
         <div class="table-responsive">
-            <table class="table table-bordered table-hover" id="penalty_table">
+            <table class="table table-bordered table-hover" id="penaltyType_table">
                 <thead>
                     <tr>
                         <th>
@@ -69,10 +69,10 @@
         var datatable;
         var tokenValue = '@ViewBag.token';
     </script>
-    <script src="~/js/Penalty.js" asp-append-version="true"></script>
+    <script src="~/js/PenaltyType.js" asp-append-version="true"></script>
     <script>
         $(document).ready(function () {
-            datatable = $('#penalty_table').DataTable({
+            datatable = $('#penaltyType_table').DataTable({
 
 
                 "processing": true,
@@ -110,7 +110,6 @@
                         name: "id",
                         "orderable": false,
                         render: function (data, type, row) {
-                            console.log(data)
                             return `
                             
                             <a href='#' onclick='penaltyHandler.editForm(${data},"${tokenValue}")' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-pencil' title='edit'>Edit</a> 

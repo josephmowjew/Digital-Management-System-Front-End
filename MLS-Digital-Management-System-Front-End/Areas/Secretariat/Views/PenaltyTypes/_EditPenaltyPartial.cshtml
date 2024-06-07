@@ -1,0 +1,76 @@
+@model MLS_Digital_Management_System_Front_End.Core.DTOs.Penalty.UpdatePenaltyDTO
+<!-- Modal -->
+<div class="modal-dialog modal-lg">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">Update Penalty</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+       <form asp-action="Create">
+       <input type="hidden" asp-for="Id"/>
+       <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+       <div class="row">
+            <div class="col-md-6">
+                <div class="mb-3 form-check">
+                    <label asp-for="Reason" class="control-label"></label>
+                    <input asp-for="Reason" placeholder="Enter Reason" class="form-control" />
+                    <span asp-validation-for="Reason" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="mb-3 form-check">
+                    <label asp-for="PenaltyTypeId" class="form-label"></label>
+                    <select asp-for="PenaltyTypeId" asp-items="@ViewBag.penaltyTypeList" class="form-control"></select>
+                    <span asp-validation-for="PenaltyTypeId" class="text-danger"></span>
+                </div>
+            </div>
+            
+       </div>
+
+       <div class="row">
+            <div class="col-md-6">
+                <div class="mb-3 form-check">
+                    <div class="custom-file">
+                        <label class="custom-file-label" asp-for="Attachments"></label>
+                        <input multiple class="form-control custom-file-input" id="Attachments" accept="image/*" name="Attachments" type="file">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="mb-3 form-check">
+                    <label asp-for="Fee" class="control-label"></label>
+                    <input asp-for="Fee" type="number" step="1" placeholder="Enter amount (MWK)" class="form-control" />
+                    <span asp-validation-for="Fee" class="text-danger"></span>
+                </div>
+            </div>
+       </div>
+
+       <div class="row">
+           <div class="col-md-6">
+                <div class="mb-3" >
+                    <label asp-for="MemberId" class="form-label"></label>
+                    <select asp-for="MemberId" asp-items="@ViewBag.membersList" class="form-control"></select>
+                    <span asp-validation-for="MemberId" class="text-danger"></span>
+                </div>
+           </div>
+
+           <div class="col-md-6">
+               <div class="mb-3" >
+            <label asp-for="YearOfOperationId" class="form-label"></label>
+            <select asp-for="YearOfOperationId" asp-items="@ViewBag.yearOperationsList" class="form-control"></select>
+            <span asp-validation-for="YearOfOperationId" class="text-danger"></span>
+          </div>
+           </div>
+       </div>
+       </form>
+    </div>
+     <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      <button type="button" class="btn btn-warning" name="update_penalty_btn" id="update_penalty_btn">Update Penalty</button>
+     
+    </div>
+  </div>
+</div>

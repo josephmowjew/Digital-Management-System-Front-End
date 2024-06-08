@@ -105,6 +105,9 @@
                         name: "fee",
                         className: "text-left",
                         "orderable": false,
+                        render: function (data, type, row) {
+                            return '<span class="badge bg-primary bg-opacity-85 rounded-pill">MWK ' + data + '</span>';
+                        }
                     },
                     {
                         data: "paymentStatus",

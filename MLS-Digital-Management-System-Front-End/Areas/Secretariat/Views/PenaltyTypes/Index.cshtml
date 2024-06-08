@@ -25,36 +25,30 @@
             <img src="~/assets/images/91.gif" id="spinner" />
         </div>
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-info my-3" data-bs-toggle="modal" data-bs-target="#create_penalty_modal">
-            Add New Penalty
+        <button type="button" class="btn btn-info my-3" data-bs-toggle="modal" data-bs-target="#create_penaltyType_modal">
+            Add New Penalty Type
         </button>
 
         <!-- Modal -->
-        <div class="modal fade" id="create_penalty_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <partial name="_CreatePenaltyPartial" />
+        <div class="modal fade" id="create_penaltyType_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <partial name="_CreatePenaltyTypePartial" />
         </div>
         <!-- Modal -->
-        <div class="modal fade" id="edit_penalty_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <partial name="_EditPenaltyPartial" />
+        <div class="modal fade" id="edit_penaltyType_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <partial name="_EditPenaltyTypePartial" />
         </div>
 
-        <h5 class="card-title fw-semibold mb-4 text-uppercase text-center"> Penalties In Year of Practice <strong>(@ViewBag.YearOfOperation.FormatedDate)</strong></h5>
+        <h5 class="card-title fw-semibold mb-4 text-uppercase text-center"> Penalty Types In Year of Practice <strong>(@ViewBag.YearOfOperation.FormatedDate)</strong></h5>
 
         <div class="table-responsive">
-            <table class="table table-bordered table-hover" id="penalty_table">
+            <table class="table table-bordered table-hover" id="penaltyType_table">
                 <thead>
                     <tr>
                         <th>
+                            Name
+                        </th>
+                        <th>
                             Description
-                        </th>
-                        <th>
-                            Fee
-                        </th>
-                        <th>
-                            Comment
-                        </th>
-                        <th>
-                            Penalty Status
                         </th>
                         <th>
                             Actions
@@ -75,17 +69,17 @@
         var datatable;
         var tokenValue = '@ViewBag.token';
     </script>
-    <script src="~/js/Penalty.js" asp-append-version="true"></script>
+    <script src="~/js/PenaltyType.js" asp-append-version="true"></script>
     <script>
         $(document).ready(function () {
-            datatable = $('#penalty_table').DataTable({
+            datatable = $('#penaltyType_table').DataTable({
 
 
                 "processing": true,
                 "serverSide": true,
                 "order": [[0, "desc"]],
                 ajax: {
-                    url: "@host/api/Penalties/paged",
+                    url: "@host/api/PenaltyType/paged",
                     type: 'get',
                     datatype: 'Json', headers: {
                         'Authorization': 'Bearer @ViewBag.token'
@@ -100,29 +94,14 @@
                 ],
                 columns: [
                     {
-                        data: "reason",
-                        name: "reason",
+                        data: "name",
+                        name: "name",
                         className: "text-left",
                         "orderable": false,
                     },
                     {
-                        data: "fee",
-                        name: "fee",
-                        className: "text-left",
-                        "orderable": false,
-                        render: function (data, type, row) {
-                            return '<span class="badge bg-primary bg-opacity-85 rounded-pill">MWK ' + data + '</span>';
-                        }
-                    },
-                    {
-                        data: "resolutionComment",
-                        name: "resolutionComment",
-                        className: "text-left",
-                        "orderable": false,
-                    },
-                    {
-                        data: "penaltyStatus",
-                        name: "penaltyStatus",
+                        data: "description",
+                        name: "description",
                         className: "text-left",
                         "orderable": false,
                     },
@@ -131,14 +110,12 @@
                         name: "id",
                         "orderable": false,
                         render: function (data, type, row) {
-                            console.log(data)
                             return `
                             
                             <a href='#' onclick='penaltyHandler.editForm(${data},"${tokenValue}")' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-pencil' title='edit'>Edit</a> 
                             
                             <a href='#' onclick='penaltyHandler.delete(${data}, "${tokenValue}")' type='buttion' title='delete' class='ti ti-trash red-icon btn btn-outline-danger btn-sm my-1 mx-1'>Delete</a>
-
-                            <a href='#' type='button' class='btn btn-outline-success mx-1 btn-sm ti ti-eye text-lg' title='show details' > Show Details</a>
+                            
                             `
                         }
                     }

@@ -1,0 +1,54 @@
+@model MLS_Digital_Management_System_Front_End.Core.DTOs.PenaltyPayment.CreatePenaltyPaymentDTO;
+<!-- Modal -->
+<div class="modal-dialog modal-lg">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">Create Penalty Payment</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+       <form asp-action="Create">
+           <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+           <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3 form-check">
+                        <label asp-for="Description" class="form-label">Description</label>
+                        <textarea asp-for="Description" placeholder="Enter Payment Description" class="form-control"></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="mb-3 form-check">
+                        <label asp-for="PenaltyId" class="form-label"></label>
+                        <select asp-for="PenaltyId" asp-items="@ViewBag.penaltyList" class="form-control"></select>
+                        <span asp-validation-for="PenaltyId" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="mb-3 form-check">
+                        <label asp-for="Fee" class="form-label"></label>
+                        <input asp-for="Fee" type="number" step="1" placeholder="Enter Amount (MWK)" class="form-control" />
+                        <span asp-validation-for="Fee" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="mb-3 form-check">
+                        <div class="custom-file">
+                            <label class="form-label" asp-for="Attachments"></label>
+                            <input multiple class="form-control custom-file-input" id="Attachments" accept="image/*" name="Attachments" type="file">
+                        </div>
+                    </div>
+                </div>
+           </div>
+       </form>
+    </div>
+
+     <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" name="create_penaltyPayment_btn" id="create_penaltyPayment_btn">Add Penalty Payment</button>
+     </div>
+  </div>
+</div>

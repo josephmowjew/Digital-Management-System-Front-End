@@ -29,6 +29,7 @@ public class ServiceRepository : IServiceRepository
     private IPenaltyTypeService _penaltyTypeService;
     private IPenaltyService _penaltyService;
     private IThreadService _threadService;
+    private IPenaltyPaymentService _penaltyPaymentService;
 
 
 
@@ -61,6 +62,7 @@ public class ServiceRepository : IServiceRepository
             _penaltyService = new PenaltyService(_httpClient);
             _penaltyTypeService = new PenaltyTypeService(_httpClient);
             _threadService = new ThreadService(_httpClient);
+            _penaltyPaymentService = new PenaltyPaymentService(_httpClient);
         } 
     } 
 
@@ -93,5 +95,6 @@ public class ServiceRepository : IServiceRepository
     public IPenaltyService PenaltyService => _penaltyService ??= new PenaltyService(_httpClient);
     public IPenaltyTypeService PenaltyTypeService => _penaltyTypeService ??= new PenaltyTypeService(_httpClient);
     public IThreadService ThreadService => _threadService ??= new ThreadService(_httpClient);
+    public IPenaltyPaymentService PenaltyPaymentService => _penaltyPaymentService ??= new PenaltyPaymentService(_httpClient);
    
 }

@@ -6,6 +6,7 @@ namespace MLS_Digital_Management_System_Front_End.Core.DTOs.Penalty
 {
     public class ReadPenaltyDTO
     {
+        public int Id { get; set; }
         public int MemberId { get; set; }
         public int PenaltyTypeId { get; set; }
         public double Fee { get; set; }

@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MLS_Digital_Management_System_Front_End.Core.DTOs.PenaltyType
 {
-    public class CreatePenaltyTypeDTO
+    public class CreatePenaltyPaymentDTO
     {
         [Required]
         [StringLength(maximumLength: 100)]

@@ -141,20 +141,25 @@
                         render: function(data, type, row) {
                             var fees = [];
 
+                            // Helper function to format currency or return "Free CPD"
+                            const formatCurrency = (fee) => {
+                            return fee === 0 ? "Free" : `MWK${fee.toFixed(2)}`;
+                            };
+
                             if (row.cpdTrainingRegistration && row.cpdTrainingRegistration.length > 0) {
-                                const memberRegistration = row.cpdTrainingRegistration.find(registration => registration.memberId == @ViewBag.MemberId);
-                                if (memberRegistration) {
-                                    const formattedFee = formatCurrency(memberRegistration.fee);
-                                    fees.push(`<div class="fee-item"><strong>Amount Paid:</strong> <span class="badge bg-dark bg-opacity-85">${formattedFee}</span></div>`);
-                                    return fees.join('');
-                                }
+                            const memberRegistration = row.cpdTrainingRegistration.find(registration => registration.memberId == @ViewBag.MemberId);
+                            if (memberRegistration) {
+                                const formattedFee = formatCurrency(memberRegistration.fee);
+                                fees.push(`<div class="fee-item"><strong>Amount Paid:</strong> <span class="badge bg-dark bg-opacity-85">${formattedFee}</span></div>`);
+                                return fees.join('');
+                            }
                             }
 
                             const renderFeeItem = (label, fee, badgeClass) => {
-                                if (fee) {
-                                    const formattedFee = formatCurrency(fee);
-                                    fees.push(`<div class="fee-item"><strong>${label}:</strong> <span class="badge ${badgeClass} bg-opacity-85">${formattedFee}</span></div>`);
-                                }
+                            if (fee !== null && fee !== undefined) {
+                                const formattedFee = formatCurrency(fee);
+                                fees.push(`<div class="fee-item"><strong>${label}:</strong> <span class="badge ${badgeClass} bg-opacity-85">${formattedFee}</span></div>`);
+                            }
                             };
 
                             renderFeeItem('Member Physical', row.memberPhysicalAttendanceFee, 'bg-primary');
@@ -162,9 +167,10 @@
                             renderFeeItem('Non-Member Physical', row.nonMemberPhysicalAttendanceFee, 'bg-warning');
                             renderFeeItem('Non-Member Virtual', row.nonMemberVirtualAttandanceFee, 'bg-info');
 
-                            return fees.length > 0 ? fees.join('') : 'Free CPD';
+                            return fees.length > 0 ? fees.join('') : 'Free';
                         }
-                    },
+                        },
+
 
                     {
                         data: "cpdUnitsAwarded",
@@ -184,17 +190,24 @@
                         orderable: false,
                         render: function(data, type, row) {
                             const registration = row.cpdTrainingRegistration.find(reg => reg.memberId === @ViewBag.MemberId);
-                            if (!registration) {
-                            const dueDate = new Date(row.registrationDueDate);
+                           if (!registration) {
+                            const dueDate = row.registrationDueDate ? new Date(Date.parse(row.registrationDueDate)) : null;
                             const today = new Date();
-                            const dueDateOnly = dueDate.getDate();
-                            const todayOnly = today.getDate()
-                            if (todayOnly > dueDateOnly) {
-                                return "<span class='badge bg-danger bg-opacity-85 rounded-pill'>Registration Closed</span>";
-                            } else {
-                                return "<span class='badge bg-danger bg-opacity-85 rounded-pill'>Not Registered</span>";
+
+                            if (dueDate) {
+                                // Calculate the time difference in milliseconds
+                                const timeDiff = dueDate.getTime() - today.getTime();
+                                // Convert the time difference from milliseconds to days
+                                const daysDiff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+                                
+                                if (daysDiff < 1) {
+                                   
+                                    return "<span class='badge bg-danger bg-opacity-85 rounded-pill'>Registration Closed</span>";
+                                }
                             }
-                            }
+
+                            return "<span class='badge bg-danger bg-opacity-85 rounded-pill'>Not Registered</span>";
+                        }
 
                             const { registrationStatus, deniedReason } = registration;
                             const badgeClasses = {
@@ -220,14 +233,26 @@
                         const todayOnly = today.getDate();
 
                         var memberRegistration = row.cpdTrainingRegistration.find(registration => registration.memberId == @ViewBag.MemberId);
+
+                        if (!memberRegistration) {
+                            const dueDate = row.registrationDueDate ? new Date(Date.parse(row.registrationDueDate)) : null;
+                            const today = new Date();
                         
-                        if(memberRegistration == null || memberRegistration == undefined) {
-                        if (todayOnly <= dueDateOnly) {
+                        if (dueDate) {
+
+                            
+                                // Calculate the time difference in milliseconds
+                                const timeDiff = dueDate.getTime() - today.getTime();
+                                // Convert the time difference from milliseconds to days
+                                const daysDiff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+                        if (daysDiff >= 1) {
+                           
                             return "<a href='#' onclick='cpdTrainingHandler.registerForm(\"" + data + "\",\"" + JSON.stringify(row).replace(/"/g, "\\\"")  + "\")' type='button' class='btn btn-outline-primary my-1 btn-sm ' title='register' ><span class='bi bi-file-plus' style='font-size: 0.9rem;'></span> Register</a> "
                         } 
                         else {
                             return "";
                             }
+                        }
                         }
                     }
                 }

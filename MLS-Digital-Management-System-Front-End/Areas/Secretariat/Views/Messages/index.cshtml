@@ -32,6 +32,10 @@
        <div>
             <img src="~/assets/images/91.gif" id="spinner" />
         </div>
+        <div>
+            <button onclick="window.history.back()" class="btn btn-warning my-3"><span class="ti ti-arrow-left"></span>Back</button>
+
+        </div>
         <!-- Button trigger modal -->
         <button type="button" class="btn btn-info my-3" data-bs-toggle="modal" data-bs-target="#create_message_modal">
             Add New Message
@@ -112,12 +116,35 @@
                         className: "text-left",
                         "orderable": false,
                     },
-                     {
-                        data: "timestamp",
-                        name: "timestamp",
-                        className: "text-left",
-                        "orderable": false,
-                    },
+                    {
+    data: "timestamp",
+    name: "timestamp",
+    className: "text-left",
+    orderable: false,
+    render: function(data) {
+        // Convert the timestamp to a JavaScript Date object
+        var date = new Date(data);
+
+        // Format the time part
+        var hours = date.getHours();
+        var ampm = hours >= 12 ? 'PM' : 'AM';
+        hours = hours % 12;
+        hours = hours ? hours : 12; // Handle 0 hour case
+        var minutes = date.getMinutes().toString().padStart(2, '0');
+        var formattedTime = '<span class="badge bg-secondary rounded-pill">' + hours + ':' + minutes + ' ' + ampm + '</span>';
+
+        // Format the date part
+        var day = date.getDate().toString().padStart(2, '0');
+        var month = (date.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-based
+        var year = date.getFullYear();
+        var formattedDate = day + '-' + month + '-' + year;
+
+        // Combine the time and date parts
+        var formattedTimestamp = formattedTime + ' ' + formattedDate;
+
+        return formattedTimestamp;
+    }
+},
                     {
                         data: "attachments",
                         name: "attachments",
@@ -132,7 +159,7 @@
                         render: function (data, type, row) {
                                    
                                     return `
-                                            <a href='#' data-id='${data}' data-token='${tokenValue}' type='button' onclick='messageHandler.delete(event)' title='delete' class='ti ti-trash red-icon btn btn-outline-danger btn-sm my-1 mx-1'>Delete</a>`;
+                                            <a href='#' data-id='${data}' data-token='${tokenValue}' type='button' onclick='messageHandler.delete(event)' title='delete' class='ti ti-trash red-icon btn btn-outline-danger btn-sm my-1 mx-1'> Remove</a>`;
                                 }
                     }
                 ],

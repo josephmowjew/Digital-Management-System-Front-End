@@ -144,7 +144,7 @@ handleMarkAttendanceSuccess(response) {
 
   handleEditFormSuccess(response) {
 
-    //console.log(response)
+    this.hideSpinner();
     
     const editform = document.querySelector("#edit_cpd_modal form");
     const data = JSON.parse(response);
@@ -182,10 +182,54 @@ handleMarkAttendanceSuccess(response) {
     const trainingIdInput = cpdRegisterform.querySelector('input[name="CPDTrainingId"]');
     trainingIdInput.value = trainingId;
 
-    if (trainingFee != null && trainingFee != undefined && trainingFee > 0) {
-      cpdRegisterform.querySelector("#cpd_training_amount").innerHTML = `<strong>MWK${trainingFee} </strong>`;
-      cpdRegisterform.querySelector("#cpd_training_no_payment_alert").style.display = "none";
-    } else {
+    // Log the trainingId for debugging purposes
+    const trainingData = JSON.parse(trainingFee);
+
+    // Destructure the different fees from the trainingFee object
+    const { 
+      memberPhysicalAttendanceFee, 
+      memberVirtualAttendanceFee, 
+      nonMemberPhysicalAttendanceFee, 
+      nonMemberVirtualAttandanceFee 
+    } = trainingData;
+
+
+    
+    // Check if all fees are zero or null
+    const isFree = [memberPhysicalAttendanceFee, memberVirtualAttendanceFee, nonMemberPhysicalAttendanceFee, nonMemberVirtualAttandanceFee]
+      .every(fee => fee === null || fee <= 0);
+
+    const displayFee = (fee) => {
+      console.log(typeof(fee))
+      if(typeof(fee) == "number")
+        {
+          if (fee > 0) {
+            cpdRegisterform.querySelector("#cpd_training_amount").innerHTML = `<strong>MWK${fee} </strong>`;
+          } else {
+            cpdRegisterform.querySelector("#cpd_training_amount").innerHTML = `<strong>Free CPD</strong>`;
+          }
+        }
+        else{
+          cpdRegisterform.querySelector("#cpd_training_amount").innerHTML = `<strong>Pending....Please select attendance mode</strong>`;
+        }
+       
+    };
+
+    const modeOfAttendanceSelect = cpdRegisterform.querySelector('select[name="AttendanceMode"]');
+   
+    modeOfAttendanceSelect.addEventListener('change', () => {
+
+     
+      const selectedMode = modeOfAttendanceSelect.value;
+      let fee = 0;
+      if (selectedMode === 'Physical') {
+        fee = memberPhysicalAttendanceFee || 0;
+      } else if (selectedMode === 'Virtual') {
+        fee = memberVirtualAttendanceFee || 0;
+      }
+      displayFee(fee);
+    });
+    if (isFree) {
       cpdRegisterform.querySelector("#cpd_training_payment_alert").style.display = "none";
       const attachmentsField = cpdRegisterform.querySelector('div input[type="file"]');
       attachmentsField.style.display = "none";
@@ -193,10 +237,21 @@ handleMarkAttendanceSuccess(response) {
       if (label) {
         label.style.display = "none";
       }
+      cpdRegisterform.querySelector("#cpd_training_no_payment_alert").style.display = "block";
+
+
+    } 
+    else {
+      displayFee(trainingFee);
+      cpdRegisterform.querySelector("#cpd_training_no_payment_alert").style.display = "none";
+      cpdRegisterform.querySelector("#cpd_training_payment_alert").style.display = "block";
     }
 
     $("#register_cpd_training_modal").modal("show");
   }
+
+
+
 
   delete(id, token) {
     bootbox.confirm("Are you sure you want to delete this CPD Training from the system?", result => {

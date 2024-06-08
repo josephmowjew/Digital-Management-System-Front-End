@@ -131,7 +131,7 @@ class PenaltyHandler {
   }
 
   delete(id, token) {
-    bootbox.confirm("Are you sure you want to delete this Penalty from the system?", result => {
+    bootbox.confirm("Are you sure you want to delete this Penalty Payment from the system?", result => {
       if (result) {
         this.sendAjaxRequest(null, 'DELETE', `http://localhost:5043/api/PenaltyPayments/${id}`, this.handleDeleteSuccess.bind(this), this.handleError.bind(this), {
           'Authorization': `Bearer ${token}`
@@ -141,7 +141,7 @@ class PenaltyHandler {
   }
 
   handleDeleteSuccess(response) {
-    toastr.success("Penalty has been deleted successfully");
+    toastr.success("Penalty Payment deleted successfully");
     const dataTable = $('#penaltyPayment_table').DataTable();
     dataTable.ajax.reload();
   }

@@ -21,6 +21,7 @@ public interface IServiceRepository{
     IPenaltyTypeService PenaltyTypeService { get; }
     IPenaltyService PenaltyService { get; }
     IThreadService ThreadService { get; }
-}
     IPenaltyPaymentService PenaltyPaymentService { get; }
+
+}
 

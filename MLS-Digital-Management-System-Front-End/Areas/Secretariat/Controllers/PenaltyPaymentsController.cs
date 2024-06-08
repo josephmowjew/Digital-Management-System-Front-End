@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using MLS_Digital_Management_System_Front_End.Core.DTOs.YearOfOperation;
 using MLS_Digital_Management_System_Front_End.Helpers;
 using MLS_Digital_Management_System_Front_End.Services.Interfaces;
@@ -6,11 +7,11 @@ using MLS_Digital_Management_System_Front_End.Services.Interfaces;
 namespace MLS_Digital_Management_System_Front_End.Areas.Secretariat.Controllers
 {
     [Area("Secretariat")]
-    public class PenaltyTypes : Controller
+    public class PenaltyPaymentsController : Controller
     {
         private readonly IServiceRepository _service;
 
-        public PenaltyTypes(IServiceRepository serviceRepository)
+        public PenaltyPaymentsController(IServiceRepository serviceRepository)
         {
             _service = serviceRepository;
         }
@@ -32,13 +33,31 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Secretariat.Controllers
             this._service.Token = token;
             ViewBag.YearOfOperation = await GetCurrentYearOfOperationAsync();
             //ViewBag.membersList = await GetAllMembersAsync();
-            //ViewBag.penaltyTypeList = await GetAllPenaltiesAsync();
+            ViewBag.penaltyList = await GetAllPenaltiesAsync();
             //ViewBag.yearOperationsList = await GetYearOfOperations();
         }
 
         private async Task<ReadYearOfOperationDTO> GetCurrentYearOfOperationAsync()
         {
             return await this._service.YearOfOperationService.GetCurrentYearOfOperationAsync();
+        }
+
+        private async Task<List<SelectListItem>> GetAllPenaltiesAsync()
+        {
+            List<SelectListItem> penaltiesList = new() { new SelectListItem() { Text = "---Select Penalty---", Value = "" } };
+
+            //get identity types from remote
+            var penaltiesListFromRemote = await this._service.PenaltyService.GetAllPenaltiesAsync();
+
+            if (penaltiesListFromRemote != null)
+            {
+                penaltiesListFromRemote.ForEach(penalty =>
+                {
+                    penaltiesList.Add(new SelectListItem() { Text = penalty.Reason, Value = penalty.Id.ToString() });
+                });
+            }
+
+            return penaltiesList;
         }
     }
 }

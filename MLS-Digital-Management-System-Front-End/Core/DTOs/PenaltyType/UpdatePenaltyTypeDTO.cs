@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MLS_Digital_Management_System_Front_End.Core.DTOs.PenaltyType
 {
-    public class UpdatePenaltyTypeDTO
+    public class UpdatePenaltyPaymentDTO
     {
         public int Id { get; set; }
         [Required]

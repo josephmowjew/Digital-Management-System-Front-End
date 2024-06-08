@@ -1,7 +1,7 @@
 @using Microsoft.Extensions.Configuration
 @inject IConfiguration Configuration
 @{
-    ViewData["Title"] = "Committes";
+    ViewData["Title"] = "Messages";
     Layout = "~/Areas/Secretariat/Views/shared/_Layout.cshtml";
 
     var host = Configuration.GetSection("APIURL")["Link"];
@@ -33,39 +33,31 @@
             <img src="~/assets/images/91.gif" id="spinner" />
         </div>
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-info my-3" data-bs-toggle="modal" data-bs-target="#create_committee_modal">
-            Add New Committee
+        <button type="button" class="btn btn-info my-3" data-bs-toggle="modal" data-bs-target="#create_message_modal">
+            Add New Message
         </button>
 
          <!-- Modal -->
-        <div class="modal fade" id="create_committee_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <partial name="_CreateCommitteePartial" />
+        <div class="modal fade" id="create_message_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <partial name="_CreateMessagePartial" />
         </div>
-        <!-- Modal -->
-        <div class="modal fade" id="edit_committee_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <partial name="_EditCommitteePartial" />
-        </div>
-
-        <h5 class="card-title fw-semibold mb-4 text-uppercase text-center"> Committee's List</strong></h5>
+       
+        <h5 class="card-title fw-semibold mb-4 text-uppercase text-center"> Messages List for @ViewBag.ThreadSubject</strong></h5>
 
         <div class="table-responsive">
-            <table class="table table-bordered table-hover" id="committee_table">
+            <table class="table table-bordered table-hover" id="message_table">
                 <thead>
                     <tr>
                         <th>
-                           Committee Name
+                            Content
+                        </th>
+                         <th>
+                           Timestamp
                         </th>
                         <th>
-                           Description
+                            Attachments
                         </th>
-                        <th>
-                            Practicing Year
-                        </th>
-                        <th>
-                            Chairperson
-                        </th>
-                        
-                        
+                       
                         <th>
                             Action
                         </th>
@@ -85,17 +77,17 @@
         var datatable;
         var tokenValue = '@ViewBag.token';
     </script>
-     <script src="~/js/Committee.js" asp-append-version="true"></script>
+     <script src="~/js/Message.js" asp-append-version="true"></script>
     <script>
         $(document).ready(function () {
-            datatable = $('#committee_table').DataTable({
+            datatable = $('#message_table').DataTable({
 
 
                 "processing": true,
                 "serverSide": true,
                 "order": [[0, "desc"]],
                 ajax: {
-                    url: "@host/api/Committees/paged",
+                    url: "@host/api/Messages/paged?threadId=@ViewBag.ThreadId",
                     type: 'get',
                     datatype: 'Json', headers: {
                         'Authorization': 'Bearer @ViewBag.token'
@@ -112,41 +104,35 @@
                     },
                 ],
                 columns: [
-                    {
-                        data: "committeeName",
-                        name: "committeeName",
-                        className: "text-left",
-                        "orderable": true,
-                    },
-                    {
-                        data: "description",
-                        name: "description",
+                  
+                   
+                     {
+                        data: "content",
+                        name: "content",
                         className: "text-left",
                         "orderable": false,
                     },
                      {
-                        data: "yearOfOperation.formatedDate",
-                        name: "yearOfOperation",
+                        data: "timestamp",
+                        name: "timestamp",
                         className: "text-left",
                         "orderable": false,
                     },
                     {
-                        data: "chairperson.user.fullName",
-                        name: "chairperson.user.fullName",
+                        data: "attachments",
+                        name: "attachments",
                         className: "text-left",
                         "orderable": false,
                     },
-                    
-                     
+                   
                     {
                         data: "id",
                         name: "id",
                         "orderable": false,
                         render: function (data, type, row) {
-                                    console.log(row)
-                                    return `<a href='#' onclick='committeeHandler.editForm(${data},"${tokenValue}")' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-pencil' title='edit'>Edit</a>
-                                            <a href='/secretariat/threads?committeeId=${data}'  type='button' class='btn btn-outline-success mx-1 btn-sm ti  ti-hand-point-down' title='show threads'>Threads</a>
-                                            <a href='#' data-id='${data}' data-token='${tokenValue}' type='button' onclick='committeeHandler.delete(event)' title='delete' class='ti ti-trash red-icon btn btn-outline-danger btn-sm my-1 mx-1'>Delete</a>`;
+                                   
+                                    return `
+                                            <a href='#' data-id='${data}' data-token='${tokenValue}' type='button' onclick='messageHandler.delete(event)' title='delete' class='ti ti-trash red-icon btn btn-outline-danger btn-sm my-1 mx-1'>Delete</a>`;
                                 }
                     }
                 ],

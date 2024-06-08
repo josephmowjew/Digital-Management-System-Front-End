@@ -28,6 +28,7 @@ public class ServiceRepository : IServiceRepository
     private ICpdUnitsEarnedService _cpdUnitsEarnedService;
     private IPenaltyTypeService _penaltyTypeService;
     private IPenaltyService _penaltyService;
+    private IThreadService _threadService;
 
 
 
@@ -59,6 +60,7 @@ public class ServiceRepository : IServiceRepository
             _cpdUnitsEarnedService = new CpdUnitsEarnedService(_httpClient);
             _penaltyService = new PenaltyService(_httpClient);
             _penaltyTypeService = new PenaltyTypeService(_httpClient);
+            _threadService = new ThreadService(_httpClient);
         } 
     } 
 
@@ -90,5 +92,6 @@ public class ServiceRepository : IServiceRepository
     public ICpdUnitsEarnedService CpdUnitsEarnedService => _cpdUnitsEarnedService ??= new CpdUnitsEarnedService(_httpClient);
     public IPenaltyService PenaltyService => _penaltyService ??= new PenaltyService(_httpClient);
     public IPenaltyTypeService PenaltyTypeService => _penaltyTypeService ??= new PenaltyTypeService(_httpClient);
+    public IThreadService ThreadService => _threadService ??= new ThreadService(_httpClient);
    
 }

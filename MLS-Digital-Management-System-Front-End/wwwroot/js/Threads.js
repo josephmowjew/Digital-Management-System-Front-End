@@ -1,10 +1,8 @@
-// Updated CommitteeHandler class
-
-class CommitteeHandler {
+class ThreadHandler {
     constructor() {
       this.hideSpinner();
       this.bindEvents();
-      this.form = document.querySelector("#create_committee_modal form");
+      this.form = document.querySelector("#create_thread_modal form");
       if (this.form) {
         this.formElements = this.form.querySelectorAll("input, select, textarea");
         this.setupFormBehavior();
@@ -26,61 +24,58 @@ class CommitteeHandler {
     }
   
     bindEvents() {
-      const createCommitteeBtn = document.querySelector(
-        "#create_committee_modal button[name='create_committee_btn']"
+      const createThreadBtn = document.querySelector(
+        "#create_thread_modal button[name='create_thread_btn']"
       );
-
-     
-      if (createCommitteeBtn) {
-        createCommitteeBtn.addEventListener("click", this.onCreateClick.bind(this));
+  
+      if (createThreadBtn) {
+        createThreadBtn.addEventListener("click", this.onCreateClick.bind(this));
       }
   
-      const updateCommitteeBtn = document.querySelector(
-        "#edit_committee_modal button[name='update_committee_btn']"
+      const updateThreadBtn = document.querySelector(
+        "#edit_thread_modal button[name='update_thread_btn']"
       );
-      if (updateCommitteeBtn) {
-        updateCommitteeBtn.addEventListener("click", this.updateClicked.bind(this));
+      if (updateThreadBtn) {
+        updateThreadBtn.addEventListener("click", this.updateClicked.bind(this));
       }
   
-      const deleteCommitteeBtns = document.querySelectorAll(
-        ".delete-committee-btn"
+      const deleteThreadBtns = document.querySelectorAll(
+        ".delete-thread-btn"
       );
-      deleteCommitteeBtns.forEach(btn => {
+      deleteThreadBtns.forEach(btn => {
         btn.addEventListener("click", this.delete.bind(this));
       });
     }
   
     onCreateClick() {
       this.showSpinner();
-      const form = document.querySelector("#create_committee_modal form");
+      const form = document.querySelector("#create_thread_modal form");
       const errorMessages = form.querySelectorAll(".error-message");
       errorMessages.forEach(errorMessage => errorMessage.remove());
-    
   
       if (!form.checkValidity()) {
         this.hideSpinner();
         this.displayValidationErrors(form);
       } else {
         const formData = new FormData(form);
-
-        
+  
         this.sendAjaxRequest(
           formData,
           "POST",
-          "http://localhost:5043/api/Committees",
+          "http://localhost:5043/api/Threads",
           this.handleCreateSuccess.bind(this),
           this.handleError.bind(this, form),  // Pass the form reference
           {
-            'Authorization': "Bearer "+ tokenValue
-         }
+            'Authorization': "Bearer " + tokenValue
+          }
         );
       }
     }
   
     updateClicked() {
       this.showSpinner();
-      const form = document.querySelector("#edit_committee_modal form");
-      const id = document.querySelector("#edit_committee_modal form input[name='Id']").value;
+      const form = document.querySelector("#edit_thread_modal form");
+      const id = document.querySelector("#edit_thread_modal form input[name='Id']").value;
       const errorMessages = form.querySelectorAll(".error-message");
       errorMessages.forEach(errorMessage => errorMessage.remove());
   
@@ -92,65 +87,63 @@ class CommitteeHandler {
         this.sendAjaxRequest(
           formData,
           "PUT",
-          `http://localhost:5043/api/Committees/${id}`,
+          `http://localhost:5043/api/Threads/${id}`,
           this.handleUpdateSuccess.bind(this),
           this.handleError.bind(this, form),  // Pass the form reference
           {
-            'Authorization': "Bearer "+ tokenValue
-         }
+            'Authorization': "Bearer " + tokenValue
+          }
         );
       }
     }
   
     editForm(id, token) {
-        this.showSpinner();
-    
-        if (id > 0) {
-          this.sendAjaxRequest(null, 'GET', `http://localhost:5043/api/Committees/GetCommitteeById/${id}`, this.handleEditFormSuccess.bind(this), this.handleError.bind(this), {
-            'Authorization': `Bearer ${token}`
-          });
-        }
-      }
-
-      handleEditFormSuccess(response) {
-    
-        this.hideSpinner();
-        const editform = document.querySelector("#edit_committee_modal form");
-        const data = JSON.parse(response);
-        const fieldMap = this.createFieldMap(data);
-        const editformElements = [...editform.querySelectorAll('input, select, textarea, checkbox, label, textarea')];
-    
-        editformElements.forEach(element => {
-          const fieldName = element.getAttribute('name');
-          const dataKey = fieldMap[fieldName];
-          let fieldValue = data[dataKey];
-    
-          element.value = fieldValue;
-          
+      this.showSpinner();
+  
+      if (id > 0) {
+        this.sendAjaxRequest(null, 'GET', `http://localhost:5043/api/Threads/GetThreadById/${id}`, this.handleEditFormSuccess.bind(this), this.handleError.bind(this), {
+          'Authorization': `Bearer ${token}`
         });
-    
-        // Show modal
-        $("#edit_committee_modal").modal("show");
       }
-
-      createFieldMap(data) {
-        return Object.entries(data).reduce((map, [key, value]) => {
-          const formFieldName = key.charAt(0).toUpperCase() + key.slice(1);
-          map[formFieldName] = key;
-          return map;
-        }, {});
-      }
+    }
+  
+    handleEditFormSuccess(response) {
+      this.hideSpinner();
+      const editform = document.querySelector("#edit_thread_modal form");
+      const data = JSON.parse(response);
+      const fieldMap = this.createFieldMap(data);
+      const editformElements = [...editform.querySelectorAll('input, select, textarea, checkbox, label, textarea')];
+  
+      editformElements.forEach(element => {
+        const fieldName = element.getAttribute('name');
+        const dataKey = fieldMap[fieldName];
+        let fieldValue = data[dataKey];
+  
+        element.value = fieldValue;
+      });
+  
+      // Show modal
+      $("#edit_thread_modal").modal("show");
+    }
+  
+    createFieldMap(data) {
+      return Object.entries(data).reduce((map, [key, value]) => {
+        const formFieldName = key.charAt(0).toUpperCase() + key.slice(1);
+        map[formFieldName] = key;
+        return map;
+      }, {});
+    }
+  
     delete(event) {
-   
       const button = event.currentTarget;
       const id = button.getAttribute("data-id");
       const token = button.getAttribute("data-token");
 
-     
+      console.log(id)
   
-      bootbox.confirm("Are you sure you want to delete this committee?", result => {
+      bootbox.confirm("Are you sure you want to delete this thread?", result => {
         if (result) {
-          this.sendAjaxRequest(null, 'DELETE', `http://localhost:5043/api/Committees/${id}`, this.handleDeleteSuccess.bind(this), this.handleError.bind(this, null), {
+          this.sendAjaxRequest(null, 'DELETE', `http://localhost:5043/api/Threads/${id}`, this.handleDeleteSuccess.bind(this), this.handleError.bind(this, null), {
             'Authorization': `Bearer ${token}`
           });
         }
@@ -159,23 +152,23 @@ class CommitteeHandler {
   
     handleCreateSuccess(response) {
       this.hideSpinner();
-      const dataTable = $("#committee_table").DataTable();
-      toastr.success("New committee created successfully");
-      $("#create_committee_modal").modal("hide");
+      const dataTable = $("#threads_table").DataTable();
+      toastr.success("New thread created successfully");
+      $("#create_thread_modal").modal("hide");
       dataTable.ajax.reload();
     }
   
     handleUpdateSuccess(response) {
       this.hideSpinner();
-      const dataTable = $("#committee_table").DataTable();
-      toastr.success("Committee updated successfully");
-      $("#edit_committee_modal").modal("hide");
+      const dataTable = $("#threads_table").DataTable();
+      toastr.success("Thread updated successfully");
+      $("#edit_thread_modal").modal("hide");
       dataTable.ajax.reload();
     }
   
     handleDeleteSuccess(response) {
-      toastr.success("Committee has been deleted successfully");
-      const dataTable = $('#committee_table').DataTable();
+      toastr.success("Thread has been deleted successfully");
+      const dataTable = $('#threads_table').DataTable();
       dataTable.ajax.reload();
     }
   
@@ -214,7 +207,7 @@ class CommitteeHandler {
     handleError(form, xhr) {  // Form is passed as the first parameter
       this.hideSpinner();
       const errorResponse = JSON.parse(xhr.responseText);
-      
+  
       if (form) {
         const errorMessages = form.querySelectorAll(".error-message");
         errorMessages.forEach(errorMessage => errorMessage.remove());
@@ -255,5 +248,5 @@ class CommitteeHandler {
     }
   }
   
-  window.committeeHandler = new CommitteeHandler();
+  window.threadHandler = new ThreadHandler();
   

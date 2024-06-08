@@ -20,5 +20,6 @@ public interface IServiceRepository{
     ICpdUnitsEarnedService CpdUnitsEarnedService { get; }
     IPenaltyTypeService PenaltyTypeService { get; }
     IPenaltyService PenaltyService { get; }
-
+    IThreadService ThreadService { get; }
 }
+

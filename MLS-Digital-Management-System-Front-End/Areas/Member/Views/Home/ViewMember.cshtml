@@ -201,7 +201,7 @@
                     "serverSide": true,
                     "order": [[0, "desc"]],
                     ajax: {
-                    url: 'http://localhost:5043/api/memberQualifications/paged?memberId='+@(ViewBag.member?.Id ?? 0),
+                    url: 'http://18.217.103.30/api/memberQualifications/paged?memberId='+@(ViewBag.member?.Id ?? 0),
                         type: 'get',
                         datatype: 'Json',headers: {
                                         'Authorization': 'Bearer @ViewBag.token'

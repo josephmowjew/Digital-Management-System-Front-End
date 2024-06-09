@@ -29,6 +29,7 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Secretariat.Controllers
             ViewBag.token = token;
             this._service.Token = token;
             ViewBag.ThreadId = threadId;
+            ViewBag.UserId = AuthHelper.GetUserId(HttpContext);
             ViewBag.ThreadSubject = (await this._service.ThreadService.GetThreadByIdAsync(threadId)).Subject;
         }
 

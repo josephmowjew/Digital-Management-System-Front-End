@@ -1,55 +1,55 @@
-
-
 class MessageHandler {
     constructor() {
-        this.hideSpinner();
-        this.bindEvents();
-        this.form = document.querySelector("#create_message_modal form");
+        this.form = document.querySelector("#chatForm");
+        this.messagesRetrieved = 0;
+        this.noMoreMessages = false;
+        this.getChatMessages(threadId, 5, 0);
         if (this.form) {
             this.formElements = this.form.querySelectorAll("input, select, textarea");
-            //this.setupFormBehavior();
         }
-    }
-
-    setupFormBehavior() {
-        document.addEventListener("DOMContentLoaded", () => {
-            const attachmentField = document.querySelector('div input[type="file"]');
-            if (attachmentField) {
-                attachmentField.style.display = "block";
-                attachmentField.required = true;
-                const label = attachmentField.previousElementSibling;
-                if (label) {
-                    label.style.display = "inline-block";
-                }
-            }
-        });
+        this.bindEvents();
     }
 
     bindEvents() {
-        const createMessageBtn = document.querySelector("#create_message_modal button[name='create_message_btn']");
+        const createMessageBtn = document.querySelector("#chatForm button[name='create_message_btn']");
         if (createMessageBtn) {
             createMessageBtn.addEventListener("click", this.onCreateClick.bind(this));
-        }
-
-        const updateMessageBtn = document.querySelector("#edit_message_modal button[name='update_message_btn']");
-        if (updateMessageBtn) {
-            updateMessageBtn.addEventListener("click", this.updateClicked.bind(this));
         }
 
         const deleteMessageBtns = document.querySelectorAll(".delete-message-btn");
         deleteMessageBtns.forEach(btn => {
             btn.addEventListener("click", this.delete.bind(this));
         });
+
+        const loadMoreMessagesBtn = document.querySelector("#loadMoreMessagesBtn");
+        if (loadMoreMessagesBtn) {
+            loadMoreMessagesBtn.addEventListener("click", () => {
+                const skip = this.messagesRetrieved;
+                this.getChatMessages(threadId, 5, skip);
+            });
+        }
+
+        const messagesList = document.getElementById('messagesList');
+        this.observeFirstMessage(messagesList);
+    }
+
+    observeFirstMessage(messagesList) {
+        const firstMessage = messagesList.querySelector('.message:first-child');
+        if (firstMessage) {
+            const observer = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting && !this.noMoreMessages) {
+                    const skip = this.messagesRetrieved;
+                    this.getChatMessages(threadId, 5, skip);
+                }
+            }, { threshold: 1.0 });
+            observer.observe(firstMessage);
+        }
     }
 
     onCreateClick() {
-        this.showSpinner();
-        const form = document.querySelector("#create_message_modal form");
-        const errorMessages = form.querySelectorAll(".error-message");
-        errorMessages.forEach(errorMessage => errorMessage.remove());
+        const form = document.querySelector("#chatForm");
 
         if (!form.checkValidity()) {
-            this.hideSpinner();
             this.displayValidationErrors(form);
         } else {
             const formData = new FormData(form);
@@ -67,14 +67,12 @@ class MessageHandler {
     }
 
     updateClicked() {
-        this.showSpinner();
         const form = document.querySelector("#edit_message_modal form");
         const id = document.querySelector("#edit_message_modal form input[name='Id']").value;
         const errorMessages = form.querySelectorAll(".error-message");
         errorMessages.forEach(errorMessage => errorMessage.remove());
 
         if (!form.checkValidity()) {
-            this.hideSpinner();
             this.displayValidationErrors(form);
         } else {
             const formData = new FormData(form);
@@ -92,7 +90,6 @@ class MessageHandler {
     }
 
     editForm(id, token) {
-        this.showSpinner();
         if (id > 0) {
             this.sendAjaxRequest(null, 'GET', `http://localhost:5043/api/Messages/GetMessageById/${id}`, this.handleEditFormSuccess.bind(this), this.handleError.bind(this), {
                 'Authorization': `Bearer ${token}`
@@ -101,7 +98,6 @@ class MessageHandler {
     }
 
     handleEditFormSuccess(response) {
-        this.hideSpinner();
         const editform = document.querySelector("#edit_message_modal form");
         const data = JSON.parse(response);
         const fieldMap = this.createFieldMap(data);
@@ -142,25 +138,79 @@ class MessageHandler {
     }
 
     handleCreateSuccess(response) {
-        this.hideSpinner();
-        const dataTable = $("#message_table").DataTable();
-        toastr.success("New message created successfully");
-        $("#create_message_modal").modal("hide");
-        dataTable.ajax.reload();
+        let messageObject = JSON.parse(response);
+        this.displayMessages(messageObject);
     }
 
     handleUpdateSuccess(response) {
-        this.hideSpinner();
         const dataTable = $("#message_table").DataTable();
         toastr.success("Message updated successfully");
-        $("#edit_message_modal").modal("hide");
-        dataTable.ajax.reload();
     }
 
     handleDeleteSuccess(response) {
         toastr.success("Message has been deleted successfully");
-        const dataTable = $('#message_table').DataTable();
-        dataTable.ajax.reload();
+    }
+
+    getChatMessages(threadId, numMessages, skip = 0) {
+        const url = `http://localhost:5043/api/Messages/GetMessageByRange/${threadId}/${numMessages}/${skip}`;
+        const messagesList = document.getElementById("messagesList");
+        const previousScrollHeight = messagesList.scrollHeight;
+        const previousScrollTop = messagesList.scrollTop;
+
+        fetch(url, {
+          method: 'GET',
+          headers: {
+            'Authorization': "Bearer " + tokenValue
+          }
+        })
+          .then(response => response.json())
+          .then(messages => {
+            if (messages.length === 0) {
+                this.noMoreMessages = true;
+                const caughtUpNotice = document.createElement("div");
+                caughtUpNotice.id = "caughtUpNotice";
+                caughtUpNotice.innerHTML = "You are all caught up.";
+                messagesList.insertAdjacentElement("afterbegin", caughtUpNotice);
+            } else {
+                this.noMoreMessages = false;
+                console.log(messages);
+                messages.reverse().forEach(message => this.displayMessagesAddedToTop(message));
+                
+                // Adjust the scroll position to keep the view stable
+                const newScrollHeight = messagesList.scrollHeight;
+                messagesList.scrollTop = newScrollHeight - previousScrollHeight + previousScrollTop;
+
+                // Re-observe the first message
+                this.observeFirstMessage(messagesList);
+            }
+          })
+          .catch(error => console.error(error));
+    }
+
+    displayMessages(messageObject) {
+        this.messagesRetrieved += 1;
+        let messageList = document.getElementById("messagesList");
+        const formattedDate = new Date(messageObject.timestamp).toLocaleString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
+        const className = messageObject.createdBy.id === userId ? 'sender' : 'receiver';
+        
+        messageList.insertAdjacentHTML('beforeend', `<div class="message ${className}">
+                                  <div class="message-header">${messageObject.createdBy.firstName} ${messageObject.createdBy.lastName}</div>
+                                  <div class="message-text">${messageObject.content}</div>
+                                  <div class="message-timestamp">${formattedDate}</div>
+                              </div>`);
+    }
+
+    displayMessagesAddedToTop(messageObject) {
+        this.messagesRetrieved += 1;
+        let messageList = document.getElementById("messagesList");
+        const formattedDate = new Date(messageObject.timestamp).toLocaleString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
+        const className = messageObject.createdBy.id === userId ? 'sender' : 'receiver';
+        
+        messageList.insertAdjacentHTML('afterbegin', `<div class="message ${className}">
+                                    <div class="message-header">${messageObject.createdBy.firstName} ${messageObject.createdBy.lastName}</div>
+                                    <div class="message-text">${messageObject.content}</div>
+                                    <div class="message-timestamp">${formattedDate}</div>
+                                </div>`);
     }
 
     displayValidationErrors(form) {
@@ -196,7 +246,6 @@ class MessageHandler {
     }
 
     handleError(form, xhr) {
-        this.hideSpinner();
         const errorResponse = JSON.parse(xhr.responseText);
 
         if (form) {

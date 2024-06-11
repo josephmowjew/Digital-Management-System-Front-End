@@ -35,7 +35,7 @@ $(function () {
         //send the request
 
         $.ajax({
-            url:  "http://18.217.103.30/api/probonoapplications",
+            url:  "http://localhost:5043/api/probonoapplications",
             type: 'POST',
             data: formData, // Convert formData object to JSON string
             processData: false, // Set processData to false to prevent automatic serialization
@@ -97,7 +97,7 @@ function EditForm(id,token, area = "") {
     showSpinner();
     
     $.ajax({
-        url: "http://18.217.103.30/api/probonoapplications/getprobonoapplication/"+ id,
+        url: "http://localhost:5043/api/probonoapplications/getprobonoapplication/"+ id,
         type: 'GET',
         headers: {
             'Authorization': "Bearer "+ token
@@ -146,7 +146,7 @@ function Delete(id,token) {
 
         if (result) {
             $.ajax({
-                url: 'http://18.217.103.30/api/probonoapplications/' + id,
+                url: 'http://localhost:5043/api/probonoapplications/' + id,
                 type: 'DELETE',
                 headers: {
                     'Authorization': "Bearer "+ token
@@ -181,7 +181,7 @@ function Activate(id,token) {
 
             showSpinner()
             $.ajax({
-                url: 'http://18.217.103.30/api/probonoapplications/activate/'+id,
+                url: 'http://localhost:5043/api/probonoapplications/activate/'+id,
                 type: 'GET',
                 headers: {
                     'Authorization': "Bearer "+ token
@@ -254,7 +254,7 @@ function DenyApplication() {
           //send the request
   
           $.ajax({
-              url:  "http://18.217.103.30/api/probonoapplications/denyApplication",
+              url:  "http://localhost:5043/api/probonoapplications/denyApplication",
               type: 'POST',
               data: formData, // Convert formData object to JSON string
               processData: false, // Set processData to false to prevent automatic serialization
@@ -339,7 +339,7 @@ function updateApplication(token) {
     //send the request
 
     $.ajax({
-        url: "http://18.217.103.30/api/probonoapplications/"+id,
+        url: "http://localhost:5043/api/probonoapplications/"+id,
         type: 'PUT',
         data: formDataJson,
         contentType: 'application/json',
@@ -418,7 +418,7 @@ function openClientDetailsModal(id)
     showSpinner();
     
     $.ajax({
-        url: "http://18.217.103.30/api/probonoclients/getclient/"+ id,
+        url: "http://localhost:5043/api/probonoclients/getclient/"+ id,
         type: 'GET',
         headers: {
             'Authorization': "Bearer "+ tokenValue

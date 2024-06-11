@@ -1,0 +1,31 @@
+@model MLS_Digital_Management_System_Front_End.Core.DTOs.PenaltyPayment.DenyPenaltyPaymentDTO;
+
+<!-- Modal -->
+<div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Deny Payment Form</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="PenaltyPaymentId" />
+
+
+                <div class="mb-3">
+                    <label asp-for="Reason" class="form-label"></label>
+                    <textarea asp-for="Reason" placeholder="Enter Reason for Denial" class="form-control"></textarea>
+                    <span asp-validation-for="Reason" class="text-danger"></span>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="deny_penalty_payment_btn" name="deny_penalty_payment_btn">Deny Application</button>
+        </div>
+
+    </div>
+</div>
+

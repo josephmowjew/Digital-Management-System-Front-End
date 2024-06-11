@@ -299,7 +299,7 @@ function Activate(id,token) {
 
             showSpinner()
             $.ajax({
-                url: 'http://18.217.103.30/api/licenseapplication/accept/'+id,
+                url: 'http://localhost:5043/api/licenseapplication/accept/'+id,
                 type: 'GET',
                 headers: {
                     'Authorization': "Bearer "+ token
@@ -371,7 +371,7 @@ function DenyForm(id,token) {
           //send the request
   
           $.ajax({
-              url:  "http://18.217.103.30/api/licenseapplication/denyApplication",
+              url:  "http://localhost:5043/api/licenseapplication/denyApplication",
               type: 'POST',
               data: formData, // Convert formData object to JSON string
               processData: false, // Set processData to false to prevent automatic serialization
@@ -456,7 +456,7 @@ function updateApplication(token) {
     //send the request
 
     $.ajax({
-        url: "http://18.217.103.30/api/licenseapplication/"+id,
+        url: "http://localhost:5043/api/licenseapplication/"+id,
         type: 'PUT',
         data: formDataJson,
         contentType: 'application/json',
@@ -575,7 +575,7 @@ function onSaveDraft() {
     //send the request
 
     $.ajax({
-        url:  "http://18.217.103.30/api/LicenseApplications",
+        url:  "http://localhost:5043/api/LicenseApplications",
         type: 'POST',
         data: formData, // Convert formData object to JSON string
         processData: false, // Set processData to false to prevent automatic serialization

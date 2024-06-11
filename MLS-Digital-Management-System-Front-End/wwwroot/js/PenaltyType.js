@@ -79,7 +79,7 @@ class PenaltyHandler {
       this.sendAjaxRequest(
         formData,
         "POST",
-        "http://18.217.103.30/api/PenaltyType",
+        `${host}/api/PenaltyType`,
         this.handleCreatePenaltyTypeSuccess.bind(this),
         this.handleError.bind(this)
       );
@@ -99,7 +99,7 @@ class PenaltyHandler {
      this.showSpinner();
 
     if (id > 0) {
-        this.sendAjaxRequest(null, 'GET', `http://18.217.103.30/api/PenaltyType/GetPenaltyTypeById/${id}`, this.handleEditFormSuccess.bind(this), this.handleError.bind(this), {
+        this.sendAjaxRequest(null, 'GET', `${host}/api/PenaltyType/GetPenaltyTypeById/${id}`, this.handleEditFormSuccess.bind(this), this.handleError.bind(this), {
         'Authorization': `Bearer ${token}`
       });
     }
@@ -135,7 +135,7 @@ class PenaltyHandler {
   delete(id, token) {
     bootbox.confirm("Are you sure you want to delete this Penalty from the system?", result => {
       if (result) {
-        this.sendAjaxRequest(null, 'DELETE', `http://18.217.103.30/api/PenaltyType/${id}`, this.handleDeleteSuccess.bind(this), this.handleError.bind(this), {
+        this.sendAjaxRequest(null, 'DELETE', `${host}/api/PenaltyType/${id}`, this.handleDeleteSuccess.bind(this), this.handleError.bind(this), {
           'Authorization': `Bearer ${token}`
         });
       }
@@ -180,7 +180,7 @@ class PenaltyHandler {
       this.sendAjaxRequest(
         formData,
         "PUT",
-        `http://18.217.103.30/api/PenaltyType/${id}`,
+        `${host}/api/PenaltyType/${id}`,
         this.handleUpdateSuccess.bind(this),
         this.handleError.bind(this),
         { 'Authorization': `Bearer ${tokenValue}` }

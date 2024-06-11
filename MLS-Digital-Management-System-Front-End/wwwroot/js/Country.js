@@ -26,7 +26,7 @@ $(function () {
         //send the request
 
         $.ajax({
-            url:  "http://18.217.103.30/api/Countries",
+            url:  `${host}/api/Countries`,
             type: 'POST',
             data: JSON.stringify(formData), // Convert formData object to JSON string
             contentType: 'application/json', // Set content type to JSON
@@ -75,7 +75,7 @@ function EditForm(id,token, area = "") {
     showSpinner();
     
     $.ajax({
-        url: "http://18.217.103.30/api/countries/getcountry/"+ id,
+        url: `${host}/api/countries/getcountry/`+ id,
         type: 'GET',
         headers: {
             'Authorization': "Bearer "+ token
@@ -121,7 +121,7 @@ function Delete(id,token) {
 
         if (result) {
             $.ajax({
-                url: 'http://18.217.103.30/api/countries/' + id,
+                url: `${host}/api/countries/` + id,
                 type: 'DELETE',
                 headers: {
                     'Authorization': "Bearer "+ token
@@ -185,7 +185,7 @@ function upDateFirm(token) {
     //send the request
 
     $.ajax({
-        url: "http://18.217.103.30/api/countries/"+id,
+        url: `${host}/api/countries/`+id,
         type: 'PUT',
         data: formDataJson,
         contentType: 'application/json',

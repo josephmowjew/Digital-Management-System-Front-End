@@ -36,7 +36,7 @@ $(function () {
         //send the request
 
         $.ajax({
-            url:  "http://18.217.103.30/api/members",
+            url:  `${host}/api/members`,
             type: 'POST',
             data: JSON.stringify(formData), // Convert formData object to JSON string
             contentType: 'application/json', // Set content type to JSON
@@ -99,7 +99,7 @@ function EditMemberForm() {
     showSpinner();
     
     $.ajax({
-        url: "http://18.217.103.30/api/members/get/"+ id,
+        url: `${host}/api/members/get/`+ id,
         type: 'GET',
         headers: {
             'Authorization': "Bearer "+ tokenValue
@@ -178,7 +178,7 @@ function UpdateMember() {
     //send the request
 
     $.ajax({
-        url: "http://18.217.103.30/api/members/"+id,
+        url: `${host}/api/members/`+id,
         type: 'PUT',
         data: formDataJson,
         contentType: 'application/json',

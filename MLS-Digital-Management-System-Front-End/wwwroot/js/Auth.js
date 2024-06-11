@@ -30,7 +30,7 @@ function ResetPassword() {
 
 
     $.ajax({
-        url: "http://18.217.103.30/api/auth/PasswordReset",
+        url: "" + host + "/api/auth/PasswordReset",
         type: 'POST',
         data: userInput,
         success: function (data) {
@@ -108,7 +108,7 @@ function ForgotPassword() {
 
 
     $.ajax({
-        url: "http://18.217.103.30/api/auth/ForgotPassword",
+        url: "" + host + "/api/auth/ForgotPassword",
         type: 'POST',
         data: userInput,
         success: function (data) {

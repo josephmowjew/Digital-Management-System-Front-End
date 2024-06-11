@@ -79,7 +79,7 @@ class PenaltyHandler {
       this.sendAjaxRequest(
         formData,
         "POST",
-        "http://18.217.103.30/api/PenaltyPayments",
+        `${host}/api/PenaltyPayments`,
         this.handleCreatePenaltyPaymentSuccess.bind(this),
         this.handleError.bind(this)
       );
@@ -98,7 +98,7 @@ class PenaltyHandler {
   editForm(id, token) {
     this.showSpinner();
     if (id > 0) {
-        this.sendAjaxRequest(null, 'GET', `http://18.217.103.30/api/PenaltyPayments/GetPenaltyPaymentById/${id}`, this.handleEditFormSuccess.bind(this), this.handleError.bind(this), {
+        this.sendAjaxRequest(null, 'GET', `${host}/api/PenaltyPayments/GetPenaltyPaymentById/${id}`, this.handleEditFormSuccess.bind(this), this.handleError.bind(this), {
         'Authorization': `Bearer ${token}`
       });
     }
@@ -133,7 +133,7 @@ class PenaltyHandler {
   delete(id, token) {
     bootbox.confirm("Are you sure you want to delete this Penalty Payment from the system?", result => {
       if (result) {
-        this.sendAjaxRequest(null, 'DELETE', `http://18.217.103.30/api/PenaltyPayments/${id}`, this.handleDeleteSuccess.bind(this), this.handleError.bind(this), {
+        this.sendAjaxRequest(null, 'DELETE', `${host}/api/PenaltyPayments/${id}`, this.handleDeleteSuccess.bind(this), this.handleError.bind(this), {
           'Authorization': `Bearer ${token}`
         });
       }
@@ -178,7 +178,7 @@ class PenaltyHandler {
       this.sendAjaxRequest(
         formData,
         "PUT",
-        `http://18.217.103.30/api/PenaltyPayments/${id}`,
+        `${host}/api/PenaltyPayments/${id}`,
         this.handleUpdateSuccess.bind(this),
         this.handleError.bind(this),
         { 'Authorization': `Bearer ${tokenValue}` }
@@ -227,7 +227,7 @@ class PenaltyHandler {
             headers: {
               'Accept': 'application/octet-stream',
               'Access-Control-Request-Method': 'GET',
-              'Origin': 'http://localhost:5281'
+              'Origin': `${host}`
             }
           })
           .then(response => response.blob())

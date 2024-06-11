@@ -103,7 +103,7 @@ $(function () {
             //send the request
     
             $.ajax({
-                url:  "http://18.217.103.30/api/LicenseApplications",
+                url:  `${host}/api/LicenseApplications`,
                 type: 'POST',
                 data: formData, // Convert formData object to JSON string
                 processData: false, // Set processData to false to prevent automatic serialization
@@ -172,8 +172,8 @@ function editForm(id,token, area = "") {
         //fetch previous data
 
         $.ajax({
-            url: "http://18.217.103.30/api/LicenseApplications/"+ id,
-            type: 'GET',
+            url: `${host}/api/LicenseApplications/`+ id,
+            type:'GET',
             headers: {
                 'Authorization': "Bearer "+ token
             }
@@ -210,7 +210,7 @@ function editForm(id,token, area = "") {
                     fetch(fileURL,{headers: {
                         'Accept': 'application/octet-stream',
                         'Access-Control-Request-Method': 'GET',
-                        'Origin': 'http://localhost:5281'
+                        'Origin': `${host}`
                       }})
                         .then(response => response.blob())
                         .then(blob => { 
@@ -264,7 +264,7 @@ function Delete(id,token) {
 
         if (result) {
             $.ajax({
-                url: 'http://18.217.103.30/api/licenseapplication/' + id,
+                url: `${host}/api/licenseapplication/` + id,
                 type: 'DELETE',
                 headers: {
                     'Authorization': "Bearer "+ token
@@ -299,7 +299,7 @@ function Activate(id,token) {
 
             showSpinner()
             $.ajax({
-                url: 'http://18.217.103.30/api/licenseapplication/accept/'+id,
+                url: `${host}/api/licenseapplication/accept/`+id,
                 type: 'GET',
                 headers: {
                     'Authorization': "Bearer "+ token
@@ -371,7 +371,7 @@ function DenyForm(id,token) {
           //send the request
   
           $.ajax({
-              url:  "http://18.217.103.30/api/licenseapplication/denyApplication",
+              url:  `${host}/api/licenseapplication/denyApplication`,
               type: 'POST',
               data: formData, // Convert formData object to JSON string
               processData: false, // Set processData to false to prevent automatic serialization
@@ -456,7 +456,7 @@ function updateApplication(token) {
     //send the request
 
     $.ajax({
-        url: "http://18.217.103.30/api/licenseapplication/"+id,
+        url: `${host}/api/licenseapplication/`+id,
         type: 'PUT',
         data: formDataJson,
         contentType: 'application/json',
@@ -575,7 +575,7 @@ function onSaveDraft() {
     //send the request
 
     $.ajax({
-        url:  "http://18.217.103.30/api/LicenseApplications",
+        url:  `${host}/api/LicenseApplications`,
         type: 'POST',
         data: formData, // Convert formData object to JSON string
         processData: false, // Set processData to false to prevent automatic serialization

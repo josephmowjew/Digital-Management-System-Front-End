@@ -33,7 +33,7 @@ $(function () {
         //send the request
 
         $.ajax({
-            url:  "http://18.217.103.30/api/users/"+ userIdGlobal,
+            url:  `${host}/api/users/`+ userIdGlobal,
             type: 'PUT',
             data: JSON.stringify(formData), // Convert formData object to JSON string
             contentType: 'application/json', // Set content type to JSON
@@ -86,7 +86,7 @@ function EditForm(id) {
    
     
     $.ajax({
-        url: "http://18.217.103.30/api/users/"+ id,
+        url: `${host}/api/users/`+ id,
         type: 'GET',
         headers: {
             'Authorization': "Bearer "+ tokenValue
@@ -169,7 +169,7 @@ function upDateUser(token) {
     //send the request
 
     $.ajax({
-        url: "http://18.217.103.30/api/users/"+id,
+        url: `${host}/api/users/`+id,
         type: 'PUT',
         data: formDataJson,
         contentType: 'application/json',

@@ -27,10 +27,13 @@ $(function () {
         //send the request
 
         $.ajax({
-            url:  "http://18.217.103.30/api/roles",
+            url:  `${host}/api/roles`,
             type: 'POST',
             data: JSON.stringify(formData), // Convert formData object to JSON string
             contentType: 'application/json', // Set content type to JSON
+            headers: {
+                'Authorization': "Bearer "+ tokenValue
+            },
             success: function (data) {
 
                 //parse whatever comes back to html
@@ -84,10 +87,10 @@ function EditForm(id,token, area = "") {
     showSpinner();
     
     $.ajax({
-        url: "http://18.217.103.30/api/roles/singleRole/"+ id,
+        url: `${host}/api/roles/singleRole/`+ id,
         type: 'GET',
         headers: {
-            'Authorization': "Bearer "+ token
+            'Authorization': "Bearer "+ tokenValue
         }
 
     }).done(function (data) {
@@ -131,7 +134,7 @@ function Delete(id,token) {
 
         if (result) {
             $.ajax({
-                url: 'http://18.217.103.30/api/roles/' + id,
+                url: `${host}/api/roles/` + id,
                 type: 'DELETE',
                 headers: {
                     'Authorization': "Bearer "+ token
@@ -195,7 +198,7 @@ function updateRole(token) {
     //send the request
 
     $.ajax({
-        url: "http://18.217.103.30/api/roles/"+id,
+        url: `${host}/api/roles/`+id,
         type: 'PUT',
         data: formDataJson,
         contentType: 'application/json',

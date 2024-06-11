@@ -62,7 +62,7 @@ class ThreadHandler {
         this.sendAjaxRequest(
           formData,
           "POST",
-          "http://18.217.103.30/api/Threads",
+          "${host}/api/Threads",
           this.handleCreateSuccess.bind(this),
           this.handleError.bind(this, form),  // Pass the form reference
           {
@@ -87,7 +87,7 @@ class ThreadHandler {
         this.sendAjaxRequest(
           formData,
           "PUT",
-          `http://18.217.103.30/api/Threads/${id}`,
+          `${host}/api/Threads/${id}`,
           this.handleUpdateSuccess.bind(this),
           this.handleError.bind(this, form),  // Pass the form reference
           {
@@ -101,7 +101,7 @@ class ThreadHandler {
       this.showSpinner();
   
       if (id > 0) {
-        this.sendAjaxRequest(null, 'GET', `http://18.217.103.30/api/Threads/GetThreadById/${id}`, this.handleEditFormSuccess.bind(this), this.handleError.bind(this), {
+        this.sendAjaxRequest(null, 'GET', `${host}/api/Threads/GetThreadById/${id}`, this.handleEditFormSuccess.bind(this), this.handleError.bind(this), {
           'Authorization': `Bearer ${token}`
         });
       }
@@ -143,7 +143,7 @@ class ThreadHandler {
   
       bootbox.confirm("Are you sure you want to delete this thread?", result => {
         if (result) {
-          this.sendAjaxRequest(null, 'DELETE', `http://18.217.103.30/api/Threads/${id}`, this.handleDeleteSuccess.bind(this), this.handleError.bind(this, null), {
+          this.sendAjaxRequest(null, 'DELETE', `${host}/api/Threads/${id}`, this.handleDeleteSuccess.bind(this), this.handleError.bind(this, null), {
             'Authorization': `Bearer ${token}`
           });
         }

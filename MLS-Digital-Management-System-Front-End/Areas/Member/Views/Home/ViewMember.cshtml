@@ -186,6 +186,7 @@
             var tokenValue = '@ViewBag.token';
             var userIdGlobal = '@ViewBag.userId';
             var roleNameGlobal = '@ViewBag.roleName';
+             var host = '@host';
             
         </script>
 
@@ -201,7 +202,7 @@
                     "serverSide": true,
                     "order": [[0, "desc"]],
                     ajax: {
-                    url: 'http://18.217.103.30/api/memberQualifications/paged?memberId='+@(ViewBag.member?.Id ?? 0),
+                    url: '@host/api/memberQualifications/paged?memberId='+@(ViewBag.member?.Id ?? 0),
                         type: 'get',
                         datatype: 'Json',headers: {
                                         'Authorization': 'Bearer @ViewBag.token'

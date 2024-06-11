@@ -140,7 +140,7 @@ class FormHandler {
             formData.append("actionType", "Submit");
             formData.append("Id", id);
 
-            this.sendAjaxRequest(formData, 'POST', "http://18.217.103.30/api/LicenseApplications", this.handleCreateApplicationSuccess.bind(this), this.handleError.bind(this));
+            this.sendAjaxRequest(formData, 'POST', `${host}/api/LicenseApplication`, this.handleCreateApplicationSuccess.bind(this), this.handleError.bind(this));
         }
     }
 
@@ -157,7 +157,7 @@ class FormHandler {
         formData.append("Id", id);
         
 
-        this.sendAjaxRequest(formData, 'POST', "http://18.217.103.30/api/LicenseApplications", this.handleSaveDraftSuccess.bind(this), this.handleError.bind(this));
+        this.sendAjaxRequest(formData, 'POST', `${host}/api/LicenseApplications`, this.handleSaveDraftSuccess.bind(this), this.handleError.bind(this));
     }
 
     sendAjaxRequest(formData, method, url, successCallback, errorCallback) {
@@ -260,7 +260,7 @@ class FormHandler {
         this.showSpinner();
 
         if (id > 0) {
-            this.sendAjaxRequest(null, 'GET', `http://18.217.103.30/api/LicenseApplications/${id}`, this.handleEditFormSuccess.bind(this), this.handleError.bind(this), {
+            this.sendAjaxRequest(null, 'GET', `${host}/api/LicenseApplications/${id}`, this.handleEditFormSuccess.bind(this), this.handleError.bind(this), {
                 'Authorization': `Bearer ${token}`
             });
         }
@@ -324,7 +324,7 @@ class FormHandler {
             headers: {
               'Accept': 'application/octet-stream',
               'Access-Control-Request-Method': 'GET',
-              'Origin': 'http://localhost:5281'
+              'Origin': `${host}`
             }
           })
             .then(response => response.blob())
@@ -344,7 +344,7 @@ class FormHandler {
     delete(id, token) {
         bootbox.confirm("Are you sure you want to delete this application from the system?", result => {
             if (result) {
-                this.sendAjaxRequest(null, 'DELETE', `http://18.217.103.30/api/licenseapplication/${id}`, this.handleDeleteSuccess.bind(this), this.handleError.bind(this), {
+                this.sendAjaxRequest(null, 'DELETE', `${host}/api/licenseapplication/${id}`, this.handleDeleteSuccess.bind(this), this.handleError.bind(this), {
                     'Authorization': `Bearer ${token}`
                 });
             }
@@ -364,7 +364,7 @@ class FormHandler {
             if (result) {
                 this.showSpinner();
                 this.hideLicenseApplicationButtons();
-                this.sendAjaxRequest(null, 'GET', `http://18.217.103.30/api/LicenseApplications/accept/${id}`, this.handleAcceptApplicationSuccess.bind(this), this.handleError.bind(this), {
+                this.sendAjaxRequest(null, 'GET', `${host}/api/LicenseApplications/accept/${id}`, this.handleAcceptApplicationSuccess.bind(this), this.handleError.bind(this), {
                     'Authorization': `Bearer ${tokenValue}`
                 });
             }
@@ -426,7 +426,7 @@ class FormHandler {
         const form = denyModal.querySelector('form');
         const formData = new FormData(form);
 
-        this.sendAjaxRequest(formData, 'POST', "http://18.217.103.30/api/licenseapplications/deny", this.handleDenyApplicationSuccess.bind(this), this.handleError.bind(this), {
+        this.sendAjaxRequest(formData, 'POST', `${host}/api/licenseapplications/deny`, this.handleDenyApplicationSuccess.bind(this), this.handleError.bind(this), {
             'Authorization': `Bearer ${tokenValue}`
         });
     }
@@ -448,7 +448,7 @@ class FormHandler {
         const formData = new FormData(form);
         const id = formData.get('Id');
 
-        this.sendAjaxRequest(formData, 'PUT', `http://18.217.103.30/api/licenseapplication/${id}`, this.handleUpdateApplicationSuccess.bind(this), this.handleError.bind(this), {
+        this.sendAjaxRequest(formData, 'PUT', `${host}/api/licenseapplication/${id}`, this.handleUpdateApplicationSuccess.bind(this), this.handleError.bind(this), {
             'Authorization': `Bearer ${token}`
         });
     }

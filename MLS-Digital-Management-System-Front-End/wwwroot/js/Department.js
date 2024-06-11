@@ -26,7 +26,7 @@ $(function () {
         //send the request
 
         $.ajax({
-            url:  "http://18.217.103.30/api/Departments",
+            url:  `${host}/api/Departments`,
             type: 'POST',
             data: JSON.stringify(formData), // Convert formData object to JSON string
             contentType: 'application/json', // Set content type to JSON
@@ -78,7 +78,7 @@ function EditForm(id,token, area = "") {
     showSpinner();
     
     $.ajax({
-        url: "http://18.217.103.30/api/departments/getdepartment/"+ id,
+        url: `${host}/api/departments/getdepartment/`+ id,
         type: 'GET',
         headers: {
             'Authorization': "Bearer "+ token
@@ -124,7 +124,7 @@ function Delete(id,token) {
 
         if (result) {
             $.ajax({
-                url: 'http://18.217.103.30/api/departments/' + id,
+                url: `${host}/api/departments/` + id,
                 type: 'DELETE',
                 headers: {
                     'Authorization': "Bearer "+ token
@@ -188,7 +188,7 @@ function upDateDepartment(token) {
     //send the request
 
     $.ajax({
-        url: "http://18.217.103.30/api/departments/"+id,
+        url: `${host}/api/departments/`+id,
         type: 'PUT',
         data: formDataJson,
         contentType: 'application/json',

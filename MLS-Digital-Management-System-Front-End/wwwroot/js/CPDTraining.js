@@ -75,11 +75,11 @@ markAttendance() {
               const formData = new FormData();
              
               formData.append('ids', JSON.stringify(this.selectedCPDTrainingIds));
-              console.log(formData)
+             
               this.sendAjaxRequest(
                   formData,
                   "POST",
-                  "http://18.217.103.30/api/CPDTrainingRegistrations/MarkAttendance",
+                  "${host}/api/CPDTrainingRegistrations/MarkAttendance",
                   this.handleMarkAttendanceSuccess.bind(this),
                   this.handleError.bind(this),
                   { 'Authorization': `Bearer ${tokenValue}` }
@@ -125,7 +125,7 @@ handleMarkAttendanceSuccess(response) {
       this.sendAjaxRequest(
         formData,
         "POST",
-        "http://18.217.103.30/api/CPDTrainings",
+        "${host}/api/CPDTrainings",
         this.handleCreateCPDSuccess.bind(this),
         this.handleError.bind(this)
       );
@@ -136,7 +136,7 @@ handleMarkAttendanceSuccess(response) {
     this.showSpinner();
 
     if (id > 0) {
-      this.sendAjaxRequest(null, 'GET', `http://18.217.103.30/api/CPDTrainings/GetCPDTrainingById/${id}`, this.handleEditFormSuccess.bind(this), this.handleError.bind(this), {
+      this.sendAjaxRequest(null, 'GET', `${host}/api/CPDTrainings/GetCPDTrainingById/${id}`, this.handleEditFormSuccess.bind(this), this.handleError.bind(this), {
         'Authorization': `Bearer ${token}`
       });
     }
@@ -200,7 +200,7 @@ handleMarkAttendanceSuccess(response) {
       .every(fee => fee === null || fee <= 0);
 
     const displayFee = (fee) => {
-      console.log(typeof(fee))
+      
       if(typeof(fee) == "number")
         {
           if (fee > 0) {
@@ -256,7 +256,7 @@ handleMarkAttendanceSuccess(response) {
   delete(id, token) {
     bootbox.confirm("Are you sure you want to delete this CPD Training from the system?", result => {
       if (result) {
-        this.sendAjaxRequest(null, 'DELETE', `http://18.217.103.30/api/CPDTrainings/${id}`, this.handleDeleteSuccess.bind(this), this.handleError.bind(this), {
+        this.sendAjaxRequest(null, 'DELETE', `${host}/api/CPDTrainings/${id}`, this.handleDeleteSuccess.bind(this), this.handleError.bind(this), {
           'Authorization': `Bearer ${token}`
         });
       }
@@ -323,7 +323,7 @@ handleMarkAttendanceSuccess(response) {
       this.sendAjaxRequest(
         formData,
         "POST",
-        `http://18.217.103.30/api/CPDTrainingRegistrations`,
+        `${host}/api/CPDTrainingRegistrations`,
         this.handleRegisterSuccess.bind(this),
         this.handleRegisterError.bind(this),
         { 'Authorization': `Bearer ${tokenValue}` }
@@ -349,7 +349,7 @@ handleMarkAttendanceSuccess(response) {
     for (const [key, messages] of Object.entries(errorResponse)) {
       const elementName = key.charAt(0).toUpperCase() + key.slice(1);
       const element = form.querySelector(`[name="${elementName}"]`);
-      console.log(elementName)
+     
       if (element) {
         messages.forEach(message => {
           const errorMessage = document.createElement("div");
@@ -394,7 +394,7 @@ handleMarkAttendanceSuccess(response) {
       this.sendAjaxRequest(
         formData,
         "PUT",
-        `http://18.217.103.30/api/CPDTrainings/${id}`,
+        `${host}/api/CPDTrainings/${id}`,
         this.handleUpdateSuccess.bind(this),
         this.handleError.bind(this),
         { 'Authorization': `Bearer ${tokenValue}` }
@@ -505,7 +505,7 @@ handleMarkAttendanceSuccess(response) {
         this.sendAjaxRequest(
           null,
           "GET",
-          `http://18.217.103.30/api/CPDTrainingRegistrations/AcceptCPDTrainingRegistration/${registrationId}`,
+          `${host}/api/CPDTrainingRegistrations/AcceptCPDTrainingRegistration/${registrationId}`,
           (response) => {
             this.hideSpinner();
             toastr.success("CPD Training Registration accepted");
@@ -540,7 +540,7 @@ handleMarkAttendanceSuccess(response) {
           this.sendAjaxRequest(
             formData,
             "PUT",
-            `http://18.217.103.30/api/CPDTrainingRegistrations/RejectCPDTrainingRegistration/${id}`,
+            `${host}/api/CPDTrainingRegistrations/RejectCPDTrainingRegistration/${id}`,
             (response) => {
               this.hideSpinner();
               toastr.success("CPD Training Registration denied");

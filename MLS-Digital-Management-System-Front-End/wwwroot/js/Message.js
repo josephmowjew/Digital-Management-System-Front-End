@@ -56,7 +56,7 @@ class MessageHandler {
             this.sendAjaxRequest(
                 formData,
                 "POST",
-                "http://18.217.103.30/api/Messages",
+                `${host}/api/Messages`,
                 this.handleCreateSuccess.bind(this),
                 this.handleError.bind(this, form),
                 {
@@ -79,7 +79,7 @@ class MessageHandler {
             this.sendAjaxRequest(
                 formData,
                 "PUT",
-                `http://18.217.103.30/api/Messages/${id}`,
+                `${host}/api/Messages/${id}`,
                 this.handleUpdateSuccess.bind(this),
                 this.handleError.bind(this, form),
                 {
@@ -91,7 +91,7 @@ class MessageHandler {
 
     editForm(id, token) {
         if (id > 0) {
-            this.sendAjaxRequest(null, 'GET', `http://18.217.103.30/api/Messages/GetMessageById/${id}`, this.handleEditFormSuccess.bind(this), this.handleError.bind(this), {
+            this.sendAjaxRequest(null, 'GET', `${host}/api/Messages/GetMessageById/${id}`, this.handleEditFormSuccess.bind(this), this.handleError.bind(this), {
                 'Authorization': `Bearer ${token}`
             });
         }
@@ -130,7 +130,7 @@ class MessageHandler {
 
         bootbox.confirm("Are you sure you want to delete this message?", result => {
             if (result) {
-                this.sendAjaxRequest(null, 'DELETE', `http://18.217.103.30/api/Messages/${id}`, this.handleDeleteSuccess.bind(this), this.handleError.bind(this, null), {
+                this.sendAjaxRequest(null, 'DELETE', `${host}/api/Messages/${id}`, this.handleDeleteSuccess.bind(this), this.handleError.bind(this, null), {
                     'Authorization': `Bearer ${token}`
                 });
             }
@@ -152,7 +152,7 @@ class MessageHandler {
     }
 
     getChatMessages(threadId, numMessages, skip = 0) {
-        const url = `http://18.217.103.30/api/Messages/GetMessageByRange/${threadId}/${numMessages}/${skip}`;
+        const url = `${host}/api/Messages/GetMessageByRange/${threadId}/${numMessages}/${skip}`;
         const messagesList = document.getElementById("messagesList");
         const previousScrollHeight = messagesList.scrollHeight;
         const previousScrollTop = messagesList.scrollTop;
@@ -173,7 +173,7 @@ class MessageHandler {
                 messagesList.insertAdjacentElement("afterbegin", caughtUpNotice);
             } else {
                 this.noMoreMessages = false;
-                console.log(messages);
+                
                 messages.reverse().forEach(message => this.displayMessagesAddedToTop(message));
                 
                 // Adjust the scroll position to keep the view stable

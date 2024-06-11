@@ -28,7 +28,7 @@ $(function () {
         //send the request
 
         $.ajax({
-            url:  "http://18.217.103.30/api/probonoclients",
+            url:  `${host}/api/probonoclients`,
             type: 'POST',
             data: JSON.stringify(formData), // Convert formData object to JSON string
             contentType: 'application/json', // Set content type to JSON
@@ -87,7 +87,7 @@ function EditForm(id,token, area = "") {
     showSpinner();
     
     $.ajax({
-        url: "http://18.217.103.30/api/probonoclients/getclient/"+ id,
+        url: `${host}/api/probonoclients/getclient/`+ id,
         type: 'GET',
         headers: {
             'Authorization': "Bearer "+ token
@@ -134,7 +134,7 @@ function Delete(id,token) {
 
         if (result) {
             $.ajax({
-                url: 'http://18.217.103.30/api/probonoclients/' + id,
+                url: `${host}/api/probonoclients/` + id,
                 type: 'DELETE',
                 headers: {
                     'Authorization': "Bearer "+ token
@@ -166,7 +166,7 @@ function Activate(id,token) {
         console.log(token)
         if (result) {
             $.ajax({
-                url: 'http://18.217.103.30/api/probonoclients/activate/'+id,
+                url: `${host}/api/probonoclients/activate/`+id,
                 type: 'GET',
                 headers: {
                     'Authorization': "Bearer "+ token
@@ -228,7 +228,7 @@ function updateClient(token) {
     //send the request
 
     $.ajax({
-        url: "http://18.217.103.30/api/probonoclients/"+id,
+        url: `${host}/api/probonoclients/`+id,
         type: 'PUT',
         data: formDataJson,
         contentType: 'application/json',

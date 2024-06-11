@@ -67,7 +67,7 @@ class CommitteeHandler {
         this.sendAjaxRequest(
           formData,
           "POST",
-          "http://18.217.103.30/api/Committees",
+          `${host}/api/Committees`,
           this.handleCreateSuccess.bind(this),
           this.handleError.bind(this, form),  // Pass the form reference
           {
@@ -92,7 +92,7 @@ class CommitteeHandler {
         this.sendAjaxRequest(
           formData,
           "PUT",
-          `http://18.217.103.30/api/Committees/${id}`,
+          `${host}/api/Committees/${id}`,
           this.handleUpdateSuccess.bind(this),
           this.handleError.bind(this, form),  // Pass the form reference
           {
@@ -106,7 +106,7 @@ class CommitteeHandler {
         this.showSpinner();
     
         if (id > 0) {
-          this.sendAjaxRequest(null, 'GET', `http://18.217.103.30/api/Committees/GetCommitteeById/${id}`, this.handleEditFormSuccess.bind(this), this.handleError.bind(this), {
+          this.sendAjaxRequest(null, 'GET', `${host}/api/Committees/GetCommitteeById/${id}`, this.handleEditFormSuccess.bind(this), this.handleError.bind(this), {
             'Authorization': `Bearer ${token}`
           });
         }
@@ -150,7 +150,7 @@ class CommitteeHandler {
   
       bootbox.confirm("Are you sure you want to delete this committee?", result => {
         if (result) {
-          this.sendAjaxRequest(null, 'DELETE', `http://18.217.103.30/api/Committees/${id}`, this.handleDeleteSuccess.bind(this), this.handleError.bind(this, null), {
+          this.sendAjaxRequest(null, 'DELETE', `${host}/api/Committees/${id}`, this.handleDeleteSuccess.bind(this), this.handleError.bind(this, null), {
             'Authorization': `Bearer ${token}`
           });
         }

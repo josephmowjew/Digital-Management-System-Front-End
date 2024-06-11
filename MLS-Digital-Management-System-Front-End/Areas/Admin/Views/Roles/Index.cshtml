@@ -1,6 +1,9 @@
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
 @{
     ViewData["Title"] = "Roles";
     Layout = "~/Areas/Admin/Views/shared/_Layout.cshtml";
+    var host = Configuration.GetSection("APIURL")["Link"];
 }
 
 
@@ -54,6 +57,7 @@
         <script>
             var datatable;
             var tokenValue = '@ViewBag.token';
+            var host = '@host';
         </script>
 
         <script src="~/js/Role.js" asp-append-version="true"></script>
@@ -66,7 +70,7 @@
                     "serverSide": true,
                     "order": [[0, "desc"]],
                     ajax: {
-                    url: 'http://18.217.103.30/api/roles/paged',
+                    url: '@host/api/roles/paged',
                         type: 'get',
                         datatype: 'Json',headers: {
                                         'Authorization': 'Bearer @ViewBag.token'

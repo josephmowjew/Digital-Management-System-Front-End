@@ -10,7 +10,7 @@ public class TitleService : ITitleService
      public TitleService(HttpClient httpClient)
     {
         _httpClient = httpClient;
-        //_httpClient.BaseAddress = new Uri("http://18.217.103.30");
+        
     }
 
     public Task<CreateTitleDTO> AddTitle(CreateTitleDTO createTitleDTO)

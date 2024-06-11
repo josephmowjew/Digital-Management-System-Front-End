@@ -30,10 +30,13 @@ $(function () {
         //send the request
 
         $.ajax({
-            url:  "http://18.217.103.30/api/auth/register",
+            url:  `${host}/api/auth/register`,
             type: 'POST',
             data: JSON.stringify(formData), // Convert formData object to JSON string
             contentType: 'application/json', // Set content type to JSON
+            headers: {
+                'Authorization': "Bearer "+ tokenValue
+            },
             success: function (data) {
 
                 //parse whatever comes back to html
@@ -100,6 +103,9 @@ function UpdatePassword() {
         url: form_url,
         type: 'POST',
         data: userInput,
+        headers: {
+            'Authorization': "Bearer "+ tokenValue
+        },
         success: function (data) {
 
 
@@ -171,7 +177,7 @@ function EditForm(id,token, area = "") {
     showSpinner();
     
     $.ajax({
-        url: "http://18.217.103.30/api/users/"+ id,
+        url: `${host}/api/users/`+ id,
         type: 'GET',
         headers: {
             'Authorization': "Bearer "+ token
@@ -223,7 +229,7 @@ function Delete(id,token) {
 
         if (result) {
             $.ajax({
-                url: 'http://18.217.103.30/api/users/' + id,
+                url: `${host}/api/users/` + id,
                 type: 'DELETE',
                 headers: {
                     'Authorization': "Bearer "+ token
@@ -292,7 +298,7 @@ function Reactivate(id,token) {
         console.log(token)
         if (result) {
             $.ajax({
-                url: 'http://18.217.103.30/api/Users/activate/'+id,
+                url: `${host}/api/Users/activate/`+id,
                 type: 'GET',
                 headers: {
                     'Authorization': "Bearer "+ token
@@ -354,7 +360,7 @@ function upDateUser(token) {
     //send the request
 
     $.ajax({
-        url: "http://18.217.103.30/api/users/"+id,
+        url: `${host}/api/users/`+id,
         type: 'PUT',
         data: formDataJson,
         contentType: 'application/json',

@@ -26,10 +26,13 @@ $(function () {
         //send the request
 
         $.ajax({
-            url:  "http://18.217.103.30/api/YearOfOperations",
+            url:  `${host}/api/YearOfOperations`,
             type: 'POST',
             data: JSON.stringify(formData), // Convert formData object to JSON string
             contentType: 'application/json', // Set content type to JSON
+            headers: {
+                'Authorization': "Bearer "+ tokenValue
+            },
             success: function (data) {
 
                 //parse whatever comes back to html
@@ -75,7 +78,7 @@ function EditForm(id,token, area = "") {
     showSpinner();
     
     $.ajax({
-        url: "http://18.217.103.30/api/yearOfOperations/getyearofoperation/"+ id,
+        url: `${host}/api/yearOfOperations/getyearofoperation/`+ id,
         type: 'GET',
         headers: {
             'Authorization': "Bearer "+ token
@@ -121,7 +124,7 @@ function Delete(id,token) {
 
         if (result) {
             $.ajax({
-                url: 'http://18.217.103.30/api/yearOfOperations/' + id,
+                url: `${host}/api/yearOfOperations/` + id,
                 type: 'DELETE',
                 headers: {
                     'Authorization': "Bearer "+ token
@@ -185,7 +188,7 @@ function updateYearOfOperation(token) {
     //send the request
 
     $.ajax({
-        url: "http://18.217.103.30/api/yearOfOperations/"+id,
+        url: `${host}/api/yearOfOperations/`+id,
         type: 'PUT',
         data: formDataJson,
         contentType: 'application/json',

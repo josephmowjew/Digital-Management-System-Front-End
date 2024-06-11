@@ -41,7 +41,7 @@ $(function () {
         //send the request
 
         $.ajax({
-            url:  "http://18.217.103.30/api/memberqualifications",
+            url:  `${host}/api/memberqualifications`,
             type: 'POST',
             data: formData, // Convert formData object to JSON string
             processData: false, // Set processData to false to prevent automatic serialization
@@ -105,7 +105,7 @@ function EditQaulificationForm() {
     showSpinner();
     
     $.ajax({
-        url: "http://18.217.103.30/api/MemberQualifications/get/"+ id,
+        url: `${host}/api/MemberQualifications/get/`+ id,
         type: 'GET',
         headers: {
             'Authorization': "Bearer "+ tokenValue
@@ -190,7 +190,7 @@ function UpdateMemberQualification() {
     //send the request
 
     $.ajax({
-        url: "http://18.217.103.30/api/MemberQualifications/"+id,
+        url: `${host}/api/MemberQualifications/`+id,
         type: 'PUT',
         data: formData,
         processData: false, // Set processData to false to prevent automatic serialization
@@ -247,7 +247,7 @@ function DeleteQualification(id,token) {
 
         if (result) {
             $.ajax({
-                url: 'http://18.217.103.30/api/memberQualifications/' + id,
+                url: `${host}/api/memberQualifications/` + id,
                 type: 'DELETE',
                 headers: {
                     'Authorization': "Bearer "+ token

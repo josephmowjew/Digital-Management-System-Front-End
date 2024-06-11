@@ -25,39 +25,21 @@ class PenaltyHandler {
   }
 
   bindEvents() {
-    const createPenaltyBtn = document.querySelector(
-      "#create_penalty_modal button[name='create_penalty_btn']"
+    const makePenaltyPaymentBtn = document.querySelector(
+      "#make_penaltyPayment_modal button[name='make_penaltyPayment_btn']"
     );
-    if (createPenaltyBtn) {
-      createPenaltyBtn.addEventListener("click", this.onCreateClick.bind(this));
-    }
-
-    const updatePenaltyBtn = document.querySelector(
-      "#edit_penalty_modal button[name='update_penalty_btn']"
-    );
-    if (updatePenaltyBtn) {
-      updatePenaltyBtn.addEventListener("click", this.updateClicked.bind(this));
-      }
-
-    const deletePenaltyBtn = document.querySelector(
-          "#create_penalty_modal button[name='delete_penalty_btn']"
-    );
-    if (deletePenaltyBtn) {
-      deletePenaltyBtn.addEventListener("click", this.deleteClicked.bind(this));
+    if (makePenaltyPaymentBtn) {
+      makePenaltyPaymentBtn.addEventListener("click", this.onCreateClick.bind(this));
     }
   }
 
   onCreateClick() {
     this.showSpinner();
-
-      const form = document.querySelector("#create_penalty_modal form");
-
-     
+    const form = document.querySelector("#make_penaltyPayment_modal form");
     const errorMessages = form.querySelectorAll(".error-message");
     errorMessages.forEach((errorMessage) => errorMessage.remove());
-
      
-    if (!form.checkValidity()) {
+      if (!form.checkValidity()) {
       this.hideSpinner();
       const invalidFields = document.querySelectorAll(":invalid");
 
@@ -75,19 +57,20 @@ class PenaltyHandler {
           field.focus();
         }
       });
-    } else {
-       
-        const formData = new FormData(form)
-       
-        
+      } else {
+      const formData = new FormData(form)
       this.sendAjaxRequest(
         formData,
         "POST",
-        "http://localhost:5043/api/Penalties",
-        this.handleCreatePenaltySuccess.bind(this),
+        "http://localhost:5043/api/PenaltyPayments",
+        this.handleCreatePenaltyPaymentSuccess.bind(this),
         this.handleError.bind(this)
       );
     }
+    }
+
+  penaltyPaymentForm() {
+
   }
 
   editForm(id, token) {
@@ -101,46 +84,32 @@ class PenaltyHandler {
   }
 
   handleEditFormSuccess(response) {
-    const editform = document.querySelector("#edit_penalty_modal form");
+    const editform = document.querySelector("#make_penaltyPayment_modal form");
     const data = JSON.parse(response);
     const fieldMap = this.createFieldMap(data);
-    const editformElements = [...editform.querySelectorAll('input, select, textarea, checkbox, label, textarea')];
-
+    const editformElements = [...editform.querySelectorAll('select')];
     editformElements.forEach(element => {
-      const fieldName = element.getAttribute('name');
-      const dataKey = fieldMap[fieldName];
-      let fieldValue = data[dataKey];
-
-      if (element.type === 'checkbox') {
+    const fieldName = element.getAttribute('name');
+    const dataKey = fieldMap[fieldName];
+    let fieldValue = data[dataKey];
+    if (element.type === 'checkbox') {
         this.setCheckboxValue(element, fieldValue);
-      } else if (element.type === 'file') {
-          console.log(data.attachments)
-          this.handleFileUpload(element, data.attachments, fieldName);
-      }
-      else {
-        element.value = fieldValue;
-      }
-    });
+    }else if (element.type === 'file') {
+        this.handleFileUpload(element, data.attachments, fieldName);
+    }
+    else {
+       element.value = fieldValue;
+    }
+    })
+      const penaltyIdField = editform.querySelector('input[name="penaltyId"]');
+  
+    if (penaltyIdField) {
+        penaltyIdField.value = data.id;
+    }
 
     // Show modal
-      $("#edit_penalty_modal").modal("show");
-      this.hideSpinner()
-  }
-
-  delete(id, token) {
-    bootbox.confirm("Are you sure you want to delete this Penalty from the system?", result => {
-      if (result) {
-          this.sendAjaxRequest(null, 'DELETE', `http://localhost:5043/api/Penalties/${id}`, this.handleDeleteSuccess.bind(this), this.handleError.bind(this), {
-          'Authorization': `Bearer ${token}`
-        });
-      }
-    });
-  }
-
-    handleDeleteSuccess(response) {
-    toastr.success("Penalty has been deleted successfully");
-    const dataTable = $('#penalty_table').DataTable();
-    dataTable.ajax.reload();
+    $("#make_penaltyPayment_modal").modal("show");
+    this.hideSpinner()
   }
 
   handleFileUpload(fileInput, attachments, fieldName) {
@@ -168,56 +137,6 @@ class PenaltyHandler {
           });
     }
   }
-  
-
-  updateClicked() {
-    this.showSpinner();
-
-    const form = document.querySelector("#edit_penalty_modal form");
-    const id = document.querySelector("#edit_penalty_modal form input[name='Id']").value;
-    const errorMessages = form.querySelectorAll(".error-message");
-    errorMessages.forEach(errorMessage => errorMessage.remove());
-
-    if (!form.checkValidity()) {
-      this.hideSpinner();
-      const invalidFields = document.querySelectorAll(":invalid");
-
-      invalidFields.forEach(field => {
-        const validationMessage = field.validationMessage;
-
-        if (validationMessage) {
-          const errorMessage = document.createElement("div");
-          errorMessage.innerHTML = validationMessage;
-          errorMessage.classList.add("error-message");
-          errorMessage.style.color = "red";
-          field.after(errorMessage);
-
-          field.scrollIntoView({ behavior: "smooth", block: "center" });
-          field.focus();
-        }
-      });
-    } else {
-      const formData = new FormData(form);
-
-      this.sendAjaxRequest(
-        formData,
-        "PUT",
-        `http://localhost:5043/api/Penalties/${id}`,
-        this.handleUpdateSuccess.bind(this),
-        this.handleError.bind(this),
-        { 'Authorization': `Bearer ${tokenValue}` }
-      );
-    }
-  }
-
-  handleUpdateSuccess(response) {
-    this.hideSpinner();
-    const dataTable = $("#penalty_table").DataTable();
-    toastr.success("Penalty updated successfully");
-    $("#edit_penalty_modal").modal("hide");
-      dataTable.ajax.reload();
-      this.form.reset();
-  }
 
   createFieldMap(data) {
     return Object.entries(data).reduce((map, [key, value]) => {
@@ -240,16 +159,15 @@ class PenaltyHandler {
         }
       }
       };
-
       console.log(formData)
-    xhr.send(formData);
+   xhr.send(formData);
   }
 
-  handleCreatePenaltySuccess(response) {
+  handleCreatePenaltyPaymentSuccess(response) {
     this.hideSpinner();
     const dataTable = $("#penalty_table").DataTable();
-    toastr.success("New Penalty added successfully");
-    $("#create_penalty_modal").modal("hide");
+    toastr.success("Payment successful");
+    $("#make_penaltyPayment_modal").modal("hide");
       dataTable.ajax.reload();
       this.form.reset();
     }

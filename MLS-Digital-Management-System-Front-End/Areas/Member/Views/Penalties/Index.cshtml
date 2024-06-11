@@ -25,18 +25,15 @@
             <img src="~/assets/images/91.gif" id="spinner" />
         </div>
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-info my-3" data-bs-toggle="modal" data-bs-target="#create_penalty_modal">
+        @*<button type="button" class="btn btn-info my-3" data-bs-toggle="modal" data-bs-target="#create_penalty_modal">
             Add New Penalty
-        </button>
+        </button>*@
 
         <!-- Modal -->
-        <div class="modal fade" id="create_penalty_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <partial name="_CreatePenaltyPartial" />
+        <div class="modal fade" id="make_penaltyPayment_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <partial name="_MakePenaltyPaymentPartial" />
         </div>
-        <!-- Modal -->
-        <div class="modal fade" id="edit_penalty_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <partial name="_EditPenaltyPartial" />
-        </div>
+        
 
         <h5 class="card-title fw-semibold mb-4 text-uppercase text-center"> Penalties In Year of Practice <strong>(@ViewBag.YearOfOperation.FormatedDate)</strong></h5>
 
@@ -57,7 +54,7 @@
                             Penalty Status
                         </th>
                         <th>
-                            Actions
+                            Action
                         </th>
                     </tr>
                 </thead>
@@ -75,17 +72,15 @@
         var datatable;
         var tokenValue = '@ViewBag.token';
     </script>
-    <script src="~/js/Penalty.js" asp-append-version="true"></script>
+    <script src="~/js/MemberPenalty.js" asp-append-version="true"></script>
     <script>
         $(document).ready(function () {
             datatable = $('#penalty_table').DataTable({
-
-
                 "processing": true,
-                "serverSide": true,
+                "serverSide": true, //?memberId="+@ViewBag.memberId,
                 "order": [[0, "desc"]],
                 ajax: {
-                    url: "@host/api/Penalties/paged",
+                    url: "@host/api/Penalties/paged?memberId=" + @ViewBag.memberId,
                     type: 'get',
                     datatype: 'Json', headers: {
                         'Authorization': 'Bearer @ViewBag.token'
@@ -131,15 +126,17 @@
                         name: "id",
                         "orderable": false,
                         render: function (data, type, row) {
-                            console.log(data)
                             return `
-                            
-                            <a href='#' onclick='penaltyHandler.editForm(${data},"${tokenValue}")' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-pencil' title='edit'>Edit</a> 
-                            
-                            <a href='#' onclick='penaltyHandler.delete(${data}, "${tokenValue}")' type='buttion' title='delete' class='ti ti-trash red-icon btn btn-outline-danger btn-sm my-1 mx-1'>Delete</a>
-
-                            <a href='#' type='button' class='btn btn-outline-success mx-1 btn-sm ti ti-eye text-lg' title='show details' > Show Details</a>
+                                <a href='#' onclick='penaltyHandler.editForm(${data},"${tokenValue}")' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-credit-card' title='edit'> Make Payment</a>
                             `
+
+                            /*return `
+                            
+                            <button type='button' class="btn btn-info my-3" data-bs-toggle="modal" data-bs-target='#make_penaltyPayment_modal'>
+                                Add New Penalty
+                            </button>
+                            
+                            `*/
                         }
                     }
                 ],

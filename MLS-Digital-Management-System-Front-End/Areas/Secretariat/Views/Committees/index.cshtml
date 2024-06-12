@@ -147,6 +147,7 @@
                                     
                                     return `<a href='#' onclick='committeeHandler.editForm(${data},"${tokenValue}")' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-pencil' title='edit'>Edit</a>
                                             <a href='/secretariat/threads?committeeId=${data}'  type='button' class='btn btn-outline-success mx-1 btn-sm ti  ti-hand-point-down' title='show threads'>Threads</a>
+                                             <a href='/secretariat/Committees/ViewMembers?committeeId=${data}'  type='button' class='btn btn-outline-success mx-1 btn-sm ti  ti-eye' title='show threads'>View Members</a>
                                             <a href='#' data-id='${data}' data-token='${tokenValue}' type='button' onclick='committeeHandler.delete(event)' title='delete' class='ti ti-trash red-icon btn btn-outline-danger btn-sm my-1 mx-1'>Delete</a>`;
                                 }
                     }

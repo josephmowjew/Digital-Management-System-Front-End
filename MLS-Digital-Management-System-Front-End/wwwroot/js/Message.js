@@ -140,6 +140,16 @@ class MessageHandler {
     handleCreateSuccess(response) {
         let messageObject = JSON.parse(response);
         this.displayMessages(messageObject);
+
+        // Scroll to the new message
+        const newMessageElement = document.querySelector(`#message-${messageObject.id}`);
+        if (newMessageElement) {
+            newMessageElement.scrollIntoView({ behavior: "smooth", block: "end" });
+        }
+
+        //clear the content input field
+        const messageContent = document.querySelector("#Content");
+        messageContent.value = "";
     }
 
     handleUpdateSuccess(response) {
@@ -158,59 +168,65 @@ class MessageHandler {
         const previousScrollTop = messagesList.scrollTop;
 
         fetch(url, {
-          method: 'GET',
-          headers: {
-            'Authorization': "Bearer " + tokenValue
-          }
-        })
-          .then(response => response.json())
-          .then(messages => {
-            if (messages.length === 0) {
-                this.noMoreMessages = true;
-                const caughtUpNotice = document.createElement("div");
-                caughtUpNotice.id = "caughtUpNotice";
-                caughtUpNotice.innerHTML = "You are all caught up.";
-                messagesList.insertAdjacentElement("afterbegin", caughtUpNotice);
-            } else {
-                this.noMoreMessages = false;
-                
-                messages.reverse().forEach(message => this.displayMessagesAddedToTop(message));
-                
-                // Adjust the scroll position to keep the view stable
-                const newScrollHeight = messagesList.scrollHeight;
-                messagesList.scrollTop = newScrollHeight - previousScrollHeight + previousScrollTop;
-
-                // Re-observe the first message
-                this.observeFirstMessage(messagesList);
+            method: 'GET',
+            headers: {
+                'Authorization': "Bearer " + tokenValue
             }
-          })
-          .catch(error => console.error(error));
+        })
+            .then(response => response.json())
+            .then(messages => {
+                if (messages.length === 0) {
+                    this.noMoreMessages = true;
+                    const caughtUpNotice = document.createElement("div");
+                    caughtUpNotice.id = "caughtUpNotice";
+                    caughtUpNotice.innerHTML = "You are all caught up.";
+                    messagesList.insertAdjacentElement("afterbegin", caughtUpNotice);
+                } else {
+                    this.noMoreMessages = false;
+
+                    messages.reverse().forEach(message => this.displayMessagesAddedToTop(message));
+
+                    // Adjust the scroll position to keep the view stable
+                    const newScrollHeight = messagesList.scrollHeight;
+                    messagesList.scrollTop = newScrollHeight - previousScrollHeight + previousScrollTop;
+
+                    // Re-observe the first message
+                    this.observeFirstMessage(messagesList);
+                }
+            })
+            .catch(error => console.error(error));
     }
 
     displayMessages(messageObject) {
         this.messagesRetrieved += 1;
         let messageList = document.getElementById("messagesList");
-        const formattedDate = new Date(messageObject.timestamp).toLocaleString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
+        const formattedDate = new Date(messageObject.timestamp).toLocaleString('en-US', {
+            year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true
+        });
         const className = messageObject.createdBy.id === userId ? 'sender' : 'receiver';
-        
-        messageList.insertAdjacentHTML('beforeend', `<div class="message ${className}">
+
+        const messageHTML = `<div class="message ${className}" id="message-${messageObject.id}">
                                   <div class="message-header">${messageObject.createdBy.firstName} ${messageObject.createdBy.lastName}</div>
                                   <div class="message-text">${messageObject.content}</div>
                                   <div class="message-timestamp">${formattedDate}</div>
-                              </div>`);
+                              </div>`;
+        messageList.insertAdjacentHTML('beforeend', messageHTML);
     }
 
     displayMessagesAddedToTop(messageObject) {
         this.messagesRetrieved += 1;
         let messageList = document.getElementById("messagesList");
-        const formattedDate = new Date(messageObject.timestamp).toLocaleString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
+        const formattedDate = new Date(messageObject.timestamp).toLocaleString('en-US', {
+            year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true
+        });
         const className = messageObject.createdBy.id === userId ? 'sender' : 'receiver';
-        
-        messageList.insertAdjacentHTML('afterbegin', `<div class="message ${className}">
+
+        const messageHTML = `<div class="message ${className}" id="message-${messageObject.id}">
                                     <div class="message-header">${messageObject.createdBy.firstName} ${messageObject.createdBy.lastName}</div>
                                     <div class="message-text">${messageObject.content}</div>
                                     <div class="message-timestamp">${formattedDate}</div>
-                                </div>`);
+                                </div>`;
+        messageList.insertAdjacentHTML('afterbegin', messageHTML);
     }
 
     displayValidationErrors(form) {
@@ -232,60 +248,37 @@ class MessageHandler {
     sendAjaxRequest(formData, method, url, successCallback, errorCallback, headers = {}) {
         const xhr = new XMLHttpRequest();
         xhr.open(method, url, true);
-        Object.entries(headers).forEach(([key, value]) => xhr.setRequestHeader(key, value));
-        xhr.onreadystatechange = () => {
-            if (xhr.readyState === XMLHttpRequest.DONE) {
-                if (xhr.status === 200 || xhr.status === 201) {
-                    successCallback(xhr.response);
-                } else {
-                    errorCallback(xhr);
-                }
+        Object.entries(headers).forEach(([key, value]) => {
+            xhr.setRequestHeader(key, value);
+        });
+        xhr.onload = function () {
+            if (xhr.status >= 200 && xhr.status < 300) {
+                successCallback(xhr.responseText);
+            } else {
+                errorCallback(xhr.responseText);
             }
+        };
+        xhr.onerror = function () {
+            errorCallback(xhr.responseText);
         };
         xhr.send(formData);
     }
 
-    handleError(form, xhr) {
-        const errorResponse = JSON.parse(xhr.responseText);
-
-        if (form) {
-            const errorMessages = form.querySelectorAll(".error-message");
-            errorMessages.forEach(errorMessage => errorMessage.remove());
-
-            Object.entries(errorResponse).forEach(([key, messages]) => {
-                const elementName = key.charAt(0).toUpperCase() + key.slice(1);
-                const element = form.querySelector(`[name="${elementName}"]`);
-
-                if (element) {
-                    messages.forEach(message => {
-                        const errorMessage = document.createElement("div");
-                        errorMessage.innerHTML = message;
-                        errorMessage.classList.add("error-message");
-                        errorMessage.style.color = "red";
-                        element.after(errorMessage);
-                    });
-                }
-            });
-        }
-    }
-
-    showSpinner() {
-        const spinnerElement = document.getElementById("spinner");
-        if (spinnerElement) {
-            spinnerElement.style.display = "block";
-        } else {
-            console.error('Spinner element with id "spinner" was not found');
-        }
-    }
-
-    hideSpinner() {
-        const spinnerElement = document.getElementById("spinner");
-        if (spinnerElement) {
-            spinnerElement.style.display = "none";
-        } else {
-            console.error('Spinner element with id "spinner" was not found');
-        }
+    handleError(form, errorResponse) {
+        const errorMessages = JSON.parse(errorResponse);
+        Object.entries(errorMessages).forEach(([fieldName, errorMessage]) => {
+            const field = form.querySelector(`[name='${fieldName}']`);
+            if (field) {
+                const errorDiv = document.createElement("div");
+                errorDiv.innerHTML = errorMessage;
+                errorDiv.classList.add("error-message");
+                errorDiv.style.color = "red";
+                field.after(errorDiv);
+            }
+        });
     }
 }
 
-window.messageHandler = new MessageHandler();
+document.addEventListener("DOMContentLoaded", () => {
+    const messageHandler = new MessageHandler();
+});

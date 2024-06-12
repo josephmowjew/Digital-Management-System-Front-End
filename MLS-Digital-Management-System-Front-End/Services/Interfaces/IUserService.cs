@@ -8,7 +8,7 @@ namespace MLS_Digital_Management_System_Front_End.Services.Interfaces;
 public interface IUserService{
 
     Task<CreateUserDTO> CreateUserAsync(CreateUserDTO user);
-
+    Task<List<ReadUserDTO>> GetAllUsersAsync();
     Task<ReadUserDTO> GetUserByIdAsync(string id);
 
     

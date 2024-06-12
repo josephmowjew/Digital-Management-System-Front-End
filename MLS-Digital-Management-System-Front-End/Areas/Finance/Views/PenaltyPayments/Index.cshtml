@@ -37,6 +37,9 @@
                 <thead>
                     <tr>
                         <th>
+                            Penalty
+                        </th>
+                        <th>
                             Payment Description
                         </th>
                         <th>
@@ -89,6 +92,12 @@
                     },
                 ],
                 columns: [
+                    {
+                        data: "penalty.reason",
+                        name: "penalty",
+                        className: "text-left",
+                        "orderable": false,
+                    },
                     {
                         data: "description",
                         name: "description",

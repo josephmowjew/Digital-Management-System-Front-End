@@ -42,6 +42,9 @@
                         <th>
                             Payment Fees
                         </th>
+                        <th>
+                            Proof of Payment
+                        </th>
                         <th>Payment Status</th>
                         <th>
                             Actions
@@ -100,6 +103,21 @@
                         render: function (data, type, row) {
                             return '<span class="badge bg-primary bg-opacity-85 rounded-pill">MWK ' + data + '</span>';
                         }
+                    }, 
+                    {
+                        data: "attachments",
+                        name: "attachments",
+                        className: "text-left",
+                        "orderable": true,
+                        render: function (data, type, row, meta) {
+                            if (data && data.length > 0) {
+                                return data.map((attachment) => {
+                                    return `<a href="@host/${attachment.filePath}" target="_blank" download="${attachment.fileName}"> Attachment <i class="bi bi-paperclip"></i></a>`;
+                                }).join('<br>');
+                            } else {
+                                return '';
+                            }
+                        }
                     },
                     {
                         data: "paymentStatus",
@@ -112,13 +130,20 @@
                         name: "id",
                         "orderable": false,
                         render: function (data, type, row) {
-                            return `
+                            let links = "";
+                            if (row.paymentStatus.toLowerCase() == "pending") {
+                                links += "<a href='#' onclick='Activate(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='ti ti-check btn btn-outline-success my-1 btn-sm mx-1' title='approve'>Approve</a>";
+                                links += "<a href='#' onclick='DenyForm(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='btn btn-outline-danger my-1 btn-sm ti ti-hand-stop' title='deny' >Deny</a> ";
+                            }
 
-                                <a href='#' onclick='Activate(${data},"${tokenValue}")' type='button' class='btn btn-outline-success mx-1 btn-sm bi bi-check' title='edit'>Approve</a>
+                            return links;
+                            /*return `
+
+                                <a href='#' onclick='Activate(${data},"${tokenValue}")' type='button' class='btn btn-outline-success mx-1 btn-sm bi bi-check' >Approve</a>
 
                                 <a href='#' onclick='DenyForm(${data}, "${tokenValue}")' type='buttion' title='delete' class='ti ti-hand-stop red-icon btn btn-outline-danger btn-sm my-1 mx-1'>Deny</a>
 
-                            `
+                            `*/
                         }
                     }
                 ],

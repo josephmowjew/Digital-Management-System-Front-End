@@ -1,0 +1,177 @@
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+@{
+    ViewData["Title"] = "Messages";
+    Layout = "~/Areas/Secretariat/Views/shared/_Layout.cshtml";
+
+    var host = Configuration.GetSection("APIURL")["Link"];
+}
+
+@section Styles {
+
+<style>
+        body {
+            font-family: 'Roboto', sans-serif;
+           
+        }
+        .chat-container {
+            max-width: 800px;
+            width: 90%;
+            height: 80%;
+            display: flex;
+            flex-direction: column;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .chat-header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+        .chat-header h5 {
+            margin: 0;
+        }
+        .chat-body {
+            flex-grow: 1;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            overflow-x: hidden;
+             max-height: 500px; /* adjust the height to your liking */
+            padding: 10px;
+            
+        }
+        .message {
+            margin-bottom: 20px;
+            padding: 10px;
+            border-radius: 10px; /* Added border radius */
+            max-width: 70%;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .message.sender {
+            background-color: #e1ffc7;
+            align-self: flex-end;
+            text-align: right;
+        }
+        .message.receiver {
+            background-color: #f1f1f1;
+            align-self: flex-start;
+            text-align: left;
+        }
+        .message .message-header {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .message .message-text {
+            margin-bottom: 5px;
+        }
+        .message .message-timestamp {
+            font-size: 12px;
+            color: #999;
+        }
+        .form-input {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-top: 1px solid #ddd;
+        }
+        .form-input input {
+            flex-grow: 1;
+            border: none;
+            padding: 10px;
+            border-radius: 10px 0 0 10px;
+            box-shadow: none;
+        }
+        .form-input input:focus {
+            outline: none;
+            box-shadow: none;
+        }
+        .send-button {
+            border: none;
+            border-radius: 0 10px 10px 0;
+            padding: 10px 15px;
+            font-size: 16px;
+            background-color: #333;
+            color: #fff;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s;
+        }
+        .send-button:hover {
+            background-color: #444;
+        }
+        .send-button i {
+            font-size: 16px;
+            transition: transform 0.4s ease-out;
+        }
+        .send-button i.fly-away {
+            animation: fly-away 0.4s ease-out forwards;
+        }
+       
+    </style>
+
+
+}
+
+
+<div class="card  w-100 h-100 d-flex justify-content-center">
+    <div class="card-body">
+      
+      
+        <div>
+            <button onclick="window.history.back()" class="btn btn-warning my-3"><span class="ti ti-arrow-left"></span>Back</button>
+        </div>
+      
+       
+        <h5 class="card-title fw-semibold mb-4 text-uppercase text-center"> Messages List for @ViewBag.ThreadSubject</strong></h5>
+
+    <div class="chat-container">
+        <div class="chat-header text-white">
+            <h5>ChatApp</h5>
+        </div>
+        <div class="chat-body" id="messagesList">
+
+        </div>
+        <form id="chatForm">
+            <div class="form-input">
+                 <input id="ThreadId" name="ThreadId" value="@ViewBag.ThreadId" type="hidden" />
+                <input type="text" id="Content" name="Content" placeholder="Message" class="form-control" />
+                <button id="sendButton" class="send-button" type="button" id="create_message_btn" name="create_message_btn">
+                    <i class="bi bi-send"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+
+        
+    </div>
+</div>
+
+
+@section Scripts{
+
+    <script>
+        var datatable;
+        var tokenValue = '@ViewBag.token';
+        const userId = '@ViewBag.UserId';
+        const threadId = '@ViewBag.ThreadId';
+        var host = '@host';
+    </script>
+     <script src="~/js/Message.js" asp-append-version="true"></script>
+    
+   
+   </script>
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

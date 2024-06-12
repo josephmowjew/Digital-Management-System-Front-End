@@ -1,0 +1,161 @@
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+@{
+    ViewData["Title"] = "Threads";
+    Layout = "~/Areas/Secretariat/Views/shared/_Layout.cshtml";
+
+    var host = Configuration.GetSection("APIURL")["Link"];
+}
+
+@section Styles {
+
+    <style>
+           .hidden {
+  display: none;
+}
+    </style>
+
+
+}
+
+
+<div class="card  w-100 h-100 d-flex justify-content-center">
+    <div class="card-body">
+      
+       <div>
+            <img src="~/assets/images/91.gif" id="spinner" />
+        </div>
+        <div>
+            <button onclick="window.history.back()" class="btn btn-warning my-3"><span class="ti ti-arrow-left"></span>Back</button>
+
+        </div>
+         <!-- Button trigger modal -->
+        <button type="button" class="btn btn-info my-3" data-bs-toggle="modal" data-bs-target="#create_thread_modal">
+            Add New Thread
+        </button>
+
+         <!-- Modal -->
+        <div class="modal fade" id="create_thread_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <partial name="_CreateThreadPartial" />
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="edit_thread_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <partial name="_EditThreadPartial" />
+        </div>
+
+        <h5 class="card-title fw-semibold mb-4 text-uppercase text-center"> Threads</h5>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover" id="threads_table">
+                <thead>
+                    <tr>
+                        
+                        <th>
+                           Subject
+                        </th>
+                        <th>
+                            Date Created
+                        </th>
+                        <th>
+                            Created By
+                        </th>
+                        <th>
+                            Action
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+
+    <script>
+        var datatable;
+        var tokenValue = '@ViewBag.token';
+         var host = '@host';
+    </script>
+     <script src="~/js/Threads.js" asp-append-version="true"></script>
+    <script>
+        $(document).ready(function () {
+            datatable = $('#threads_table').DataTable({
+
+
+                "processing": true,
+                "serverSide": true,
+                "order": [[0, "desc"]],
+                ajax: {
+                    url: "@host/api/Threads/paged?committeeId=@ViewBag.CommitteeId",
+                    type: 'get',
+                    datatype: 'Json', headers: {
+                        'Authorization': 'Bearer @ViewBag.token'
+                    },
+
+                   
+
+                },
+                columnDefs: [
+                    {
+                        defaultContent: "",
+                        targets: "_all",
+                        'orderable': true
+                    },
+                ],
+                columns: [
+                   
+                    {
+                        data: "subject",
+                        name: "subject",
+                        className: "text-left",
+                        "orderable": true,
+                    },
+                   {
+                        data: "createdDate",
+                        name: "createdDate",
+                        className: "text-left",
+                        orderable: true,
+                        render: function(data) {
+                            var date = new Date(data);
+                            var day = date.getDate();
+                            var month = date.getMonth() + 1; // Months are zero-based
+                            var year = date.getFullYear();
+                            
+                            // Add leading zeros if needed
+                            day = day < 10 ? '0' + day : day;
+                            month = month < 10 ? '0' + month : month;
+                            
+                            return day + '-' + month + '-' + year;
+                        }
+                    },
+                    {
+                        data: "createdBy.fullName",
+                        name: "createdBy",
+                        className: "text-left",
+                        "orderable": true,
+                    },
+                    {
+                        data: "id",
+                        name: "id",
+                        "orderable": false,
+                        render: function (data, type, row) {
+                                    
+                                return `<a href='#' onclick='threadHandler.editForm(${data},"${tokenValue}")' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-pencil' title='edit'>Edit</a>
+                                        <a href='/member/messages?threadId=${data}'  type='button' class='btn btn-outline-success mx-1 btn-sm ti  ti-hand-point-down' title='show messages'>Messages</a>
+                                        <a href='#' data-id='${data}' data-token='${tokenValue}' type='button' onclick='threadHandler.delete(event)' title='delete' class='ti ti-trash red-icon btn btn-outline-danger btn-sm my-1 mx-1'>Delete</a>`;
+                                }
+                    }
+                ],
+                responsive: true,
+                "autoWidth": false,
+            });
+        });
+    </script>
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

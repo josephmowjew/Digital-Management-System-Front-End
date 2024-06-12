@@ -1,0 +1,175 @@
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+@{
+    ViewData["Title"] = "Messages";
+    Layout = "~/Areas/Secretariat/Views/shared/_Layout.cshtml";
+
+    var host = Configuration.GetSection("APIURL")["Link"];
+}
+
+@section Styles {
+
+    <style>
+           .hidden {
+                display: none;
+                }
+            .fees-column {
+                padding: 10px;
+            }
+
+            .fee-item {
+                margin-bottom: 5px;
+            }
+    </style>
+
+
+}
+
+
+<div class="card  w-100 h-100 d-flex justify-content-center">
+    <div class="card-body">
+      
+       <div>
+            <img src="~/assets/images/91.gif" id="spinner" />
+        </div>
+        <div>
+            <button onclick="window.history.back()" class="btn btn-warning my-3"><span class="ti ti-arrow-left"></span>Back</button>
+
+        </div>
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-info my-3" data-bs-toggle="modal" data-bs-target="#create_message_modal">
+            Add New Message
+        </button>
+
+         <!-- Modal -->
+        <div class="modal fade" id="create_message_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <partial name="_CreateMessagePartial" />
+        </div>
+       
+        <h5 class="card-title fw-semibold mb-4 text-uppercase text-center"> Messages List for @ViewBag.ThreadSubject</strong></h5>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover" id="message_table">
+                <thead>
+                    <tr>
+                        <th>
+                            Content
+                        </th>
+                         <th>
+                           Timestamp
+                        </th>
+                        <th>
+                            Attachments
+                        </th>
+                       
+                        <th>
+                            Action
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+
+    <script>
+        var datatable;
+        var tokenValue = '@ViewBag.token';
+    </script>
+     <script src="~/js/Message.js" asp-append-version="true"></script>
+    <script>
+        $(document).ready(function () {
+            datatable = $('#message_table').DataTable({
+
+
+                "processing": true,
+                "serverSide": true,
+                "order": [[0, "desc"]],
+                ajax: {
+                    url: "@host/api/Messages/paged?threadId=@ViewBag.ThreadId",
+                    type: 'get',
+                    datatype: 'Json', headers: {
+                        'Authorization': 'Bearer @ViewBag.token'
+                    },
+
+                   
+
+                },
+                columnDefs: [
+                    {
+                        defaultContent: "",
+                        targets: "_all",
+                        'orderable': true
+                    },
+                ],
+                columns: [
+                  
+                   
+                     {
+                        data: "content",
+                        name: "content",
+                        className: "text-left",
+                        "orderable": false,
+                    },
+                    {
+    data: "timestamp",
+    name: "timestamp",
+    className: "text-left",
+    orderable: false,
+    render: function(data) {
+        // Convert the timestamp to a JavaScript Date object
+        var date = new Date(data);
+
+        // Format the time part
+        var hours = date.getHours();
+        var ampm = hours >= 12 ? 'PM' : 'AM';
+        hours = hours % 12;
+        hours = hours ? hours : 12; // Handle 0 hour case
+        var minutes = date.getMinutes().toString().padStart(2, '0');
+        var formattedTime = '<span class="badge bg-secondary rounded-pill">' + hours + ':' + minutes + ' ' + ampm + '</span>';
+
+        // Format the date part
+        var day = date.getDate().toString().padStart(2, '0');
+        var month = (date.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-based
+        var year = date.getFullYear();
+        var formattedDate = day + '-' + month + '-' + year;
+
+        // Combine the time and date parts
+        var formattedTimestamp = formattedTime + ' ' + formattedDate;
+
+        return formattedTimestamp;
+    }
+},
+                    {
+                        data: "attachments",
+                        name: "attachments",
+                        className: "text-left",
+                        "orderable": false,
+                    },
+                   
+                    {
+                        data: "id",
+                        name: "id",
+                        "orderable": false,
+                        render: function (data, type, row) {
+                                   
+                                    return `
+                                            <a href='#' data-id='${data}' data-token='${tokenValue}' type='button' onclick='messageHandler.delete(event)' title='delete' class='ti ti-trash red-icon btn btn-outline-danger btn-sm my-1 mx-1'> Remove</a>`;
+                                }
+                    }
+                ],
+                responsive: true,
+                "autoWidth": false,
+            });
+        });
+    </script>
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

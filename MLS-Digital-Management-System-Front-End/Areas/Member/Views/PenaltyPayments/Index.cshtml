@@ -2,7 +2,7 @@
 @inject IConfiguration Configuration
 @{
     ViewData["Title"] = "License Applications";
-    Layout = "~/Areas/Secretariat/Views/shared/_Layout.cshtml";
+    Layout = "~/Areas/Member/Views/shared/_Layout.cshtml";
 
     var host = Configuration.GetSection("APIURL")["Link"];
 }

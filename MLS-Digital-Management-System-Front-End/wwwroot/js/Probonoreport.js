@@ -98,7 +98,7 @@ function EditForm(id,token, area = "") {
     showSpinner();
     
     $.ajax({
-        url: `${host}/api/probonoreports/getprobonoreport/`+ id,
+        url: "http://18.217.103.30/api/probonoreports/getprobonoreport/"+ id,
         type: 'GET',
         headers: {
             'Authorization': "Bearer "+ token
@@ -147,7 +147,7 @@ function Delete(id,token) {
 
         if (result) {
             $.ajax({
-                url: `${host}/api/probonoreports/` + id,
+                url: 'http://18.217.103.30/api/probonoreports/' + id,
                 type: 'DELETE',
                 headers: {
                     'Authorization': "Bearer "+ token
@@ -180,7 +180,7 @@ function AcceptForm(id,token) {
     showSpinner();
     
     $.ajax({
-        url: `${host}/api/probonoreports/getprobonoreport/`+ id,
+        url: "http://18.217.103.30/api/probonoreports/getprobonoreport/"+ id,
         type: 'GET',
         headers: {
             'Authorization': "Bearer "+ token
@@ -267,7 +267,7 @@ function DenyForm(id,token) {
       //send the request
 
       $.ajax({
-          url:  `${host}/api/probonoreports/acceptReport`,
+          url:  "http://18.217.103.30/api/probonoreports/acceptReport",
           type: 'POST',
           data: formData, // Convert formData object to JSON string
           processData: false, // Set processData to false to prevent automatic serialization
@@ -341,7 +341,7 @@ function DenyForm(id,token) {
           //send the request
   
           $.ajax({
-              url:  `${host}/api/probonoreports/denyreport`,
+              url:  "http://18.217.103.30/api/probonoreports/denyreport",
               type: 'POST',
               data: formData, // Convert formData object to JSON string
               processData: false, // Set processData to false to prevent automatic serialization
@@ -425,7 +425,7 @@ function updateApplication(token) {
     //send the request
 
     $.ajax({
-        url: `${host}/api/ProBonoReports/`+id,
+        url: "http://18.217.103.30/api/ProBonoReports/"+id,
         type: 'PUT',
         data: formData,
         processData: false, // Set processData to false to prevent automatic serialization

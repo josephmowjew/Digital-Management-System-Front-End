@@ -1,0 +1,175 @@
+﻿       @using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+@{
+    ViewData["Title"] = "License Applications";
+    Layout = "~/Areas/Finance/Views/shared/_Layout.cshtml";
+
+    var host = Configuration.GetSection("APIURL")["Link"];
+}
+
+@section Styles {
+
+    <style>
+        .hidden {
+            display: none;
+        }
+    </style>
+
+
+}
+
+<div class="card  w-100 h-100 d-flex justify-content-center">
+    <div class="card-body">
+
+        <div>
+            <img src="~/assets/images/91.gif" id="spinner" />
+        </div>
+        <h5 class="card-title fw-semibold mb-4 text-uppercase text-center"> Penalties In Year of Practice <strong>(@ViewBag.YearOfOperation.FormatedDate)</strong></h5>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover" id="penalty_table">
+                <thead>
+                    <tr>
+                        <th>
+                            Description
+                        </th>
+                        <th>
+                            Fee
+                        </th>
+                        <th>
+                            Penalty Status
+                        </th>
+                        <th>
+                            Amount Paid
+                        </th>
+                        <th>
+                            Balance
+                        </th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+
+    <script>
+        var datatable;
+        var tokenValue = '@ViewBag.token';
+    </script>
+    <script src="~/js/MemberPenalty.js" asp-append-version="true"></script>
+    <script>
+        $(document).ready(function () {
+            datatable = $('#penalty_table').DataTable({
+                "processing": true,
+                "serverSide": true, //?memberId="+@ViewBag.memberId,
+                "order": [[0, "desc"]],
+                ajax: {
+                    url: "@host/api/Penalties/paged",
+                    type: 'get',
+                    datatype: 'Json', headers: {
+                        'Authorization': 'Bearer @ViewBag.token'
+                    }
+                },
+                columnDefs: [
+                    {
+                        defaultContent: "",
+                        targets: "_all",
+                        'orderable': true
+                    },
+                ],
+                columns: [
+                    {
+                        data: "reason",
+                        name: "reason",
+                        className: "text-left",
+                        "orderable": false,
+                    },
+                    {
+                        data: "fee",
+                        name: "fee",
+                        className: "text-left",
+                        "orderable": false,
+                        render: function (data, type, row) {
+                            // Function to format numbers as currency
+                            var formatCurrency = function (value) {
+                                return new Intl.NumberFormat('en-US', {
+                                    style: 'currency',
+                                    currency: 'MWK' // Change this to your desired currency
+                                }).format(value);
+                            };
+
+                            var formattedData = formatCurrency(data);
+                            return '<span class="badge bg-primary bg-opacity-85 rounded-pill">' + formattedData + '</span>';
+                        }
+                    },
+                    {
+                        data: "penaltyStatus",
+                        name: "penaltyStatus",
+                        className: "text-left",
+                        "orderable": false,
+                    },
+                    {
+                        data: "amountPaid",
+                        name: "amountPaid",
+                        className: "text-left",
+                        "orderable": false,
+                        render: function (data, type, row) {
+                            // Function to format numbers as currency
+                            var formatCurrency = function (value) {
+                                return new Intl.NumberFormat('en-US', {
+                                    style: 'currency',
+                                    currency: 'MWK' // Change this to your desired currency
+                                }).format(value);
+                            };
+
+                            var formattedData = formatCurrency(data);
+                            return '<span class="badge bg-primary bg-opacity-85 rounded-pill">' + formattedData + '</span>';
+                        }
+                    },
+                    {
+                        data: "amountRemaining",
+                        name: "amountRemaining",
+                        className: "text-left",
+                        "orderable": false,
+                        render: function (data, type, row) {
+                            var fee = row.fee
+
+                            // Function to format numbers as currency
+                            var formatCurrency = function (value) {
+                                return new Intl.NumberFormat('en-US', {
+                                    style: 'currency',
+                                    currency: 'MWK' // Change this to your desired currency
+                                }).format(value);
+                            };
+
+                            var formattedData = formatCurrency(data);
+                            var formattedFee = formatCurrency(fee);
+
+                            if (data == 0) {
+                                return '<span class="badge bg-success bg-opacity-85 rounded-pill">'+ formattedData + '</span>'
+                            }
+                            if (data == fee) {
+                                return '<span class="badge bg-danger bg-opacity-85 rounded-pill">'+ formattedData +'</span>'
+                            }
+                            else if (data < fee) {
+                                return '<span class="badge bg-warning bg-opacity-85 rounded-pill">'+ formattedData +'</span>'
+                            }
+                        }
+                    }
+                ],
+                responsive: true,
+                "autoWidth": false,
+            });
+        });
+    </script>
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

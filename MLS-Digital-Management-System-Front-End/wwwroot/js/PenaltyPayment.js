@@ -104,7 +104,7 @@ class PenaltyHandler {
     }
   }
 
-    handleEditFormSuccess(response) {
+  handleEditFormSuccess(response) {
     const editform = document.querySelector("#edit_penaltyPayment_modal form");
     const data = JSON.parse(response);
     const fieldMap = this.createFieldMap(data);
@@ -126,8 +126,8 @@ class PenaltyHandler {
     });
 
     // Show modal
-      $("#edit_penaltyPayment_modal").modal("show");
-      this.hideSpinner()
+    $("#edit_penaltyPayment_modal").modal("show");
+    this.hideSpinner()
   }
 
   delete(id, token) {

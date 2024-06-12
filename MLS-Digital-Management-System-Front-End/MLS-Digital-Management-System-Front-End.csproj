@@ -18,10 +18,8 @@
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\CEO\Data\" />
     <Folder Include="Areas\CEO\Models\" />
-    <Folder Include="Areas\Member\Controllers\" />
     <Folder Include="Areas\Member\Data\" />
     <Folder Include="Areas\Member\Models\" />
-    <Folder Include="Areas\Member\Views\" />
     <Folder Include="Areas\Secretariat\Data\" />
     <Folder Include="Areas\Secretariat\Models\" />
   </ItemGroup>

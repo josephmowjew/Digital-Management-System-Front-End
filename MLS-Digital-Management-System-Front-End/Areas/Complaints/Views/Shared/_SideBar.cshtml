@@ -5,7 +5,7 @@
             <span class="hide-menu">Home</span>
         </li>
         <li class="sidebar-item">
-            <a class="sidebar-link" asp-area="Member" asp-controller="Home" asp-action="Index" aria-expanded="false">
+            <a class="sidebar-link" asp-area="Complaints" asp-controller="Home" asp-action="Index" aria-expanded="false">
                 <span>
                     <i class="ti ti-layout-dashboard"></i>
                 </span>
@@ -18,7 +18,7 @@
             <span class="hide-menu">License Management</span>
         </li>
         <li class="sidebar-item">
-            <a class="sidebar-link" asp-action="index" asp-area="complaints" asp-controller="LicenseApplications" aria-expanded="false">
+            <a class="sidebar-link" asp-action="index" asp-area="Complaints" asp-controller="LicenseApplications" aria-expanded="false">
                 <span>
                     <i class="ti ti-cards"></i>
                 </span>
@@ -29,8 +29,26 @@
             <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
             <span class="hide-menu">Configurations</span>
         </li>
-        
-       
+        <li class="nav-small-cap">
+            <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+            <span class="hide-menu">Penalties</span>
+        </li>
+        <li class="sidebar-item">
+            <a class="sidebar-link" asp-action="index" asp-area="Complaints" asp-controller="Penalties" aria-expanded="false">
+                <span>
+                    <i class="bi bi-exclamation-octagon" style="font-size: 1.rem;"></i>
+                </span>
+                <span class="hide-menu">Active Penalties</span>
+            </a>
+        </li>
+        <li class="sidebar-item">
+            <a class="sidebar-link" asp-action="index" asp-area="Complaints" asp-controller="PenaltyTypes" aria-expanded="false">
+                <span>
+                    <i class="bi bi-gear" style="font-size: 1.rem;"></i>
+                </span>
+                <span class="hide-menu">Penalty Types</span>
+            </a>
+        </li>
 
     </ul>
     @* <div class="unlimited-access hide-menu bg-light-primary position-relative mb-7 mt-5 rounded">

@@ -1,13 +1,13 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using MLS_Digital_Management_System_Front_End.Core.DTOs.Member;
 using MLS_Digital_Management_System_Front_End.Core.DTOs.YearOfOperation;
 using MLS_Digital_Management_System_Front_End.Helpers;
 using MLS_Digital_Management_System_Front_End.Services.Interfaces;
 
-namespace MLS_Digital_Management_System_Front_End.Areas.Complaints.Controllers
+namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
 {
-    [Area("Complaints")]
-
+    [Area("Member")]
     public class PenaltiesController : Controller
     {
         private readonly IServiceRepository _service;
@@ -32,24 +32,26 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Complaints.Controllers
             //get the token
             string token = AuthHelper.GetToken(HttpContext);
             ViewBag.token = token;
-            this._service.Token = token;
+            _service.Token = token;
+            ViewBag.memberId = await GetMemberByUserIdAsync();
             ViewBag.YearOfOperation = await GetCurrentYearOfOperationAsync();
-            ViewBag.membersList = await GetAllMembersAsync();
-            ViewBag.penaltyTypeList = await GetAllPenaltiesAsync();
+            //ViewBag.membersList = await GetAllMembersAsync();
+            ViewBag.penaltyList = await GetAllPenaltiesAsync();
+            //ViewBag.penaltyTypeList = await GetAllPenaltyTypesAsync();
             ViewBag.yearOperationsList = await GetYearOfOperations();
         }
 
         private async Task<ReadYearOfOperationDTO> GetCurrentYearOfOperationAsync()
         {
-            return await this._service.YearOfOperationService.GetCurrentYearOfOperationAsync();
+            return await _service.YearOfOperationService.GetCurrentYearOfOperationAsync();
         }
 
-        private async Task<List<SelectListItem>> GetAllMembersAsync()
+        /*private async Task<List<SelectListItem>> GetAllMembersAsync()
         {
             List<SelectListItem> membersList = new() { new SelectListItem() { Text = "---Select Member---", Value = "" } };
 
             //get identity types from remote
-            var memberListFromRemote = await this._service.MemberService.GetAllMembersAsync();
+            var memberListFromRemote = await _service.MemberService.GetAllMembersAsync();
 
             if (memberListFromRemote != null)
             {
@@ -60,14 +62,14 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Complaints.Controllers
             }
 
             return membersList;
-        }
+        }*/
 
-        private async Task<List<SelectListItem>> GetAllPenaltiesAsync()
+        /*private async Task<List<SelectListItem>> GetAllPenaltyTypesAsync()
         {
             List<SelectListItem> penaltyTypesList = new() { new SelectListItem() { Text = "---Select Penalty Types---", Value = "" } };
 
             //get identity types from remote
-            var penaltyTypesListFromRemote = await this._service.PenaltyTypeService.GetAllPenaltyTypesAsync();
+            var penaltyTypesListFromRemote = await _service.PenaltyTypeService.GetAllPenaltyTypesAsync();
 
             if (penaltyTypesListFromRemote != null)
             {
@@ -78,14 +80,14 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Complaints.Controllers
             }
 
             return penaltyTypesList;
-        }
+        }*/
 
         private async Task<List<SelectListItem>> GetYearOfOperations()
         {
             List<SelectListItem> yearOperationsList = new() { new SelectListItem() { Text = "---Select Practicing Year---", Value = "" } };
 
             //get identity types from remote
-            var yearsOfOperationFromRemote = await this._service.YearOfOperationService.GetAllYearOfOperationsAsync();
+            var yearsOfOperationFromRemote = await _service.YearOfOperationService.GetAllYearOfOperationsAsync();
 
             if (yearsOfOperationFromRemote != null)
             {
@@ -96,6 +98,33 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Complaints.Controllers
             }
 
             return yearOperationsList;
+        }
+
+        private async Task<List<SelectListItem>> GetAllPenaltiesAsync()
+        {
+            List<SelectListItem> penaltiesList = new() { new SelectListItem() { Text = "---Select Penalty---", Value = "" } };
+
+            //get identity types from remote
+            var penaltiesListFromRemote = await _service.PenaltyService.GetAllPenaltiesAsync();
+
+            if (penaltiesListFromRemote != null)
+            {
+                penaltiesListFromRemote.ForEach(penalty =>
+                {
+                    penaltiesList.Add(new SelectListItem() { Text = penalty.Reason, Value = penalty.Id.ToString() });
+                });
+            }
+
+            return penaltiesList;
+        }
+
+        private async Task<int> GetMemberByUserIdAsync()
+        {
+            string userId = AuthHelper.GetUserId(HttpContext);
+            int memberId = (await _service.MemberService.GetMemberByUserIdAsync(userId)).Id;
+
+
+            return memberId;
         }
     }
 }

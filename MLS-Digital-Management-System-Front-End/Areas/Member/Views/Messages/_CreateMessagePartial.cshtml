@@ -1,0 +1,33 @@
+@model MLS_Digital_Management_System_Front_End.Core.DTOs.Message.CreateMessageDTO
+
+<!-- Modal -->
+<div class="modal-dialog modal-lg">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">New Message</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+
+    <div class="modal-body">
+    <form id="myForm" asp-action="Create">
+       <input asp-for="ThreadId" value="@ViewBag.ThreadId" type="hidden" />
+        <div class="mb-3">
+            <label asp-for="Content" class="form-label">Content</label>
+            <textarea asp-for="Content" class="form-control" placeholder="Enter Content"></textarea>
+            <span asp-validation-for="Content" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Attachments" class="form-label">Attachments</label>
+            <input asp-for="Attachments" type="file" multiple class="form-control" />
+            <span asp-validation-for="Attachments" class="text-danger"></span>
+        </div>
+    </form>
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      <button type="button" class="btn btn-primary" name="create_message_btn" id="create_message_btn">Create Message</button>
+    </div>
+
+  </div>
+</div>

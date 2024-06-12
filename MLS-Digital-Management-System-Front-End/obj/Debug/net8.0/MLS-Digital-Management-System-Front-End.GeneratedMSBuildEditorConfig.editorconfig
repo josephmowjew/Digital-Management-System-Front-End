@@ -306,6 +306,14 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXMvRmluYW5jZS9WaWV3cy9fVmlld1N0YXJ0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[/Users/software/projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Member/Views/Committees/index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXMvTWVtYmVyL1ZpZXdzL0NvbW1pdHRlZXMvaW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/software/projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Member/Views/Committees/ViewMembers.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXMvTWVtYmVyL1ZpZXdzL0NvbW1pdHRlZXMvVmlld01lbWJlcnMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [/Users/software/projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Member/Views/CPDTrainigs/index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXMvTWVtYmVyL1ZpZXdzL0NQRFRyYWluaWdzL2luZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -374,6 +382,22 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXMvTWVtYmVyL1ZpZXdzL0xpY2Vuc2VBcHBsaWNhdGlvbnMvX05ld0FwcGxpY2F0aW9uUGFydGlhbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[/Users/software/projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Member/Views/Messages/index copy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXMvTWVtYmVyL1ZpZXdzL01lc3NhZ2VzL2luZGV4IGNvcHkuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/software/projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Member/Views/Messages/index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXMvTWVtYmVyL1ZpZXdzL01lc3NhZ2VzL2luZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/software/projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Member/Views/Messages/_CreateMessagePartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXMvTWVtYmVyL1ZpZXdzL01lc3NhZ2VzL19DcmVhdGVNZXNzYWdlUGFydGlhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/software/projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Member/Views/Messages/_EditMessagePartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXMvTWVtYmVyL1ZpZXdzL01lc3NhZ2VzL19FZGl0TWVzc2FnZVBhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [/Users/software/projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Member/Views/ProBonoApplications/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXMvTWVtYmVyL1ZpZXdzL1Byb0Jvbm9BcHBsaWNhdGlvbnMvSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -432,6 +456,18 @@ build_metadata.AdditionalFiles.CssScope =
 
 [/Users/software/projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Member/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXMvTWVtYmVyL1ZpZXdzL1NoYXJlZC9fVmFsaWRhdGlvblNjcmlwdHNQYXJ0aWFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/software/projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Member/Views/Threads/index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXMvTWVtYmVyL1ZpZXdzL1RocmVhZHMvaW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/software/projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Member/Views/Threads/_CreateThreadPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXMvTWVtYmVyL1ZpZXdzL1RocmVhZHMvX0NyZWF0ZVRocmVhZFBhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/software/projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Member/Views/Threads/_EditThreadPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXMvTWVtYmVyL1ZpZXdzL1RocmVhZHMvX0VkaXRUaHJlYWRQYXJ0aWFsLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Users/software/projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Member/Views/_ViewImports.cshtml]

@@ -31,7 +31,7 @@
           </div>
           <div class="mb-3">
             <label asp-for="Attachments" class="form-label"></label>
-            <input asp-for="Attachments" type="file" accept="image/*" multiple class="form-control" />
+            <input multiple class="form-control custom-file-input" id="Attachments" accept="image/*,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" name="Attachments" type="file" />
             <span asp-validation-for="Attachments" class="text-danger"></span>
           </div>
           <div class="mb-3">

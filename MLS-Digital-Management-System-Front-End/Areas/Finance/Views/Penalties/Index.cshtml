@@ -34,6 +34,9 @@
                             Description
                         </th>
                         <th>
+                            Member
+                        </th>
+                        <th>
                             Fee
                         </th>
                         <th>
@@ -87,6 +90,12 @@
                     {
                         data: "reason",
                         name: "reason",
+                        className: "text-left",
+                        "orderable": false,
+                    },
+                    {
+                        data: "member.user.fullName",
+                        name: "member",
                         className: "text-left",
                         "orderable": false,
                     },

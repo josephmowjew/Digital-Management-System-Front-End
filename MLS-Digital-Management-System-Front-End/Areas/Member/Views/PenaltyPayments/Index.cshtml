@@ -45,6 +45,9 @@
                 <thead>
                     <tr>
                         <th>
+                            Penalty
+                        </th>
+                        <th>
                             Payment Description
                         </th>
                         <th>
@@ -96,6 +99,12 @@
                 ],
                 columns: [
                     {
+                        data: "penalty.reason",
+                        name: "penalty",
+                        className: "text-left",
+                        "orderable": false,
+                    },
+                    {
                         data: "description",
                         name: "description",
                         className: "text-left",
@@ -121,13 +130,17 @@
                         name: "id",
                         "orderable": false,
                         render: function (data, type, row) {
-                            return `
-                            
-                            <a href='#' onclick='penaltyHandler.editForm(${data},"${tokenValue}")' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-pencil' title='edit'>Edit</a> 
-                            
-                            <a href='#' onclick='penaltyHandler.delete(${data}, "${tokenValue}")' type='buttion' title='delete' class='ti ti-trash red-icon btn btn-outline-danger btn-sm my-1 mx-1'>Delete</a>
-                            
-                            `
+                            let links = "";
+                            if (row.paymentStatus.toLowerCase() == "pending") {
+
+                                links += "<a href='#' onclick='penaltyHandler.editForm(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-pencil' title='edit'>Edit</a>";
+                                links += "<a href='#' onclick='penaltyHandler.delete(\"" + data + "\",\"" + tokenValue + "\")' type='buttion' title='delete' class='ti ti-trash red-icon btn btn-outline-danger btn-sm my-1 mx-1'>Delete</a>";
+
+                                /*links += "<a href='#' onclick='penaltyHandler.editForm(${data},"${ tokenValue } ")' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-pencil' title='edit'>Edit</a>";
+                                links += "<a href='#' onclick='penaltyHandler.delete(${data}, "${ tokenValue } ")' type='buttion' title='delete' class='ti ti-trash red-icon btn btn-outline-danger btn-sm my-1 mx-1'>Delete</a>";*/
+                            }
+
+                            return links;
                         }
                     }
                 ],

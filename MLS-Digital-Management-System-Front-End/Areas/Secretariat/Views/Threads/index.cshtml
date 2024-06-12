@@ -143,9 +143,9 @@
                         "orderable": false,
                         render: function (data, type, row) {
                                     
-                                    return `<a href='#' onclick='threadHandler.editForm(${data},"${tokenValue}")' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-pencil' title='edit'>Edit</a>
-                                    <a href='/secretariat/messages?threadId=${data}'  type='button' class='btn btn-outline-success mx-1 btn-sm ti  ti-hand-point-down' title='show messages'>Messages</a>
-                                <a href='#' data-id='${data}' data-token='${tokenValue}' type='button' onclick='threadHandler.delete(event)' title='delete' class='ti ti-trash red-icon btn btn-outline-danger btn-sm my-1 mx-1'>Delete</a>`;
+                                return `<a href='#' onclick='threadHandler.editForm(${data},"${tokenValue}")' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-pencil' title='edit'>Edit</a>
+                                        <a href='/secretariat/messages?threadId=${data}'  type='button' class='btn btn-outline-success mx-1 btn-sm ti  ti-hand-point-down' title='show messages'>Messages</a>
+                                        <a href='#' data-id='${data}' data-token='${tokenValue}' type='button' onclick='threadHandler.delete(event)' title='delete' class='ti ti-trash red-icon btn btn-outline-danger btn-sm my-1 mx-1'>Delete</a>`;
                                 }
                     }
                 ],

@@ -63,6 +63,7 @@ public class ServiceRepository : IServiceRepository
             _penaltyTypeService = new PenaltyTypeService(_httpClient);
             _threadService = new ThreadService(_httpClient);
             _penaltyPaymentService = new PenaltyPaymentService(_httpClient);
+            _userService = new UserService(_httpClient);
         } 
     } 
 
@@ -81,7 +82,7 @@ public class ServiceRepository : IServiceRepository
     public ITitleService TitleService => _titleService??= new TitleService(_httpClient);
     public IRoleService RoleService => _roleService ??= new RoleService(_httpClient);
     public IAuthenticationService AuthenticationService => _authenticationService ??= new AuthenticationService(_httpClient);
-    public IUserService UserService => throw new NotImplementedException();
+    public IUserService UserService => _userService??= new UserService(_httpClient);
     public IDepartmentService DepartmentService => _departmentService ??= new DepartmentService(_httpClient);
     public ICountryService CountryService => _countryService ??= new CountryService(_httpClient);
     public IProBonoClientService ProbonoClientService => _probonoClientService ??= new ProBonoClientService(_httpClient);

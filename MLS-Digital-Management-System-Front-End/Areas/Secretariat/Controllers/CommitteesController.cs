@@ -31,12 +31,18 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Secretariat.Controllers
         private async Task PopulateViewBags()
         {
             //get the token
-            string token = AuthHelper.GetToken(HttpContext);
-            ViewBag.token = token;
-            this._service.Token = token;
+            await this.PopulateViewBagsMinimal();
             ViewBag.YearOfOperationList = await GetAllYearOfOperations();
             ViewBag.MembersList = await GetAllMembers();
         
+        }
+
+        public async Task<IActionResult> ViewMembers(int committeeId)
+        {
+            await PopulateViewBagsMinimal();
+            ViewBag.CommitteeId = committeeId;
+            ViewBag.MembersList = await GetAllUsers();
+            return View();
         }
         private async Task<List<SelectListItem>> GetAllYearOfOperations()
         {
@@ -55,6 +61,22 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Secretariat.Controllers
             return yearsOfOperationsList;
         }
 
+        private async Task<List<SelectListItem>> GetAllUsers()
+        {
+            var usersList = await this._service.UserService.GetAllUsersAsync();
+
+            List<SelectListItem> usersSelectList = new List<SelectListItem>();
+
+            if(usersList != null)
+            {
+                usersList.ForEach(user =>
+                {
+                    usersSelectList.Add(new SelectListItem() { Text = user.FullName, Value = user.Id.ToString() });
+                });
+            }
+
+            return usersSelectList;
+        }
         private async Task<List<SelectListItem>> GetAllMembers()
         {
             var membersList = await this._service.MemberService.GetAllMembersAsync();
@@ -70,6 +92,13 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Secretariat.Controllers
             }
 
             return membersSelectList;
+        }
+
+        private async Task PopulateViewBagsMinimal()
+        {
+            string token = AuthHelper.GetToken(HttpContext);
+            ViewBag.token = token;
+            this._service.Token = token;
         }
        
 

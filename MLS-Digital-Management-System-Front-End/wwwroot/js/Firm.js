@@ -125,7 +125,7 @@ function Delete(id,token) {
 
         if (result) {
             $.ajax({
-                url: '" + host + "/api/firms/' + id,
+                url: "" + host + "/api/firms/" + id,
                 type: 'DELETE',
                 headers: {
                     'Authorization': "Bearer "+ token

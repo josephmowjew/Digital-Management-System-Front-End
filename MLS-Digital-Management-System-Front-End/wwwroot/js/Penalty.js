@@ -114,7 +114,6 @@ class PenaltyHandler {
       if (element.type === 'checkbox') {
         this.setCheckboxValue(element, fieldValue);
       } else if (element.type === 'file') {
-          console.log(data.attachments)
           this.handleFileUpload(element, data.attachments, fieldName);
       }
       else {

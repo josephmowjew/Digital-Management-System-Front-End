@@ -55,7 +55,9 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
             {
                 penaltiesListFromRemote.ForEach(penalty =>
                 {
-                    penaltiesList.Add(new SelectListItem() { Text = penalty.Reason, Value = penalty.Id.ToString() });
+                    if(penalty.AmountRemaining != 0)
+                        penaltiesList.Add(new SelectListItem() { Text = penalty.Reason, Value = penalty.Id.ToString() });
+
                 });
             }
 

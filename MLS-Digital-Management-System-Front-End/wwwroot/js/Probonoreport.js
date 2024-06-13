@@ -98,7 +98,7 @@ function EditForm(id,token, area = "") {
     showSpinner();
     
     $.ajax({
-        url: "http://18.217.103.30/api/probonoreports/getprobonoreport/"+ id,
+        url: `${host}/api/probonoreports/getprobonoreport/`+ id,
         type: 'GET',
         headers: {
             'Authorization': "Bearer "+ token
@@ -108,21 +108,54 @@ function EditForm(id,token, area = "") {
         
         hideSpinner();
         // Iterate over the keys of the data object and map them to form field names dynamically
-        var fieldMap = {};
+        /*var fieldMap = {};
         for (var key in data) {
             if (data.hasOwnProperty(key)) {
                 var formFieldName = key.charAt(0).toUpperCase() + key.slice(1); // Convert first character to uppercase
                 fieldMap[formFieldName] = key; // Map form field name to data key
             }
-        }
+        }*/
 
         // Iterate over the form elements and populate values dynamically
-        $("#edit_report_modal form").find('input, select, textarea').each(function(index, element) {
+        /*$("#edit_report_modal form").find('input, select, textarea').each(function(index, element) {
             var field = $(element);
+            console.log(field)
             var fieldName = field.attr('name');
             var dataKey = fieldMap[fieldName]; // Get corresponding key from data
             var fieldValue = data[dataKey]; // Get value from data based on key
-            field.val(fieldValue); // Set field value
+            console.log(fieldValue)
+            //field.val(fieldValue); // Set field value
+            //console.log(field.type)
+            if (field.type === 'checkbox') {
+                this.setCheckboxValue(element, fieldValue);
+            } else if (field.type === 'file') {
+                handleFileUpload(element, data.attachments, fieldName);
+            }
+            else {
+                //console.log(element)
+                field.value = fieldValue;
+            }
+        });*/
+
+        const editform = document.querySelector("#edit_report_modal form");
+        //const data = JSON.parse(response);
+        const fieldMap = createFieldMap(data);
+        const editformElements = [...editform.querySelectorAll('input, select, textarea, checkbox, label, textarea')];
+
+        editformElements.forEach(element => {
+            const fieldName = element.getAttribute('name');
+            const dataKey = fieldMap[fieldName];
+            let fieldValue = data[dataKey];
+
+            if (element.type === 'checkbox') {
+                this.setCheckboxValue(element, fieldValue);
+            } else if (element.type === 'file') {
+                //console.log("I'm here")
+                handleFileUpload(element, data.attachments, fieldName);
+            }
+            else {
+                element.value = fieldValue;
+            }
         });
 
 
@@ -147,7 +180,7 @@ function Delete(id,token) {
 
         if (result) {
             $.ajax({
-                url: 'http://18.217.103.30/api/probonoreports/' + id,
+                url: `${host}/api/probonoreports/` + id,
                 type: 'DELETE',
                 headers: {
                     'Authorization': "Bearer "+ token
@@ -180,7 +213,7 @@ function AcceptForm(id,token) {
     showSpinner();
     
     $.ajax({
-        url: "http://18.217.103.30/api/probonoreports/getprobonoreport/"+ id,
+        url: `${host}/api/probonoreports/getprobonoreport/`+ id,
         type: 'GET',
         headers: {
             'Authorization': "Bearer "+ token
@@ -267,7 +300,7 @@ function DenyForm(id,token) {
       //send the request
 
       $.ajax({
-          url:  "http://18.217.103.30/api/probonoreports/acceptReport",
+          url: `${host}/api/probonoreports/acceptReport`,
           type: 'POST',
           data: formData, // Convert formData object to JSON string
           processData: false, // Set processData to false to prevent automatic serialization
@@ -341,7 +374,7 @@ function DenyForm(id,token) {
           //send the request
   
           $.ajax({
-              url:  "http://18.217.103.30/api/probonoreports/denyreport",
+              url: `${host}/api/probonoreports/denyreport`,
               type: 'POST',
               data: formData, // Convert formData object to JSON string
               processData: false, // Set processData to false to prevent automatic serialization
@@ -425,7 +458,7 @@ function updateApplication(token) {
     //send the request
 
     $.ajax({
-        url: "http://18.217.103.30/api/ProBonoReports/"+id,
+        url: `${host}/api/ProBonoReports/`+id,
         type: 'PUT',
         data: formData,
         processData: false, // Set processData to false to prevent automatic serialization
@@ -497,6 +530,44 @@ function hideSpinner() {
     } else {
         console.error('Spinner element with id "spinner" was not found');
     }
+}
+
+
+
+function handleFileUpload(fileInput, attachments, fieldName) {
+    console.log(attachments)
+    const attachment = attachments.find(attachment => attachment.propertyName === fieldName);
+    console.log(attachment)
+    if (attachment) {
+        const fileURL = attachment.filePath;
+        fetch(fileURL, {
+            headers: {
+                'Accept': 'application/octet-stream',
+                'Access-Control-Request-Method': 'GET',
+                'Origin': `${host}`
+            }
+        })
+            .then(response => response.blob())
+            .then(blob => {
+                const file = new File([blob], attachment.fileName, attachment.fileType);
+                const dataTransfer = new DataTransfer();
+                dataTransfer.items.add(file);
+                fileInput.files = dataTransfer.files;
+                const event = new Event('change', { bubbles: true });
+                fileInput.dispatchEvent(event);
+            })
+            .catch(error => {
+                console.error(`Error fetching file ${fileURL}:`, error);
+            });
+    }
+}
+
+function createFieldMap(data) {
+    return Object.entries(data).reduce((map, [key, value]) => {
+        const formFieldName = key.charAt(0).toUpperCase() + key.slice(1);
+        map[formFieldName] = key;
+        return map;
+    }, {})
 }
 
 

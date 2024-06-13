@@ -18,8 +18,8 @@ namespace MLS_Digital_Management_System_Front_End.Areas.CEO.Controllers
             _service = serviceRepository;
         }
         public async Task<IActionResult> Index()
-        {   
-            ViewBag.currentYear = await CurrentYearOfOperation();
+        {
+            await PopulateViewBags();
 
             return View();
         }
@@ -40,16 +40,15 @@ namespace MLS_Digital_Management_System_Front_End.Areas.CEO.Controllers
             //get the token
             string token = AuthHelper.GetToken(HttpContext);
             ViewBag.token = token;
-            this._service.Token = token;
+            _service.Token = token;
             ViewBag.userId = HttpContext.Request.Cookies["UserId"];
             ViewBag.roleName = HttpContext.Request.Cookies["RoleName"];
+            ViewBag.currentYear = await CurrentYearOfOperation();
         }
 
         private async Task<ReadYearOfOperationDTO> CurrentYearOfOperation()
         {
-           ReadYearOfOperationDTO dto =  await this._service.YearOfOperationService.GetCurrentYearOfOperationAsync();
-
-           return dto;
+           return await _service.YearOfOperationService.GetCurrentYearOfOperationAsync();
         }
 
 

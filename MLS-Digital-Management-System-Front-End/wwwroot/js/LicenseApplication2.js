@@ -344,7 +344,7 @@ class FormHandler {
     delete(id, token) {
         bootbox.confirm("Are you sure you want to delete this application from the system?", result => {
             if (result) {
-                this.sendAjaxRequest(null, 'DELETE', `${host}/api/licenseapplication/${id}`, this.handleDeleteSuccess.bind(this), this.handleError.bind(this), {
+                this.sendAjaxRequest(null, 'DELETE', `${host}/api/LicenseApplications/${id}`, this.handleDeleteSuccess.bind(this), this.handleError.bind(this), {
                     'Authorization': `Bearer ${token}`
                 });
             }

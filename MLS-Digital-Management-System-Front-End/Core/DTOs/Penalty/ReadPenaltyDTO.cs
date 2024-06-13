@@ -15,6 +15,7 @@ namespace MLS_Digital_Management_System_Front_End.Core.DTOs.Penalty
         public string Reason { get; set; }
         [Required]
         public int YearOfOperationId { get; set; }
+        public double AmountRemaining { get; set; }
         public List<IFormFile>? Attachments { get; set; }
     }
 }

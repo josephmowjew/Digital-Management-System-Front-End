@@ -125,7 +125,7 @@ handleMarkAttendanceSuccess(response) {
       this.sendAjaxRequest(
         formData,
         "POST",
-        "${host}/api/CPDTrainings",
+        `${host}/api/CPDTrainings`,
         this.handleCreateCPDSuccess.bind(this),
         this.handleError.bind(this)
       );

@@ -52,14 +52,14 @@ $(function () {
                 hideSpinner();
 
                
-                    //show success message to the user
-                    var dataTable = $('#my_table').DataTable();
+                //show success message to the user
+                var dataTable = $('#my_table').DataTable();
 
-                    toastr.success("New pro bono case addded successfully")
+                toastr.success("New pro bono case addded successfully")
 
-                    $("#create_application_modal").modal("hide")
-
-                    dataTable.ajax.reload();
+                $("#create_application_modal").modal("hide")
+                dataTable.ajax.reload()
+                form.reset()
 
                 
 

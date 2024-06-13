@@ -160,7 +160,7 @@
                             render: function (data, type, row) {
                             let links = "";
                             if (row.applicationStatus.toLowerCase() == "pending") {
-                            links += "<a href='#' onclick='Activate(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='btn btn-outline-success mx-1 btn-sm ti ti-check' title='activate'>Activate</a>";
+                            links += "<a href='#' onclick='Activate(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='btn btn-outline-success mx-1 btn-sm ti ti-check my-1 mx-1' title='activate'>Activate</a>";
                             links += "<a href='#' onclick='DenyForm(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='btn btn-outline-danger mx-1 btn-sm ti ti-hand-stop' title='Deny'>Deny</a>";
                             
                             }

@@ -140,7 +140,7 @@ class FormHandler {
             formData.append("actionType", "Submit");
             formData.append("Id", id);
 
-            this.sendAjaxRequest(formData, 'POST', `${host}/api/LicenseApplication`, this.handleCreateApplicationSuccess.bind(this), this.handleError.bind(this));
+            this.sendAjaxRequest(formData, 'POST', `${host}/api/LicenseApplications`, this.handleCreateApplicationSuccess.bind(this), this.handleError.bind(this));
         }
     }
 

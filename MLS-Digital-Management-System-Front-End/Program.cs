@@ -76,4 +76,4 @@ pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
 });
 
 
-app.Run();
+app.Run(url: "http://localhost:5002");

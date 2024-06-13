@@ -62,7 +62,7 @@ class ThreadHandler {
         this.sendAjaxRequest(
           formData,
           "POST",
-          "${host}/api/Threads",
+          `${host}/api/Threads`,
           this.handleCreateSuccess.bind(this),
           this.handleError.bind(this, form),  // Pass the form reference
           {

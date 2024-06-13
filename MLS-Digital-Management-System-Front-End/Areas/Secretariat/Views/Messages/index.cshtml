@@ -123,7 +123,7 @@
 }
 
 
-<div class="card  w-100 h-100 d-flex justify-content-center">
+<div class="w-100 h-100 d-flex justify-content-center">
     <div class="card-body">
       
       
@@ -134,22 +134,24 @@
        
         <h5 class="card-title fw-semibold mb-4 text-uppercase text-center"> Messages List for @ViewBag.ThreadSubject</strong></h5>
 
-    <div class="chat-container">
-        <div class="chat-header text-white">
-            <h5>ChatApp</h5>
-        </div>
-        <div class="chat-body" id="messagesList">
-
-        </div>
-        <form id="chatForm">
-            <div class="form-input">
-                 <input id="ThreadId" name="ThreadId" value="@ViewBag.ThreadId" type="hidden" />
-                <input type="text" id="Content" name="Content" placeholder="Message" class="form-control" />
-                <button id="sendButton" class="send-button" type="button" id="create_message_btn" name="create_message_btn">
-                    <i class="bi bi-send"></i>
-                </button>
+        <div class="d-flex justify-content-center">
+            <div class="chat-container">
+            <div class="chat-header text-white">
+                <h5>ChatApp</h5>
             </div>
-        </form>
+            <div class="chat-body" id="messagesList">
+
+            </div>
+            <form id="chatForm">
+                <div class="form-input">
+                     <input id="ThreadId" name="ThreadId" value="@ViewBag.ThreadId" type="hidden" />
+                    <input type="text" id="Content" name="Content" placeholder="Message" class="form-control" />
+                    <button id="sendButton" class="send-button" type="button" id="create_message_btn" name="create_message_btn">
+                        <i class="bi bi-send"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
 
         

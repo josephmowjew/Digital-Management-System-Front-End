@@ -14,11 +14,18 @@
           <div>
             <img src="~/assets/images/91.gif" id="spinner" />
         </div>
-        
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-info my-3" data-bs-toggle="modal" data-bs-target="#create_report_modal">
-            Add Report
-        </button>
+        <div class="d-flex justify-content-between">
+            <div>
+                <button onclick="window.history.back()" class="btn btn-warning my-3"><span class="ti ti-arrow-left"></span>Back</button>
+
+            </div>
+            <div>
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-info my-3" data-bs-toggle="modal" data-bs-target="#create_report_modal">
+                    Add Report
+                </button>
+            </div>
+        </div>
       
         <!-- Modal -->
         <div class="modal fade" id="create_report_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -145,7 +152,7 @@
                         render: function(data, type, row, meta) {
                             if (data && data.length > 0) {
                             return data.map((attachment) => {
-                                return `<a href="@host/${attachment.filePath}" target="_blank" download="${attachment.fileName}" class='ti ti-download btn btn-outline-info'> ${attachment.fileName}</a>`;
+                                    return `<a href="@host/${attachment.filePath}" target="_blank" download="${attachment.fileName}"> document <i class="bi bi-paperclip"></i></a>`;
                             }).join('<br>');
                             } else {
                             return '';

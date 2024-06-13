@@ -203,7 +203,7 @@ class PenaltyHandler {
         "PUT",
         `${host}/api/Penalties/${id}`,
         this.handleUpdateSuccess.bind(this),
-        this.handleError.bind(this),
+        this.handleEditError.bind(this),
         { 'Authorization': `Bearer ${tokenValue}` }
       );
     }
@@ -252,35 +252,64 @@ class PenaltyHandler {
       dataTable.ajax.reload();
       this.form.reset();
     }
-
-  handleError(xhr) {
-    this.hideSpinner();
-    const errorResponse = JSON.parse(xhr.responseText);
-    $.each(errorResponse, (key, value) => {
-      $.each(value, (index, message) => {
-        const elementName = key
-          ? key.charAt(0).toUpperCase() + key.slice(1)
-          : null;
-        const element = elementName
-          ? document.querySelector(
-              `#create_penalty_modal form input[name="${elementName}"]`
-            )
-          : null;
-
-        if (element) {
-          const errorSpan = element.nextElementSibling;
-          if (errorSpan && errorSpan.classList.contains("text-danger")) {
-            errorSpan.textContent = message;
-          } else {
-            const newErrorSpan = document.createElement("span");
-            newErrorSpan.textContent = message;
-            newErrorSpan.classList.add("text-danger");
-            element.after(newErrorSpan);
+    handleError(xhr) {
+      this.hideSpinner();
+      const errorResponse = JSON.parse(xhr.responseText);
+      $.each(errorResponse, (key, value) => {
+        $.each(value, (index, message) => {
+          const elementName = key ? key.charAt(0).toUpperCase() + key.slice(1) : null;
+          const element = elementName 
+            ? document.querySelector(
+                `#create_penalty_modal form input[name="${elementName}"], #create_penalty_modal form textarea[name="${elementName}"], #create_penalty_modal form select[name="${elementName}"]`
+              )
+            : null;
+    
+          console.log(key.charAt(0).toUpperCase() + key.slice(1));
+    
+          if (element) {
+            const errorSpan = element.nextElementSibling;
+            if (errorSpan && errorSpan.classList.contains("text-danger")) {
+              errorSpan.textContent = message;
+            } else {
+              const newErrorSpan = document.createElement("span");
+              newErrorSpan.textContent = message;
+              newErrorSpan.classList.add("text-danger");
+              element.after(newErrorSpan);
+            }
           }
-        }
+        });
       });
-    });
-  }
+    }
+
+    handleEditError(xhr) {
+      this.hideSpinner();
+      const errorResponse = JSON.parse(xhr.responseText);
+      $.each(errorResponse, (key, value) => {
+        $.each(value, (index, message) => {
+          const elementName = key ? key.charAt(0).toUpperCase() + key.slice(1) : null;
+          const element = elementName 
+            ? document.querySelector(
+                `#edit_penalty_modal form input[name="${elementName}"], #edit_penalty_modal form textarea[name="${elementName}"], #edit_penalty_modal form select[name="${elementName}"]`
+              )
+            : null;
+    
+          console.log(key.charAt(0).toUpperCase() + key.slice(1));
+    
+          if (element) {
+            const errorSpan = element.nextElementSibling;
+            if (errorSpan && errorSpan.classList.contains("text-danger")) {
+              errorSpan.textContent = message;
+            } else {
+              const newErrorSpan = document.createElement("span");
+              newErrorSpan.textContent = message;
+              newErrorSpan.classList.add("text-danger");
+              element.after(newErrorSpan);
+            }
+          }
+        });
+      });
+    }
+    
 
   showSpinner() {
     const spinnerElement = document.getElementById("spinner");

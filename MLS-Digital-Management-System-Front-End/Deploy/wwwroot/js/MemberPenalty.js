@@ -174,7 +174,11 @@ class PenaltyHandler {
 
   handleError(xhr) {
     this.hideSpinner();
+
+    
     const errorResponse = JSON.parse(xhr.responseText);
+
+    
     $.each(errorResponse, (key, value) => {
       $.each(value, (index, message) => {
         const elementName = key

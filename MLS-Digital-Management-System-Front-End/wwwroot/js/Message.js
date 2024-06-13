@@ -197,36 +197,33 @@ class MessageHandler {
             .catch(error => console.error(error));
     }
 
-    displayMessages(messageObject) {
+
+
+    displayMessagesAddedToTop = (messageObject) => {
         this.messagesRetrieved += 1;
         let messageList = document.getElementById("messagesList");
         const formattedDate = new Date(messageObject.timestamp).toLocaleString('en-US', {
             year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true
         });
         const className = messageObject.createdBy.id === userId ? 'sender' : 'receiver';
-
-        const messageHTML = `<div class="message ${className}" id="message-${messageObject.id}">
-                                  <div class="message-header">${messageObject.createdBy.firstName} ${messageObject.createdBy.lastName}</div>
-                                  <div class="message-text">${messageObject.content}</div>
-                                  <div class="message-timestamp">${formattedDate}</div>
-                              </div>`;
-        messageList.insertAdjacentHTML('beforeend', messageHTML);
-    }
-
-    displayMessagesAddedToTop(messageObject) {
-        this.messagesRetrieved += 1;
-        let messageList = document.getElementById("messagesList");
-        const formattedDate = new Date(messageObject.timestamp).toLocaleString('en-US', {
-            year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true
-        });
-        const className = messageObject.createdBy.id === userId ? 'sender' : 'receiver';
-
-        const messageHTML = `<div class="message ${className}" id="message-${messageObject.id}">
-                                    <div class="message-header">${messageObject.createdBy.firstName} ${messageObject.createdBy.lastName}</div>
-                                    <div class="message-text">${messageObject.content}</div>
-                                    <div class="message-timestamp">${formattedDate}</div>
-                                </div>`;
-        messageList.insertAdjacentHTML('afterbegin', messageHTML);
+    
+        const messageElement = document.createElement('div');
+        messageElement.className = `message ${className}`;
+        messageElement.id = `message-${messageObject.id}`;
+        messageElement.innerHTML = `
+            <div class="message-header">${messageObject.createdBy.firstName} ${messageObject.createdBy.lastName}</div>
+            <div class="message-text">${messageObject.content}</div>
+            <div class="message-timestamp">${formattedDate}</div>
+        `;
+    
+        const messages = Array.from(messageList.children);
+        const insertionIndex = messages.findIndex(msg => new Date(messageObject.timestamp) < new Date(msg.querySelector('.message-timestamp').textContent));
+    
+        if (insertionIndex === -1) {
+            messageList.insertAdjacentElement('afterbegin', messageElement);
+        } else {
+            messages[insertionIndex].insertAdjacentElement('beforebegin', messageElement);
+        }
     }
 
     displayValidationErrors(form) {

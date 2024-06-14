@@ -269,6 +269,7 @@ class FormHandler {
     handleEditFormSuccess(response) {
         this.hideSpinner();
         const data = JSON.parse(response);
+        console.log(data)
         const fieldMap = this.createFieldMap(data);
     
         this.formElements.forEach(element => {

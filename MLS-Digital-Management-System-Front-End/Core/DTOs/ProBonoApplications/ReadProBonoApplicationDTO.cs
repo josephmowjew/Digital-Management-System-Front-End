@@ -33,7 +33,6 @@ public class ReadProBonoApplicationDTO
         public string SummaryOfDispute { get; set; }
         public int YearOfOperationId { get; set; }
         public ReadYearOfOperationDTO YearOfOperation { get; set; }
-
-        //public ICollection<Attachment> Attachments { get; set; }
+        public List<IFormFile>? Attachments { get; set; }
 
 }

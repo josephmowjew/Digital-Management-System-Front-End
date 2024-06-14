@@ -57,6 +57,10 @@
                         </th>
                        
                         <th>
+                            Case Document
+                        </th>
+
+                        <th>
                             Action
                         </th>
 
@@ -140,6 +144,21 @@
                             name: "comments",
                             className: "text-left",
                             "orderable": true,
+                        },
+                        {
+                            data: "attachments",
+                            name: "attachments",
+                            className: "text-left",
+                            "orderable": false,
+                            render: function (data, type, row, meta) {
+                                if (data && data.length > 0) {
+                                    return data.map((attachment) => {
+                                        return `<a href="@host/${attachment.filePath}" target="_blank" download="${attachment.fileName}"> Attachment <i class="bi bi-paperclip"></i></a>`;
+                                    }).join('<br>');
+                                } else {
+                                    return '';
+                                }
+                            }
                         },
                        {
                         data: "id",

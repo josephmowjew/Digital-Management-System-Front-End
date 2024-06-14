@@ -45,5 +45,6 @@ public class ReadLicenseApplicationDTO
         public string ExplanationForNoAccountantsCertificate { get; set; }
         public bool CompliedWithPenaltiesImposedUnderTheAct { get; set; }
         public string ExplanationForNoComplianceWithPenalties { get; set; }
-        
-    }
+        public string ExplanationForNotSubmittingCertificateOfAdmission { get; set; }
+
+}

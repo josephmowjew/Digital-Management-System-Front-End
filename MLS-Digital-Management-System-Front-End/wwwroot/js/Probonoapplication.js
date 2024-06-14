@@ -116,7 +116,6 @@ function EditForm(id,token, area = "") {
                 fieldMap[formFieldName] = key; // Map form field name to data key
             }
         }*/
-        }*/
 
         // Iterate over the form elements and populate values dynamically
         /*$("#edit_application_modal form").find('input, select, textarea').each(function(index, element) {
@@ -126,29 +125,6 @@ function EditForm(id,token, area = "") {
             var dataKey = fieldMap[fieldName]; // Get corresponding key from data
             var fieldValue = data[dataKey]; // Get value from data based on key
             field.val(fieldValue); // Set field value
-        });*/
-
-        const editform = document.querySelector("#edit_application_modal form");
-        //const data = JSON.parse(response);
-        console.log(data)
-        const fieldMap = createFieldMap(data);
-        const editformElements = [...editform.querySelectorAll('input, select, textarea, checkbox, label, textarea')];
-
-        editformElements.forEach(element => {
-            const fieldName = element.getAttribute('name');
-            const dataKey = fieldMap[fieldName];
-            let fieldValue = data[dataKey];
-
-            if (element.type === 'checkbox') {
-                this.setCheckboxValue(element, fieldValue);
-            } else if (element.type === 'file') {
-                //console.log(data.attachments)
-                handleFileUpload(element, data.attachments, fieldName);
-            }
-            else {
-                element.value = fieldValue;
-            }
-        });
         });*/
 
         const editform = document.querySelector("#edit_application_modal form");

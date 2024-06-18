@@ -36,7 +36,7 @@ $(function () {
         //send the request
 
         $.ajax({
-            url:  `${host}/api/probonoreports`,
+            url:  `${host}/api/Probonoreports`,
             type: 'POST',
             data: formData, // Convert formData object to JSON string
             processData: false, // Set processData to false to prevent automatic serialization
@@ -535,9 +535,9 @@ function hideSpinner() {
 
 
 function handleFileUpload(fileInput, attachments, fieldName) {
-    console.log(attachments)
+ 
     const attachment = attachments.find(attachment => attachment.propertyName === fieldName);
-    console.log(attachment)
+  
     if (attachment) {
         const fileURL = attachment.filePath;
         fetch(fileURL, {
@@ -553,6 +553,7 @@ function handleFileUpload(fileInput, attachments, fieldName) {
                 const dataTransfer = new DataTransfer();
                 dataTransfer.items.add(file);
                 fileInput.files = dataTransfer.files;
+
                 const event = new Event('change', { bubbles: true });
                 fileInput.dispatchEvent(event);
             })

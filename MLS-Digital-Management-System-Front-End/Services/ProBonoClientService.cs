@@ -17,7 +17,7 @@ public class ProBonoClientService : IProBonoClientService
 
     public async Task<List<ReadProBonoClientDTO>> GetAllProBonoClientsAsync()
     {
-         var response = await _httpClient.GetAsync($"api/probonoclients/getAll");
+         var response = await _httpClient.GetAsync($"api/ProBonoClients/getAll");
         if (response.IsSuccessStatusCode)
         {
             var responseData = await response.Content.ReadFromJsonAsync<List<ReadProBonoClientDTO>>();
@@ -25,6 +25,7 @@ public class ProBonoClientService : IProBonoClientService
         }
         else
         {
+            string responseAsString = await response.Content.ReadAsStringAsync();
             throw new InvalidOperationException($"Failed to get probono clients.");
         }
     }

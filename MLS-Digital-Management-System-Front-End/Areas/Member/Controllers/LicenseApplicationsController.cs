@@ -69,6 +69,10 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
                 });
             }
 
+            //add "other as a last option
+
+            firmsList.Add(new SelectListItem() { Text = "Other", Value = "Other" });
+
             return firmsList;
         }
         private async Task<bool> HasPreviousLicenseApplication()

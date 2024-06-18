@@ -109,6 +109,7 @@ function EditForm(id,token, area = "") {
         hideSpinner();
         // Iterate over the keys of the data object and map them to form field names dynamically
         /*var fieldMap = {};
+        /*var fieldMap = {};
         for (var key in data) {
             if (data.hasOwnProperty(key)) {
                 var formFieldName = key.charAt(0).toUpperCase() + key.slice(1); // Convert first character to uppercase
@@ -117,6 +118,7 @@ function EditForm(id,token, area = "") {
         }*/
 
         // Iterate over the form elements and populate values dynamically
+        /*$("#edit_application_modal form").find('input, select, textarea').each(function(index, element) {
         /*$("#edit_application_modal form").find('input, select, textarea').each(function(index, element) {
             var field = $(element);
             var fieldName = field.attr('name');
@@ -127,7 +129,6 @@ function EditForm(id,token, area = "") {
 
         const editform = document.querySelector("#edit_application_modal form");
         //const data = JSON.parse(response);
-        console.log(data)
         const fieldMap = createFieldMap(data);
         const editformElements = [...editform.querySelectorAll('input, select, textarea, checkbox, label, textarea')];
 
@@ -139,13 +140,14 @@ function EditForm(id,token, area = "") {
             if (element.type === 'checkbox') {
                 this.setCheckboxValue(element, fieldValue);
             } else if (element.type === 'file') {
-                //console.log(data.attachments)
+                //console.log("I'm here")
                 handleFileUpload(element, data.attachments, fieldName);
             }
             else {
                 element.value = fieldValue;
             }
         });
+
 
    
 
@@ -331,30 +333,34 @@ function updateApplication(token) {
     //updateApplication
     var authenticationToken = $("#edit_application_modal input[name='__RequestVerificationToken']").val();
 
-     //get the form itself 
-     var form = $("#edit_application_modal form");
-
+    //console.log("this is the form",$("#edit_application_modal form")[0])
         
-     var formData = {};
+    // Get the form itself
+    var form = $("#edit_application_modal form")[0];
 
-     // Iterate over the form's elements and build the formData object dynamically
-     $(form).find('input, select, textarea').each(function(index, element) {
-         var field = $(element);
-         var fieldName = field.attr('name');
-         var fieldValue = field.val();
-         formData[fieldName] = fieldValue;
-     });
+    //console.log(form)
+    // Create a new FormData object
+    var formData = new FormData();
+
+    // Append the form field values
+
+   
+
+    $(form).find('input, select, textarea').each(function (index, element) {
+        var field = $(element);
+        var fieldName = field.attr('name');
+        var fieldValue = field.val();
+        formData.append(fieldName, fieldValue);
+    });
 
      let id = $("#edit_application_modal input[name='Id']").val()
 
-     // Convert formData object to an array of key-value pairs
-    const formDataEntries = Object.entries(formData);
 
-    // Convert the array of key-value pairs back to an object
-    const formDataObject = Object.fromEntries(formDataEntries);
-
-    // Stringify the formDataObject
-    const formDataJson = JSON.stringify(formDataObject);
+    // Append the file attachments
+    var attachments = $("#edit_application_modal input[name='Attachments']")[0].files;
+    for (var i = 0; i < attachments.length; i++) {
+        formData.append("Attachments", attachments[i]);
+    }
 
 
    
@@ -363,8 +369,9 @@ function updateApplication(token) {
     $.ajax({
         url: `${host}/api/probonoapplications/`+id,
         type: 'PUT',
-        data: formDataJson,
-        contentType: 'application/json',
+        data: formData,
+        processData: false, // Set processData to false to prevent automatic serialization
+        contentType: false, // Prevent jQuery from processing the data (since it's already in FormData format)
         headers: {
             'Authorization': "Bearer "+ token
         },
@@ -513,3 +520,44 @@ function createFieldMap(data) {
         return map;
     }, {})
 }
+function handleFileUpload(fileInput, attachments, fieldName) {
+
+    const attachment = attachments.find(attachment => attachment.propertyName === fieldName);
+
+
+
+    if (attachment) {
+        const fileURL = attachment.filePath;
+
+        //console.log(fileURL)
+        fetch(fileURL, {
+            headers: {
+                'Accept': 'application/octet-stream',
+                'Access-Control-Request-Method': 'GET',
+                'Origin': `${host}`
+            }
+        })
+            .then(response => response.blob())
+            .then(blob => {
+                const file = new File([blob], attachment.fileName, attachment.fileType);
+                const dataTransfer = new DataTransfer();
+                dataTransfer.items.add(file);
+                fileInput.files = dataTransfer.files;
+                const event = new Event('change', { bubbles: true });
+                fileInput.dispatchEvent(event);
+            })
+            .catch(error => {
+                console.error(`Error fetching file ${fileURL}:`, error);
+            });
+    }
+}
+
+function createFieldMap(data) {
+    return Object.entries(data).reduce((map, [key, value]) => {
+        const formFieldName = key.charAt(0).toUpperCase() + key.slice(1);
+        map[formFieldName] = key;
+        return map;
+    }, {})
+}
+
+

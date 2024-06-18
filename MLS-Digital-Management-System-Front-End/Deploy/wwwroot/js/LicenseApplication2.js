@@ -1,17 +1,51 @@
 class FormHandler {
     constructor() {
         this.hideSpinner();
-        
         this.bindEvents();
-      
-       
-         this.form = document.querySelector("#create_application_modal form");
+        this.form = document.querySelector("#create_application_modal form");
         if (this.form) {
             this.formElements = this.form.querySelectorAll('input, select, textarea, checkbox');
             this.setupFormBehavior();
             this.hideFormFields();
+            this.setupFirmSelectListener();
         }
-       
+    }
+
+    setupFirmSelectListener() {
+        const firmSelect = this.form.querySelector('select[name="FirmId"]');
+        if (firmSelect) {
+            firmSelect.addEventListener('change', (event) => {
+                if (event.target.value === "Other") {
+                    bootbox.confirm({
+                        message: "Do you want to create a new firm?",
+                        buttons: {
+                            confirm: {
+                                label: 'Yes',
+                                className: 'btn-success'
+                            },
+                            cancel: {
+                                label: 'No',
+                                className: 'btn-danger'
+                            }
+                        },
+                        callback: (result) => {
+                            if (result) {
+                                this.onSaveDraft().then(() => {
+                                   
+                                    // Wait for a short period to allow the toast to be displayed
+                                    setTimeout(() => {
+                                        window.location.href = `/member/firms`;
+                                    }, 2000); // Delay for 2 seconds
+                                }).catch((error) => {
+                                    console.error('Error saving draft:', error);
+                                    alert('There was an error saving the draft. Please try again.');
+                                });
+                            }
+                        }
+                    });
+                }
+            });
+        }
     }
 
     setupFormBehavior() {
@@ -89,7 +123,6 @@ class FormHandler {
         const createApplicationBtn = document.querySelector("#create_application_modal button[name='create_application_btn']");
         const saveApplicationBtn = document.querySelector("#create_application_modal button[name='save_application_btn']");
         
-        
         if (createApplicationBtn) {
             createApplicationBtn.addEventListener('click', this.onCreateClick.bind(this));
         }
@@ -145,19 +178,26 @@ class FormHandler {
     }
 
     onSaveDraft() {
-        this.showSpinner();
+        return new Promise((resolve, reject) => {
+            this.showSpinner();
 
-        const form = document.querySelector("#create_application_modal form");
-        const id = form.querySelector('input[name="Id"]').value;
-        const formData = new FormData(form);
-        const stringToBoolean = (str) => str === "True" ? true : false;
-        let hasPreviousLicenseApplication = stringToBoolean(hasPreviousLicenseApplicationVar);
-        formData.append("hasPreviousLicenseApplication", hasPreviousLicenseApplication);
-        formData.append("actionType", "Draft");
-        formData.append("Id", id);
-        
-
-        this.sendAjaxRequest(formData, 'POST', `${host}/api/LicenseApplications`, this.handleSaveDraftSuccess.bind(this), this.handleError.bind(this));
+            const form = document.querySelector("#create_application_modal form");
+            const id = form.querySelector('input[name="Id"]').value;
+            const formData = new FormData(form);
+            const stringToBoolean = (str) => str === "True" ? true : false;
+            let hasPreviousLicenseApplication = stringToBoolean(hasPreviousLicenseApplicationVar);
+            formData.append("hasPreviousLicenseApplication", hasPreviousLicenseApplication);
+            formData.append("actionType", "Draft");
+            formData.append("Id", id);
+    
+            this.sendAjaxRequest(formData, 'POST', `${host}/api/LicenseApplications`, (response) => {
+                this.handleSaveDraftSuccess(response);
+                resolve();
+            }, (error) => {
+                this.handleError(error);
+                reject(error);
+            });
+        });
     }
 
     sendAjaxRequest(formData, method, url, successCallback, errorCallback) {
@@ -269,6 +309,7 @@ class FormHandler {
     handleEditFormSuccess(response) {
         this.hideSpinner();
         const data = JSON.parse(response);
+        console.log(data)
         const fieldMap = this.createFieldMap(data);
     
         this.formElements.forEach(element => {
@@ -374,10 +415,6 @@ class FormHandler {
     handleAcceptApplicationSuccess(response) {
         this.hideSpinner();
         toastr.success("application has been approved accepted successfully");
-
-       
-       
-       
     }
 
     denyForm(id) {
@@ -436,8 +473,6 @@ class FormHandler {
         toastr.success("Application has been denied");
 
         $("#deny_license_application_modal").modal("hide");
-        
-
     }
 
     updateApplication(token) {
@@ -461,61 +496,45 @@ class FormHandler {
         dataTable.ajax.reload();
     }
 
-    hideFormFields()
-    {
-        //get the form
+    hideFormFields() {
         const form = document.querySelector("#create_application_modal form");
-
-        
-
         const stringToBoolean = (str) => str === "True" ? true : false;
-
         let hasPreviousLicenseApplication = stringToBoolean(hasPreviousLicenseApplicationVar);
-        
-
         const formElements = [...form.querySelectorAll('input, select, textarea, checkbox, label, textarea')];
-        const newApplicationList = ["CertificateOfAdmission","ContributionToMLSBuildingProjectFund","ContributionToFidelityFund","AnnualSubscriptionToSociety","FirmId"]
+        const newApplicationList = ["CertificateOfAdmission", "ContributionToMLSBuildingProjectFund", "ContributionToFidelityFund", "AnnualSubscriptionToSociety", "FirmId"];
 
         let applicationElements = null;
 
-        if(hasPreviousLicenseApplication == false)
-        {
+        if (!hasPreviousLicenseApplication) {
             applicationElements = formElements.filter(element => {
-            if (element.tagName === 'LABEL') {
-                return newApplicationList.some(item => element.htmlFor.includes(item));
-            } else {
-            return (element.name && newApplicationList.some(item => element.name.includes(item))) || (element.id && newApplicationList.some(item => element.id.includes(item)));
-            }
-        });
-
-        }else{
+                if (element.tagName === 'LABEL') {
+                    return newApplicationList.some(item => element.htmlFor.includes(item));
+                } else {
+                    return (element.name && newApplicationList.some(item => element.name.includes(item))) || (element.id && newApplicationList.some(item => element.id.includes(item)));
+                }
+            });
+        } else {
             applicationElements = formElements.filter(element => {
-            if (element.tagName === 'LABEL') {
-            return !element.htmlFor.includes('CertificateOfAdmission');
-            } else {
-            return !(element.name && element.name.includes('CertificateOfAdmission')) && !(element.id && element.id.includes('CertificateOfAdmission'));
-            }
-        });
+                if (element.tagName === 'LABEL') {
+                    return !element.htmlFor.includes('CertificateOfAdmission');
+                } else {
+                    return !(element.name && element.name.includes('CertificateOfAdmission')) && !(element.id && element.id.includes('CertificateOfAdmission'));
+                }
+            });
         }
         
-      
-    //display only the elements in the applicationElements list from the formElements
-    formElements.forEach(element => {
-        if (applicationElements.includes(element)) {
-        element.hidden = false; // show the element
-        element.disabled = false; // set disabled to true
-        } else {
-        element.hidden = true; // hide the element
-        element.required = false; // set required to false
-        element.disabled = true; // set disabled to true
-        }
-    });
-            
-      
-
+        formElements.forEach(element => {
+            if (applicationElements.includes(element)) {
+                element.hidden = false;
+                element.disabled = false;
+            } else {
+                element.hidden = true;
+                element.required = false;
+                element.disabled = true;
+            }
+        });
     }
 }
 
 // expose-form-handler.js
 window.formHandler = new FormHandler();
-

@@ -139,7 +139,7 @@ class MessageHandler {
 
     handleCreateSuccess(response) {
         let messageObject = JSON.parse(response);
-        this.displayMessages(messageObject);
+        this.displayMessagesAddedToTop(messageObject);
 
         // Scroll to the new message
         const newMessageElement = document.querySelector(`#message-${messageObject.id}`);
@@ -198,7 +198,6 @@ class MessageHandler {
     }
 
 
-
     displayMessagesAddedToTop = (messageObject) => {
         this.messagesRetrieved += 1;
         let messageList = document.getElementById("messagesList");
@@ -213,18 +212,28 @@ class MessageHandler {
         messageElement.innerHTML = `
             <div class="message-header">${messageObject.createdBy.firstName} ${messageObject.createdBy.lastName}</div>
             <div class="message-text">${messageObject.content}</div>
-            <div class="message-timestamp">${formattedDate}</div>
+            <div class="message-timestamp" data-timestamp="${messageObject.timestamp}">${formattedDate}</div>
         `;
     
         const messages = Array.from(messageList.children);
-        const insertionIndex = messages.findIndex(msg => new Date(messageObject.timestamp) < new Date(msg.querySelector('.message-timestamp').textContent));
+    
+        const insertionIndex = messages.findIndex(msg => {
+            const timestampElement = msg.querySelector('.message-timestamp');
+            if (timestampElement) {
+                const msgTimestamp = timestampElement.getAttribute('data-timestamp');
+                return new Date(messageObject.timestamp) < new Date(msgTimestamp);
+            }
+            return false;
+        });
     
         if (insertionIndex === -1) {
-            messageList.insertAdjacentElement('afterbegin', messageElement);
+            messageList.appendChild(messageElement);
         } else {
             messages[insertionIndex].insertAdjacentElement('beforebegin', messageElement);
         }
     }
+    
+    
 
     displayValidationErrors(form) {
         const invalidFields = form.querySelectorAll(":invalid");

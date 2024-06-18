@@ -93,7 +93,8 @@
                             name: "id",
                             "orderable": false,
                             render: function (data) {
-                                return "<a href='#' onclick='EditForm(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='ti ti-pencil' title='edit' ></a> <a href='#' type='button' onclick='Delete(\"" + data + "\",\"" + tokenValue + "\")' title='delete' class='ti ti-trash red-icon' ></a>"
+                                return "<a href='#' onclick='EditForm(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-pencil' title='edit' > Edit</a><a href='#' type='button' onclick='Delete(\"" + data + "\",\"" + tokenValue + "\")' title='delete' class='ti ti-trash red-icon btn btn-outline-danger my-1 btn-sm' > Delete</a>"
+                               
                             }                     }
                     ],
                     responsive: true,

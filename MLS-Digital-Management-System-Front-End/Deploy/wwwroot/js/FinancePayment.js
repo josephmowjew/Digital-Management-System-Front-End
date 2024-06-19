@@ -9,9 +9,7 @@ function Activate(id, token) {
 
             showSpinner()
             $.ajax({
-                url: 'http://localhost:5043/api/PenaltyPayments/approve/'+id,
-
-                //url: 'http://localhost:5043/api/probonoapplications/activate/'+id,
+                url: `${host}/api/PenaltyPayments/approve/`+id,
                 type: 'POST',
                 headers: {
                     'Authorization': "Bearer " + token
@@ -84,7 +82,7 @@ function DenyApplication() {
     //send the request
 
     $.ajax({
-        url: "http://localhost:5043/api/PenaltyPayments/denyPayment",
+        url: `${host}/api/PenaltyPayments/denyPayment`,
         type: 'POST',
         data: formData, // Convert formData object to JSON string
         processData: false, // Set processData to false to prevent automatic serialization

@@ -1,4 +1,4 @@
-class PenaltyHandler {
+    class PenaltyHandler {
   constructor() {
     this.hideSpinner();
     this.bindEvents();
@@ -62,7 +62,7 @@ class PenaltyHandler {
       this.sendAjaxRequest(
         formData,
         "POST",
-        "http://localhost:5043/api/PenaltyPayments",
+        `${host}/api/PenaltyPayments`,
         this.handleCreatePenaltyPaymentSuccess.bind(this),
         this.handleError.bind(this)
       );
@@ -77,7 +77,7 @@ class PenaltyHandler {
     this.showSpinner();
 
     if (id > 0) {
-        this.sendAjaxRequest(null, 'GET', `http://localhost:5043/api/Penalties/GetPenaltyById/${id}`, this.handleEditFormSuccess.bind(this), this.handleError.bind(this), {
+        this.sendAjaxRequest(null, 'GET', `${host}/api/Penalties/GetPenaltyById/${id}`, this.handleEditFormSuccess.bind(this), this.handleError.bind(this), {
         'Authorization': `Bearer ${token}`
       });
     }
@@ -120,7 +120,7 @@ class PenaltyHandler {
             headers: {
               'Accept': 'application/octet-stream',
               'Access-Control-Request-Method': 'GET',
-              'Origin': 'http://localhost:5281'
+              'Origin': `${host}`
             }
           })
           .then(response => response.blob())

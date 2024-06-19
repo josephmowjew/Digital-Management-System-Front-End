@@ -62,16 +62,10 @@
                             Event Date
                         </th>
                         <th>
-                            Fee
-                        </th>
-                        <th>
                             Units Awarded
                         </th>
                         <th>
-                            AccreditingInstitution
-                        </th>
-                        <th>
-                            Poster
+                            Accrediting Institution
                         </th>
                         <th>
                             Action
@@ -138,55 +132,6 @@
                         className: "text-left",
                         "orderable": false,
                     },
-
-                    {
-                        data: null,
-                        name: "fees",
-                        title: "Fees",
-                        className: "text-left fees-column",
-                        "orderable": false,
-                        render: function(data, type, row) {
-                            var fees = [];
-
-                        if (row.memberPhysicalAttendanceFee) {
-                            const formattedFee = new Intl.NumberFormat('en-MW', {
-                            style: 'currency',
-                            currency: 'MWK',
-                            minimumFractionDigits: 0
-                        }).format(row.memberPhysicalAttendanceFee);
-                            fees.push('<div class="fee-item"><strong>Member Physical:</strong> <span class="badge bg-primary bg-opacity-85">' + formattedFee + '</span></div>');
-                        }
-
-                        if (row.memberVirtualAttendanceFee) {
-                            const formattedFee = new Intl.NumberFormat('en-MW', {
-                            style: 'currency',
-                            currency: 'MWK',
-                            minimumFractionDigits: 0
-                        }).format(row.memberVirtualAttendanceFee);
-                            fees.push('<div class="fee-item"><strong>Member Virtual:</strong> <span class="badge bg-success bg-opacity-85">' + formattedFee + '</span></div>');
-                        }
-
-                        if (row.nonMemberPhysicalAttendanceFee) {
-                            const formattedFee = new Intl.NumberFormat('en-MW', {
-                            style: 'currency',
-                            currency: 'MWK',
-                            minimumFractionDigits: 0
-                        }).format(row.nonMemberPhysicalAttendanceFee);
-                            fees.push('<div class="fee-item"><strong>Non-Member Physical:</strong> <span class="badge bg-warning bg-opacity-85">' + formattedFee + '</span></div>');
-                        }
-
-                        if (row.nonMemberVirtualAttandanceFee) {
-                            const formattedFee = new Intl.NumberFormat('en-MW', {
-                            style: 'currency',
-                            currency: 'MWK',
-                            minimumFractionDigits: 0
-                        }).format(row.nonMemberVirtualAttandanceFee);
-                            fees.push('<div class="fee-item"><strong>Non-Member Virtual:</strong> <span class="badge bg-info bg-opacity-85">' + formattedFee + '</span></div>');
-                        }
-
-                        return fees.length > 0 ? fees.join('') : 'Free CPD';
-                        }
-                    },
                     {
                         data: "cpdUnitsAwarded",
                         name: "cpdUnitsAwarded",
@@ -199,31 +144,18 @@
                         className: "text-left",
                         "orderable": true,
                     },
-                     {
-                        data: "attachments",
-                        name: "attachments",
-                        className: "text-left",
-                        "orderable": true,
-                        render: function(data, type, row, meta) {
-                            if (data && data.length > 0) {
-                            return data.map((attachment) => {
-                                return `<a href="@host/${attachment.filePath}" data-lightbox="image-1" title="${attachment.fileName}" > <img src="@host/${attachment.filePath}"  alt="cpd poster"  class="w-50 h-50"> </a>`;
-                            }).join('<br>');
-                            } else {
-                            return '';
-                            }
-                        }
-                        },
-                  
                     {
                         data: "id",
                         name: "id",
                         "orderable": false,
                         render: function (data, type, row) {
                                   
-                                    return `<a href='#' onclick='cpdTrainingHandler.editForm(${data},"${tokenValue}")' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-pencil' title='edit' >Edit</a> 
-                                    <a href='#' type='button' onclick='cpdTrainingHandler.delete(${data}, "${tokenValue}")' title='delete' class='ti ti-trash red-icon btn btn-outline-danger btn-sm my-1 mx-1'>Delete</a>
-                                    <a class='btn btn-outline-primary btn-sm mx-1 position-relative' href='/Secretariat/CPDTrainingRegistrations?cpdTrainingId=${data}' type='button'> <span class='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary'>${row.numberOfPendingRegistrations}</span> View Applications</a>`
+                                    return `
+                                        <a href='#' onclick='cpdTrainingHandler.editForm(${data},"${tokenValue}")' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-pencil' title='edit' >Edit</a> 
+                                        <a href='#' type='button' onclick='cpdTrainingHandler.delete(${data}, "${tokenValue}")' title='delete' class='ti ti-trash red-icon btn btn-outline-danger btn-sm my-1 mx-1'>Delete</a>
+                                        <a href='/Secretariat/CPDTrainings/TrainingDetails/${data}' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-eye text-lg' title='show details' > View</a>
+                                    `
+
                                 }
                     }
                 ],

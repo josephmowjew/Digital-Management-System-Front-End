@@ -27,6 +27,24 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Secretariat.Controllers
             
         }
 
+        public async Task<IActionResult> TrainingDetails(int Id)
+        {
+
+            await PopulateViewBags();
+            var training = await _service.CpdTrainingService.GetCpdTrainingByIdAsync(Id);
+
+            if (training == null)
+            {
+                return NotFound();
+            }
+
+            ViewBag.training = training;
+            //ViewBag.cpdTrainingId = trainingId;
+            //ViewBag.Id = Id;
+
+            return View(training);
+        }
+
        
         private async Task PopulateViewBags()
         {

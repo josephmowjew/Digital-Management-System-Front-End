@@ -23,10 +23,7 @@
                            Member Name
                         </th>
                         <th>
-                            License Number
-                        </th>
-                        <th>
-                            License Registration Status
+                            Registration Status
                         </th>
                         <th>
                             Payment Proof
@@ -91,12 +88,6 @@
                             "orderable": false,
                         },
                         {
-                            data: "member.currentLicense.licenseNumber",
-                            name: "member",
-                            className: "text-left",
-                            "orderable": false,
-                        },
-                        {
                             data: "registrationStatus",
                             name: "registrationStatus",
                             "orderable": false,
@@ -127,7 +118,7 @@
                         render: function(data, type, row, meta) {
                             if (data && data.length > 0) {
                             return data.map((attachment) => {
-                                return `<a href="@host/${attachment.filePath}" target="_blank" download="${attachment.fileName}" class='ti ti-download btn btn-outline-info'> ${attachment.fileName}</a>`;
+                                return `<a href="@host/${attachment.filePath}" target="_blank" download="${attachment.fileName}"> Attachment <i class="bi bi-paperclip"></i></a>`;
                             }).join('<br>');
                             } else {
                             return '';

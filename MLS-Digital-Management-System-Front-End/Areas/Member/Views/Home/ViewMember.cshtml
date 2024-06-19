@@ -4,7 +4,7 @@
 @inject IConfiguration Configuration
 
 @{
-    ViewData["Title"] = "Pro Bono Applications";
+    ViewData["Title"] = "Member Profile";
     Layout = "~/Areas/Member/Views/shared/_Layout.cshtml";
 
      var host = Configuration.GetSection("APIURL")["Link"];
@@ -118,7 +118,7 @@
 
         @if(ViewBag.member as ReadMemberDTO != null)
         {
-            <button name="create_member_qualification_btn" data-bs-toggle="modal" data-bs-target="#create_member_qualification_modal" class="btn btn-primary me-3">Add Qualification</button>
+            <button name="create_member_qualification_btn" data-bs-toggle="modal" data-bs-target="#create_member_qualification_modal" class="btn btn-primary mb-3">Add Qualification</button>
 
         }
 
@@ -243,20 +243,20 @@
                         },
                         
                         
-                    {
-                        data: "attachments",
-                        name: "attachments",
-                        className: "text-left",
-                        "orderable": true,
-                        render: function(data, type, row, meta) {
-                            if (data && data.length > 0) {
-                            return data.map((attachment) => {
-                                return `<a href="@host/${attachment.filePath}" target="_blank" download="${attachment.fileName}" class='ti ti-download btn btn-outline-info'> ${attachment.fileName}</a>`;
-                            }).join('<br>');
-                            } else {
-                            return '';
+                        {
+                            data: "attachments",
+                            name: "attachments",
+                            className: "text-left",
+                            "orderable": true,
+                            render: function(data, type, row, meta) {
+                                if (data && data.length > 0) {
+                                return data.map((attachment) => {
+                                    return `<a href="@host/${attachment.filePath}" target="_blank" download="${attachment.fileName}" btn btn-outline-info'>Attachement <i class="bi bi-paperclip"></i></a>`;
+                                }).join('<br>');
+                                } else {
+                                return '';
+                                }
                             }
-                        }
                         },
                        
                         
@@ -265,8 +265,9 @@
                             name: "id",
                             "orderable": false,
                             render: function (data) {
-                                return "<a href='#' onclick='EditQaulificationForm(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='btn btn-outline-primary my-1 btn-sm ti ti-pencil' title='edit' > Edit</a> <a href='#' type='button' onclick='DeleteQualification(\"" + data + "\",\"" + tokenValue + "\")' title='delete' class='btn btn-outline-danger btn-sm  ti ti-trash red-icon' >Delete</a>"
-                            }                     }
+                                return "<a href='#' onclick='EditQualificationForm(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='btn btn-outline-primary my-1 btn-sm ti ti-pencil' title='edit' > Edit</a> <a href='#' type='button' onclick='DeleteQualification(\"" + data + "\",\"" + tokenValue + "\")' title='delete' class='btn btn-outline-danger btn-sm  ti ti-trash red-icon' >Delete</a>"
+                            }
+                        }
                     ],
                     responsive: true,
                     "autoWidth": false,

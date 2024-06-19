@@ -139,7 +139,7 @@ class MessageHandler {
 
     handleCreateSuccess(response) {
         let messageObject = JSON.parse(response);
-        this.displayMessages(messageObject);
+        this.displayMessagesAddedToTop(messageObject);
 
         // Scroll to the new message
         const newMessageElement = document.querySelector(`#message-${messageObject.id}`);
@@ -197,7 +197,7 @@ class MessageHandler {
             .catch(error => console.error(error));
     }
 
-
+        
 
     displayMessagesAddedToTop = (messageObject) => {
         this.messagesRetrieved += 1;

@@ -62,6 +62,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/arthu/Documents/Work/MLS project/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Admin/Views/Home/Profile.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcSG9tZVxQcm9maWxlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/arthu/Documents/Work/MLS project/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Admin/Views/Roles/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcUm9sZXNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -134,6 +138,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ0VPXFZpZXdzXEhvbWVcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/arthu/Documents/Work/MLS project/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/CEO/Views/Home/Profile.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ0VPXFZpZXdzXEhvbWVcUHJvZmlsZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/arthu/Documents/Work/MLS project/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/CEO/Views/LicenseApplications/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ0VPXFZpZXdzXExpY2Vuc2VBcHBsaWNhdGlvbnNcRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -172,6 +180,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/arthu/Documents/Work/MLS project/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Complaints/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ29tcGxhaW50c1xWaWV3c1xIb21lXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/arthu/Documents/Work/MLS project/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Complaints/Views/Home/Profile.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ29tcGxhaW50c1xWaWV3c1xIb21lXFByb2ZpbGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/arthu/Documents/Work/MLS project/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Complaints/Views/LicenseApplications/Details.cshtml]
@@ -238,6 +250,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRXhlY3V0aXZlXFZpZXdzXEhvbWVcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/arthu/Documents/Work/MLS project/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Executive/Views/Home/Profile.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRXhlY3V0aXZlXFZpZXdzXEhvbWVcUHJvZmlsZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/arthu/Documents/Work/MLS project/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Executive/Views/LicenseApplications/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRXhlY3V0aXZlXFZpZXdzXExpY2Vuc2VBcHBsaWNhdGlvbnNcRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -284,6 +300,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/arthu/Documents/Work/MLS project/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Finance/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRmluYW5jZVxWaWV3c1xIb21lXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/arthu/Documents/Work/MLS project/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Finance/Views/Home/Profile.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRmluYW5jZVxWaWV3c1xIb21lXFByb2ZpbGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/arthu/Documents/Work/MLS project/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Finance/Views/LicenseApplications/Details.cshtml]

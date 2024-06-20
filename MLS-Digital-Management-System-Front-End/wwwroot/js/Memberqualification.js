@@ -92,8 +92,6 @@ $(function () {
 function EditQualificationForm() {
     const editform = document.querySelector("#edit_member_qualification_modal form");
    let id =  $("#edit_member_modal input[name='Id']").val();
-
-   console.log("id is: " + id)
     //get the record from the database
     showSpinner();
     
@@ -105,27 +103,8 @@ function EditQualificationForm() {
         }
 
     }).done(function (data) {
-        /*console.log("I'm here")
-        console.log(data)*/
         hideSpinner();
         // Iterate over the keys of the data object and map them to form field names dynamically
-        /*var fieldMap = {};
-        for (var key in data) {
-            if (data.hasOwnProperty(key)) {
-                var formFieldName = key.charAt(0).toUpperCase() + key.slice(1); // Convert first character to uppercase
-                fieldMap[formFieldName] = key; // Map form field name to data key
-            }
-        }*/
-
-        // Iterate over the form elements and populate values dynamically
-        /*$("#edit_member_qualification_modal form").find('input, select').each(function(index, element) {
-            var field = $(element);
-            var fieldName = field.attr('name');
-            var dataKey = fieldMap[fieldName]; // Get corresponding key from data
-            var fieldValue = data[dataKey]; // Get value from data based on key
-            field.val(fieldValue); // Set field value
-        });*/
-
         const fieldMap = createFieldMap(data);
         const editformElements = [...editform.querySelectorAll('input, select, textarea, checkbox, label, textarea')];
 
@@ -241,7 +220,6 @@ function UpdateMemberQualification() {
                    
                     const elementName = key.charAt(0).toUpperCase() + key.slice(1); // Replace with the desired element name
                     const element = $("#edit_member_qualification_modal").find("form :input[name='" + elementName + "']");
-                   console.log(element)
                    element.siblings("span.text-danger").text(message);
                     //$("#edit_member_qualification_modal input[name='" + key+']').siblings("span.text-danger").text(message);
                 });
@@ -335,7 +313,6 @@ function handleFileUpload(fileInput, attachments, fieldName) {
             });
     }
 }
-
 function createFieldMap(data) {
     return Object.entries(data).reduce((map, [key, value]) => {
         const formFieldName = key.charAt(0).toUpperCase() + key.slice(1);

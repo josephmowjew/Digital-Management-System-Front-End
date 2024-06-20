@@ -1,6 +1,5 @@
 ﻿@using Microsoft.Extensions.Configuration
 @inject IConfiguration Configuration
-@model MLS_Digital_Management_System_Front_End.Core.DTOs.CPDTraining.ReadCPDTrainingDTO;
 @{
     ViewData["Title"] = "CPD Trainings";
     Layout = "~/Areas/Secretariat/Views/shared/_Layout.cshtml";
@@ -22,12 +21,8 @@
 
     <div class="row gap-0">
         <div class="col-6">
-            <a href='#' onclick='cpdTrainingHandler.editForm(${data},"${tokenValue}")' type='button' class='btn btn-outline-primary btn-sm ti ti-pencil' title='edit'>Edit</a>
+            <a href='#' onclick='cpdTrainingHandler.editForm(@ViewBag.training.Id, "@ViewBag.token")' class='btn btn-outline-primary btn-sm ti ti-pencil' title='edit'>Edit</a>
             
-        </div>
-
-        <div class="col-6">
-            <a href='#' type='button' onclick='cpdTrainingHandler.delete(${data}, "${tokenValue}")' title='delete' class='ti ti-trash red-icon btn btn-outline-danger btn-sm'>Delete</a>
         </div>
     </div>
 </div>
@@ -39,34 +34,34 @@
 
 
 <div class="row mb-4 px-3">
-    <div class="col-12 col-md-6">
+    <div class="col-12 col-md-8">
         <div class="py-2">
             <h1 class="fs-4">
-                Training: @Model.Title
+                Training: @ViewBag.training.Title
             </h1>
         </div>
         <ul style="list-style-type: disc; padding-left">
-            <li><strong>Venue:</strong> @Model.PhysicalVenue</li>
-            <li><strong>Date:</strong> @Model.DateToBeConducted.ToString("yyyy-MM-dd")</li>
-            <li><strong>Accrediting Institution:</strong> @Model.AccreditingInstitution</li>
-            <li><strong>Duration (Hours):</strong> @Model.Duration</li>
+            <li><strong>Venue:</strong> @ViewBag.training.PhysicalVenue</li>
+            <li><strong>Date:</strong> @ViewBag.training.DateToBeConducted.ToString("yyyy-MM-dd")</li>
+            <li><strong>Accrediting Institution:</strong> @ViewBag.training.AccreditingInstitution</li>
+            <li><strong>Duration (Hours):</strong> @ViewBag.training.Duration</li>
             <li>
                 <strong>Fees:</strong>
                 <ul>
-                    <li>Physical Attendance (Members): @Model.MemberPhysicalAttendanceFee</li>
-                    <li>Virtual Attendance (Members): @Model.MemberVirtualAttendanceFee</li>
-                    <li>Physical Attendance (Non-Members): @Model.NonMemberPhysicalAttendanceFee</li>
-                    <li>Virtulal Attendance (Non-Members): @Model.NonMemberVirtualAttandanceFee</li>
+                    <li class="py-1">Physical Attendance (Members): <span class="badge bg-primary bg-opacity-85">@ViewBag.training.MemberPhysicalAttendanceFee</span></li>
+                    <li class="py-1">Virtual Attendance (Members): <span class="badge bg-success bg-opacity-85">@ViewBag.training.MemberVirtualAttendanceFee</span></li>
+                    <li class="py-1">Physical Attendance (Non-Members): <span class="badge bg-warning bg-opacity-85">@ViewBag.training.NonMemberPhysicalAttendanceFee</span></li>
+                    <li class="py-1">Virtulal Attendance (Non-Members): <span class="badge bg-info bg-opacity-85">@ViewBag.training.NonMemberVirtualAttandanceFee</span></li>
                 </ul>
             </li>
         </ul>
     </div>
 
-    <div class="col-12 col-md-6">
-        @foreach (var attachment in Model.Attachments)
+    <div class="col-12 col-md-4">
+        @foreach (var attachment in ViewBag.training.Attachments)
         {
             <a href="@attachment.FilePath" data-lightbox="image-1" class="d-flex justify-content-center align-items-center">
-                <img src="@attachment.FilePath" alt="cpd poster" class="w-50 h-75" />
+                <img src="@attachment.FilePath" alt="cpd poster" class="w-75 h-75" />
             </a>
         }
     </div>
@@ -128,7 +123,7 @@
                 "serverSide": true,
                 "order": [[0, "desc"]],
                 ajax: {
-                    url: '@host/api/cpdtrainingregistrations/paged?cpdtrainingId=@Model.Id',
+                    url: '@host/api/cpdtrainingregistrations/paged?cpdtrainingId=@ViewBag.training.Id',
                     type: 'get',
                     datatype: 'Json', headers: {
                         'Authorization': 'Bearer @ViewBag.token'

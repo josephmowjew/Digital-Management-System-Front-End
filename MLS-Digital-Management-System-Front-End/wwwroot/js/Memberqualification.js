@@ -313,28 +313,28 @@ function hideSpinner() {
 function handleFileUpload(fileInput, attachments, fieldName) {
     const attachment = attachments.find(attachment => attachment.propertyName === fieldName);
     if (attachment) {
-        const fileURL = attachment.filePath;
-        fetch(fileURL, {
-            headers: {
-                'Accept': 'application/octet-stream',
-                'Access-Control-Request-Method': 'GET',
-                'Origin': `${host}`
-            }
-        })
-            .then(response => response.blob())
-            .then(blob => {
-                const file = new File([blob], attachment.fileName, attachment.fileType);
-                const dataTransfer = new DataTransfer();
-                dataTransfer.items.add(file);
-                fileInput.files = dataTransfer.files;
-                const event = new Event('change', { bubbles: true });
-                fileInput.dispatchEvent(event);
-            })
-            .catch(error => {
-                console.error(`Error fetching file ${fileURL}:`, error);
-            });
+      const fileURL = attachment.filePath;
+      fetch(fileURL, {
+        headers: {
+          'Accept': 'application/octet-stream',
+          'Access-Control-Request-Method': 'GET',
+          'Origin': `${host}`
+        }
+      })
+      .then(response => response.blob())
+      .then(blob => {
+        const file = new File([blob], attachment.fileName, attachment.fileType);
+        const dataTransfer = new DataTransfer();
+        dataTransfer.items.add(file);
+        fileInput.files = dataTransfer.files;
+        const event = new Event('change', { bubbles: true });
+        fileInput.dispatchEvent(event);
+      })
+      .catch(error => {
+        console.error(`Error fetching file ${fileURL}:`, error);
+      });
     }
-}
+  }
 
 function createFieldMap(data) {
     return Object.entries(data).reduce((map, [key, value]) => {

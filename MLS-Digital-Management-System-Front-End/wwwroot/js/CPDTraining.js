@@ -148,8 +148,6 @@ handleMarkAttendanceSuccess(response) {
     
     const editform = document.querySelector("#edit_cpd_modal form");
     const data = JSON.parse(response);
-
-      //console.log(data);
   
     const fieldMap = this.createFieldMap(data);
     const editformElements = [...editform.querySelectorAll('input, select, textarea, checkbox, label, textarea')];
@@ -277,7 +275,7 @@ handleMarkAttendanceSuccess(response) {
         headers: {
           'Accept': 'application/octet-stream',
           'Access-Control-Request-Method': 'GET',
-          'Origin': 'http://localhost:5281'
+          'Origin': `${host}`
         }
       })
       .then(response => response.blob())
@@ -415,7 +413,8 @@ handleMarkAttendanceSuccess(response) {
     const dataTable = $("#cpd_table").DataTable();
     toastr.success("CPD Training updated successfully");
     $("#edit_cpd_modal").modal("hide");
-    dataTable.ajax.reload();
+      //dataTable.ajax.reload();
+      location.reload()
   }
 
   createFieldMap(data) {

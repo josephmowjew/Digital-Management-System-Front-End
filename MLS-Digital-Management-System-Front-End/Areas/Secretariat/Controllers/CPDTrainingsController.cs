@@ -42,7 +42,7 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Secretariat.Controllers
             //ViewBag.cpdTrainingId = trainingId;
             //ViewBag.Id = Id;
 
-            return View(training);
+            return View();
         }
 
        

@@ -113,7 +113,6 @@ class FormHandler {
             attachmentField.required = false;
             attachmentFieldLabel.style.display = 'none';
             attachmentField.value = '';
-            console.log("attchament", attachmentField.value)
             if (explanationField) {
                 explanationField.style.display = 'block';
                 explanationField.required = true;
@@ -374,7 +373,6 @@ class FormHandler {
 
               element.addEventListener('change', () => {
                   // Log or handle checkbox change here
-                  console.log(`Checkbox ${fieldName} changed to: ${element.checked}`);
                   this.setCheckboxValue(element, element.checked);
               });
               //console.log(fieldValue)

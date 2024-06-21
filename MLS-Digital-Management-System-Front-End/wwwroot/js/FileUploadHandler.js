@@ -35,5 +35,4 @@
         }
     }
 }
-
 window.FileUploadHandler = FileUploadHandler;

@@ -220,29 +220,34 @@ class PenaltyHandler {
   }
 
   handleFileUpload(fileInput, attachments, fieldName) {
-    const attachment = attachments.find(attachment => attachment.propertyName === fieldName);
-    if (attachment) {
-          const fileURL = attachment.filePath;
-          fetch(fileURL, {
-            headers: {
-              'Accept': 'application/octet-stream',
-              'Access-Control-Request-Method': 'GET',
-              'Origin': `${host}`
-            }
-          })
-          .then(response => response.blob())
-          .then(blob => {
-            const file = new File([blob], attachment.fileName, attachment.fileType);
-            const dataTransfer = new DataTransfer();
-            dataTransfer.items.add(file);
-            fileInput.files = dataTransfer.files;
-            const event = new Event('change', { bubbles: true });
-            fileInput.dispatchEvent(event);
-          })
-          .catch(error => {
-            console.error(`Error fetching file ${fileURL}:`, error);
-          });
-    }
+      const attachment = attachments.find(attachment => attachment.propertyName === fieldName);
+
+      if (attachment) {
+
+          //console.log("attachment description: ",attachment)
+          const fileURL = attachment.filePath.replace(/\\/g, '/');
+          const newFileURL = `${host}${fileURL}`;
+
+          // Create a mock file
+          const mockFile = new File([""], attachment.propertyName, { type: attachment.fileType });
+
+          // Create a new FileList-like object
+          const dataTransfer = new DataTransfer();
+          dataTransfer.items.add(mockFile);
+
+          // Set the file input's files
+          fileInput.files = dataTransfer.files;
+
+          // Create and dispatch a change event
+          const event = new Event('change', { bubbles: true });
+          fileInput.dispatchEvent(event);
+
+          // Update any related UI elements or perform additional actions
+          //console.log(`File ${attachment.fileName} added to input field`);
+
+          // Optionally, you can store the actual file URL as a data attribute
+          fileInput.dataset.actualFileUrl = newFileURL;
+      }
   }
 
   handleError(xhr) {

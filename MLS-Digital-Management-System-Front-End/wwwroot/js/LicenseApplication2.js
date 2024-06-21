@@ -1,3 +1,5 @@
+
+
 class FormHandler {
     constructor() {
         this.hideSpinner();
@@ -111,6 +113,7 @@ class FormHandler {
             attachmentField.required = false;
             attachmentFieldLabel.style.display = 'none';
             attachmentField.value = '';
+            console.log("attchament", attachmentField.value)
             if (explanationField) {
                 explanationField.style.display = 'block';
                 explanationField.required = true;
@@ -184,14 +187,58 @@ class FormHandler {
             this.showSpinner();
 
             const form = document.querySelector("#create_application_modal form");
+            const formData = new FormData(); // Create new FormData object
+
+            // Append specific form fields to FormData
             const id = form.querySelector('input[name="Id"]').value;
-            const formData = new FormData(form);
+           
+
             const stringToBoolean = (str) => str === "True" ? true : false;
             let hasPreviousLicenseApplication = stringToBoolean(hasPreviousLicenseApplicationVar);
+
+
+            // Track added names to avoid duplication
+            const addedNames = new Set();
+            // Iterate through form elements and append values
+            form.querySelectorAll('input, select, textarea').forEach(element => {
+                const tagName = element.tagName.toLowerCase();
+                const name = element.getAttribute('name');
+
+                // Check if name has already been added
+                if (!addedNames.has(name)) {
+                    if (tagName === 'input') {
+                        if (element.type === 'checkbox') {
+                            // Append checkbox value as 'true' if checked
+                            formData.append(name, element.checked ? 'true' : 'false');
+                        } else if (element.type === 'file') {
+                            // Handle file input
+                            const files = element.files;
+                            for (let i = 0; i < files.length; i++) {
+                                formData.append(name, files[i]);
+                            }
+                        } else {
+                            // Append other input types (excluding file) directly
+                            formData.append(name, element.value);
+                        }
+                    } else if (tagName === 'select' || tagName === 'textarea') {
+                        // Append select and textarea values directly
+                        formData.append(name, element.value);
+                    }
+
+                    // Add name to set to track it
+                    addedNames.add(name);
+                }
+            });
+
             formData.append("hasPreviousLicenseApplication", hasPreviousLicenseApplication);
             formData.append("actionType", "Draft");
             formData.append("Id", id);
-    
+            // Log all key-value pairs
+            for (let [key, value] of formData.entries()) {
+                console.log(key + ': ' + value);
+            }
+
+           
             this.sendAjaxRequest(formData, 'POST', `${host}/api/LicenseApplications`, (response) => {
                 this.handleSaveDraftSuccess(response);
                 resolve();
@@ -310,7 +357,7 @@ class FormHandler {
 
     handleEditFormSuccess(response) {
         this.hideSpinner();
-        const data = JSON.parse(response);
+        const data = JSON.parse(response);  
         const fieldMap = this.createFieldMap(data);
     
         this.formElements.forEach(element => {
@@ -323,7 +370,14 @@ class FormHandler {
           }
     
           if (element.type === 'checkbox') {
-            this.setCheckboxValue(element, fieldValue);
+              this.setCheckboxValue(element, fieldValue);
+
+              element.addEventListener('change', () => {
+                  // Log or handle checkbox change here
+                  console.log(`Checkbox ${fieldName} changed to: ${element.checked}`);
+                  this.setCheckboxValue(element, element.checked);
+              });
+              //console.log(fieldValue)
           } else if (element.type === 'file') {
               //this.handleFileUpload(element, data.attachments, fieldName);
               this.fileUploadHandler.handleFileUpload(element, data.attachments, fieldName);
@@ -332,21 +386,15 @@ class FormHandler {
             element.value = fieldValue;
           }
         });
-    
-        const certificateOfAdmissionAttachment = data.attachments.find(attachment => attachment.propertyName === "CertificateOfAdmissionAttachment");
-        if (certificateOfAdmissionAttachment) {
-          this.setCheckboxValue(this.form.querySelector('input[name="CertificateOfAdmission"]'), true);
-        }
-    
         // Reset validation
         const validator = $("#create_application_modal form").validate();
         validator.resetForm();
     
         // Show modal
         $("#create_application_modal").modal("show");
-      }
+    }
     
-      createFieldMap(data) {
+    createFieldMap(data) {
         return Object.entries(data).reduce((map, [key, value]) => {
           const formFieldName = key.charAt(0).toUpperCase() + key.slice(1);
           map[formFieldName] = key;
@@ -354,11 +402,13 @@ class FormHandler {
         }, {});
       }
     
-      setCheckboxValue(checkbox, value) {
-        checkbox.checked = value === true || value === 'true';
-        const event = new Event('change', { bubbles: true });
-        checkbox.dispatchEvent(event);
-      }
+    setCheckboxValue(checkbox, value) {
+        if (checkbox.checked !== value) { // Only update if value is different
+            checkbox.checked = value === true || value === 'true';
+            const event = new Event('change', { bubbles: true });
+            checkbox.dispatchEvent(event);
+        }
+    }
     
     handleFileUpload(fileInput, attachments, fieldName) {
         const attachment = attachments.find(attachment => attachment.propertyName === fieldName);
@@ -391,6 +441,7 @@ class FormHandler {
             fileInput.dataset.actualFileUrl = newFileURL;
         }
     }
+
     delete(id, token) {
         bootbox.confirm("Are you sure you want to delete this application from the system?", result => {
             if (result) {

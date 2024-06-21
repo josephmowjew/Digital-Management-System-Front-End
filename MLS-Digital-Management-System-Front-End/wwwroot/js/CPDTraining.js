@@ -148,8 +148,6 @@ handleMarkAttendanceSuccess(response) {
     
     const editform = document.querySelector("#edit_cpd_modal form");
     const data = JSON.parse(response);
-
-      //console.log(data);
   
     const fieldMap = this.createFieldMap(data);
     const editformElements = [...editform.querySelectorAll('input, select, textarea, checkbox, label, textarea')];
@@ -162,7 +160,8 @@ handleMarkAttendanceSuccess(response) {
       if (element.type === 'checkbox') {
         this.setCheckboxValue(element, fieldValue);
       } else if (element.type === 'file') {
-        this.handleFileUpload(element, data.attachments, fieldName);
+          //this.handleFileUpload(element, data.attachments, fieldName);
+          this.fileUploadHandler.handleFileUpload(element, data.attachments, fieldName);
       } 
       else if(fieldName == "CPDUnitsAwarded")
       {

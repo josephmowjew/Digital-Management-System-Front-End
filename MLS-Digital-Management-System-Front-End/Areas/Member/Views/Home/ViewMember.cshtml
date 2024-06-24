@@ -203,7 +203,7 @@
                     "serverSide": true,
                     "order": [[0, "desc"]],
                     ajax: {
-                    url: '@host/api/memberQualifications/paged?memberId='+@(ViewBag.member?.Id ?? 0),
+                    url: '@host/api/memberQualifications/paged?memberId='+@(ViewBag.member.Id ?? 0),
                         type: 'get',
                         datatype: 'Json',headers: {
                                         'Authorization': 'Bearer @ViewBag.token'
@@ -267,7 +267,7 @@
                             "orderable": false,
                             render: function (data) {
                                 return "<a href='#' onclick='EditQualificationForm(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='btn btn-outline-primary my-1 btn-sm ti ti-pencil' title='edit' > Edit</a> <a href='#' type='button' onclick='DeleteQualification(\"" + data + "\",\"" + tokenValue + "\")' title='delete' class='btn btn-outline-danger btn-sm  ti ti-trash red-icon' >Delete</a>"
-                            }
+                            },
                         }
                     ],
                     responsive: true,

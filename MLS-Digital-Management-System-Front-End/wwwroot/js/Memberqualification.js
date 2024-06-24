@@ -62,10 +62,6 @@ $(function () {
                     dataTable.ajax.reload();
 
                     hideSpinner();
-
-                
-
-
             },
             error: function (xhr, ajaxOtions, thrownError) {
                 hideSpinner();
@@ -90,10 +86,8 @@ $(function () {
 
 
 function EditQualificationForm() {
-    const editform = document.querySelector("#edit_member_qualification_modal form");
+   const editform = document.querySelector("#edit_member_qualification_modal form");
    let id =  $("#edit_member_modal input[name='Id']").val();
-
-   console.log("id is: " + id)
     //get the record from the database
     showSpinner();
     
@@ -105,27 +99,8 @@ function EditQualificationForm() {
         }
 
     }).done(function (data) {
-        /*console.log("I'm here")
-        console.log(data)*/
         hideSpinner();
         // Iterate over the keys of the data object and map them to form field names dynamically
-        /*var fieldMap = {};
-        for (var key in data) {
-            if (data.hasOwnProperty(key)) {
-                var formFieldName = key.charAt(0).toUpperCase() + key.slice(1); // Convert first character to uppercase
-                fieldMap[formFieldName] = key; // Map form field name to data key
-            }
-        }*/
-
-        // Iterate over the form elements and populate values dynamically
-        /*$("#edit_member_qualification_modal form").find('input, select').each(function(index, element) {
-            var field = $(element);
-            var fieldName = field.attr('name');
-            var dataKey = fieldMap[fieldName]; // Get corresponding key from data
-            var fieldValue = data[dataKey]; // Get value from data based on key
-            field.val(fieldValue); // Set field value
-        });*/
-
         const fieldMap = createFieldMap(data);
         const editformElements = [...editform.querySelectorAll('input, select, textarea, checkbox, label, textarea')];
 
@@ -241,7 +216,6 @@ function UpdateMemberQualification() {
                    
                     const elementName = key.charAt(0).toUpperCase() + key.slice(1); // Replace with the desired element name
                     const element = $("#edit_member_qualification_modal").find("form :input[name='" + elementName + "']");
-                   console.log(element)
                    element.siblings("span.text-danger").text(message);
                     //$("#edit_member_qualification_modal input[name='" + key+']').siblings("span.text-danger").text(message);
                 });
@@ -312,30 +286,34 @@ function hideSpinner() {
 
 function handleFileUpload(fileInput, attachments, fieldName) {
     const attachment = attachments.find(attachment => attachment.propertyName === fieldName);
+
     if (attachment) {
-        const fileURL = attachment.filePath;
-        fetch(fileURL, {
-            headers: {
-                'Accept': 'application/octet-stream',
-                'Access-Control-Request-Method': 'GET',
-                'Origin': `${host}`
-            }
-        })
-            .then(response => response.blob())
-            .then(blob => {
-                const file = new File([blob], attachment.fileName, attachment.fileType);
-                const dataTransfer = new DataTransfer();
-                dataTransfer.items.add(file);
-                fileInput.files = dataTransfer.files;
-                const event = new Event('change', { bubbles: true });
-                fileInput.dispatchEvent(event);
-            })
-            .catch(error => {
-                console.error(`Error fetching file ${fileURL}:`, error);
-            });
+
+        //console.log("attachment description: ",attachment)
+        const fileURL = attachment.filePath.replace(/\\/g, '/');
+        const newFileURL = `${host}${fileURL}`;
+
+        // Create a mock file
+        const mockFile = new File([""], attachment.propertyName, { type: attachment.fileType });
+
+        // Create a new FileList-like object
+        const dataTransfer = new DataTransfer();
+        dataTransfer.items.add(mockFile);
+
+        // Set the file input's files
+        fileInput.files = dataTransfer.files;
+
+        // Create and dispatch a change event
+        const event = new Event('change', { bubbles: true });
+        fileInput.dispatchEvent(event);
+
+        // Update any related UI elements or perform additional actions
+        //console.log(`File ${attachment.fileName} added to input field`);
+
+        // Optionally, you can store the actual file URL as a data attribute
+        fileInput.dataset.actualFileUrl = newFileURL;
     }
 }
-
 function createFieldMap(data) {
     return Object.entries(data).reduce((map, [key, value]) => {
         const formFieldName = key.charAt(0).toUpperCase() + key.slice(1);

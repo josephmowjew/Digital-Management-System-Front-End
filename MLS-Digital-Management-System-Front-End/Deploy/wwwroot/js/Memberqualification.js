@@ -84,20 +84,22 @@ $(function () {
 })
 
 
-function EditQualificationForm() {
-   const editform = document.querySelector("#edit_member_qualification_modal form");
-   let id =  $("#edit_member_modal input[name='Id']").val();
+function EditQualificationForm(data, token) {
+    const editform = document.querySelector("#edit_member_qualification_modal form");
+   //let id = $("#edit_member_modal input[name='Id']").val();
+   //console.log(id)
     //get the record from the database
     showSpinner();
     
     $.ajax({
-        url: `${host}/api/MemberQualifications/get/`+ id,
+        url: `${host}/api/memberqualifications/GetQualificationById/${ data }`,
         type: 'GET',
         headers: {
             'Authorization': "Bearer "+ tokenValue
         }
 
     }).done(function (data) {
+        //console.log(data)
         hideSpinner();
         // Iterate over the keys of the data object and map them to form field names dynamically
         const fieldMap = createFieldMap(data);

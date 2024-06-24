@@ -3,13 +3,41 @@ $(function () {
     hideSpinner();
     //hook up a click event to the login button
 
-    var createApplicationButton = $("#create_application_modal button[name='create_application_btn']").unbind().click(OnCreateClick);
-
-
-
-
+    //var createApplicationButton = $("#create_application_modal button[name='create_application_btn']").unbind().click(OnCreateClick);
 })
 
+function Delete(id, token) {
+    console.log("we here")
+    bootbox.confirm("Are you sure you want to delete this pro bono case?", function (result) {
+
+
+        if (result) {
+            $.ajax({
+                url: `${host}/api/probonos/${id}`,
+                type: 'DELETE',
+                headers: {
+                    'Authorization': "Bearer " + token
+                }
+
+            }).done(function (data) {
+
+
+                toastr.success("Pro bono case has been deleted sucessfully")
+
+                datatable.ajax.reload();
+
+
+            }).fail(function (response) {
+
+                toastr.error(response.responseText)
+
+                datatable.ajax.reload();
+            });
+        }
+
+
+    });
+}
 
 
 

@@ -62,6 +62,9 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
             ViewBag.qualificationTypesList = await GetQualificationTypes();
 
             ViewBag.userId = HttpContext.Request.Cookies["UserId"];
+
+            ViewBag.username = await _service.UserService.GetUserByIdAsync(HttpContext.Request.Cookies["UserId"]);
+
             ViewBag.roleName = HttpContext.Request.Cookies["RoleName"];
         }
 

@@ -8,8 +8,9 @@ class CPDTrainingHandler {
       this.formElements = this.form.querySelectorAll("input, select, textarea");
       this.setupFormBehavior();
     }
-
     this.selectedCPDTrainingIds = []; // Initialize the array
+    this.fileUploadHandler = new FileUploadHandler(`${host}`);
+ 
   }
 
   setupFormBehavior() {
@@ -148,8 +149,6 @@ handleMarkAttendanceSuccess(response) {
     
     const editform = document.querySelector("#edit_cpd_modal form");
     const data = JSON.parse(response);
-
-      //console.log(data);
   
     const fieldMap = this.createFieldMap(data);
     const editformElements = [...editform.querySelectorAll('input, select, textarea, checkbox, label, textarea')];
@@ -162,7 +161,8 @@ handleMarkAttendanceSuccess(response) {
       if (element.type === 'checkbox') {
         this.setCheckboxValue(element, fieldValue);
       } else if (element.type === 'file') {
-        this.handleFileUpload(element, data.attachments, fieldName);
+          //this.handleFileUpload(element, data.attachments, fieldName);
+          this.fileUploadHandler.handleFileUpload(element, data.attachments, fieldName);
       } 
       else if(fieldName == "CPDUnitsAwarded")
       {
@@ -269,30 +269,34 @@ handleMarkAttendanceSuccess(response) {
     dataTable.ajax.reload();
   }
 
-    handleFileUpload(fileInput, attachments, fieldName) {
-    const attachment = attachments.find(attachment => attachment.propertyName === fieldName);
-    if (attachment) {
-      const fileURL = attachment.filePath;
-      fetch(fileURL, {
-        headers: {
-          'Accept': 'application/octet-stream',
-          'Access-Control-Request-Method': 'GET',
-          'Origin': 'http://localhost:5281'
+  handleFileUpload(fileInput, attachments, fieldName) {
+        const attachment = attachments.find(attachment => attachment.propertyName === fieldName);
+        if (attachment) {
+
+            //console.log("attachment description: ",attachment)
+            const fileURL = attachment.filePath.replace(/\\/g, '/');
+            const newFileURL = `${host}${fileURL}`;
+
+            // Create a mock file
+            const mockFile = new File([""], attachment.propertyName, { type: attachment.fileType });
+
+            // Create a new FileList-like object
+            const dataTransfer = new DataTransfer();
+            dataTransfer.items.add(mockFile);
+
+            // Set the file input's files
+            fileInput.files = dataTransfer.files;
+
+            // Create and dispatch a change event
+            const event = new Event('change', { bubbles: true });
+            fileInput.dispatchEvent(event);
+
+            // Update any related UI elements or perform additional actions
+            //console.log(`File ${attachment.fileName} added to input field`);
+
+            // Optionally, you can store the actual file URL as a data attribute
+            fileInput.dataset.actualFileUrl = newFileURL;
         }
-      })
-      .then(response => response.blob())
-      .then(blob => {
-        const file = new File([blob], attachment.fileName, attachment.fileType);
-        const dataTransfer = new DataTransfer();
-        dataTransfer.items.add(file);
-        fileInput.files = dataTransfer.files;
-        const event = new Event('change', { bubbles: true });
-        fileInput.dispatchEvent(event);
-      })
-      .catch(error => {
-        console.error(`Error fetching file ${fileURL}:`, error);
-      });
-    }
   }
 
   registerTrainingClicked() {
@@ -415,7 +419,8 @@ handleMarkAttendanceSuccess(response) {
     const dataTable = $("#cpd_table").DataTable();
     toastr.success("CPD Training updated successfully");
     $("#edit_cpd_modal").modal("hide");
-    dataTable.ajax.reload();
+      //dataTable.ajax.reload();
+      location.reload()
   }
 
   createFieldMap(data) {

@@ -56,7 +56,6 @@ class PenaltyHandler {
     errorMessages.forEach((errorMessage) => errorMessage.remove());
      
       if (!form.checkValidity()) {
-        console.log(form)
       this.hideSpinner();
       const invalidFields = document.querySelectorAll(":invalid");
 
@@ -119,8 +118,7 @@ class PenaltyHandler {
       if (element.type === 'checkbox') {
         this.setCheckboxValue(element, fieldValue);
       } else if (element.type === 'file') {
-          console.log(data.attachments)
-          this.handleFileUpload(element, data.attachments, fieldName);
+          //this.handleFileUpload(element, data.attachments, fieldName);
       }
       else {
         element.value = fieldValue;

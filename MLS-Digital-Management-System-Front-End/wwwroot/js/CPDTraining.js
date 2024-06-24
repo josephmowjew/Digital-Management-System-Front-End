@@ -419,7 +419,8 @@ handleMarkAttendanceSuccess(response) {
     const dataTable = $("#cpd_table").DataTable();
     toastr.success("CPD Training updated successfully");
     $("#edit_cpd_modal").modal("hide");
-    dataTable.ajax.reload();
+      //dataTable.ajax.reload();
+      location.reload()
   }
 
   createFieldMap(data) {

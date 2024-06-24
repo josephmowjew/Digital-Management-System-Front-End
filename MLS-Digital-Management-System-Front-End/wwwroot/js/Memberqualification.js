@@ -289,6 +289,7 @@ function handleFileUpload(fileInput, attachments, fieldName) {
 
     if (attachment) {
 
+
         //console.log("attachment description: ",attachment)
         const fileURL = attachment.filePath.replace(/\\/g, '/');
         const newFileURL = `${host}${fileURL}`;
@@ -314,6 +315,7 @@ function handleFileUpload(fileInput, attachments, fieldName) {
         fileInput.dataset.actualFileUrl = newFileURL;
     }
 }
+
 function createFieldMap(data) {
     return Object.entries(data).reduce((map, [key, value]) => {
         const formFieldName = key.charAt(0).toUpperCase() + key.slice(1);

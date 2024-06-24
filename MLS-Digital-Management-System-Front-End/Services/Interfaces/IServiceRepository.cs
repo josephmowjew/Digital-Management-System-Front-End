@@ -18,6 +18,7 @@ public interface IServiceRepository{
     ILicenseApplicationService LicenseApplicationService{ get; }
     ILicenseApprovalHistoryService LicenseApprovalHistoryService { get; }
     ICpdUnitsEarnedService CpdUnitsEarnedService { get; }
+    ICpdTrainingService CpdTrainingService { get; }
     IPenaltyTypeService PenaltyTypeService { get; }
     IPenaltyService PenaltyService { get; }
     IThreadService ThreadService { get; }

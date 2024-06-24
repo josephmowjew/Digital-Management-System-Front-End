@@ -90,9 +90,6 @@
                     datatype: 'Json', headers: {
                         'Authorization': 'Bearer @ViewBag.token'
                     },
-
-                   
-
                 },
                 columnDefs: [
                     {
@@ -134,7 +131,7 @@
                         "orderable": false,
                         render: function (data, type, row) {
                                    
-                                   let loggedInUserId = `@ViewBag.UserId`; 
+                                    let loggedInUserId = `@ViewBag.UserId`; 
                                     let isUserInCommittee = row.committeeMemberships.find(reg => reg.memberShipId === loggedInUserId);
 
                                     if(isUserInCommittee){

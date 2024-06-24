@@ -9,6 +9,10 @@
 
 
 <a asp-action="index" asp-controller="cpdtrainings" asp-area="finance" class="btn btn-secondary mx-2 my-2">Back To Trainings List</a>
+
+<div>
+    <img src="~/assets/images/91.gif" id="spinner" />
+</div>
 <div class="card ">
     <div class="card-body">
       
@@ -54,6 +58,7 @@
             var host = '@host';
         </script>
 
+    <script src="~/js/FileUploadHandler.js" asp-append-version="true"></script>
         <script src="~/js/CPDTraining.js" asp-append-version="true"></script>
         <script>
             $(document).ready(function () {

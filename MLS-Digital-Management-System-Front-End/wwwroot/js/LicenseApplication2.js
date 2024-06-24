@@ -232,12 +232,6 @@ class FormHandler {
             formData.append("hasPreviousLicenseApplication", hasPreviousLicenseApplication);
             formData.append("actionType", "Draft");
             formData.append("Id", id);
-            // Log all key-value pairs
-            for (let [key, value] of formData.entries()) {
-                console.log(key + ': ' + value);
-            }
-
-           
             this.sendAjaxRequest(formData, 'POST', `${host}/api/LicenseApplications`, (response) => {
                 this.handleSaveDraftSuccess(response);
                 resolve();

@@ -71,7 +71,6 @@ $(function () {
                        
                         const elementName = key.charAt(0).toUpperCase() + key.slice(1); // Replace with the desired element name
                         const element = $("#create_member_qualification_modal").find("form :input[name='" + elementName + "']");
-                       console.log(element)
                        element.siblings("span.text-danger").text(message);
                         //$("#edit_member_qualification_modal input[name='" + key+']').siblings("span.text-danger").text(message);
                     });

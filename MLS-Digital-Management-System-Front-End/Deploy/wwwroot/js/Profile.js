@@ -24,9 +24,6 @@ $(function () {
         });
         
         //var userId = $("#update_user_form input[name='Id']").val()
-        //console.log(formData)
-
-        //console.log(JSON.stringfy(formData))
         //send the request
 
         $.ajax({

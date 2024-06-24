@@ -116,7 +116,7 @@ function EditForm(id,token, area = "") {
 }
 function Delete(id,token) {
 
-    bootbox.concountry("Are you sure you want to delete this country from the system?", function (result) {
+    bootbox.confirm("Are you sure you want to delete this country from the system?", function (result) {
 
 
         if (result) {

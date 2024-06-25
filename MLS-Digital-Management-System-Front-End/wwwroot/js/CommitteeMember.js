@@ -70,6 +70,8 @@ class CommitteeMemberHandler {
         toastr.success("New committee member added successfully");
         $("#create_committee_member_modal").modal("hide");
         dataTable.ajax.reload();
+        this.form.reset();
+
     }
 
     handleDeleteSuccess(response) {

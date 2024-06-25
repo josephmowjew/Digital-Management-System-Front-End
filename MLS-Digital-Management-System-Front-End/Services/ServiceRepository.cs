@@ -31,7 +31,7 @@ public class ServiceRepository : IServiceRepository
     private IPenaltyService _penaltyService;
     private IThreadService _threadService;
     private IPenaltyPaymentService _penaltyPaymentService;
-
+    private ICommitteeMembershipService _committeeMembershipService;
 
 
     public string Token 
@@ -66,6 +66,7 @@ public class ServiceRepository : IServiceRepository
             _threadService = new ThreadService(_httpClient);
             _penaltyPaymentService = new PenaltyPaymentService(_httpClient);
             _userService = new UserService(_httpClient);
+            _committeeMembershipService = new CommitteeMembershipService(_httpClient);
         } 
     } 
 
@@ -100,5 +101,6 @@ public class ServiceRepository : IServiceRepository
     public IPenaltyTypeService PenaltyTypeService => _penaltyTypeService ??= new PenaltyTypeService(_httpClient);
     public IThreadService ThreadService => _threadService ??= new ThreadService(_httpClient);
     public IPenaltyPaymentService PenaltyPaymentService => _penaltyPaymentService ??= new PenaltyPaymentService(_httpClient);
-   
+    public ICommitteeMembershipService CommitteeMembershipService => _committeeMembershipService ??= new CommitteeMembershipService(_httpClient);
+
 }

@@ -107,25 +107,6 @@ function EditForm(id,token, area = "") {
     }).done(function (data) {
         
         hideSpinner();
-        // Iterate over the keys of the data object and map them to form field names dynamically
-        /*var fieldMap = {};
-        /*var fieldMap = {};
-        for (var key in data) {
-            if (data.hasOwnProperty(key)) {
-                var formFieldName = key.charAt(0).toUpperCase() + key.slice(1); // Convert first character to uppercase
-                fieldMap[formFieldName] = key; // Map form field name to data key
-            }
-        }*/
-
-        // Iterate over the form elements and populate values dynamically
-        /*$("#edit_application_modal form").find('input, select, textarea').each(function(index, element) {
-        /*$("#edit_application_modal form").find('input, select, textarea').each(function(index, element) {
-            var field = $(element);
-            var fieldName = field.attr('name');
-            var dataKey = fieldMap[fieldName]; // Get corresponding key from data
-            var fieldValue = data[dataKey]; // Get value from data based on key
-            field.val(fieldValue); // Set field value
-        });*/
 
         const editform = document.querySelector("#edit_application_modal form");
         //const data = JSON.parse(response);
@@ -148,18 +129,15 @@ function EditForm(id,token, area = "") {
             }
         });
 
+        // Hook up event to the update user button
+        $("#edit_application_modal button[name='update_application_btn']").unbind().click(function () { updateApplication(token) });
 
-   
+        // Reset validation
+        var validator = $("#edit_application_modal form").validate();
+        validator.resetForm();
 
-    // Hook up event to the update user button
-    $("#edit_application_modal button[name='update_application_btn']").unbind().click(function () { updateApplication(token) });
-
-    // Reset validation
-    var validator = $("#edit_application_modal form").validate();
-    validator.resetForm();
-
-    // Show modal
-    $("#edit_application_modal").modal("show");
+        // Show modal
+        $("#edit_application_modal").modal("show");
 
     })
 }

@@ -40,7 +40,19 @@ $(function () {
                 var dataTable = $('#my_table').DataTable();
 
                 toastr.success(" User updated successfully")
-                location.reload();
+                // Redirect to the login page or home page after updating profile
+
+                $.ajax({
+                    url: '/home/logout',  // Using a relative URL
+                    type: 'GET',  // Changed to GET
+                    success: function () {
+                        // Redirect to the login page or home page after logout
+                        window.location.href = '/'; 
+                    },
+                    error: function () {
+                        toastr.error("Logout failed. Please try again.");
+                    }
+                });
             },
             error: function (xhr, ajaxOtions, thrownError) {
                 hideSpinner();
@@ -157,7 +169,7 @@ function upDateUser(token) {
     //send the request
 
     $.ajax({
-        //url: `${host}/api/users/`+id,
+        url: `${host}/api/users/`+id,
         type: 'PUT',
         data: formDataJson,
         contentType: 'application/json',
@@ -180,14 +192,15 @@ function upDateUser(token) {
 
            
 
-                //show success message to the user
-                var dataTable = $('#my_table').DataTable();
+            //show success message to the user
+            var dataTable = $('#my_table').DataTable();
 
-                toastr.success("User updated successfully")
+            toastr.success("User updated successfully")
 
-                $("#edit_user_modal").modal("hide")
+            $("#edit_user_modal").modal("hide")
 
-                dataTable.ajax.reload();
+            //dataTable.ajax.reload();
+            location.reload();
 
             
 

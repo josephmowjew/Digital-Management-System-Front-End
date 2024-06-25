@@ -60,10 +60,6 @@ $(function () {
                 $("#create_application_modal").modal("hide")
                 dataTable.ajax.reload()
                 form.reset()
-
-                
-
-
             },
             error: function (xhr, ajaxOtions, thrownError) {
                 hideSpinner();
@@ -92,8 +88,6 @@ $(function () {
 
 
 function EditForm(id,token, area = "") {
-
-   
     //get the record from the database
     showSpinner();
     
@@ -153,15 +147,10 @@ function Delete(id,token) {
                 headers: {
                     'Authorization': "Bearer "+ token
                 }
-
             }).done(function (data) {
-
-              
                     toastr.success("Pro bono application has been deleted sucessfully")
               
                 datatable.ajax.reload();
-
-
             }).fail(function (response) {
 
                 toastr.error(response.responseText)
@@ -169,8 +158,6 @@ function Delete(id,token) {
                 datatable.ajax.reload();
             });
         }
-
-
     });
 }
 
@@ -321,9 +308,6 @@ function updateApplication(token) {
     var formData = new FormData();
 
     // Append the form field values
-
-   
-
     $(form).find('input, select, textarea').each(function (index, element) {
         var field = $(element);
         var fieldName = field.attr('name');
@@ -339,9 +323,6 @@ function updateApplication(token) {
     for (var i = 0; i < attachments.length; i++) {
         formData.append("Attachments", attachments[i]);
     }
-
-
-   
     //send the request
 
     $.ajax({
@@ -354,12 +335,6 @@ function updateApplication(token) {
             'Authorization': "Bearer "+ token
         },
         success: function (data) {
-
-
-
-
-           
-
                 //show success message to the user
                 var dataTable = $('#my_table').DataTable();
 
@@ -368,11 +343,6 @@ function updateApplication(token) {
                 $("#edit_application_modal").modal("hide")
 
                 dataTable.ajax.reload();
-
-            
-
-
-
         },
         error: function (xhr, ajaxOtions, thrownError) {
 

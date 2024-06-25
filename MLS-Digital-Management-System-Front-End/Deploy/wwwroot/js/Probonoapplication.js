@@ -60,10 +60,6 @@ $(function () {
                 $("#create_application_modal").modal("hide")
                 dataTable.ajax.reload()
                 form.reset()
-
-                
-
-
             },
             error: function (xhr, ajaxOtions, thrownError) {
                 hideSpinner();
@@ -92,8 +88,6 @@ $(function () {
 
 
 function EditForm(id,token, area = "") {
-
-   
     //get the record from the database
     showSpinner();
     
@@ -107,25 +101,6 @@ function EditForm(id,token, area = "") {
     }).done(function (data) {
         
         hideSpinner();
-        // Iterate over the keys of the data object and map them to form field names dynamically
-        /*var fieldMap = {};
-        /*var fieldMap = {};
-        for (var key in data) {
-            if (data.hasOwnProperty(key)) {
-                var formFieldName = key.charAt(0).toUpperCase() + key.slice(1); // Convert first character to uppercase
-                fieldMap[formFieldName] = key; // Map form field name to data key
-            }
-        }*/
-
-        // Iterate over the form elements and populate values dynamically
-        /*$("#edit_application_modal form").find('input, select, textarea').each(function(index, element) {
-        /*$("#edit_application_modal form").find('input, select, textarea').each(function(index, element) {
-            var field = $(element);
-            var fieldName = field.attr('name');
-            var dataKey = fieldMap[fieldName]; // Get corresponding key from data
-            var fieldValue = data[dataKey]; // Get value from data based on key
-            field.val(fieldValue); // Set field value
-        });*/
 
         const editform = document.querySelector("#edit_application_modal form");
         //const data = JSON.parse(response);
@@ -148,18 +123,15 @@ function EditForm(id,token, area = "") {
             }
         });
 
+        // Hook up event to the update user button
+        $("#edit_application_modal button[name='update_application_btn']").unbind().click(function () { updateApplication(token) });
 
-   
+        // Reset validation
+        var validator = $("#edit_application_modal form").validate();
+        validator.resetForm();
 
-    // Hook up event to the update user button
-    $("#edit_application_modal button[name='update_application_btn']").unbind().click(function () { updateApplication(token) });
-
-    // Reset validation
-    var validator = $("#edit_application_modal form").validate();
-    validator.resetForm();
-
-    // Show modal
-    $("#edit_application_modal").modal("show");
+        // Show modal
+        $("#edit_application_modal").modal("show");
 
     })
 }
@@ -175,15 +147,10 @@ function Delete(id,token) {
                 headers: {
                     'Authorization': "Bearer "+ token
                 }
-
             }).done(function (data) {
-
-              
                     toastr.success("Pro bono application has been deleted sucessfully")
               
                 datatable.ajax.reload();
-
-
             }).fail(function (response) {
 
                 toastr.error(response.responseText)
@@ -191,8 +158,6 @@ function Delete(id,token) {
                 datatable.ajax.reload();
             });
         }
-
-
     });
 }
 
@@ -343,9 +308,6 @@ function updateApplication(token) {
     var formData = new FormData();
 
     // Append the form field values
-
-   
-
     $(form).find('input, select, textarea').each(function (index, element) {
         var field = $(element);
         var fieldName = field.attr('name');
@@ -361,9 +323,6 @@ function updateApplication(token) {
     for (var i = 0; i < attachments.length; i++) {
         formData.append("Attachments", attachments[i]);
     }
-
-
-   
     //send the request
 
     $.ajax({
@@ -376,12 +335,6 @@ function updateApplication(token) {
             'Authorization': "Bearer "+ token
         },
         success: function (data) {
-
-
-
-
-           
-
                 //show success message to the user
                 var dataTable = $('#my_table').DataTable();
 
@@ -390,11 +343,6 @@ function updateApplication(token) {
                 $("#edit_application_modal").modal("hide")
 
                 dataTable.ajax.reload();
-
-            
-
-
-
         },
         error: function (xhr, ajaxOtions, thrownError) {
 

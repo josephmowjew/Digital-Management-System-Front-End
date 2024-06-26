@@ -3,6 +3,7 @@ class CPDTrainingHandler {
     this.hideSpinner();
     this.bindEvents();
     this.bindCheckboxEvents();
+    this.fee = 0
     this.form = document.querySelector("#create_cpd_modal form");
     if (this.form) {
       this.formElements = this.form.querySelectorAll("input, select, textarea");
@@ -44,8 +45,14 @@ class CPDTrainingHandler {
     const registerCPDTrainingBtn = document.querySelector(
       "#register_cpd_training_modal button[name='register_training_btn']"
     );
+
     if (registerCPDTrainingBtn) {
       registerCPDTrainingBtn.addEventListener("click", this.registerTrainingClicked.bind(this));
+    }
+    
+    const requestInvoiceBtn = document.querySelector("#request_invoice_btn");
+    if (requestInvoiceBtn) {
+      requestInvoiceBtn.addEventListener("click", this.requestInvoice.bind(this));
     }
 
    
@@ -64,6 +71,34 @@ class CPDTrainingHandler {
         }
 
     });
+}
+
+
+requestInvoice() {
+  bootbox.confirm("Are you sure you want to request an invoice?", (result) => {
+    if (result) {
+      this.showSpinner();
+      const trainingId = document.querySelector("#register_cpd_training_modal input[name='CPDTrainingId']").value;
+
+
+      const formData = new FormData();
+      formData.append("ReferencedEntityType", "CPDTrainings");
+      formData.append("Amount", this.fee);
+      formData.append("ReferencedEntityId", trainingId);
+
+      this.sendAjaxRequest(
+        formData,
+        "POST",
+        `${host}/api/InvoiceRequest`,
+        (response) => {
+          this.hideSpinner();
+          toastr.success("Invoice requested successfully");
+        },
+        this.handleError.bind(this),
+        { 'Authorization': `Bearer ${tokenValue}` }
+      );
+    }
+  });
 }
 markAttendance() {
   const selectedCount = this.selectedCPDTrainingIds.length;
@@ -177,14 +212,14 @@ handleMarkAttendanceSuccess(response) {
     $("#edit_cpd_modal").modal("show");
   }
 
-  registerForm(trainingId, trainingFee) {
+   registerForm(trainingId, trainingFee) {
     const cpdRegisterform = document.querySelector("#register_cpd_training_modal form");
     const trainingIdInput = cpdRegisterform.querySelector('input[name="CPDTrainingId"]');
     trainingIdInput.value = trainingId;
-
+  
     // Log the trainingId for debugging purposes
     const trainingData = JSON.parse(trainingFee);
-
+  
     // Destructure the different fees from the trainingFee object
     const { 
       memberPhysicalAttendanceFee, 
@@ -192,34 +227,34 @@ handleMarkAttendanceSuccess(response) {
       nonMemberPhysicalAttendanceFee, 
       nonMemberVirtualAttandanceFee 
     } = trainingData;
-
-
-    
+  
     // Check if all fees are zero or null
     const isFree = [memberPhysicalAttendanceFee, memberVirtualAttendanceFee, nonMemberPhysicalAttendanceFee, nonMemberVirtualAttandanceFee]
       .every(fee => fee === null || fee <= 0);
-
+  
     const displayFee = (fee) => {
+
+      //set the fee to the class member
+      this.fee = fee
+      const amountElement = cpdRegisterform.querySelector("#cpd_training_amount");
+      const requestInvoiceButton = document.querySelector("#request_invoice_btn");
       
-      if(typeof(fee) == "number")
-        {
-          if (fee > 0) {
-            cpdRegisterform.querySelector("#cpd_training_amount").innerHTML = `<strong>MWK${fee} </strong>`;
-          } else {
-            cpdRegisterform.querySelector("#cpd_training_amount").innerHTML = `<strong>Free CPD</strong>`;
-          }
+      if (typeof(fee) === "number") {
+        if (fee > 0) {
+          amountElement.innerHTML = `<strong>MWK${fee} </strong>`;
+          requestInvoiceButton.style.display = "block"; // Show the button when amount is set
+        } else {
+          amountElement.innerHTML = `<strong>Free CPD</strong>`;
+          requestInvoiceButton.style.display = "none"; // Hide the button for free events
         }
-        else{
-          cpdRegisterform.querySelector("#cpd_training_amount").innerHTML = `<strong>Pending....Please select attendance mode</strong>`;
-        }
-       
+      } else {
+        amountElement.innerHTML = `<strong>Pending....Please select attendance mode</strong>`;
+        requestInvoiceButton.style.display = "none"; // Hide the button when amount is pending
+      }
     };
-
+  
     const modeOfAttendanceSelect = cpdRegisterform.querySelector('select[name="AttendanceMode"]');
-   
     modeOfAttendanceSelect.addEventListener('change', () => {
-
-     
       const selectedMode = modeOfAttendanceSelect.value;
       let fee = 0;
       if (selectedMode === 'Physical') {
@@ -229,6 +264,7 @@ handleMarkAttendanceSuccess(response) {
       }
       displayFee(fee);
     });
+  
     if (isFree) {
       cpdRegisterform.querySelector("#cpd_training_payment_alert").style.display = "none";
       const attachmentsField = cpdRegisterform.querySelector('div input[type="file"]');
@@ -238,18 +274,16 @@ handleMarkAttendanceSuccess(response) {
         label.style.display = "none";
       }
       cpdRegisterform.querySelector("#cpd_training_no_payment_alert").style.display = "block";
-
-
-    } 
-    else {
+      document.querySelector("#request_invoice_btn").style.display = "none"; // Hide the button for free events
+    } else {
       displayFee(trainingFee);
       cpdRegisterform.querySelector("#cpd_training_no_payment_alert").style.display = "none";
       cpdRegisterform.querySelector("#cpd_training_payment_alert").style.display = "block";
     }
-
+  
     $("#register_cpd_training_modal").modal("show");
   }
-
+  
 
 
 

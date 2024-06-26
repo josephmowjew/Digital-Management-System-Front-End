@@ -306,7 +306,19 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRmluYW5jZVxWaWV3c1xIb21lXFByb2ZpbGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/arthu/Documents/Work/MLS project/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Finance/Views/LicenseApplications/Details.cshtml]
+[C:/Users/Joseph-Sparc/Documents/C\# Projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Finance/Views/InvoiceRequestTypes/index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRmluYW5jZVxWaWV3c1xJbnZvaWNlUmVxdWVzdFR5cGVzXGluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Joseph-Sparc/Documents/C\# Projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Finance/Views/InvoiceRequestTypes/_CreateInvoiceRequestTypePartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRmluYW5jZVxWaWV3c1xJbnZvaWNlUmVxdWVzdFR5cGVzXF9DcmVhdGVJbnZvaWNlUmVxdWVzdFR5cGVQYXJ0aWFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Joseph-Sparc/Documents/C\# Projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Finance/Views/InvoiceRequestTypes/_EditInvoiceRequestTypePartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRmluYW5jZVxWaWV3c1xJbnZvaWNlUmVxdWVzdFR5cGVzXF9FZGl0SW52b2ljZVJlcXVlc3RUeXBlUGFydGlhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Joseph-Sparc/Documents/C\# Projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Finance/Views/LicenseApplications/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRmluYW5jZVxWaWV3c1xMaWNlbnNlQXBwbGljYXRpb25zXERldGFpbHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 

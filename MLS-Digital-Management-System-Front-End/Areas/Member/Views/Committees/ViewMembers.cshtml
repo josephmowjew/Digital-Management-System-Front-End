@@ -33,8 +33,10 @@
                 <thead>
                     <tr>
                         <th>Member Name</th>
-                        
                         <th>Member Role</th>
+                        <th>Gender</th>
+                        <th>Email</th>
+                        <th>Contact</th>
                         @if (ViewBag.IsChairperson)
                         {
                             <th>Action</th>
@@ -73,6 +75,24 @@
                 name: "role",
                 className: "text-left",
                 "orderable": false
+            },
+            {
+                data: "memberShip.gender",
+                name: "gender",
+                className: "text-left",
+                "orderable": false
+            },
+            {
+                data: "memberShip.email",
+                name: "email",
+                className: "text-left",
+                "orderable": false
+            },
+            {
+                data: "memberShip.phoneNumber",
+                name: "contact",
+                className: "text-left",
+                "orderable": false
             }
         ];
 
@@ -82,7 +102,6 @@
                 name: "id",
                 "orderable": false,
                 render: function (data, type, row) {
-                    console.log(data);
                     return `
                         <a href='#' data-id="${data}" data-token="${tokenValue}" onclick='committeeMemberHandler.delete(event)' type='button' class='btn btn-outline-danger mx-1 btn-sm ti ti-trash' title='edit'> Remove</a> 
                     `;

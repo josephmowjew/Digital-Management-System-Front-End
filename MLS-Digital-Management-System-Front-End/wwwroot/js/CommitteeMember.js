@@ -64,6 +64,21 @@ class CommitteeMemberHandler {
         });
     }
 
+    addMember(event) {
+        const button = event.currentTarget;
+        const id = button.getAttribute("data-id");
+        const token = button.getAttribute("data-token");
+
+        // Confirmation dialog
+        bootbox.confirm("Are you sure you want to add this member to the committee?", result => {
+            if (result) {
+                this.sendAjaxRequest(null, 'GET', `${host}/api/CommitteeMembers/approve/${id}`, this.handleApprovalSuccess.bind(this), this.handleError.bind(this, null), {
+                    'Authorization': `Bearer ${token}`
+                });
+            }
+        });
+    }
+
     handleCreateSuccess(response) {
         this.hideSpinner();
         const dataTable = $("#my_table").DataTable();
@@ -79,6 +94,12 @@ class CommitteeMemberHandler {
         const dataTable = $('#my_table').DataTable();
         dataTable.ajax.reload();
         location.reload();
+    }
+
+    handleApprovalSuccess(response) {
+        toastr.success("Accepted successfully");
+        const dataTable = $('#my_table').DataTable();
+        dataTable.ajax.reload();
     }
 
     displayValidationErrors(form) {

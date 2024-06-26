@@ -25,17 +25,20 @@
             <img src="~/assets/images/91.gif" id="spinner" />
         </div>
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-info my-3" data-bs-toggle="modal" data-bs-target="#create_application_modal">
-            
-        @if(ViewBag.hasPreviousLicenseApplication == true ){
-            <span>Renew Application</span>
-            }
-            else{
-                <span>New Application</span>
-            }
-        </button>
+        @if (ViewBag.membership) {
+            <button type="button" class="btn btn-info my-3" data-bs-toggle="modal" data-bs-target="#create_application_modal">
 
-        
+                @if (ViewBag.hasPreviousLicenseApplication == true) {
+                    <span>Renew Application</span>
+                }
+                else {
+                    <span>New Application</span>
+                }
+            </button>
+        }else{
+            <a asp-area="Member" asp-action="ViewMember" asp-controller="Home" class="btn btn-warning my-3">Complete Membership Details</a>
+        }
+
         <!-- Modal -->
         <div class="modal fade" id="create_application_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <partial name="_CreateApplicationPartial" />

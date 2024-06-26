@@ -95,7 +95,7 @@
                             console.log(data)
                             return `
                             
-                            <a href='#' data-id="${data}" data-token="${tokenValue}" onclick='committeeMemberHandler.delete(event)' type='button' class='btn btn-outline-success mx-1 btn-sm ti ti-check' title='edit'> Accept</a>
+                            <a href='#' data-id="${data}" data-token="${tokenValue}" onclick='committeeMemberHandler.addMember(event)' type='button' class='btn btn-outline-success mx-1 btn-sm ti ti-check' title='edit'> Accept</a>
                             <a href='#' data-id="${data}" data-token="${tokenValue}" onclick='committeeMemberHandler.delete(event)' type='button' class='btn btn-outline-danger mx-1 btn-sm ti ti-trash' title='edit'> Deny</a>
                                            
                             `

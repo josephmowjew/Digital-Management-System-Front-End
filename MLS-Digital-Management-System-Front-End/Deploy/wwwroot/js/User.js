@@ -78,8 +78,6 @@ $(function () {
 
         });
     }
-
-
 })
 
 
@@ -96,8 +94,6 @@ function UpdatePassword() {
         Id: userId,
         NewPassword: newPassword
     }
-
-    
 
     $.ajax({
         url: form_url,

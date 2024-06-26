@@ -25,5 +25,7 @@ public interface IServiceRepository{
     IPenaltyPaymentService PenaltyPaymentService { get; }
     ICommitteeMembershipService CommitteeMembershipService { get; }
 
+    ICommitteeService CommitteeService { get; } 
+
 }
 

@@ -134,7 +134,7 @@
                         render: function (data, type, row) {
                             let loggedInUserId = `@ViewBag.UserId`;
                             let userMembership = row.committeeMemberships.find(reg => reg.memberShipId === loggedInUserId);
-
+                            //console.log(userMembership)
                             if (userMembership != null) {
                                 let membershipStatus = userMembership.memberShipStatus;
                                 //console.log("member status: ",membershipStatus)
@@ -143,8 +143,10 @@
                                     return `<span class="text-success">Member</span>`;
                                 } else if (membershipStatus === 'Pending') {  // Example of handling a different status
                                     return `<span class="text-warning">Pending</span>`;
-                                } else if (membershipStatus === 'Exited'){
+                                } else if (membershipStatus === 'Exited') {
                                     return `<span class="text-danger">Exited</span>`;
+                                } else {
+                                    return `<span class="text-danger">Not a Member</span>`;
                                 }
                             } 
                             else {
@@ -159,16 +161,31 @@
                         render: function (data, type, row) {
                             let loggedInUserId = `@ViewBag.UserId`;
                             let isUserInCommittee = row.committeeMemberships.find(reg => reg.memberShipId === loggedInUserId);
-                            console.log(isUserInCommittee);
+                            //console.log(isUserInCommittee);
 
                             if (isUserInCommittee != null) {
                                 let membershipStatus = isUserInCommittee.memberShipStatus
                                 if (membershipStatus == "Approved") {
-
-                                    return `<a href='/member/threads?committeeId=${data}'  type='button' class='btn btn-outline-success mx-1 btn-sm ti  ti-hand-point-down' title='show threads'>Threads</a>
-                                                            <a href='#' data-id='${data}' data-token='${tokenValue}' type='button' onclick='committeeHandler.exitCommittee(event)' title='delete' class='ti ti-trash red-icon btn btn-outline-danger btn-sm my-1 mx-1'>Exit</a>`
-                                } else if (membershipStatus == "Pending") {
+                                    if (isUserInCommittee.role == "Chairperson") {
+                                        return `
+                                                <a href='/member/threads?committeeId=${data}'  type='button' class='btn btn-outline-success mx-1 btn-sm ti  ti-hand-point-down' title='show threads'>Threads</a>
+                                                <a href='/member/Committees/ViewMembers?committeeId=${data}'  type='button' class='btn btn-outline-primary mx-1 btn-sm ti  ti-eye' title='show threads'>Members</a>
+                                                <a href='/member/Committees/ViewMemberRequests?committeeId=${data}'  type='button' class='btn btn-outline-warning mx-1 btn-sm ti  ti-eye' title='show threads'>Requests</a>
+                                                <a href='#' data-id='${data}' data-token='${tokenValue}' type='button' onclick='committeeHandler.exitCommittee(event)' title='delete' class='ti ti-trash red-icon btn btn-outline-danger btn-sm my-1 mx-1'>Exit</a>
+                                            `
+                                    } else {
+                                        return `
+                                                <a href='/member/threads?committeeId=${data}'  type='button' class='btn btn-outline-success mx-1 btn-sm ti  ti-hand-point-down' title='show threads'>Threads</a>
+                                                <a href='/member/Committees/ViewMembers?committeeId=${data}'  type='button' class='btn btn-outline-primary mx-1 btn-sm ti  ti-eye' title='show threads'>Members</a>
+                                                <a href='#' data-id='${data}' data-token='${tokenValue}' type='button' onclick='committeeHandler.exitCommittee(event)' title='delete' class='ti ti-trash red-icon btn btn-outline-danger btn-sm my-1 mx-1'>Exit</a>
+                                            `
+                                    }
+                                    
+                                } else if (membershipStatus == "Pending") 
+                                {
                                     return ``;
+                                }else{
+                                    return `<a href='#' data-id='${data}' data-token='${tokenValue}' onclick='committeeHandler.joinCommittee(event)' type='button' class='btn btn-outline-primary mx-1 btn-sm' title='edit'> <i class='bi bi-plus'></i> Join</a>`;
                                 }
                             } else {
                                 return `<a href='#' data-id='${data}' data-token='${tokenValue}' onclick='committeeHandler.joinCommittee(event)' type='button' class='btn btn-outline-primary mx-1 btn-sm' title='edit'> <i class='bi bi-plus'></i> Join</a>`;

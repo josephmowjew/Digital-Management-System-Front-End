@@ -75,9 +75,10 @@ class CommitteeMemberHandler {
     }
 
     handleDeleteSuccess(response) {
-        toastr.success("Committee member has been deleted successfully");
+        toastr.success("Committee member has been removed successfully");
         const dataTable = $('#my_table').DataTable();
         dataTable.ajax.reload();
+        location.reload();
     }
 
     displayValidationErrors(form) {

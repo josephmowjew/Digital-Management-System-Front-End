@@ -43,8 +43,22 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
         public async Task<IActionResult> ViewMembers(int committeeId)
         {
             await PopulateViewBagsMinimal();
+            var UserId = AuthHelper.GetUserId(HttpContext);
+
             ViewBag.CommitteeId = committeeId;
-           
+            var member = await _service.MemberService.GetMemberByUserIdAsync(UserId);
+
+            bool isChairperson = await IsUserChairpersonOfCommittee(member.Id, committeeId);
+            ViewBag.isChairperson = isChairperson;
+            ViewBag.MembersList = await GetAllUsers(committeeId);
+            return View();
+        }
+
+        public async Task<IActionResult> ViewMemberRequests(int committeeId)
+        {
+            await PopulateViewBagsMinimal();
+            ViewBag.CommitteeId = committeeId;
+            ViewBag.MembersList = await GetAllUsers(committeeId);
             return View();
         }
         private async Task<List<SelectListItem>> GetAllYearOfOperations()
@@ -74,13 +88,40 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
             return membersList.ToList();
         }
 
+        private async Task<List<SelectListItem>> GetAllUsers(int committeeId)
+        {
+            //var usersList = await this._service.UserService.GetAllUsersAsync();
+
+            var usersList = await this._service.CommitteeMembershipService.GetAllNonMembersAsync(committeeId);
+
+            List<SelectListItem> usersSelectList = new() { new SelectListItem() { Text = "--- Select Member ---", Value = "" } };
+
+            if (usersList != null)
+            {
+                usersList.ForEach(user =>
+                {
+                    usersSelectList.Add(new SelectListItem() { Text = user.FullName, Value = user.Id.ToString() });
+                });
+            }
+
+            return usersSelectList;
+        }
+
         private async Task PopulateViewBagsMinimal()
         {
             string token = AuthHelper.GetToken(HttpContext);
             ViewBag.token = token;
             this._service.Token = token;
         }
-       
+
+        // Method to check if the user is the chairperson of the committee
+        private async Task<bool> IsUserChairpersonOfCommittee(int memberId, int committeeId)
+        {
+            // Implement your logic here to determine if the user is the chairperson
+            var committee = await _service.CommitteeService.GetCommitteeByIdAsync(committeeId);
+            return committee != null && committee.ChairpersonID == memberId;
+        }
+
 
     }
 }

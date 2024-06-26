@@ -32,11 +32,13 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
             string token = AuthHelper.GetToken(HttpContext);
             ViewBag.token = token;
             this._service.Token = token;
-             ViewBag.firmsList = await GetFirms();
-             ViewBag.hasPreviousLicenseApplication = await HasPreviousLicenseApplication();
+            ViewBag.firmsList = await GetFirms();
+            ViewBag.hasPreviousLicenseApplication = await HasPreviousLicenseApplication();
 
-           
-            
+            var userId = AuthHelper.GetUserId(HttpContext);
+            var member = await _service.MemberService.GetMemberByUserIdAsync(userId);
+            ViewBag.membership = member != null;
+
         }
          public async Task<IActionResult> Details(int id)
         {

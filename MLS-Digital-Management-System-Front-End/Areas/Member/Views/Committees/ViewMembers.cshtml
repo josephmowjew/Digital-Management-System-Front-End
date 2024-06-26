@@ -1,8 +1,10 @@
 @using Microsoft.Extensions.Configuration
 @inject IConfiguration Configuration
+@using System.Text.Json;
 @{
     ViewData["Title"] = "View Committee Members";
-    Layout = "~/Areas/Secretariat/Views/shared/_Layout.cshtml";
+    Layout = "~/Areas/Member/Views/shared/_Layout.cshtml";
+    //bool isChairperson = ViewBag.IsChairperson;
 
     var host = Configuration.GetSection("APIURL")["Link"];
 }
@@ -33,7 +35,10 @@
                         <th>Member Name</th>
                         
                         <th>Member Role</th>
-                        <th>Action</th>
+                        @if (ViewBag.IsChairperson)
+                        {
+                            <th>Action</th>
+                        }
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -47,66 +52,69 @@
         var datatable;
         var tokenValue = '@ViewBag.token';
         var host = '@host';
+        console.log('@ViewBag.UserId');
     </script>
 
  <script src="~/js/CommitteeMember.js" asp-append-version="true"></script>
     
     <script>
-        $(document).ready(function () {
-            datatable = $('#my_table').DataTable({
-                "processing": true,
-                "serverSide": true,
-                "order": [[0, "asc"]],
-                ajax: {
-                    url: "@host/api/CommitteeMembers/paged?committeeId=" + @ViewBag.CommitteeId,
-                    type: 'get',
-                    datatype: 'Json',
-                    headers: {
-                        'Authorization': 'Bearer @ViewBag.token'
-                    },
+    $(document).ready(function () {
+            const isChairperson = @Html.Raw(JsonSerializer.Serialize(@ViewBag.IsChairperson));
 
-                },
-                columnDefs: [
-                    {
-                        defaultContent: "",
-                        targets: "_all",
-                        'orderable': true
-                    }
-                ],
-                columns: [
-                    {
-                        data: "memberShip.fullName",
-                        name: "memberShip",
-                        className: "text-left",
-                        "orderable": false
-                    },
-                   
-                    {
-                        data: "role",
-                        name: "role",
-                        className: "text-left",
-                        "orderable": false
-                    },
-                    {
-                        data: "id",
-                        name: "id",
-                        "orderable": false,
-                        render: function (data, type, row) {
-                            console.log(data)
-                            return `
-                            
-                            <a href='#' data-id="${data}" data-token="${tokenValue}" onclick='committeeMemberHandler.delete(event)' type='button' class='btn btn-outline-danger mx-1 btn-sm ti ti-trash' title='edit'> Delete</a> 
-                            
-                                              
-                            `
-                        }
-                    }
-                ],
-                responsive: true,
-                "autoWidth": false
+        let columns = [
+            {
+                data: "memberShip.fullName",
+                name: "memberShip",
+                className: "text-left",
+                "orderable": false
+            },
+            {
+                data: "role",
+                name: "role",
+                className: "text-left",
+                "orderable": false
+            }
+        ];
+
+        if (isChairperson) {
+            columns.push({
+                data: "id",
+                name: "id",
+                "orderable": false,
+                render: function (data, type, row) {
+                    console.log(data);
+                    return `
+                        <a href='#' data-id="${data}" data-token="${tokenValue}" onclick='committeeMemberHandler.delete(event)' type='button' class='btn btn-outline-danger mx-1 btn-sm ti ti-trash' title='edit'> Remove</a> 
+                    `;
+                }
             });
+        }
+
+        datatable = $('#my_table').DataTable({
+            "processing": true,
+            "serverSide": true,
+            "order": [[0, "asc"]],
+            ajax: {
+                url: "@host/api/CommitteeMembers/paged?committeeId=" + @ViewBag.CommitteeId,
+                type: 'get',
+                datatype: 'Json',
+                headers: {
+                    'Authorization': 'Bearer @ViewBag.token'
+                },
+            },
+            columnDefs: [
+                {
+                    defaultContent: "",
+                    targets: "_all",
+                    'orderable': true
+                }
+            ],
+            columns: columns,
+            responsive: true,
+            "autoWidth": false
         });
-    </script>
+    });
+</script>
 
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");

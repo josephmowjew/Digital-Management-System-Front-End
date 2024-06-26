@@ -41,7 +41,7 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Secretariat.Controllers
         {
             await PopulateViewBagsMinimal();
             ViewBag.CommitteeId = committeeId;
-            ViewBag.MembersList = await GetAllUsers();
+            ViewBag.MembersList = await GetAllUsers(committeeId);
             return View();
         }
         private async Task<List<SelectListItem>> GetAllYearOfOperations()
@@ -61,13 +61,15 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Secretariat.Controllers
             return yearsOfOperationsList;
         }
 
-        private async Task<List<SelectListItem>> GetAllUsers()
+        private async Task<List<SelectListItem>> GetAllUsers(int committeeId)
         {
-            var usersList = await this._service.UserService.GetAllUsersAsync();
+            //var usersList = await this._service.UserService.GetAllUsersAsync();
 
-            List<SelectListItem> usersSelectList = new List<SelectListItem>();
+            var usersList = await this._service.CommitteeMembershipService.GetAllNonMembersAsync(committeeId);
 
-            if(usersList != null)
+            List<SelectListItem> usersSelectList = new() { new SelectListItem() { Text = "--- Select Member ---", Value = "" } };
+
+            if (usersList != null)
             {
                 usersList.ForEach(user =>
                 {
@@ -79,11 +81,12 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Secretariat.Controllers
         }
         private async Task<List<SelectListItem>> GetAllMembers()
         {
+
+            List<SelectListItem> membersSelectList = new() { new SelectListItem() { Text = "--- Select Member ---", Value = "" } };
+
             var membersList = await this._service.MemberService.GetAllMembersAsync();
 
-            List<SelectListItem> membersSelectList = new List<SelectListItem>();
-
-            if(membersList != null)
+            if (membersList != null)
             {
                 membersList.ForEach(member =>
                 {
@@ -100,7 +103,5 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Secretariat.Controllers
             ViewBag.token = token;
             this._service.Token = token;
         }
-       
-
     }
 }

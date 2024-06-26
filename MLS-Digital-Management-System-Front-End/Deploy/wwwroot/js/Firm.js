@@ -26,7 +26,7 @@ $(function () {
         //send the request
 
         $.ajax({
-            url:  "" + host + "/api/Firms",
+            url:  `${host}/api/Firms`,
             type: 'POST',
             data: JSON.stringify(formData), // Convert formData object to JSON string
             contentType: 'application/json', // Set content type to JSON
@@ -74,12 +74,12 @@ $(function () {
 
 function EditForm(id,token, area = "") {
 
-    console.log(host)
+    //console.log(host)
     //get the record from the database
     showSpinner();
     
     $.ajax({
-        url: "" + host + "/api/firms/getfirm/"+ id,
+        url: `${host}/api/firms/getfirm/${id}`,
         type: 'GET',
         headers: {
             'Authorization': "Bearer "+ token
@@ -125,7 +125,7 @@ function Delete(id,token) {
 
         if (result) {
             $.ajax({
-                url: "" + host + "/api/firms/" + id,
+                url: `${host}/api/firms/${id}`,
                 type: 'DELETE',
                 headers: {
                     'Authorization': "Bearer "+ token
@@ -160,7 +160,7 @@ function Activate(id,token) {
 
             showSpinner()
             $.ajax({
-                url: '" + host + "/api/firms/activate/'+id,
+                url: `${host}/api/firms/activate/${id}`,
                 type: 'GET',
                 headers: {
                     'Authorization': "Bearer "+ token
@@ -233,7 +233,7 @@ function DenyFirm() {
           //send the request
   
           $.ajax({
-              url:  "" + host + "/api/firms/deny",
+              url:  `${host}/api/firms/deny`,
               type: 'POST',
               data: formData, // Convert formData object to JSON string
               processData: false, // Set processData to false to prevent automatic serialization
@@ -318,7 +318,7 @@ function upDateFirm(token) {
     //send the request
 
     $.ajax({
-        url: "" + host + "/api/firms/"+id,
+        url: `${host}/api/firms/${id}`,
         type: 'PUT',
         data: formDataJson,
         contentType: 'application/json',

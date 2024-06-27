@@ -104,6 +104,13 @@
                         name: "reason",
                         className: "text-left",
                         "orderable": false,
+                        render: function (data, type, row) {
+                            console.log(@ViewBag.memberId);
+                            if (@ViewBag.memberId === 0) {
+                                return ''; // Render nothing
+                            }
+                            return data; // Render the original data
+                        }
                     },
                     {
                         data: "fee",
@@ -111,6 +118,10 @@
                         className: "text-left",
                         "orderable": false,
                         render: function (data, type, row) {
+                            console.log(@ViewBag.memberId);
+                            if (@ViewBag.memberId === 0) {
+                                return ''; // Render nothing
+                            }
                             return '<span class="badge bg-primary bg-opacity-85 rounded-pill">MWK ' + data + '</span>';
                         }
                     },
@@ -119,6 +130,13 @@
                         name: "penaltyStatus",
                         className: "text-left",
                         "orderable": false,
+                        render: function (data, type, row) {
+                            console.log(@ViewBag.memberId);
+                            if (@ViewBag.memberId === 0) {
+                                return ''; // Render nothing
+                            }
+                            return data; // Render the original data
+                        }
                     },
                     {
                         data: "attachments",
@@ -126,12 +144,16 @@
                         className: "text-left",
                         "orderable": false,
                         render: function (data, type, row, meta) {
-                            if (data && data.length > 0) {
-                                return data.map((attachment) => {
-                                    return `<a href="@host/${attachment.filePath}" target="_blank" download="${attachment.fileName}"> Attachment <i class="bi bi-paperclip"></i></a>`;
-                                }).join('<br>');
+                            if (@ViewBag.memberId === 0) {
+                                return ''; // Render nothing
                             } else {
-                                return '';
+                                if (data && data.length > 0) {
+                                    return data.map((attachment) => {
+                                        return `<a href="@host/${attachment.filePath}" target="_blank" download="${attachment.fileName}"> Attachment <i class="bi bi-paperclip"></i></a>`;
+                                    }).join('<br>');
+                                } else {
+                                    return '';
+                                }
                             }
                         }
                     },
@@ -141,16 +163,20 @@
                         className: "text-left",
                         "orderable": false,
                         render: function (data, type, row) {
-                            // Function to format numbers as currency
-                            var formatCurrency = function (value) {
-                                return new Intl.NumberFormat('en-US', {
-                                    style: 'currency',
-                                    currency: 'MWK' // Change this to your desired currency
-                                }).format(value);
-                            };
+                            if (@ViewBag.memberId === 0) {
+                                return ''; // Render nothing
+                            } else {
+                                // Function to format numbers as currency
+                                var formatCurrency = function (value) {
+                                    return new Intl.NumberFormat('en-US', {
+                                        style: 'currency',
+                                        currency: 'MWK' // Change this to your desired currency
+                                    }).format(value);
+                                };
 
-                            var formattedData = formatCurrency(data);
-                            return '<span class="badge bg-primary bg-opacity-85 rounded-pill">' + formattedData + '</span>';
+                                var formattedData = formatCurrency(data);
+                                return '<span class="badge bg-primary bg-opacity-85 rounded-pill">' + formattedData + '</span>';
+                            }
                         }
                     },
                     {
@@ -161,25 +187,29 @@
                         render: function (data, type, row) {
                             var fee = row.fee
 
-                            // Function to format numbers as currency
-                            var formatCurrency = function (value) {
-                                return new Intl.NumberFormat('en-US', {
-                                    style: 'currency',
-                                    currency: 'MWK' // Change this to your desired currency
-                                }).format(value);
-                            };
+                            if (@ViewBag.memberId === 0) {
+                                return ''; // Render nothing
+                            } else {
+                                // Function to format numbers as currency
+                                var formatCurrency = function (value) {
+                                    return new Intl.NumberFormat('en-US', {
+                                        style: 'currency',
+                                        currency: 'MWK' // Change this to your desired currency
+                                    }).format(value);
+                                };
 
-                            var formattedData = formatCurrency(data);
-                            var formattedFee = formatCurrency(fee);
+                                var formattedData = formatCurrency(data);
+                                var formattedFee = formatCurrency(fee);
 
-                            if (data == 0) {
-                                return '<span class="badge bg-success bg-opacity-85 rounded-pill">' + formattedData + '</span>'
-                            }
-                            if (data == fee) {
-                                return '<span class="badge bg-danger bg-opacity-85 rounded-pill">' + formattedData + '</span>'
-                            }
-                            else if (data < fee) {
-                                return '<span class="badge bg-warning bg-opacity-85 rounded-pill">' + formattedData + '</span>'
+                                if (data == 0) {
+                                    return '<span class="badge bg-success bg-opacity-85 rounded-pill">' + formattedData + '</span>'
+                                }
+                                if (data == fee) {
+                                    return '<span class="badge bg-danger bg-opacity-85 rounded-pill">' + formattedData + '</span>'
+                                }
+                                else if (data < fee) {
+                                    return '<span class="badge bg-warning bg-opacity-85 rounded-pill">' + formattedData + '</span>'
+                                }
                             }
                         }
                     },
@@ -190,23 +220,17 @@
                         render: function (data, type, row) {
                             var balance = row.amountRemaining
 
-
-                            if (balance == 0) {
-                                return ""
+                            if (@ViewBag.memberId === 0) {
+                                return ''; // Render nothing
                             } else {
-                                return `
-                                        <a href='#' onclick='penaltyHandler.editForm(${data},"${tokenValue}")' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-credit-card' title='edit'> Make Payment</a>
-                                    `
+                                if (balance == 0) {
+                                    return ""
+                                } else {
+                                    return `
+                                                <a href='#' onclick='penaltyHandler.editForm(${data},"${tokenValue}")' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-credit-card' title='edit'> Make Payment</a>
+                                            `
+                                }
                             }
-                            
-
-                            /*return `
-                            
-                            <button type='button' class="btn btn-info my-3" data-bs-toggle="modal" data-bs-target='#make_penaltyPayment_modal'>
-                                Add New Penalty
-                            </button>
-                            
-                            `*/
                         }
                     }
                 ],

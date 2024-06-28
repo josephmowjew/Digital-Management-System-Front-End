@@ -5,6 +5,7 @@
     Layout = "~/Areas/Secretariat/Views/shared/_Layout.cshtml";
 
     var host = Configuration.GetSection("APIURL")["Link"];
+     var apiPrefix =  Configuration.GetSection("APISettings")["API_Prefix"];
 }
 
 @section Styles {
@@ -54,6 +55,7 @@
                         <th>
                             Penalty Status
                         </th>
+                        <th>Penalty Document</th>
                         <th>
                             Actions
                         </th>
@@ -124,6 +126,21 @@
                         name: "penaltyStatus",
                         className: "text-left",
                         "orderable": false,
+                    },
+                    {
+                        data: "attachments",
+                        name: "attachments",
+                        className: "text-left",
+                        "orderable": false,
+                        render: function (data, type, row, meta) {
+                            if (data && data.length > 0) {
+                                return data.map((attachment) => {
+                                    return `<a href="@host@apiPrefix/${attachment.filePath}" target="_blank" download="${attachment.fileName}"> Attachment <i class="bi bi-paperclip"></i></a>`;
+                                }).join('<br>');
+                            } else {
+                                return '';
+                            }
+                        }
                     },
                     {
                         data: "id",

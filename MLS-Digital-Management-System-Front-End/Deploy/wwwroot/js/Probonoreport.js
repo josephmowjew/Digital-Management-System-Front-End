@@ -46,25 +46,17 @@ $(function () {
             },
             success: function (data) {
 
-                //parse whatever comes back to html
-
-                //var parsedData = $.parseHTML(data)
-
                 hideSpinner();
+                //show success message to the user
+                var dataTable = $('#my_table').DataTable();
 
-               
-                    //show success message to the user
-                    var dataTable = $('#my_table').DataTable();
+                toastr.success("New pro bono report addded successfully")
 
-                    toastr.success("New pro bono report addded successfully")
+                $("#create_report_modal").modal("hide")
 
-                    $("#create_report_modal").modal("hide")
+                dataTable.ajax.reload();
 
-                    dataTable.ajax.reload();
-
-                
-
-
+                $("#create_report_modal form")[0].reset();
             },
             error: function (xhr, ajaxOtions, thrownError) {
                 hideSpinner();

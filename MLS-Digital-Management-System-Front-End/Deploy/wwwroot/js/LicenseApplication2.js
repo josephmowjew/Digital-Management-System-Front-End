@@ -264,6 +264,7 @@ class FormHandler {
         toastr.success("New license added successfully");
         $("#create_application_modal").modal("hide");
         dataTable.ajax.reload();
+        $("#create_application_modal form")[0].reset();
     }
 
     handleSaveDraftSuccess(response) {

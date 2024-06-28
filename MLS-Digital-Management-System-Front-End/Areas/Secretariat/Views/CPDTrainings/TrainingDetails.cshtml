@@ -5,6 +5,7 @@
     Layout = "~/Areas/Secretariat/Views/shared/_Layout.cshtml";
 
     var host = Configuration.GetSection("APIURL")["Link"];
+    var apiPrefix =  Configuration.GetSection("APISettings")["API_Prefix"];
 }
 
 <div>
@@ -187,7 +188,7 @@
                         render: function (data, type, row, meta) {
                             if (data && data.length > 0) {
                                 return data.map((attachment) => {
-                                    return `<a href="@host/${attachment.filePath}" target="_blank" download="${attachment.fileName}">Attachment <i class="bi bi-paperclip"></i></a>`;
+                                    return `<a href="@host@apiPrefix/${attachment.filePath}" target="_blank" download="${attachment.fileName}">Attachment <i class="bi bi-paperclip"></i></a>`;
                                 }).join('<br>');
                             } else {
                                 return '';

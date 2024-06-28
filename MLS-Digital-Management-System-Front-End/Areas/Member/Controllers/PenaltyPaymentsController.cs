@@ -32,9 +32,12 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
             ViewBag.token = token;
             _service.Token = token;
             ViewBag.YearOfOperation = await GetCurrentYearOfOperationAsync();
-            //ViewBag.membersList = await GetAllMembersAsync();
+
             ViewBag.penaltyList = await GetAllPenaltiesAsync();
-            //ViewBag.yearOperationsList = await GetYearOfOperations();
+
+            var UserId = AuthHelper.GetUserId(HttpContext);
+
+            ViewBag.member = await _service.MemberService.GetMemberByUserIdAsync(UserId);
         }
 
         private async Task<ReadYearOfOperationDTO> GetCurrentYearOfOperationAsync()
@@ -44,21 +47,29 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
 
         private async Task<List<SelectListItem>> GetAllPenaltiesAsync()
         {
-            //return await _service.PenaltyService.GetPenaltyByIdAsync();
+            var UserId = AuthHelper.GetUserId(HttpContext);
+
+            var member = await _service.MemberService.GetMemberByUserIdAsync(UserId);
 
             List<SelectListItem> penaltiesList = new() { new SelectListItem() { Text = "---Select Penalty---", Value = "" } };
 
             //get identity types from remote
             var penaltiesListFromRemote = await _service.PenaltyService.GetAllPenaltiesAsync();
 
-            if (penaltiesListFromRemote != null)
+            // Filter the penalties that match the member's memberId
+            if(member != null)
             {
-                penaltiesListFromRemote.ForEach(penalty =>
-                {
-                    if(penalty.AmountRemaining != 0)
-                        penaltiesList.Add(new SelectListItem() { Text = penalty.Reason, Value = penalty.Id.ToString() });
+                var memberPenalties = penaltiesListFromRemote.Where(p => p.MemberId == member.Id).ToList();
 
-                });
+                if (memberPenalties != null)
+                {
+                    memberPenalties.ForEach(penalty =>
+                    {
+                        if (penalty.AmountRemaining != 0)
+                            penaltiesList.Add(new SelectListItem() { Text = penalty.Reason, Value = penalty.Id.ToString() });
+
+                    });
+                }
             }
 
             return penaltiesList;

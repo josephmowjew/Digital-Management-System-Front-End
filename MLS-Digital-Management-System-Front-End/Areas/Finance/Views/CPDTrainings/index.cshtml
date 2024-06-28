@@ -5,6 +5,7 @@
     Layout = "~/Areas/Finance/Views/shared/_Layout.cshtml";
 
     var host = Configuration.GetSection("APIURL")["Link"];
+    var apiPrefix =  Configuration.GetSection("APISettings")["API_Prefix"];
 }
 
 @section Styles {
@@ -136,7 +137,7 @@
                         render: function(data, type, row, meta) {
                             if (data && data.length > 0) {
                             return data.map((attachment) => {
-                                return `<a href="@host/${attachment.filePath}" title="${attachment.fileName}" target="_blank"> <img src="@host/${attachment.filePath}" alt="Girl in a jacket" class="w-50 h-50"> </a>`;
+                                return `<a href="@host@apiPrefix/${attachment.filePath}" title="${attachment.fileName}" target="_blank"> <img src="@host/${attachment.filePath}" alt="Girl in a jacket" class="w-50 h-50"> </a>`;
                             }).join('<br>');
                             } else {
                             return '';

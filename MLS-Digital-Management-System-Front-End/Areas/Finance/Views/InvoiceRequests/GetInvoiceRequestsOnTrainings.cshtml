@@ -17,7 +17,7 @@
 <div class="card ">
     <div class="card-body">
       
-        <h5 class="card-title fw-semibold mb-4 text-uppercase text-center">Invoice Requests on Trainings</h5>
+        <h5 class="card-title fw-semibold mb-4 text-uppercase text-center">Invoice Requests on Training</h5>
        
         <div class="table-responsive">
             <table class="table table-bordered " id="invoice_requests_table">
@@ -66,7 +66,7 @@
                     "serverSide": true,
                     "order": [[0, "desc"]],
                     ajax: {
-                    url: '@host/api/invoicerequests/cpdtrainings?cpdTrainingId='+ @ViewBag.cpdTrainingId,
+                    url: '@host/api/InvoiceRequest/cpdtrainings?cpdTrainingId='+ @ViewBag.cpdTrainingId,
                         type: 'get',
                         datatype: 'Json',headers: {
                                         'Authorization': 'Bearer @ViewBag.token'
@@ -82,17 +82,12 @@
                     ],
                     columns: [
                         {
-                            data: "invoiceRequestType.name",
-                            name: "invoiceRequestType.name",
+                            data: "customer.customerName",
+                            name: "CustomerId",
                             className: "text-left",
-                            "orderable": true,
+                            "orderable": false,
                         },
-                        {
-                            data: "trainingName",
-                            name: "trainingName",
-                            className: "text-left",
-                            "orderable": true,
-                        },
+                       
                         {
                             data: "amount",
                             name: "amount",
@@ -100,12 +95,16 @@
                             "orderable": true,
                         },
                         {
-                            data: "dateRequested",
-                            name: "dateRequested",
+                            data: "createdDate",
+                            name: "createdDate",
                             className: "text-left",
                             orderable: true,
                             render: function(data, type, row) {
+
+                                console.log(row);
                                 if (data) {
+
+                                    
                                     var date = new Date(data);
                                     var day = ("0" + date.getDate()).slice(-2);
                                     var month = ("0" + (date.getMonth() + 1)).slice(-2);

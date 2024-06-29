@@ -151,7 +151,9 @@
                         "orderable": false,
                         render: function (data, type, row) {
                                    
-                                    return `<a class='btn btn-outline-primary btn-sm mx-1 position-relative' href='/Finance/CPDTrainingRegistrations?cpdTrainingId=${data}' type='button'> <span class='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary'>${row.numberOfPendingRegistrations}</span> View Applications</a>`
+                                    return `<a class='btn btn-outline-primary btn-sm mx-1 position-relative' href='/Finance/CPDTrainingRegistrations?cpdTrainingId=${data}' type='button'> <span class='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary'>${row.numberOfPendingRegistrations}</span> View Applications</a>
+                                    <a class='btn btn-outline-primary btn-sm mx-1 mt-1 position-relative' href='/Finance/InvoiceRequests/GetInvoiceRequestsOnTrainings?cpdTrainingId=${data}' type='button'> <span class='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary'>${row.numberOfPendingRegistrations}</span> View Invoice Requests</a>`
+                                    
                                 }
                     }
                 ],

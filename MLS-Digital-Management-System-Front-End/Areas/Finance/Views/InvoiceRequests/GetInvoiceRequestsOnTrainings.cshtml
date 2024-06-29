@@ -1,0 +1,147 @@
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+@{
+    ViewData["Title"] = "Invoice Requests on Trainings";
+    Layout = "~/Areas/Finance/Views/shared/_Layout.cshtml";
+
+    var host = Configuration.GetSection("APIURL")["Link"];
+    var apiPrefix =  Configuration.GetSection("APISettings")["API_Prefix"];
+}
+
+
+<a asp-action="index" asp-controller="cpdtrainings" asp-area="finance" class="btn btn-secondary mx-2 my-2">Back To Invoice Requests List</a>
+
+<div>
+    <img src="~/assets/images/91.gif" id="spinner" />
+</div>
+<div class="card ">
+    <div class="card-body">
+      
+        <h5 class="card-title fw-semibold mb-4 text-uppercase text-center">Invoice Requests on Trainings</h5>
+       
+        <div class="table-responsive">
+            <table class="table table-bordered " id="invoice_requests_table">
+                <thead>
+                    <tr>
+                       
+                        <th>
+                            Training Title
+                        </th>
+                        <th>
+                            Amount
+                        </th>
+                        <th>
+                            Date Requested
+                        </th>
+                        <th>
+                            Status
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+   
+</div>
+
+
+       @section Scripts{
+
+        <script>
+            var datatable;
+            var tokenValue = '@ViewBag.token';
+            var host = '@host';
+        </script>
+
+    <script src="~/js/FileUploadHandler.js" asp-append-version="true"></script>
+        <script src="~/js/InvoiceRequests.js" asp-append-version="true"></script>
+        <script>
+            $(document).ready(function () {
+                datatable = $('#invoice_requests_table').DataTable({
+
+
+                    "processing": true,
+                    "serverSide": true,
+                    "order": [[0, "desc"]],
+                    ajax: {
+                    url: '@host/api/invoicerequests/cpdtrainings?cpdTrainingId='+ @ViewBag.cpdTrainingId,
+                        type: 'get',
+                        datatype: 'Json',headers: {
+                                        'Authorization': 'Bearer @ViewBag.token'
+                                    }
+
+                  },
+                    columnDefs: [
+                        {
+                            defaultContent: "",
+                            targets: "_all",
+                            'orderable': true
+                        },
+                    ],
+                    columns: [
+                        {
+                            data: "invoiceRequestType.name",
+                            name: "invoiceRequestType.name",
+                            className: "text-left",
+                            "orderable": true,
+                        },
+                        {
+                            data: "trainingName",
+                            name: "trainingName",
+                            className: "text-left",
+                            "orderable": true,
+                        },
+                        {
+                            data: "amount",
+                            name: "amount",
+                            className: "text-left",
+                            "orderable": true,
+                        },
+                        {
+                            data: "dateRequested",
+                            name: "dateRequested",
+                            className: "text-left",
+                            orderable: true,
+                            render: function(data, type, row) {
+                                if (data) {
+                                    var date = new Date(data);
+                                    var day = ("0" + date.getDate()).slice(-2);
+                                    var month = ("0" + (date.getMonth() + 1)).slice(-2);
+                                    var year = date.getFullYear();
+                                    return year + '-' + month + '-' + day;
+                                }
+                                return '';
+                            }
+                        },
+                        {
+                            data: "status",
+                            name: "status",
+                            "orderable": true,
+                            render: function (data, type, row) {
+                                if (data == "Approved") {
+                                    return `<span class='badge bg-success bg-opacity-85 rounded-pill'>${data}</span>`
+                                }
+                                if (data == "Pending") {
+                                    return `<span class='badge bg-secondary bg-opacity-85 rounded-pill'>${data}</span>`
+                                }
+                                else if (data == "Rejected") {
+                                    return `<span class='badge bg-danger bg-opacity-85 rounded-pill'>${data}</span>`
+                                }
+                                else {
+                                    return `<span class='badge bg-warning bg-opacity-85 rounded-pill'>${data}</span>`
+                                }
+                            }
+                        }
+                    ],
+                    responsive: true,
+                    "autoWidth": false,
+                });
+            });
+        </script>
+
+            @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+        }

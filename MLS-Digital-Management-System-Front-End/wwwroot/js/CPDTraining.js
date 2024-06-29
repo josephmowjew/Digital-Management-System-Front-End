@@ -92,6 +92,8 @@ requestInvoice() {
         `${host}/api/InvoiceRequest`,
         (response) => {
           this.hideSpinner();
+          //hide the quest invoice button
+          document.getElementById("request_invoice_btn").style.display = "none";
           toastr.success("Invoice requested successfully");
         },
         this.handleError.bind(this),

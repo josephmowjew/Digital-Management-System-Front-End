@@ -61,7 +61,10 @@ class InvoiceRequestHandler {
             data: "amount",
             name: "amount",
             className: "text-left",
-            "orderable": true,
+            orderable: true,
+            render: function (data) {
+              return  data.toLocaleString('en-MW', { style: 'currency', currency: 'MWK' })
+            }
           },
           {
             data: "createdDate",
@@ -101,21 +104,30 @@ class InvoiceRequestHandler {
             name: "id",
             "orderable": false,
             render: (data, type, row) => {
-              if (row.status === "Pending") {
-                return `<div class="d-flex justify-content-center">
-                          <button class='btn btn-warning btn-sm' onclick='invoiceRequestHandler.markAsGenerated(${data})'>Mark as Generated</button>
-                        </div>`;
-              } else if (row.status === "Generated") {
-                return `<div class="d-flex justify-content-center">
-                          <button class='btn btn-success btn-sm' onclick='invoiceRequestHandler.markAsPaid(${data})'>Mark as Paid</button>
-                        </div>`;
-              } else {
-                return `<div class="d-flex justify-content-center">
-                          <a href='${this.host}/InvoiceRequest/ViewInvoiceRequest/${data}' class='btn btn-primary btn-sm'>View</a>
-                        </div>`;
-              }
+                let buttonsHtml = `<div class="d-flex justify-content-center">`;
+        
+                if (row.status === "Pending") {
+                    buttonsHtml += `
+                        <button class='btn btn-warning btn-sm mx-2' onclick='invoiceRequestHandler.markAsGenerated(${data})'>Mark as Generated</button>
+                    `;
+                } else if (row.status === "Generated") {
+                    buttonsHtml += `
+                        <button class='btn btn-success btn-sm mx-2' onclick='invoiceRequestHandler.markAsPaid(${data})'>Mark as Paid</button>
+                    `;
+                }
+        
+                // Always add the View button with spacing
+                buttonsHtml += `
+                    <a href='ViewInvoiceRequest?invoiceRequestId=${data}' class='btn btn-primary btn-sm mx-2'>View</a>
+                `;
+        
+                buttonsHtml += `</div>`;
+                
+                return buttonsHtml;
             }
-          }
+        }
+        
+        
         ],
         responsive: true,
         "autoWidth": false,

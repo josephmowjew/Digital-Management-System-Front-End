@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using MLS_Digital_Management_System_Front_End.Core.DTOs.CPDTraining;
+using MLS_Digital_Management_System_Front_End.Core.DTOs.InvoiceRequest;
 using MLS_Digital_Management_System_Front_End.Helpers;
 using MLS_Digital_Management_System_Front_End.Services.Interfaces;
 
@@ -40,6 +41,21 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Finance.Controllers
         private async Task<ReadCPDTrainingDTO> GetInvoiceRequestsOnTraining(int cpdTrainingId)
         {
             return await _service.CpdTrainingService.GetCpdTrainingByIdAsync(cpdTrainingId);
+
+        }
+
+        public async Task<IActionResult> ViewInvoiceRequest(int invoiceRequestId)
+        {
+            await PopulateViewBags();
+
+            var invoiceRequest = await GetInvoiceRequest(invoiceRequestId);
+            
+            return View(invoiceRequest);
+        }
+
+        private async Task<ReadInvoiceRequestDTO> GetInvoiceRequest(int id)
+        {
+            return await _service.InvoiceRequestService.GetInvoiceRequestByIdAsync(id);
 
         }
 

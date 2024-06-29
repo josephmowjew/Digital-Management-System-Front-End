@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using MLS_Digital_Management_System_Front_End.Core.DTOs.ProBonoApplications;
 using MLS_Digital_Management_System_Front_End.Helpers;
 using MLS_Digital_Management_System_Front_End.Services.Interfaces;
 
@@ -21,6 +22,7 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
             string token = this.GetToken();
             this._service.Token = token;
             ViewBag.summedUnits = await this.GetSummedCPDUnits();
+            ViewBag.proBonoApplicationsTotal = await this.GetProBonoApplications();
             return View();
         }
 
@@ -199,6 +201,13 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
             var summedUnits = await _service.CpdUnitsEarnedService.GetCpdSummedUnitsEarnedById(member.Id);
 
             return summedUnits;
+        }
+
+        private async Task<int> GetProBonoApplications()
+        {
+            var proBonoApplication = await _service.ProBonoApplicationService.GetProBonoApplicationCountAsync();
+
+            return proBonoApplication;
         }
        
     

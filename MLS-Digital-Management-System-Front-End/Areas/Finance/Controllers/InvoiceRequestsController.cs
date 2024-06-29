@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using MLS_Digital_Management_System_Front_End.Core.DTOs.CPDTraining;
 using MLS_Digital_Management_System_Front_End.Helpers;
 using MLS_Digital_Management_System_Front_End.Services.Interfaces;
 
@@ -33,7 +34,13 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Finance.Controllers
             await PopulateViewBags();
 
             ViewBag.cpdTrainingId = cpdTrainingId;
+            ViewBag.cpdTraining = await GetInvoiceRequestsOnTraining(cpdTrainingId);
             return View();
+        }
+        private async Task<ReadCPDTrainingDTO> GetInvoiceRequestsOnTraining(int cpdTrainingId)
+        {
+            return await _service.CpdTrainingService.GetCpdTrainingByIdAsync(cpdTrainingId);
+
         }
 
 

@@ -94,7 +94,8 @@ requestInvoice() {
           this.hideSpinner();
           //hide the quest invoice button
           document.getElementById("request_invoice_btn").style.display = "none";
-          toastr.success("Invoice requested successfully");
+            toastr.success("Invoice requested successfully");
+            $("#register_cpd_training_modal").modal("hide");
         },
         this.handleError.bind(this),
         { 'Authorization': `Bearer ${tokenValue}` }

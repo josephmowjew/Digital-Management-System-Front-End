@@ -66,7 +66,7 @@
                     "serverSide": true,
                     "order": [[0, "desc"]],
                     ajax: {
-                    url: '@host/api/invoicerequests/cpdtrainings?cpdTrainingId='+ @ViewBag.cpdTrainingId,
+                    url: '@host/api/invoicerequest/cpdtrainings?cpdTrainingId='+ @ViewBag.cpdTrainingId,
                         type: 'get',
                         datatype: 'Json',headers: {
                                         'Authorization': 'Bearer @ViewBag.token'

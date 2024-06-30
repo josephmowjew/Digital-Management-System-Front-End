@@ -3,6 +3,7 @@ class InvoiceRequestHandler {
     this.host = host;
     this.tokenValue = tokenValue;
     this.spinner = document.getElementById("spinner");
+    this.dataTable = null;
     this.hideSpinner();
     this.initDataTable();
   }
@@ -20,173 +21,133 @@ class InvoiceRequestHandler {
   }
 
   initDataTable() {
-    $(document).ready(() => {
-      if ($.fn.DataTable.isDataTable('#invoice_requests_table')) {
-        $('#invoice_requests_table').DataTable().destroy();
-      }
+    if (this.dataTable) {
+      return; // Exit if already initialized
+    }
 
-      $('#invoice_requests_table').DataTable({
-        processing: true,
-        serverSide: true,
-        order: [[0, "desc"]],
-        ajax: {
-          url: `${this.host}/api/InvoiceRequest/cpdtrainings?cpdTrainingId=${cpdTrainingId}`,
-          type: 'get',
-          datatype: 'Json',
-          headers: {
-            'Authorization': `Bearer ${this.tokenValue}`
+    this.dataTable = $('#invoice_requests_table').DataTable({
+      processing: true,
+      serverSide: true,
+      order: [[0, "desc"]],
+      ajax: {
+        url: `${this.host}/api/InvoiceRequest/cpdtrainings`,
+        type: 'get',
+        data: (d) => {
+          d.cpdTrainingId = cpdTrainingId; // Assuming cpdTrainingId is defined globally
+        },
+        headers: {
+          'Authorization': `Bearer ${this.tokenValue}`
+        }
+      },
+      columns: [
+        { data: "customer.customerName", name: "CustomerId", orderable: false },
+        { data: "referencedEntity.title", name: "referencedEntity", orderable: false },
+        {
+          data: "amount",
+          name: "amount",
+          render: (data) => data.toLocaleString('en-MW', { style: 'currency', currency: 'MWK' })
+        },
+        {
+          data: "createdDate",
+          name: "createdDate",
+          render: (data) => data ? new Date(data).toISOString().split('T')[0] : ''
+        },
+        {
+          data: "status",
+          name: "status",
+          render: (data) => {
+            const statusClasses = {
+              Approved: "bg-success",
+              Pending: "bg-secondary",
+              Rejected: "bg-danger",
+              Generated: "bg-warning"
+            };
+            return `<span class='badge ${statusClasses[data] || "bg-info"} bg-opacity-85 rounded-pill'>${data}</span>`;
           }
         },
-        columnDefs: [
-          {
-            defaultContent: "",
-            targets: "_all",
-            'orderable': true
-          },
-        ],
-        columns: [
-          {
-            data: "customer.customerName",
-            name: "CustomerId",
-            className: "text-left",
-            "orderable": false,
-          },
-          {
-            data: "referencedEntity.title",
-            name: "referencedEntity",
-            className: "text-left",
-            "orderable": false,
-          },
-          {
-            data: "amount",
-            name: "amount",
-            className: "text-left",
-            orderable: true,
-            render: function (data) {
-              return  data.toLocaleString('en-MW', { style: 'currency', currency: 'MWK' })
-            }
-          },
-          {
-            data: "createdDate",
-            name: "createdDate",
-            className: "text-left",
-            orderable: true,
-            render: function (data) {
-              if (data) {
-                const date = new Date(data);
-                const day = ("0" + date.getDate()).slice(-2);
-                const month = ("0" + (date.getMonth() + 1)).slice(-2);
-                const year = date.getFullYear();
-                return `${year}-${month}-${day}`;
-              }
-              return '';
-            }
-          },
-          {
-            data: "status",
-            name: "status",
-            "orderable": true,
-            render: function (data) {
-              switch (data) {
-                case "Approved":
-                  return "<span class='badge bg-success bg-opacity-85 rounded-pill'>" + data + "</span>";
-                case "Pending":
-                  return "<span class='badge bg-secondary bg-opacity-85 rounded-pill'>" + data + "</span>";
-                case "Rejected":
-                  return "<span class='badge bg-danger bg-opacity-85 rounded-pill'>" + data + "</span>";
-                default:
-                  return "<span class='badge bg-warning bg-opacity-85 rounded-pill'>" + data + "</span>";
-              }
-            }
-          },
-          {
-            data: "id",
-            name: "id",
-            "orderable": false,
-            render: (data, type, row) => {
-                let buttonsHtml = `<div class="d-flex justify-content-center">`;
-        
-                if (row.status === "Pending") {
-                    buttonsHtml += `
-                        <button class='btn btn-warning btn-sm mx-2' onclick='invoiceRequestHandler.markAsGenerated(${data})'>Mark as Generated</button>
-                    `;
-                } else if (row.status === "Generated") {
-                    buttonsHtml += `
-                        <button class='btn btn-success btn-sm mx-2' onclick='invoiceRequestHandler.markAsPaid(${data})'>Mark as Paid</button>
-                    `;
-                }
-        
-                // Always add the View button with spacing
-                buttonsHtml += `
-                    <a href='ViewInvoiceRequest?invoiceRequestId=${data}' class='btn btn-primary btn-sm mx-2'>View</a>
-                `;
-        
-                buttonsHtml += `</div>`;
-                
-                return buttonsHtml;
-            }
+        {
+          data: "id",
+          name: "id",
+          orderable: false,
+          render: (data, type, row) => this.renderActionButtons(data, row.status)
         }
-        
-        
-        ],
-        responsive: true,
-        "autoWidth": false,
-      });
+      ],
+      responsive: true,
+      autoWidth: false
     });
+  }
+
+  renderActionButtons(id, status) {
+    let buttonsHtml = `<div class="d-flex justify-content-center">`;
+    
+    if (status === "Pending") {
+      buttonsHtml += `<button class='btn btn-warning btn-sm mx-2' onclick='invoiceRequestHandler.markAsGenerated(${id})'>Mark as Generated</button>`;
+    } else if (status === "Generated") {
+      buttonsHtml += `<button class='btn btn-success btn-sm mx-2' onclick='invoiceRequestHandler.markAsPaid(${id})'>Mark as Paid</button>`;
+    }
+    
+    buttonsHtml += `<a href='ViewInvoiceRequest?invoiceRequestId=${id}' class='btn btn-primary btn-sm mx-2'>View</a></div>`;
+    
+    return buttonsHtml;
   }
 
   markAsGenerated(id) {
-    bootbox.confirm("Are you sure you want to mark this invoice as generated?", (result) => {
-      if (result) {
-        this.showSpinner();
-        this.sendAjaxRequest(
-          null,
-          "POST",
-          `${this.host}/api/InvoiceRequest/MarkAsGenerated/${id}`,
-          () => {
-            this.hideSpinner();
-            toastr.success("Invoice marked as generated successfully");
-            $('#invoice_requests_table').DataTable().ajax.reload();
-          }
-        );
-      }
-    });
+    this.confirmAndSendRequest(
+      "Are you sure you want to mark this invoice as generated?",
+      `${this.host}/api/InvoiceRequest/MarkAsGenerated/${id}`,
+      "Invoice marked as generated successfully"
+    );
   }
 
   markAsPaid(id) {
-    bootbox.confirm("Are you sure you want to mark this invoice as paid?", (result) => {
+    this.confirmAndSendRequest(
+      "Are you sure you want to mark this invoice as paid?",
+      `${this.host}/api/InvoiceRequest/MarkAsPaid/${id}`,
+      "Invoice marked as paid successfully"
+    );
+  }
+
+  confirmAndSendRequest(message, url, successMessage) {
+    bootbox.confirm(message, (result) => {
       if (result) {
         this.showSpinner();
-        this.sendAjaxRequest(
-          null,
-          "POST",
-          `${this.host}/api/InvoiceRequest/MarkAsPaid/${id}`,
-          () => {
-            this.hideSpinner();
-            toastr.success("Invoice marked as paid successfully");
-            $('#invoice_requests_table').DataTable().ajax.reload();
-          }
-        );
+        this.sendAjaxRequest(null, "POST", url, () => {
+          this.hideSpinner();
+          toastr.success(successMessage);
+          this.dataTable.ajax.reload();
+        });
       }
     });
   }
 
   sendAjaxRequest(formData, method, url, successCallback) {
-    const xhr = new XMLHttpRequest();
-    xhr.open(method, url, true);
-    xhr.setRequestHeader("Authorization", `Bearer ${this.tokenValue}`);
-    xhr.onreadystatechange = () => {
-      if (xhr.readyState === XMLHttpRequest.DONE) {
-        this.hideSpinner();
-        if (xhr.status === 200 || xhr.status === 201) {
-          successCallback(xhr.response);
-        } else {
-          toastr.error("An error occurred while processing your request");
-        }
+    fetch(url, {
+      method: method,
+      headers: {
+        "Authorization": `Bearer ${this.tokenValue}`
+      },
+      body: formData
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
       }
-    };
-    xhr.send(formData);
+      return response.json();
+    })
+    .then(data => {
+      this.hideSpinner();
+      console.log("data", data)
+      successCallback(data);
+    })
+    .catch(error => {
+      this.hideSpinner();
+      toastr.error("An error occurred while processing your request");
+      console.error('Error:', error);
+    });
   }
 }
 
-window.invoiceRequestHandler = new InvoiceRequestHandler(host, tokenValue);
+// Initialize the handler when the DOM is fully loaded
+document.addEventListener('DOMContentLoaded', () => {
+  window.invoiceRequestHandler = new InvoiceRequestHandler(host, tokenValue);
+});

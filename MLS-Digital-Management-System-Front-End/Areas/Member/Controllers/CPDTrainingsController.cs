@@ -11,10 +11,10 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
 {
   
     [Area("Member")]
-    public class CPDTrainigsController : Controller
+    public class CPDTrainingsController : Controller
     {
         private readonly IServiceRepository _service;
-        public CPDTrainigsController(IServiceRepository serviceRepository)
+        public CPDTrainingsController(IServiceRepository serviceRepository)
         {
             _service = serviceRepository;
         }
@@ -28,11 +28,22 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
             
         }
 
-       
+        public async Task<IActionResult> CPDInvoices()
+        {
+
+            await PopulateViewBags();
+
+            return View();
+
+
+        }
+
+
         private async Task PopulateViewBags()
         {
             //get the token
             string token = AuthHelper.GetToken(HttpContext);
+            ViewBag.userId = AuthHelper.GetUserId(HttpContext);
             ViewBag.token = token;
             this._service.Token = token;
             ViewBag.YearOfOperation = await GetCurrentYearOfOperationAsync();
@@ -55,7 +66,23 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
 
             return 0;
         }
-       
+
+        public async Task<IActionResult> TrainingDetails(int Id)
+        {
+
+            await PopulateViewBags();
+            var training = await _service.CpdTrainingService.GetCpdTrainingByIdAsync(Id);
+
+            if (training == null)
+            {
+                return NotFound();
+            }
+
+            ViewBag.training = training;
+
+            return View();
+        }
+
 
     }
 }

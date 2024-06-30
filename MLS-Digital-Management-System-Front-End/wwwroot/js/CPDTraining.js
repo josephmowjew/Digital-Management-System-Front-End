@@ -119,7 +119,7 @@ markAttendance() {
               this.sendAjaxRequest(
                   formData,
                   "POST",
-                  "${host}/api/CPDTrainingRegistrations/MarkAttendance",
+                  `${host}/api/CPDTrainingRegistrations/MarkAttendance`,
                   this.handleMarkAttendanceSuccess.bind(this),
                   this.handleError.bind(this),
                   { 'Authorization': `Bearer ${tokenValue}` }

@@ -20,5 +20,7 @@ namespace MLS_Digital_Management_System_Front_End.Core.DTOs.Member;
 
     [Required] 
     public DateOnly DateOfAdmissionToPractice { get; set; }
+    [Display(Name = "QuickBooks Customer Reference")]
+    public string? CustomerId { get; set; }
     
   }

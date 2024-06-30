@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.CodeAnalysis.Elfie.Serialization;
+using MLS_Digital_Management_System_Front_End.Core.DTOs.InvoiceRequest;
 using MLS_Digital_Management_System_Front_End.Core.DTOs.Member;
 using MLS_Digital_Management_System_Front_End.Core.DTOs.YearOfOperation;
 using MLS_Digital_Management_System_Front_End.Helpers;
@@ -37,7 +38,6 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
 
 
         }
-
 
         private async Task PopulateViewBags()
         {
@@ -81,6 +81,21 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
             ViewBag.training = training;
 
             return View();
+        }
+
+        public async Task<IActionResult> ViewInvoiceRequest(int invoiceRequestId)
+        {
+            await PopulateViewBags();
+
+            var invoiceRequest = await GetInvoiceRequest(invoiceRequestId);
+
+            return View(invoiceRequest);
+        }
+
+        private async Task<ReadInvoiceRequestDTO> GetInvoiceRequest(int id)
+        {
+            return await _service.InvoiceRequestService.GetInvoiceRequestByIdAsync(id);
+
         }
 
 

@@ -38,6 +38,16 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Finance.Controllers
             ViewBag.cpdTraining = await GetInvoiceRequestsOnTraining(cpdTrainingId);
             return View();
         }
+
+        public async Task<IActionResult> GetPaidInvoiceRequestsOnTrainings(int cpdTrainingId)
+        {
+            await PopulateViewBags();
+
+            ViewBag.cpdTrainingId = cpdTrainingId;
+            ViewBag.cpdTraining = await GetInvoiceRequestsOnTraining(cpdTrainingId);
+            return View();
+        }
+
         private async Task<ReadCPDTrainingDTO> GetInvoiceRequestsOnTraining(int cpdTrainingId)
         {
             return await _service.CpdTrainingService.GetCpdTrainingByIdAsync(cpdTrainingId);
@@ -58,7 +68,6 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Finance.Controllers
             return await _service.InvoiceRequestService.GetInvoiceRequestByIdAsync(id);
 
         }
-
 
     }
 }

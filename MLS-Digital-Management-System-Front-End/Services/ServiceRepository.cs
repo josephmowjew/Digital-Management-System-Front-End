@@ -72,6 +72,7 @@ public class ServiceRepository : IServiceRepository
             _committeeMembershipService = new CommitteeMembershipService(_httpClient);
             _committeeService = new CommitteeService(_httpClient);
             _proBonoApplicationService = new ProBonoApplicationService(_httpClient);
+            _invoiceRequestService = new InvoiceRequestService(_httpClient);
         } 
     } 
 
@@ -109,7 +110,6 @@ public class ServiceRepository : IServiceRepository
     public ICommitteeMembershipService CommitteeMembershipService => _committeeMembershipService ??= new CommitteeMembershipService(_httpClient);
     public ICommitteeService CommitteeService => _committeeService ??= new CommitteeService(_httpClient);
     public IProBonoApplicationService ProBonoApplicationService => _proBonoApplicationService ??= new ProBonoApplicationService(_httpClient);
-
     public IInvoiceRequestService InvoiceRequestService => _invoiceRequestService ??= new InvoiceRequestService(_httpClient);
 
     

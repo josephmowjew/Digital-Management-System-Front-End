@@ -32,6 +32,10 @@
             <partial name="_RegisterTrainingPartial" />
         </div>
 
+        <div class="modal fade" id="cpd_invoice_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <partial name="_CPDInvoicePartial" />
+        </div>
+
         <h5 class="card-title fw-semibold mb-4 text-uppercase text-center"> CPD's In Practice Year <strong>(@ViewBag.YearOfOperation.FormatedDate)</strong></h5>
 
         <div class="table-responsive">
@@ -46,9 +50,6 @@
                         </th>
                         <th>
                             Event Date
-                        </th>
-                         <th>
-                            Fee
                         </th>
                         <th>
                            CPD Units 
@@ -84,7 +85,7 @@
         $('[data-toggle="tooltip"]').tooltip()
         })
      </script>
-    <script src="~/js/FileUploadHandler.js" asp-append-version="true"></script>
+     <script src="~/js/FileUploadHandler.js" asp-append-version="true"></script>
      <script src="~/js/CPDTraining.js" asp-append-version="true"></script>
     <script>
         $(document).ready(function () {
@@ -100,10 +101,6 @@
                     datatype: 'Json', headers: {
                         'Authorization': 'Bearer @ViewBag.token'
                     },
-                    
-
-                   
-
                 },
                 columnDefs: [
                     {
@@ -134,46 +131,6 @@
                         className: "text-left",
                         "orderable": false,
                     },
-                    {
-                        data: null,
-                        name: "fees",
-                        title: "Fees",
-                        className: "text-left fees-column",
-                        "orderable": false,
-                        render: function(data, type, row) {
-                            var fees = [];
-
-                            // Helper function to format currency or return "Free CPD"
-                            const formatCurrency = (fee) => {
-                            return fee === 0 ? "Free" : `MWK${fee.toFixed(2)}`;
-                            };
-
-                            if (row.cpdTrainingRegistration && row.cpdTrainingRegistration.length > 0) {
-                            const memberRegistration = row.cpdTrainingRegistration.find(registration => registration.memberId == @ViewBag.MemberId);
-                            if (memberRegistration) {
-                                const formattedFee = formatCurrency(memberRegistration.fee);
-                                fees.push(`<div class="fee-item"><strong>Amount Paid:</strong> <span class="badge bg-dark bg-opacity-85">${formattedFee}</span></div>`);
-                                return fees.join('');
-                            }
-                            }
-
-                            const renderFeeItem = (label, fee, badgeClass) => {
-                            if (fee !== null && fee !== undefined) {
-                                const formattedFee = formatCurrency(fee);
-                                fees.push(`<div class="fee-item"><strong>${label}:</strong> <span class="badge ${badgeClass} bg-opacity-85">${formattedFee}</span></div>`);
-                            }
-                            };
-
-                            renderFeeItem('Member Physical', row.memberPhysicalAttendanceFee, 'bg-primary');
-                            renderFeeItem('Member Virtual', row.memberVirtualAttendanceFee, 'bg-success');
-                            renderFeeItem('Non-Member Physical', row.nonMemberPhysicalAttendanceFee, 'bg-warning');
-                            renderFeeItem('Non-Member Virtual', row.nonMemberVirtualAttandanceFee, 'bg-info');
-
-                            return fees.length > 0 ? fees.join('') : 'Free';
-                        }
-                        },
-
-
                     {
                         data: "cpdUnitsAwarded",
                         name: "cpdUnitsAwarded",
@@ -240,22 +197,26 @@
                             const dueDate = row.registrationDueDate ? new Date(Date.parse(row.registrationDueDate)) : null;
                             const today = new Date();
                         
-                        if (dueDate) {
+                            if (dueDate) {
 
                             
                                 // Calculate the time difference in milliseconds
                                 const timeDiff = dueDate.getTime() - today.getTime();
                                 // Convert the time difference from milliseconds to days
                                 const daysDiff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
-                        if (daysDiff >= 1) {
-                           
-                            return "<a href='#' onclick='cpdTrainingHandler.registerForm(\"" + data + "\",\"" + JSON.stringify(row).replace(/"/g, "\\\"")  + "\")' type='button' class='btn btn-outline-primary my-1 btn-sm ' title='register' ><span class='bi bi-file-plus' style='font-size: 0.9rem;'></span> Register</a> "
-                        } 
-                        else {
-                            return "";
+                                if (daysDiff >= 1) {
+
+                                        return "<a href='#' onclick='cpdTrainingHandler.registerForm(\"" + data + "\",\"" + JSON.stringify(row).replace(/"/g, "\\\"") + "\")' type='button' class='btn btn-outline-primary mx-1 btn-sm ' title='register'> Register</a><a href='#' onclick='cpdTrainingHandler.invoiceForm(\"" + data + "\",\"" + JSON.stringify(row).replace(/"/g, "\\\"") + "\")' type='button' class='btn btn-outline-warning mx-1 btn-sm ' title='Invoice'> Invoice</a><a href='/member/CPDTrainings/TrainingDetails/" + data + "' type = 'button' class='btn btn-outline-success mx-1 btn-sm ti ti-eye text-lg' title = 'show details'> View </a>"
+                                            
+                                } 
+                                else {
+                                        return "";
+                                }
                             }
+                        }else{
+                            return "<a href='/member/CPDTrainings/TrainingDetails/" + data +"' type = 'button' class='btn btn-outline-primary mx-1 btn-sm ti ti-eye text-lg' title = 'show details'> View </a>";
                         }
-                        }
+
                     }
                 }
                 ],

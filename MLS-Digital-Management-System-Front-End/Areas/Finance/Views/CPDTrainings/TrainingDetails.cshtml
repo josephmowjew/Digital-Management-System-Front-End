@@ -1,0 +1,233 @@
+﻿@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+@{
+    ViewData["Title"] = "CPD Trainings";
+    Layout = "~/Areas/Finance/Views/shared/_Layout.cshtml";
+
+    var host = Configuration.GetSection("APIURL")["Link"];
+    var apiPrefix =  Configuration.GetSection("APISettings")["API_Prefix"];
+}
+
+<div>
+    <img src="~/assets/images/91.gif" id="spinner" />
+</div>
+
+<div class="d-flex justify-content-between align-items-center mb-5">
+    <div>
+        <a asp-action="index" asp-controller="cpdtrainings" asp-area="finance" class="btn btn-secondary p-1">
+            <i class="bi bi-chevron-double-left"></i>
+            Back
+        </a>
+    </div>
+
+    <div class="d-flex justify-content-between">
+        <div class="mx-1">
+            <a class='btn btn-outline-warning btn btn-sm p-1 position-relative' href='/Finance/InvoiceRequests/GetInvoiceRequestsOnTrainings?cpdTrainingId=@ViewBag.training.Id' type='button'>Requested Inovices </a>
+           
+        </div>
+        <div class="mx-1">
+            <a class='btn btn-outline-success btn btn-sm p-1 position-relative' href='/Finance/InvoiceRequests/GetPaidInvoiceRequestsOnTrainings?cpdTrainingId=@ViewBag.training.Id' type='button'> Paid Inovices</a>
+        </div>
+    </div>
+</div>
+
+
+<div class="row mb-4 px-3">
+    <div class="col-12 col-md-8">
+        <div class="py-2">
+            <h1 class="fs-4">
+                Training: @ViewBag.training.Title
+            </h1>
+        </div>
+        <ul style="list-style-type: disc; padding-left">
+            <li><strong>Venue:</strong> @ViewBag.training.PhysicalVenue</li>
+            <li><strong>Date:</strong> @ViewBag.training.DateToBeConducted.ToString("yyyy-MM-dd")</li>
+            <li><strong>Accrediting Institution:</strong> @ViewBag.training.AccreditingInstitution</li>
+            <li><strong>Duration (Hours):</strong> @ViewBag.training.Duration</li>
+            <li>
+                <strong>Fees:</strong>
+                <ul>
+                    <li class="py-1">Physical Attendance (Members): <span class="badge bg-primary bg-opacity-85">@ViewBag.training.MemberPhysicalAttendanceFee</span></li>
+                    <li class="py-1">Virtual Attendance (Members): <span class="badge bg-success bg-opacity-85">@ViewBag.training.MemberVirtualAttendanceFee</span></li>
+                    <li class="py-1">Physical Attendance (Non-Members): <span class="badge bg-warning bg-opacity-85">@ViewBag.training.NonMemberPhysicalAttendanceFee</span></li>
+                    <li class="py-1">Virtulal Attendance (Non-Members): <span class="badge bg-info bg-opacity-85">@ViewBag.training.NonMemberVirtualAttandanceFee</span></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <div class="col-12 col-md-4">
+        @foreach (var attachment in ViewBag.training.Attachments)
+        {
+            <a href="@attachment.FilePath" data-lightbox="image-1" class="d-flex justify-content-center align-items-center">
+                <img src="@attachment.FilePath" alt="cpd poster" class="w-75 h-75" />
+            </a>
+        }
+    </div>
+</div>
+
+<div class="card ">
+    <div class="card-body">
+
+        <h5 class="card-title fw-semibold mb-4 text-uppercase text-center">Payments</h5>
+
+        <div class="table-responsive">
+            <table class="table table-bordered " id="cpd_table">
+                <thead>
+                    <tr>
+
+                        <th>
+                            Member Name
+                        </th>
+                        <th>
+                            Registration Status
+                        </th>
+                        <th>
+                            Payment Proof
+                        </th>
+                        <th>
+                            Date Of Payment
+                        </th>
+                        <th>
+                            Action
+                        </th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+
+@section Scripts {
+
+    <script>
+        var datatable;
+        var tokenValue = '@ViewBag.token';
+        var host = '@host';
+    </script>
+
+    <script src="~/js/FileUploadHandler.js" asp-append-version="true"></script>
+    <script src="~/js/CPDTraining.js" asp-append-version="true"></script>
+    <script>
+        $(document).ready(function () {
+            datatable = $('#cpd_table').DataTable({
+
+
+                "processing": true,
+                "serverSide": true,
+                "order": [[0, "desc"]],
+                ajax: {
+                    url: '@host/api/cpdtrainingregistrations/paged?cpdtrainingId=@ViewBag.training.Id',
+                    type: 'get',
+                    datatype: 'Json', headers: {
+                        'Authorization': 'Bearer @ViewBag.token'
+                    }
+
+                },
+                columnDefs: [
+                    {
+                        defaultContent: "",
+                        targets: "_all",
+                        'orderable': true
+                    },
+                ],
+                columns: [
+
+
+                    {
+                        data: "member.user.fullName",
+                        name: "member",
+                        className: "text-left",
+                        "orderable": false,
+                    },
+                    {
+                        data: "registrationStatus",
+                        name: "registrationStatus",
+                        "orderable": false,
+                        render: function (data, type, row) {
+
+                            if (data == "Attended") {
+                                return `<span class='badge bg-success bg-opacity-85 rounded-pill'>${data}</span>`
+                            }
+                            if (data == "Pending") {
+                                return `<span class='badge bg-secondary bg-opacity-85 rounded-pill'>${data}</span>`
+                            }
+                            else if (data == "Denied") {
+                                return `<span class='badge bg-danger bg-opacity-85 rounded-pill' data-toggle='tooltip' data-placement='right' title='${row.deniedReason}'>${data}</span>`
+                            }
+                            else {
+                                return `<span class='badge bg-warning bg-opacity-85 rounded-pill'>${data}</span>`
+                            }
+
+
+
+                        }
+                    },
+                    {
+                        data: "attachments",
+                        name: "attachments",
+                        className: "text-left",
+                        "orderable": true,
+                        render: function (data, type, row, meta) {
+                            if (data && data.length > 0) {
+                                return data.map((attachment) => {
+                                    return `<a href="@host@apiPrefix/${attachment.filePath}" target="_blank" download="${attachment.fileName}"> Attachment <i class="bi bi-paperclip"></i></a>`;
+                                }).join('<br>');
+                            } else {
+                                return '';
+                            }
+                        }
+                    },
+
+                    {
+                        data: "dateOfPayment",
+                        name: "dateOfPayment",
+                        className: "text-left",
+                        orderable: false,
+                        render: function (data, type, row) {
+                            if (data) {
+                                // Assuming the date is in ISO format (e.g., "2024-05-16T00:00:00")
+                                // Extract the date portion and return it
+                                var date = new Date(data);
+                                var day = ("0" + date.getDate()).slice(-2);
+                                var month = ("0" + (date.getMonth() + 1)).slice(-2);
+                                var year = date.getFullYear();
+                                return year + '-' + month + '-' + day;
+                            }
+                            return '';
+                        }
+                    },
+
+
+
+                    {
+                        data: "id",
+                        name: "id",
+                        "orderable": false,
+                        render: function (data, type, row) {
+
+                            let links = "";
+                            if (row.registrationStatus.toLowerCase() == "pending") {
+                                links += "<a href='#' onclick='cpdTrainingHandler.acceptRegistration(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='ti ti-check btn btn-outline-success my-1 btn-sm mx-1' title='accept'>Accept</a>";
+                                links += "<a href='#' onclick='cpdTrainingHandler.denyRegistration(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='btn btn-outline-danger my-1 btn-sm ti ti-pencil' title='deny' >Deny</a> "
+                            }
+
+                            return links;
+                        }
+                    }
+                ],
+                responsive: true,
+                "autoWidth": false,
+            });
+        });
+    </script>
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

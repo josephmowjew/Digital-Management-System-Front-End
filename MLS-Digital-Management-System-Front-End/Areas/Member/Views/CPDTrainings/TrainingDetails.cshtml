@@ -1,0 +1,74 @@
+﻿@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+@{
+    ViewData["Title"] = "CPD Trainings";
+    Layout = "~/Areas/Member/Views/shared/_Layout.cshtml";
+
+    var host = Configuration.GetSection("APIURL")["Link"];
+    var apiPrefix =  Configuration.GetSection("APISettings")["API_Prefix"];
+}
+
+<div>
+    <img src="~/assets/images/91.gif" id="spinner" />
+</div>
+
+<div>
+    <a asp-action="index" asp-controller="cpdtrainings" asp-area="member" class="btn btn-secondary p-1">
+        <i class="bi bi-chevron-double-left"></i>
+        Back
+    </a>
+</div>
+
+
+<div class="card my-2 p-3">
+    <div class="row mb-4 px-3">
+        <div class="col-12 col-md-6">
+            <div class="py-2">
+                <h1 class="fs-4">
+                    Training: @ViewBag.training.Title
+                </h1>
+            </div>
+            <ul style="list-style-type: disc; padding-left">
+                <li><strong>Venue:</strong> @ViewBag.training.PhysicalVenue</li>
+                <li><strong>Date:</strong> @ViewBag.training.DateToBeConducted.ToString("yyyy-MM-dd")</li>
+                <li><strong>Accrediting Institution:</strong> @ViewBag.training.AccreditingInstitution</li>
+                <li><strong>Duration (Hours):</strong> @ViewBag.training.Duration</li>
+                <li>
+                    <strong>Fees:</strong>
+                    <ul>
+                        <li class="py-1">Physical Attendance (Members): <span class="badge bg-primary bg-opacity-85">@ViewBag.training.MemberPhysicalAttendanceFee</span></li>
+                        <li class="py-1">Virtual Attendance (Members): <span class="badge bg-success bg-opacity-85">@ViewBag.training.MemberVirtualAttendanceFee</span></li>
+                        <li class="py-1">Physical Attendance (Non-Members): <span class="badge bg-warning bg-opacity-85">@ViewBag.training.NonMemberPhysicalAttendanceFee</span></li>
+                        <li class="py-1">Virtulal Attendance (Non-Members): <span class="badge bg-info bg-opacity-85">@ViewBag.training.NonMemberVirtualAttandanceFee</span></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="col-12 col-md-6">
+            @foreach (var attachment in ViewBag.training.Attachments)
+            {
+                <a href="@attachment.FilePath" data-lightbox="image-1" class="d-flex justify-content-center align-items-center">
+                    <img src="@attachment.FilePath" alt="cpd poster" class="w-75 h-75" />
+                </a>
+            }
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+
+    <script>
+        var datatable;
+        var tokenValue = '@ViewBag.token';
+        var host = '@host';
+    </script>
+
+    <script src="~/js/FileUploadHandler.js" asp-append-version="true"></script>
+    <script src="~/js/CPDTraining.js" asp-append-version="true"></script>
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

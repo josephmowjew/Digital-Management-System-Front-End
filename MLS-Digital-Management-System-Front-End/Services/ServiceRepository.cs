@@ -33,6 +33,7 @@ public class ServiceRepository : IServiceRepository
     private IPenaltyPaymentService _penaltyPaymentService;
     private ICommitteeMembershipService _committeeMembershipService;
     private ICommitteeService _committeeService;
+    private IInvoiceRequestService _invoiceRequestService;
     private IProBonoApplicationService _proBonoApplicationService;
 
 
@@ -109,4 +110,7 @@ public class ServiceRepository : IServiceRepository
     public ICommitteeService CommitteeService => _committeeService ??= new CommitteeService(_httpClient);
     public IProBonoApplicationService ProBonoApplicationService => _proBonoApplicationService ??= new ProBonoApplicationService(_httpClient);
 
+    public IInvoiceRequestService InvoiceRequestService => _invoiceRequestService ??= new InvoiceRequestService(_httpClient);
+
+    
 }

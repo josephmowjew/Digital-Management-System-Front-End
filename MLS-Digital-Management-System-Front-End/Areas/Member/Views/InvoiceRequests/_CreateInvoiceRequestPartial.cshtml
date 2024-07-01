@@ -1,0 +1,41 @@
+@model MLS_Digital_Management_System_Front_End.Core.DTOs.InvoiceRequest.CreateInvoiceRequestDTO;
+<!-- Modal -->
+
+
+<div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Request Invoice</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input asp-for="Description" value="MLS" type="hidden" class="form-control" />
+                <input asp-for="ReferencedEntityId" class="form-control"value="N/A" type="hidden" />
+                <input asp-for="Amount" class="form-control" value="0" type="hidden" />
+                <div class="row row-cols-lg-1">
+                    <div class="mb-3">
+                        <label asp-for="ReferencedEntityType" class="form-label"> Service </label>
+                        <select asp-for="ReferencedEntityType" required class="form-control">
+                            <option value="">Please Select Service</option>
+                            <option value="Subscriptions">Subscriptions</option>
+                            <option value="CPD Trainings">CPD Training</option>
+                            <option value="Fidelity Fund">Fidelity Fund</option>
+                            <option value="Penalties">Penalties</option>
+                            <option value="ProBono">ProBono Work</option>
+                        </select>
+                        <span asp-validation-for="ReferencedEntityType" class="text-danger"></span>
+                    </div>
+                   
+                </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="create_invoice_request_btn" name="create_invoice_request_btn">Request Invoice</button>
+           
+      </div>
+    </div>
+  </div>
+

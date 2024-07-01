@@ -1,0 +1,47 @@
+﻿@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+@{
+    ViewData["Title"] = "Invoice Requests";
+    Layout = "~/Areas/Member/Views/shared/_Layout.cshtml";
+
+    var host = Configuration.GetSection("APIURL")["Link"];
+    var apiPrefix = Configuration.GetSection("APISettings")["API_Prefix"];
+}
+
+<div>
+    <img src="~/assets/images/91.gif" id="spinner" />
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title fw-semibold mb-4 text-uppercase text-center">Invoice Requests</h5>
+        <div class="table-responsive">
+            <table class="table table-bordered" id="invoices_requests">
+                <thead>
+                    <tr>
+                        <th>Member Name/Customer Name</th>
+                        <th>Service</th>
+                        <th>Date Requested</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        var tokenValue = '@ViewBag.token';
+        var host = '@host';
+        var cpdTrainingId = 0;
+    </script>
+    <script src="~/js/InvoiceRequestHandler.js" asp-append-version="true"></script>
+   
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

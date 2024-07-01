@@ -1,0 +1,54 @@
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+@{
+    ViewData["Title"] = "Invoice Requests on Trainings";
+    Layout = "~/Areas/Finance/Views/shared/_Layout.cshtml";
+
+    var host = Configuration.GetSection("APIURL")["Link"];
+    var apiPrefix =  Configuration.GetSection("APISettings")["API_Prefix"];
+    var cpdTrainingId = ViewBag.cpdTrainingId;
+}
+
+<a onclick="window.history.back()" class="btn btn-secondary mx-2 my-2">Back To CPD</a>
+
+<div>
+    <img src="~/assets/images/91.gif" id="spinner" />
+</div>
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title fw-semibold mb-4 text-uppercase text-center">Paid Invoices on @ViewBag.cpdtraining.Title</h5>
+        <div class="table-responsive">
+            <table class="table table-bordered" id="invoice_requests_table">
+                <thead>
+                    <tr>
+                        <th>Member Name/Customer Name</th>
+                        <th>CPD Title</th>
+                        <th>Amount</th>
+                        <th>Date Requested</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        var tokenValue = '@ViewBag.token';
+        var host = '@host';
+        var cpdTrainingId = '@cpdTrainingId';
+    </script>
+    <script src="~/js/PaidInvoiceRequestHandler.js" asp-append-version="true"></script>
+    <script>
+        $(document).ready(function () {
+            window.invoiceRequestHandler = new InvoiceRequestHandler(host, tokenValue);
+        });
+    </script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

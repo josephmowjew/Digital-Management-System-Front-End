@@ -89,25 +89,24 @@ $(function () {
 })
 
 
-function EditMemberForm() {
+function EditMemberForm(id) {
+    // Use the id from the parameter if provided, otherwise get it from the form field
+    id = id || $("#edit_member_modal input[name='Id']").val();
 
-
-   let id =  $("#edit_member_modal input[name='Id']").val();
-
-   
-    //get the record from the database
+    // Show spinner while fetching the data
     showSpinner();
-    
+
+    // Get the record from the database
     $.ajax({
-        url: `${host}/api/members/get/`+ id,
+        url: `${host}/api/members/get/` + id,
         type: 'GET',
         headers: {
-            'Authorization': "Bearer "+ tokenValue
+            'Authorization': "Bearer " + tokenValue
         }
-
     }).done(function (data) {
-        
         hideSpinner();
+
+     
         // Iterate over the keys of the data object and map them to form field names dynamically
         var fieldMap = {};
         for (var key in data) {
@@ -118,25 +117,51 @@ function EditMemberForm() {
         }
 
         // Iterate over the form elements and populate values dynamically
-        $("#edit_member_modal form").find('input, select').each(function(index, element) {
+        $("#edit_member_modal form").find('input, select').each(function (index, element) {
             var field = $(element);
             var fieldName = field.attr('name');
             var dataKey = fieldMap[fieldName]; // Get corresponding key from data
-            var fieldValue = data[dataKey]; // Get value from data based on key
-            field.val(fieldValue); // Set field value
+            
+            if (fieldName === 'CustomerId') {
+
+                // If the field is Customer Id, set the value and trigger EnhancedSelect with the retrieved Customer ID
+                field.val(data[dataKey]);
+                if(data.customer != null)
+                    {
+                        new EnhancedSelect({
+                            url: `${host}/api/Customers`,
+                            hiddenFieldId: "CustomerId",
+                            pageSize: 20,
+                            initialSearchValue: data.customer.id,
+                            }, "edit_member_modal");
+                    }else{
+                        new EnhancedSelect({
+                            url: `${host}/api/Customers`,
+                            hiddenFieldId: "CustomerId",
+                            pageSize: 20,
+                            initialSearchValue: "",
+                            }, "edit_member_modal");
+                    }
+               
+              
+            } else {
+                // For other fields, set the value as usual
+                field.val(data[dataKey]);
+            }
         });
 
-    // Hook up event to the update firm button
-    $("#edit_member_modal button[name='update_member_btn']").unbind().click(function () { UpdateMember() });
+        // Hook up event to the update member button
+        $("#edit_member_modal button[name='update_member_btn']").unbind().click(function () {
+            UpdateMember();
+        });
 
-    // Reset validation
-    var validator = $("#edit_member_modal form").validate();
-    validator.resetForm();
+        // Reset validation
+        var validator = $("#edit_member_modal form").validate();
+        validator.resetForm();
 
-    // Show modal
-    $("#edit_member_modal").modal("show");
-
-    })
+        // Show modal
+        $("#edit_member_modal").modal("show");
+    });
 }
 
 

@@ -62,6 +62,35 @@
             <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
             <span class="hide-menu">Invoice Management</span>
         </li>
+        <li class="sidebar-item">
+            <a class="sidebar-link" asp-action="index" asp-area="Finance" asp-controller="InvoiceRequests" aria-expanded="false">
+                <span>
+                    <i class="bi bi-info-circle" style="font-size: 1.rem;"></i>
+                </span>
+                <span class="hide-menu">Requests</span>
+            </a>
+        </li>
+         <li class="nav-small-cap">
+            <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+            <span class="hide-menu">Configurations</span>
+        </li>
+
+         <li class="sidebar-item">
+            <a class="sidebar-link" asp-area="Finance" asp-controller="Firms" asp-action="Index" aria-expanded="false">
+                <span>
+                    <i class="bi bi-building" style="font-size: 1.1rem;"></i>
+                </span>
+                <span class="hide-menu">Firms</span>
+            </a>
+        </li>
+        <li class="sidebar-item">
+            <a class="sidebar-link" asp-area="Finance" asp-controller="Members" asp-action="Index" aria-expanded="false">
+                <span>
+                    <i class="bi bi-people" style="font-size: 1.1rem;"></i>
+                </span>
+                <span class="hide-menu">Members</span>
+            </a>
+        </li>
        
         @* <li class="sidebar-item">
             <a class="sidebar-link" asp-action="index" asp-area="Finance" asp-controller="InvoiceRequestTypes" aria-expanded="false">

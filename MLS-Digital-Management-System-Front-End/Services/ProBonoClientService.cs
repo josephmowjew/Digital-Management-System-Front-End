@@ -10,6 +10,7 @@ public class ProBonoClientService : IProBonoClientService
     {
         _httpClient = httpClient;
     }
+
     public Task<ReadProBonoClientDTO> CreateProBonoClientAsync(CreateProBonoClientDTO createProBonoClientDTO)
     {
         throw new NotImplementedException();
@@ -32,7 +33,7 @@ public class ProBonoClientService : IProBonoClientService
 
     public async Task<ReadProBonoClientDTO> GetProBonoClientByIdAsync(int id)
     {
-         var response = await _httpClient.GetAsync($"api/probonoclients/{id}");
+        var response = await _httpClient.GetAsync($"api/probonoclients/{id}");
         if (response.IsSuccessStatusCode)
         {
             var responseData = await response.Content.ReadFromJsonAsync<ReadProBonoClientDTO>();

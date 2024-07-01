@@ -1,0 +1,50 @@
+@model MLS_Digital_Management_System_Front_End.Core.DTOs.CPDTrainingRegistration.CreateCPDTrainingRegistrationDTO
+
+<!-- Modal -->
+<div class="modal-dialog modal-md">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel text-center">Request Training Invoice</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+      <form asp-action="Create">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input asp-for="CPDTrainingId" type="hidden" />
+        <div class="row row-cols-lg-1" >
+          <div class="mb-3" id="cpd_training_no_payment_alert">
+            <div class="text-end">
+              <i class="bi bi-emoji-smile text-success" style="font-size: 2rem;"></i>
+            </div>
+            <div class="alert alert-success" role="alert">
+              <p class="text-center"><strong>This is a free event, no need for payment!!</strong></p>
+            </div>
+          </div>
+          <div class="mb-3" id="cpd_training_payment_alert">
+            <div class="text-end">
+              <i class="bi bi-exclamation-triangle text-danger" style="font-size: 2rem;"></i>
+            </div>
+            <div class="alert alert-danger" role="alert">
+              <p>This is a paid event, Please make sure you attach proof of payment when registering</p>
+              <p>The amount to be paid is: <span id="cpd_training_amount"></span></p>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label asp-for="AttendanceMode" class="form-label"></label>
+            <select asp-for="AttendanceMode" required class="form-control">
+                <option value="">Please Select Mode Of Attendance</option>
+                <option value="Virtual">Virtual</option>
+                <option value="Physical">Physical</option>
+            </select>
+            <span asp-validation-for="AttendanceMode" class="text-danger"></span>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      <button type="button" class="btn btn-info" name="request_invoice_btn" id="request_invoice_btn">Request Invoice</button>
+     
+    </div>
+  </div>
+</div>

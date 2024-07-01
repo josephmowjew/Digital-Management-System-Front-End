@@ -49,9 +49,6 @@
                             AccreditingInstitution
                         </th>
                         <th>
-                            Poster
-                        </th>
-                        <th>
                             Action
                         </th>
                     </tr>
@@ -123,36 +120,24 @@
                         className: "text-left",
                         "orderable": true,
                     },
-                     {
+                    {
                         data: "accreditingInstitution",
                         name: "accreditingInstitution",
                         className: "text-left",
                         "orderable": true,
                     },
-                     {
-                        data: "attachments",
-                        name: "attachments",
-                        className: "text-left",
-                        "orderable": true,
-                        render: function(data, type, row, meta) {
-                            if (data && data.length > 0) {
-                            return data.map((attachment) => {
-                                return `<a href="@host@apiPrefix/${attachment.filePath}" title="${attachment.fileName}" target="_blank"> <img src="@host/${attachment.filePath}" alt="Girl in a jacket" class="w-50 h-50"> </a>`;
-                            }).join('<br>');
-                            } else {
-                            return '';
-                            }
-                        }
-                        },
-                  
                     {
                         data: "id",
                         name: "id",
                         "orderable": false,
                         render: function (data, type, row) {
                                    
-                                    return `<a class='btn btn-outline-primary btn-sm mx-1 position-relative' href='/Finance/CPDTrainingRegistrations?cpdTrainingId=${data}' type='button'> <span class='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary'>${row.numberOfPendingRegistrations}</span> View Applications</a>`
-                                }
+                           /*return `<a class='btn btn-outline-primary btn-sm mx-1 position-relative' href='/Finance/CPDTrainingRegistrations?cpdTrainingId=${data}' type='button'> <span class='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary'>${row.numberOfPendingRegistrations}</span> Applications</a>
+                                    <a class='btn btn-outline-primary btn-sm mx-1 mt-1 position-relative' href='/Finance/InvoiceRequests/GetInvoiceRequestsOnTrainings?cpdTrainingId=${data}' type='button'> <span class='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary'>${row.numberOfPendingRegistrations}</span> Invoice Requests</a>`*/
+
+                            return `<a href='/Finance/CPDTrainings/TrainingDetails/${data}' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-eye text-lg' title='show details' > View Details </a>`
+                                    
+                        }
                     }
                 ],
                 responsive: true,

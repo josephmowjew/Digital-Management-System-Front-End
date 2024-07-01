@@ -34,6 +34,7 @@ public class ServiceRepository : IServiceRepository
     private ICommitteeMembershipService _committeeMembershipService;
     private ICommitteeService _committeeService;
     private IInvoiceRequestService _invoiceRequestService;
+    private IProBonoApplicationService _proBonoApplicationService;
 
 
     public string Token 
@@ -70,6 +71,8 @@ public class ServiceRepository : IServiceRepository
             _userService = new UserService(_httpClient);
             _committeeMembershipService = new CommitteeMembershipService(_httpClient);
             _committeeService = new CommitteeService(_httpClient);
+            _proBonoApplicationService = new ProBonoApplicationService(_httpClient);
+            _invoiceRequestService = new InvoiceRequestService(_httpClient);
         } 
     } 
 
@@ -106,6 +109,7 @@ public class ServiceRepository : IServiceRepository
     public IPenaltyPaymentService PenaltyPaymentService => _penaltyPaymentService ??= new PenaltyPaymentService(_httpClient);
     public ICommitteeMembershipService CommitteeMembershipService => _committeeMembershipService ??= new CommitteeMembershipService(_httpClient);
     public ICommitteeService CommitteeService => _committeeService ??= new CommitteeService(_httpClient);
+    public IProBonoApplicationService ProBonoApplicationService => _proBonoApplicationService ??= new ProBonoApplicationService(_httpClient);
     public IInvoiceRequestService InvoiceRequestService => _invoiceRequestService ??= new InvoiceRequestService(_httpClient);
 
     

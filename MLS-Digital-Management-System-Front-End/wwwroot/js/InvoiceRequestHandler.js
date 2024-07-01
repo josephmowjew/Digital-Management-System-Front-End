@@ -191,6 +191,72 @@ class InvoiceRequestHandler {
                             "orderable": false,
                         },
                         {
+                            data: "createdDate",
+                            name: "createdDate",
+                            className: "text-left",
+                            orderable: true,
+                            render: function (data) {
+                                if (data) {
+                                    const date = new Date(data);
+                                    const day = ("0" + date.getDate()).slice(-2);
+                                    const month = ("0" + (date.getMonth() + 1)).slice(-2);
+                                    const year = date.getFullYear();
+                                    return `${year}-${month}-${day}`;
+                                }
+                                return '';
+                            }
+                        },
+                        {
+                            data: "status",
+                            name: "status",
+                            "orderable": true,
+                            render: function (data) {
+                                switch (data) {
+                                    case "Approved":
+                                        return "<span class='badge bg-success bg-opacity-85 rounded-pill'>" + data + "</span>";
+                                    case "Pending":
+                                        return "<span class='badge bg-secondary bg-opacity-85 rounded-pill'>" + data + "</span>";
+                                    case "Rejected":
+                                        return "<span class='badge bg-danger bg-opacity-85 rounded-pill'>" + data + "</span>";
+                                    default:
+                                        return "<span class='badge bg-warning bg-opacity-85 rounded-pill'>" + data + "</span>";
+                                }
+                            }
+                        },
+                        {
+                            data: "id",
+                            name: "id",
+                            "orderable": false,
+                            render: (data, type, row) => {
+                                let buttonsHtml = `<div class="d-flex justify-content-center">`;
+                                // Always add the View button with spacing
+                                buttonsHtml += `
+                                    <a href='/Member/InvoiceRequests/ViewInvoiceRequest?invoiceRequestId=${data}' class='btn btn-primary btn-sm mx-2'>View</a>
+                                `;
+
+                                buttonsHtml += `</div>`;
+
+                                return buttonsHtml;
+                            }
+                        }
+                    ]
+                },
+                'processed_invoice_requests_table': {
+                    url: `${this.host}/api/InvoiceRequest/paged`,
+                    columns: [
+                        {
+                            data: "customer.customerName",
+                            name: "CustomerId",
+                            className: "text-left",
+                            "orderable": false,
+                        },
+                        {
+                            data: "referencedEntityType",
+                            name: "referencedEntityType",
+                            className: "text-left",
+                            "orderable": false,
+                        },
+                        {
                             data: "amount",
                             name: "amount",
                             className: "text-left",

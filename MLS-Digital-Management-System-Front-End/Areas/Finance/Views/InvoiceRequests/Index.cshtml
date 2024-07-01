@@ -1,28 +1,26 @@
-@using Microsoft.Extensions.Configuration
+﻿@using Microsoft.Extensions.Configuration
 @inject IConfiguration Configuration
 @{
-    ViewData["Title"] = "Processed Invoices";
+    ViewData["Title"] = "Invoice Requests";
     Layout = "~/Areas/Member/Views/shared/_Layout.cshtml";
 
     var host = Configuration.GetSection("APIURL")["Link"];
-    var apiPrefix =  Configuration.GetSection("APISettings")["API_Prefix"];
+    var apiPrefix = Configuration.GetSection("APISettings")["API_Prefix"];
 }
-
-<a onclick="window.history.back()" class="btn btn-secondary mx-2 my-2">Back To CPD</a>
 
 <div>
     <img src="~/assets/images/91.gif" id="spinner" />
 </div>
+
 <div class="card">
     <div class="card-body">
-        <h5 class="card-title fw-semibold mb-4 text-uppercase text-center">Processed Invoices</h5>
+        <h5 class="card-title fw-semibold mb-4 text-uppercase text-center">Invoice Requests</h5>
         <div class="table-responsive">
-            <table class="table table-bordered" id="processed_invoice_requests_table">
+            <table class="table table-bordered" id="invoices_requests">
                 <thead>
                     <tr>
                         <th>Member Name/Customer Name</th>
                         <th>Service</th>
-                        <th>Amount</th>
                         <th>Date Requested</th>
                         <th>Status</th>
                         <th>Action</th>
@@ -35,14 +33,14 @@
     </div>
 </div>
 
-@section Scripts{
+@section Scripts {
     <script>
         var tokenValue = '@ViewBag.token';
         var host = '@host';
         var cpdTrainingId = 0;
     </script>
     <script src="~/js/InvoiceRequestHandler.js" asp-append-version="true"></script>
-    
+   
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }

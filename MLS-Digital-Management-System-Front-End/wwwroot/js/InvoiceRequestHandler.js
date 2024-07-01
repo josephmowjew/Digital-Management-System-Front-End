@@ -176,7 +176,7 @@ class InvoiceRequestHandler {
                     ],
                 },
                 'invoices_requested_table': {
-                    url: `${this.host}/api/InvoiceRequest/paged`,
+                    url: `${this.host}/api/InvoiceRequest/byMember`,
                     columns: [
                         {
                             data: "customer.customerName",
@@ -241,7 +241,7 @@ class InvoiceRequestHandler {
                         }
                     ]
                 },
-                'processed_invoice_requests_table': {
+                'invoices_requests': {
                     url: `${this.host}/api/InvoiceRequest/paged`,
                     columns: [
                         {
@@ -255,15 +255,6 @@ class InvoiceRequestHandler {
                             name: "referencedEntityType",
                             className: "text-left",
                             "orderable": false,
-                        },
-                        {
-                            data: "amount",
-                            name: "amount",
-                            className: "text-left",
-                            orderable: true,
-                            render: function (data) {
-                                return data.toLocaleString('en-MW', { style: 'currency', currency: 'MWK' })
-                            }
                         },
                         {
                             data: "createdDate",
@@ -296,6 +287,68 @@ class InvoiceRequestHandler {
                                     default:
                                         return "<span class='badge bg-warning bg-opacity-85 rounded-pill'>" + data + "</span>";
                                 }
+                            }
+                        },
+                        {
+                            data: "id",
+                            name: "id",
+                            "orderable": false,
+                            render: (data, type, row) => {
+                                let buttonsHtml = `<div class="d-flex justify-content-center">`;
+
+                                if (row.status === "Pending") {
+                                    buttonsHtml += `
+                                        <button class='btn btn-warning btn-sm mx-2' onclick='invoiceRequestHandler.markAsGenerated(${data})'>Mark as Generated</button>
+                                    `;
+                                } else if (row.status === "Generated") {
+                                    buttonsHtml += `
+                                        <button class='btn btn-success btn-sm mx-2' onclick='invoiceRequestHandler.markAsPaid(${data})'>Mark as Paid</button>
+                                    `;
+                                }
+                                // Always add the View button with spacing
+                                buttonsHtml += `
+                                    <a href='/Finance/InvoiceRequests/ViewInvoiceRequest?invoiceRequestId=${data}' class='btn btn-primary btn-sm mx-2'>View</a>
+                                `;
+
+                                buttonsHtml += `</div>`;
+
+                                return buttonsHtml;
+                            }
+                        }
+                    ]
+                },
+                'qb_invoices_table': {
+                    url: `${this.host}/api/InvoiceRequest/processed`,
+                    columns: [  
+                        {
+                            data: "invoiceDate",
+                            name: "invoiceDate",
+                            className: "text-left",
+                            "orderable": false,
+                        },
+                        {
+                            data: "invoiceAmount",
+                            name: "invoiceAmount",
+                            className: "text-left",
+                            orderable: true,
+                            render: function (data) {
+                                return data.toLocaleString('en-MW', { style: 'currency', currency: 'MWK' })
+                            }
+                        },
+                        {
+                            data: "createdDate",
+                            name: "createdDate",
+                            className: "text-left",
+                            orderable: true,
+                            render: function (data) {
+                                if (data) {
+                                    const date = new Date(data);
+                                    const day = ("0" + date.getDate()).slice(-2);
+                                    const month = ("0" + (date.getMonth() + 1)).slice(-2);
+                                    const year = date.getFullYear();
+                                    return `${year}-${month}-${day}`;
+                                }
+                                return '';
                             }
                         },
                         {

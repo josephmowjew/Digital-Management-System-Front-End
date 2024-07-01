@@ -24,4 +24,18 @@ public class CpdTrainingService : ICpdTrainingService
             throw new InvalidOperationException($"Failed to get Trainging with id {id}.");
         }
     }
+
+    public async Task<int> GetCpdTrainingsCountAsync()
+        {
+            var response = await _httpClient.GetAsync($"api/CpdTrainings/count");
+            if (response.IsSuccessStatusCode)
+            {
+                var count = await response.Content.ReadFromJsonAsync<int>();
+                return count;
+            }
+            else
+            {
+                throw new InvalidOperationException($"Failed to get CPD Trainings count");
+            }
+        }
 }

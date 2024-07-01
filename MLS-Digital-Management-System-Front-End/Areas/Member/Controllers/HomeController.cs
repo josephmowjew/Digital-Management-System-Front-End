@@ -23,6 +23,8 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
             this._service.Token = token;
             ViewBag.summedUnits = await this.GetSummedCPDUnits();
             ViewBag.proBonoApplicationsTotal = await this.GetProBonoApplications();
+            ViewBag.cpdTrainingsCount = await this.GetTotalCpdTrainings();
+            ViewBag.proBonoHours = await this.GetTotalProBonoHours();
             return View();
         }
 
@@ -208,6 +210,20 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
             var proBonoApplication = await _service.ProBonoApplicationService.GetProBonoApplicationCountAsync();
 
             return proBonoApplication;
+        }
+
+        private async Task<int> GetTotalCpdTrainings()
+        {
+            var totalCpdTrainings = await _service.CpdTrainingRegistrationService.GetCpdTrainingsAttendedCountAsync();
+
+            return totalCpdTrainings;
+        }
+
+        private async Task<int> GetTotalProBonoHours()
+        {
+            var totalCpdTrainings = await _service.CpdTrainingRegistrationService.GetCpdTrainingsAttendedCountAsync();
+
+            return totalCpdTrainings;
         }
        
     

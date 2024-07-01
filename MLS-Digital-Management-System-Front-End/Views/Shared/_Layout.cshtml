@@ -6,6 +6,7 @@
   <title>@ViewData["Title"] - Malawi Law Society</title>
      <link rel="shortcut icon" type="image/png" href="~/assets/images/logos/cropped-mls-logo-clear-192x192.png" />
     <link href="~/assets/css/styles.min.css" rel="stylesheet" />
+    <link href="~/assets/css/toastr.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -15,6 +16,7 @@
      @RenderBody()
   </div>
     <script src="~/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="~/assets/js/toastr.min.js"></script>
     <script src="~/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)

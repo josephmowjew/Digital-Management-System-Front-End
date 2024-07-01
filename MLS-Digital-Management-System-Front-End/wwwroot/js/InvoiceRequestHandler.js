@@ -1,153 +1,107 @@
-class InvoiceRequestHandler {
-  constructor(host, tokenValue) {
-    this.host = host;
-    this.tokenValue = tokenValue;
-    this.spinner = document.getElementById("spinner");
-    this.dataTable = null;
-    this.hideSpinner();
-    this.initDataTable();
+class AuthHandler {
+  constructor(host) {
+      this.host = host;
+      this.spinner = document.getElementById("spinner");
+
+      this.init();
+  }
+
+  init() {
+      this.hideSpinner();
+      document.getElementById("reset_password_btn").addEventListener("click", () => this.resetPassword());
+      document.getElementById("forgot_password_btn").addEventListener("click", () => this.forgotPassword());
   }
 
   showSpinner() {
-    if (this.spinner) {
-      this.spinner.style.display = "block";
-    }
+      if (this.spinner) {
+          this.spinner.style.display = 'block';
+      } else {
+          console.error('Spinner element with id "spinner" was not found');
+      }
   }
 
   hideSpinner() {
-    if (this.spinner) {
-      this.spinner.style.display = "none";
-    }
-  }
-
-  initDataTable() {
-    if (this.dataTable) {
-      return; // Exit if already initialized
-    }
-
-    this.dataTable = $('#invoice_requests_table').DataTable({
-      processing: true,
-      serverSide: true,
-      order: [[0, "desc"]],
-      ajax: {
-        url: `${this.host}/api/InvoiceRequest/cpdtrainings`,
-        type: 'get',
-        data: (d) => {
-          d.cpdTrainingId = cpdTrainingId; // Assuming cpdTrainingId is defined globally
-        },
-        headers: {
-          'Authorization': `Bearer ${this.tokenValue}`
-        }
-      },
-      columns: [
-        { data: "customer.customerName", name: "CustomerId", orderable: false },
-        { data: "referencedEntity.title", name: "referencedEntity", orderable: false },
-        {
-          data: "amount",
-          name: "amount",
-          render: (data) => data.toLocaleString('en-MW', { style: 'currency', currency: 'MWK' })
-        },
-        {
-          data: "createdDate",
-          name: "createdDate",
-          render: (data) => data ? new Date(data).toISOString().split('T')[0] : ''
-        },
-        {
-          data: "status",
-          name: "status",
-          render: (data) => {
-            const statusClasses = {
-              Approved: "bg-success",
-              Pending: "bg-secondary",
-              Rejected: "bg-danger",
-              Generated: "bg-warning"
-            };
-            return `<span class='badge ${statusClasses[data] || "bg-info"} bg-opacity-85 rounded-pill'>${data}</span>`;
-          }
-        },
-        {
-          data: "id",
-          name: "id",
-          orderable: false,
-          render: (data, type, row) => this.renderActionButtons(data, row.status)
-        }
-      ],
-      responsive: true,
-      autoWidth: false
-    });
-  }
-
-  renderActionButtons(id, status) {
-    let buttonsHtml = `<div class="d-flex justify-content-center">`;
-    
-    if (status === "Pending") {
-      buttonsHtml += `<button class='btn btn-warning btn-sm mx-2' onclick='invoiceRequestHandler.markAsGenerated(${id})'>Mark as Generated</button>`;
-    } else if (status === "Generated") {
-      buttonsHtml += `<button class='btn btn-success btn-sm mx-2' onclick='invoiceRequestHandler.markAsPaid(${id})'>Mark as Paid</button>`;
-    }
-    
-    buttonsHtml += `<a href='ViewInvoiceRequest?invoiceRequestId=${id}' class='btn btn-primary btn-sm mx-2'>View</a></div>`;
-    
-    return buttonsHtml;
-  }
-
-  markAsGenerated(id) {
-    this.confirmAndSendRequest(
-      "Are you sure you want to mark this invoice as generated?",
-      `${this.host}/api/InvoiceRequest/MarkAsGenerated/${id}`,
-      "Invoice marked as generated successfully"
-    );
-  }
-
-  markAsPaid(id) {
-    this.confirmAndSendRequest(
-      "Are you sure you want to mark this invoice as paid?",
-      `${this.host}/api/InvoiceRequest/MarkAsPaid/${id}`,
-      "Invoice marked as paid successfully"
-    );
-  }
-
-  confirmAndSendRequest(message, url, successMessage) {
-    bootbox.confirm(message, (result) => {
-      if (result) {
-        this.showSpinner();
-        this.sendAjaxRequest(null, "POST", url, () => {
-          this.hideSpinner();
-          toastr.success(successMessage);
-          this.dataTable.ajax.reload();
-        });
+      if (this.spinner) {
+          this.spinner.style.display = 'none';
+      } else {
+          console.error('Spinner element with id "spinner" was not found');
       }
-    });
   }
 
-  sendAjaxRequest(formData, method, url, successCallback) {
-    fetch(url, {
-      method: method,
-      headers: {
-        "Authorization": `Bearer ${this.tokenValue}`
-      },
-      body: formData
-    })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
+  async resetPassword() {
+      const form = document.querySelector("#reset_password_form");
+      const userInput = {
+          __RequestVerificationToken: form.querySelector("input[name='__RequestVerificationToken']").value,
+          Code: form.querySelector("input[name='Code']").value,
+          Email: form.querySelector("input[name='Email']").value,
+          Password: form.querySelector("input[name='Password']").value
+      };
+
+      console.log("User Input:", userInput);
+
+      try {
+          const response = await fetch(`${this.host}/api/auth/PasswordReset`, {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(userInput)
+          });
+
+          const data = await response.text();
+          this.handleResponse(data, "#reset_password_modal", this.resetPassword.bind(this));
+      } catch (error) {
+          console.error(`Error: ${error}`);
       }
-      return response.json();
-    })
-    .then(data => {
-      this.hideSpinner();
-      console.log("data", data)
-      successCallback(data);
-    })
-    .catch(error => {
-      this.hideSpinner();
-      toastr.error("An error occurred while processing your request");
-      console.error('Error:', error);
-    });
+  }
+
+  async forgotPassword() {
+      const form = document.querySelector("#forgot_password_form");
+      const userInput = {
+          __RequestVerificationToken: form.querySelector("input[name='__RequestVerificationToken']").value,
+          Email: form.querySelector("input[name='Email']").value
+      };
+
+      try {
+          const response = await fetch(`${this.host}/api/auth/ForgotPassword`, {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(userInput)
+          });
+
+          const data = await response.text();
+          this.handleResponse(data, "#forgot_password_form", this.forgotPassword.bind(this));
+      } catch (error) {
+          console.error(`Error: ${error}`);
+      }
+  }
+
+  handleResponse(data, formSelector, retryFunction) {
+      const parsedData = new DOMParser().parseFromString(data, 'text/html');
+      const isInvalid = parsedData.querySelector("input[name='DataInvalid']")?.value === "true";
+
+      if (isInvalid) {
+          document.querySelector(formSelector).innerHTML = data;
+          toastr.error(parsedData.querySelector("input[name='message']").value);
+          this.rewireFormEvents(formSelector, retryFunction);
+      } else {
+          toastr.success(parsedData.querySelector("input[name='message']").value);
+      }
+  }
+
+  rewireFormEvents(formSelector, retryFunction) {
+      document.querySelector(`${formSelector} button`).addEventListener("click", retryFunction);
+      const form = document.querySelector(formSelector);
+      $(form).removeData("validator");
+      $(form).removeData("unobtrusiveValidation");
+      $.validator.unobtrusive.parse(form);
   }
 }
 
 // Initialize the handler when the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', () => {
-  window.invoiceRequestHandler = new InvoiceRequestHandler(host, tokenValue);
+  
+  new AuthHandler(host);
 });

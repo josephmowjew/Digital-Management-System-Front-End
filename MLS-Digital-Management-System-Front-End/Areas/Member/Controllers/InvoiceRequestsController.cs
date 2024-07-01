@@ -6,9 +6,9 @@ using MLS_Digital_Management_System_Front_End.Core.DTOs.InvoiceRequest;
 using MLS_Digital_Management_System_Front_End.Helpers;
 using MLS_Digital_Management_System_Front_End.Services.Interfaces;
 
-namespace MLS_Digital_Management_System_Front_End.Areas.Finance.Controllers
+namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
 {
-    [Area("Finance")]
+    [Area("Member")]
     public class InvoiceRequestsController : Controller
     {
         private readonly IServiceRepository _service;
@@ -24,7 +24,7 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Finance.Controllers
 
         private async Task PopulateViewBags()
         {
-            string token = AuthHelper.GetToken(HttpContext);    
+            string token = AuthHelper.GetToken(HttpContext);
             ViewBag.token = token;
             this._service.Token = token;
            

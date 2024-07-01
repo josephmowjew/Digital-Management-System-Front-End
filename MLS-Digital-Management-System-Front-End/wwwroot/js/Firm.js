@@ -102,8 +102,34 @@ function EditForm(id,token, area = "") {
             var field = $(element);
             var fieldName = field.attr('name');
             var dataKey = fieldMap[fieldName]; // Get corresponding key from data
-            var fieldValue = data[dataKey]; // Get value from data based on key
-            field.val(fieldValue); // Set field value
+            if (fieldName === 'CustomerId') {
+
+                // If the field is Customer Id, set the value and trigger EnhancedSelect with the retrieved Customer ID
+                field.val(data[dataKey]);
+                if(data.customer != null)
+                    {
+                        new EnhancedSelect({
+                            url: `${host}/api/Customers`,
+                            hiddenFieldId: "CustomerId",
+                            pageSize: 20,
+                            initialSearchValue: data.customer.id,
+                            }, "edit_firm_modal");
+                    }
+                    else{
+                        new EnhancedSelect({
+                            url: `${host}/api/Customers`,
+                            hiddenFieldId: "CustomerId",
+                            pageSize: 20,
+                            initialSearchValue: "",
+                            }, "edit_firm_modal");
+                    }
+               
+              
+            } else {
+                // For other fields, set the value as usual
+                field.val(data[dataKey]);
+            }
+           
         });
 
     // Hook up event to the update firm button

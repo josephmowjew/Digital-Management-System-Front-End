@@ -43,11 +43,7 @@
         var cpdTrainingId = '@cpdTrainingId';
     </script>
     <script src="~/js/InvoiceRequestHandler.js" asp-append-version="true"></script>
-    <script>
-        $(document).ready(function () {
-            window.invoiceRequestHandler = new InvoiceRequestHandler(host, tokenValue);
-        });
-    </script>
+   
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }

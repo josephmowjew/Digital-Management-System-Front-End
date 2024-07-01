@@ -37,6 +37,9 @@ public class UpdateFirmDTO
     [StringLength(maximumLength: 15)]
     [Display(Name = "Secondary Phone Number")]
     public string SecondaryPhoneNumber { get; set; }
+    
+    [Display(Name = "Customer QuickBooks Id")]
+    public string CustomerId { get; set; }
 
     public string DataInvalid { get; set; } = "true";
 }

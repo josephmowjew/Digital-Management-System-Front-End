@@ -354,37 +354,30 @@ class InvoiceRequestHandler {
     }
 
   markAsGenerated(id) {
-    bootbox.confirm("Are you sure you want to mark this invoice as generated?", (result) => {
-      if (result) {
-        this.showSpinner();
-        this.sendAjaxRequest(
-          null,
-          "POST",
-          `${this.host}/api/InvoiceRequest/MarkAsGenerated/${id}`,
-          () => {
-            this.hideSpinner();
-            toastr.success("Invoice marked as generated successfully");
-            $('#invoice_requests_table').DataTable().ajax.reload();
-          }
-        );
-      }
-    });
+    this.confirmAndSendRequest(
+      "Are you sure you want to mark this invoice as generated?",
+      `${this.host}/api/InvoiceRequest/MarkAsGenerated/${id}`,
+      "Invoice marked as generated successfully"
+    );
   }
 
   markAsPaid(id) {
-    bootbox.confirm("Are you sure you want to mark this invoice as paid?", (result) => {
+    this.confirmAndSendRequest(
+      "Are you sure you want to mark this invoice as paid?",
+      `${this.host}/api/InvoiceRequest/MarkAsPaid/${id}`,
+      "Invoice marked as paid successfully"
+    );
+  }
+
+  confirmAndSendRequest(message, url, successMessage) {
+    bootbox.confirm(message, (result) => {
       if (result) {
         this.showSpinner();
-        this.sendAjaxRequest(
-          null,
-          "POST",
-          `${this.host}/api/InvoiceRequest/MarkAsPaid/${id}`,
-          () => {
-            this.hideSpinner();
-            toastr.success("Invoice marked as paid successfully");
-            $('#invoice_requests_table').DataTable().ajax.reload();
-          }
-        );
+        this.sendAjaxRequest(null, "POST", url, () => {
+          this.hideSpinner();
+          toastr.success(successMessage);
+          this.dataTable.ajax.reload();
+        });
       }
     });
   }
@@ -407,4 +400,7 @@ class InvoiceRequestHandler {
   }
 }
 
-window.invoiceRequestHandler = new InvoiceRequestHandler(host, tokenValue);
+// Initialize the handler when the DOM is fully loaded
+document.addEventListener('DOMContentLoaded', () => {
+  window.invoiceRequestHandler = new InvoiceRequestHandler(host, tokenValue);
+});

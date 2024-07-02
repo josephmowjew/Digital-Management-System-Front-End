@@ -10,5 +10,7 @@ public class CreateCPDTrainingRegistrationDTO
     [Display(Name = "Date of Payment")]
     public DateTime? DateOfPayment { get; set; }
     [Display(Name = "Mode of Attandance")]
-    public string AttendanceMode { get; set; }
+    public string? AttendanceMode { get; set; }
+
+    public string InvoiceRequestId { get; set; }
 }

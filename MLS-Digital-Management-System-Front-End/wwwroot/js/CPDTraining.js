@@ -220,6 +220,12 @@ handleMarkAttendanceSuccess(response) {
     const cpdRegisterform = document.querySelector("#register_cpd_training_modal form");
     const trainingIdInput = cpdRegisterform.querySelector('input[name="CPDTrainingId"]');
     trainingIdInput.value = trainingId;
+
+    //get invoice request id from the data attribute on the clicked button 
+
+    //set the value of an element with a specified id InvoiceRequestId to the incoming invoiceRequestId
+    const invoiceRequestIdInput = cpdRegisterform.querySelector('input[name="InvoiceRequestId"]');
+   
   
     // Log the trainingId for debugging purposes
     const trainingData = JSON.parse(trainingFee);
@@ -229,22 +235,42 @@ handleMarkAttendanceSuccess(response) {
       memberPhysicalAttendanceFee, 
       memberVirtualAttendanceFee, 
       nonMemberPhysicalAttendanceFee, 
-      nonMemberVirtualAttandanceFee 
+      nonMemberVirtualAttandanceFee,
+      invoiceRequestId,
+      invoiceRequest, 
     } = trainingData;
+
+
+
+    //set the value of an element with a specified id InvoiceRequestId to the incoming invoiceRequestId making sure the value is not null
+    invoiceRequestIdInput.value = invoiceRequestId;
+
+    
+  
   
     // Check if all fees are zero or null
-    const isFree = [memberPhysicalAttendanceFee, memberVirtualAttendanceFee, nonMemberPhysicalAttendanceFee, nonMemberVirtualAttandanceFee]
-      .every(fee => fee === null || fee <= 0);
-  
-    const displayFee = (fee) => {
+    const isFree =  (invoiceRequest == null || invoiceRequest.amount < 1);
 
+   
+ 
+    const displayFee = (invoiceRequest) => {
+
+      let ParentinvoiceData = JSON.parse(invoiceRequest);
+
+    
+
+      let invoiceData = ParentinvoiceData.invoiceRequest;
       //set the fee to the class member
-      this.fee = fee
+      let fee = invoiceData.amount;
+
+      
+    
       const amountElement = cpdRegisterform.querySelector("#cpd_training_amount");
       const requestInvoiceButton = document.querySelector("#request_invoice_btn");
       
       if (typeof(fee) === "number") {
         if (fee > 0) {
+
           amountElement.innerHTML = `<strong>MWK${fee} </strong>`;
           requestInvoiceButton.style.display = "block"; // Show the button when amount is set
         } else {
@@ -252,23 +278,12 @@ handleMarkAttendanceSuccess(response) {
           requestInvoiceButton.style.display = "none"; // Hide the button for free events
         }
       } else {
-        amountElement.innerHTML = `<strong>Pending....Please select attendance mode</strong>`;
+        amountElement.innerHTML = `<strong>0`;
         requestInvoiceButton.style.display = "none"; // Hide the button when amount is pending
       }
     };
   
-    const modeOfAttendanceSelect = cpdRegisterform.querySelector('select[name="AttendanceMode"]');
-    modeOfAttendanceSelect.addEventListener('change', () => {
-      const selectedMode = modeOfAttendanceSelect.value;
-      let fee = 0;
-      if (selectedMode === 'Physical') {
-        fee = memberPhysicalAttendanceFee || 0;
-      } else if (selectedMode === 'Virtual') {
-        fee = memberVirtualAttendanceFee || 0;
-      }
-      displayFee(fee);
-    });
-  
+   
     if (isFree) {
       cpdRegisterform.querySelector("#cpd_training_payment_alert").style.display = "none";
       const attachmentsField = cpdRegisterform.querySelector('div input[type="file"]');
@@ -280,6 +295,7 @@ handleMarkAttendanceSuccess(response) {
       cpdRegisterform.querySelector("#cpd_training_no_payment_alert").style.display = "block";
       document.querySelector("#request_invoice_btn").style.display = "none"; // Hide the button for free events
     } else {
+      
       displayFee(trainingFee);
       cpdRegisterform.querySelector("#cpd_training_no_payment_alert").style.display = "none";
       cpdRegisterform.querySelector("#cpd_training_payment_alert").style.display = "block";

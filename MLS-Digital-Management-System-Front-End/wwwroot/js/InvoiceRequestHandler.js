@@ -414,6 +414,27 @@ class InvoiceRequestHandler {
     );
   }
 
+  markAsPaid(id) {
+    this.confirmAndSendRequest(
+      "Are you sure you want to mark this invoice as paid?",
+      `${this.host}/api/InvoiceRequest/MarkAsPaid/${id}`,
+      "Invoice marked as paid successfully"
+    );
+  }
+  
+  confirmAndSendRequest(message, url, successMessage) {
+    bootbox.confirm(message, (result) => {
+      if (result) {
+        this.showSpinner();
+        this.sendAjaxRequest(null, "POST", url, () => {
+          this.hideSpinner();
+          toastr.success(successMessage);
+         
+        });
+      }
+    });
+  }
+
   handleResponse(data, formSelector, retryFunction) {
       const parsedData = new DOMParser().parseFromString(data, 'text/html');
       const isInvalid = parsedData.querySelector("input[name='DataInvalid']")?.value === "true";

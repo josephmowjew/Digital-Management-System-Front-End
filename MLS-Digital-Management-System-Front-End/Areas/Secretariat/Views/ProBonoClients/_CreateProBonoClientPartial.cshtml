@@ -38,16 +38,16 @@
             <span asp-validation-for="ResidentialAddress" class="text-danger"></span>
           </div>
           
-          <div class="mb-3">
-            <label asp-for="PhoneNumber" class="form-label"></label>
-            <input asp-for="PhoneNumber" placeholder="Enter Phone Number" class="form-control" />
-            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+         <div class="mb-3">
+              <label asp-for="PhoneNumber" class="form-label"></label>
+              <input asp-for="PhoneNumber" id="PhoneNumber" placeholder="Enter Phone Number" class="form-control" />
+              <span asp-validation-for="PhoneNumber" class="text-danger" id="PhoneNumberValidation"></span>
           </div>
-          
+
           <div class="mb-3">
-            <label asp-for="OtherContacts" class="form-label"></label>
-            <input asp-for="OtherContacts" placeholder="Enter Other Contacts" class="form-control" />
-            <span asp-validation-for="OtherContacts" class="text-danger"></span>
+              <label asp-for="OtherContacts" class="form-label"></label>
+              <input asp-for="OtherContacts" id="OtherContacts" placeholder="Enter Other Contacts" class="form-control" />
+              <span asp-validation-for="OtherContacts" class="text-danger" id="OtherContactsValidation"></span>
           </div>
 
            <div class="mb-3">
@@ -80,3 +80,24 @@
   </div>
 </div>
 
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('PhoneNumber').addEventListener('input', validateContactFields);
+    document.getElementById('OtherContacts').addEventListener('input', validateContactFields);
+
+    function validateContactFields() {
+        var phoneNumber = document.getElementById('PhoneNumber').value;
+        var otherContacts = document.getElementById('OtherContacts').value;
+        var phoneNumberSpan = document.getElementById('PhoneNumberValidation');
+        var otherContactsSpan = document.getElementById('OtherContactsValidation');
+
+        if (phoneNumber && otherContacts && phoneNumber === otherContacts) {
+            phoneNumberSpan.textContent = 'Phone Number and Other Contacts should be different.';
+            otherContactsSpan.textContent = 'Phone Number and Other Contacts should be different.';
+        } else {
+            phoneNumberSpan.textContent = '';
+            otherContactsSpan.textContent = '';
+        }
+    }
+});
+</script>

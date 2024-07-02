@@ -181,7 +181,7 @@
                         }
                     },
                   
-                   {
+                  {
                     data: "id",
                     name: "id",
                     "orderable": false,
@@ -190,33 +190,45 @@
                         const today = new Date();
                         const dueDateOnly = dueDate.getDate();
                         const todayOnly = today.getDate();
-
                         var memberRegistration = row.cpdTrainingRegistration.find(registration => registration.memberId == @ViewBag.MemberId);
-
                         if (!memberRegistration) {
                             const dueDate = row.registrationDueDate ? new Date(Date.parse(row.registrationDueDate)) : null;
                             const today = new Date();
-                        
+                          
                             if (dueDate) {
-
-                            
                                 // Calculate the time difference in milliseconds
                                 const timeDiff = dueDate.getTime() - today.getTime();
                                 // Convert the time difference from milliseconds to days
                                 const daysDiff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
-                                if (daysDiff >= 1) {
 
-                                        return "<a href='#' onclick='cpdTrainingHandler.registerForm(\"" + data + "\",\"" + JSON.stringify(row).replace(/"/g, "\\\"") + "\")' type='button' class='btn btn-outline-primary mx-1 btn-sm ' title='register'> Register</a><a href='#' onclick='cpdTrainingHandler.invoiceForm(\"" + data + "\",\"" + JSON.stringify(row).replace(/"/g, "\\\"") + "\")' type='button' class='btn btn-outline-warning mx-1 btn-sm ' title='Invoice'> Invoice</a><a href='/member/CPDTrainings/TrainingDetails/" + data + "' type = 'button' class='btn btn-outline-success mx-1 btn-sm ti ti-eye text-lg' title = 'show details'> View </a>"
-                                            
-                                } 
+                                let buttons = "";
+                                if (daysDiff >= 1) {
+                                    
+                                    if(row.isFree == false && row.invoiceRequestId == null)
+                                    {
+                                        
+
+                                    }else{
+                                         buttons += `<a href='#' onclick='cpdTrainingHandler.registerForm("${data}", "${JSON.stringify(row).replace(/"/g, "\\\"")}")' type='button' class='btn btn-outline-primary mx-1 btn-sm ' title='register'> Register</a>`;
+
+                                    }
+                                    
+                                    if (row.isFree != true && row.invoiceRequestId == null) {
+                                        buttons += "<a href='#' onclick='cpdTrainingHandler.invoiceForm(\"" + data + "\",\"" + JSON.stringify(row).replace(/"/g, "\\\"") + "\")' type='button' class='btn btn-outline-warning mx-1 btn-sm ' title='Invoice'> Invoice</a>";
+                                    }
+                                    
+                                    buttons += "<a href='/member/CPDTrainings/TrainingDetails/" + data + "' type = 'button' class='btn btn-outline-success mx-1 btn-sm ti ti-eye text-lg' title = 'show details'> View </a>";
+                                    
+                                    return buttons;
+                                }
                                 else {
-                                        return "";
+                                    return "";
                                 }
                             }
-                        }else{
-                            return "<a href='/member/CPDTrainings/TrainingDetails/" + data +"' type = 'button' class='btn btn-outline-primary mx-1 btn-sm ti ti-eye text-lg' title = 'show details'> View </a>";
+                            else {
+                                return "<a href='/member/CPDTrainings/TrainingDetails/" + data +"' type = 'button' class='btn btn-outline-primary mx-1 btn-sm ti ti-eye text-lg' title = 'show details'> View </a>";
+                            }
                         }
-
                     }
                 }
                 ],

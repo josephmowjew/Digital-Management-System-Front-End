@@ -35,19 +35,17 @@
             <span asp-validation-for="Attachments" class="text-danger"></span>
           </div>
           <div class="mb-3">
-            <label asp-for="AttendanceMode" class="form-label"></label>
-            <select asp-for="AttendanceMode" required class="form-control">
-                <option value="">Please Select Mode Of Attendance</option>
-                <option value="Virtual">Virtual</option>
-                <option value="Physical">Physical</option>
-            </select>
-            <span asp-validation-for="AttendanceMode" class="text-danger"></span>
+              <label asp-for="InvoiceRequestId" class="form-label">Invoice Request ID</label>
+              <input asp-for="InvoiceRequestId" type="text" class="form-control" disabled />
           </div>
-           <div class="mb-3">
+
+        
+          <div class="mb-3">
             <label asp-for="DateOfPayment" class="form-label"></label>
-            <input asp-for="DateOfPayment" type="date" class="form-control" />
+            <input asp-for="DateOfPayment" type="date" class="form-control" max="@DateTime.Now.ToString("yyyy-MM-dd")" />
             <span asp-validation-for="DateOfPayment" class="text-danger"></span>
-          </div>
+        </div>
+
 
 
         </div>
@@ -55,7 +53,7 @@
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-      <button type="button" class="btn btn-primary" name="register_training_btn" id="register_training_btn">Register From Training</button>
+      <button type="button" class="btn btn-primary" name="register_training_btn" id="register_training_btn">Register Training</button>
      
     </div>
   </div>

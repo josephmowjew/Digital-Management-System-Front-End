@@ -63,6 +63,23 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
             
             return View(invoiceRequest);
         }
+    
+        public async Task<IActionResult> ViewProcessedInvoiceRequest(string invoiceRequestId)
+        {
+            await PopulateViewBags();
+
+            var invoiceRequest = await GetProcessedInvoiceRequest(invoiceRequestId);
+            
+            return View(invoiceRequest);
+        }
+
+
+
+        private async Task<ReadQBInvoiceDTO> GetProcessedInvoiceRequest(string id)
+        {
+            return await _service.InvoiceRequestService.GetProcessedInvoiceRequestByIdAsync(id);
+
+        }
 
         private async Task<ReadInvoiceRequestDTO> GetInvoiceRequest(int id)
         {

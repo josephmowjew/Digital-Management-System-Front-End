@@ -359,7 +359,7 @@ class InvoiceRequestHandler {
                                 let buttonsHtml = `<div class="d-flex justify-content-center">`;
                                 // Always add the View button with spacing
                                 buttonsHtml += `
-                                    <a href='/Member/InvoiceRequests/ViewInvoiceRequest?invoiceRequestId=${data}' class='btn btn-primary btn-sm mx-2'>View</a>
+                                    <a href='/Member/InvoiceRequests/ViewProcessedInvoiceRequest?invoiceRequestId=${data}' class='btn btn-primary btn-sm mx-2'>View</a>
                                 `;
 
                                 buttonsHtml += `</div>`;

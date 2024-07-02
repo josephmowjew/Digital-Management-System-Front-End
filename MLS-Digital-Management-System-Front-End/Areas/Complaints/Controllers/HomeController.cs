@@ -19,6 +19,10 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Complaints.Controllers
         public IActionResult Index()
         {   
     
+            /*ViewBag.LicenseApplications = await this.GetSummedCPDUnits();
+            ViewBag.proBonoApplicationsTotal = await this.GetProBonoApplications();
+            ViewBag.cpdTrainingsCount = await this.GetTotalCpdTrainings();
+            ViewBag.proBonoHours = await this.GetTotalProBonoHours();*/
             return View();
         }
 
@@ -168,5 +172,7 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Complaints.Controllers
 
             return summedUnits;
         }
+    
+        
     }
 }

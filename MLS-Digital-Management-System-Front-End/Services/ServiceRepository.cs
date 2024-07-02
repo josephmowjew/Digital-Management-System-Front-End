@@ -27,6 +27,7 @@ public class ServiceRepository : IServiceRepository
     private ILicenseApprovalHistoryService _licenseApprovalHistoryService;
     private ICpdUnitsEarnedService _cpdUnitsEarnedService;
     private ICpdTrainingService _cpdTrainingService;
+    private ICpdTrainingRegistrationService _cpdTrainingRegistrationService;
     private IPenaltyTypeService _penaltyTypeService;
     private IPenaltyService _penaltyService;
     private IThreadService _threadService;
@@ -35,6 +36,7 @@ public class ServiceRepository : IServiceRepository
     private ICommitteeService _committeeService;
     private IInvoiceRequestService _invoiceRequestService;
     private IProBonoApplicationService _proBonoApplicationService;
+    private IProBonoReportService _proBonoReportService;
 
 
     public string Token 
@@ -64,6 +66,7 @@ public class ServiceRepository : IServiceRepository
             _licenseApprovalHistoryService = new LicenseApprovalHistoryService(_httpClient);
             _cpdUnitsEarnedService = new CpdUnitsEarnedService(_httpClient);
             _cpdTrainingService = new CpdTrainingService(_httpClient);
+            _cpdTrainingRegistrationService = new CpdTrainingRegistrationService(_httpClient);
             _penaltyService = new PenaltyService(_httpClient);
             _penaltyTypeService = new PenaltyTypeService(_httpClient);
             _threadService = new ThreadService(_httpClient);
@@ -73,6 +76,7 @@ public class ServiceRepository : IServiceRepository
             _committeeService = new CommitteeService(_httpClient);
             _proBonoApplicationService = new ProBonoApplicationService(_httpClient);
             _invoiceRequestService = new InvoiceRequestService(_httpClient);
+            _proBonoReportService = new ProBonoReportService(_httpClient);
         } 
     } 
 
@@ -103,6 +107,7 @@ public class ServiceRepository : IServiceRepository
     public ILicenseApprovalHistoryService LicenseApprovalHistoryService => _licenseApprovalHistoryService ??= new LicenseApprovalHistoryService(_httpClient);
     public ICpdUnitsEarnedService CpdUnitsEarnedService => _cpdUnitsEarnedService ??= new CpdUnitsEarnedService(_httpClient);
     public ICpdTrainingService CpdTrainingService => _cpdTrainingService ??= new CpdTrainingService(_httpClient);
+    public ICpdTrainingRegistrationService CpdTrainingRegistrationService => _cpdTrainingRegistrationService ??= new CpdTrainingRegistrationService(_httpClient);
     public IPenaltyService PenaltyService => _penaltyService ??= new PenaltyService(_httpClient);
     public IPenaltyTypeService PenaltyTypeService => _penaltyTypeService ??= new PenaltyTypeService(_httpClient);
     public IThreadService ThreadService => _threadService ??= new ThreadService(_httpClient);
@@ -110,6 +115,7 @@ public class ServiceRepository : IServiceRepository
     public ICommitteeMembershipService CommitteeMembershipService => _committeeMembershipService ??= new CommitteeMembershipService(_httpClient);
     public ICommitteeService CommitteeService => _committeeService ??= new CommitteeService(_httpClient);
     public IProBonoApplicationService ProBonoApplicationService => _proBonoApplicationService ??= new ProBonoApplicationService(_httpClient);
+    public IProBonoReportService ProBonoReportService => _proBonoReportService ??= new ProBonoReportService(_httpClient);
     public IInvoiceRequestService InvoiceRequestService => _invoiceRequestService ??= new InvoiceRequestService(_httpClient);
 
     

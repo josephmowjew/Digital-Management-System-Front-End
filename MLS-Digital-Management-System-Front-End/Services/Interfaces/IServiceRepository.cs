@@ -28,6 +28,7 @@ public interface IServiceRepository{
     ICommitteeService CommitteeService { get; } 
     IProBonoApplicationService ProBonoApplicationService { get; }
     IProBonoReportService ProBonoReportService { get; }
+    IProBonoService ProBonoService { get; }
     IInvoiceRequestService InvoiceRequestService { get; }
 }
 

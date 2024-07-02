@@ -51,4 +51,17 @@ public class MemberService : IMemberService
         }
     }
 
+    public async Task<int> GetMembersCount(){
+        var response = await _httpClient.GetAsync($"api/Members/count");
+        if (response.IsSuccessStatusCode)
+        {
+            var count = await response.Content.ReadFromJsonAsync<int>();
+            return count;
+        }
+        else
+        {
+            throw new InvalidOperationException($"Failed to get Member count");
+        }
+    }
+
 }

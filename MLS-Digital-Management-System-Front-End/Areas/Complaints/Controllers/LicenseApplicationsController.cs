@@ -18,7 +18,6 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Complaints.Controllers
         }
         public async Task<IActionResult> Index()
         {
-
             await PopulateViewBags();
 
             return View();
@@ -67,13 +66,6 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Complaints.Controllers
             var licenseApprovalHistory = await this._service.LicenseApprovalHistoryService.GetLicenseApprovalHistoryByIdAsync(id);
             return licenseApprovalHistory;
         }
-
-
-
-
-       
-
-
 
     }
 }

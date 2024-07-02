@@ -7,4 +7,5 @@ public interface ILicenseApplicationService
 {
     Task<bool> CheckIfPreviousApplicationExists(string userId);
     Task<ReadLicenseApplicationDTO> GetLicenseApplication(int id);
+    Task<int> GetLicenseApplicationsTotal();
 }

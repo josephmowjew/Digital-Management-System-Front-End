@@ -26,5 +26,19 @@ namespace MLS_Digital_Management_System_Front_End.Services
                 throw new InvalidOperationException($"Failed to get Committee with id {id}.");
             }
         }
+
+        public async Task<int> GetCommitteesCountAsync()
+        {
+            var response = await _httpClient.GetAsync("api/Committees/count");
+            if (response.IsSuccessStatusCode)
+            {
+                var responseData = await response.Content.ReadFromJsonAsync<int>();
+                return responseData;
+            }
+            else
+            {
+                throw new InvalidOperationException($"Failed to get Committees Count.");
+            }
+        }
     }
 }

@@ -29,5 +29,19 @@ namespace MLS_Digital_Management_System_Front_End.Services
                 throw new InvalidOperationException($"Failed to get penalties");
             }
         }
+
+        public async Task<int> GetPenaltiesCountAsync()
+        {
+            var response = await _httpClient.GetAsync($"api/Penalties/count");
+            if (response.IsSuccessStatusCode)
+            {
+                var count = await response.Content.ReadFromJsonAsync<int>();
+                return count;
+            }
+            else
+            {
+                throw new InvalidOperationException($"Failed to get ProBono count");
+            }
+        }
     }
 }

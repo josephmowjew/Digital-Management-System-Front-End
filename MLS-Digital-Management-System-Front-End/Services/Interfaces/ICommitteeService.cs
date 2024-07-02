@@ -6,5 +6,7 @@ namespace MLS_Digital_Management_System_Front_End.Services.Interfaces
     public interface ICommitteeService
     {
         Task<ReadCommitteeDTO> GetCommitteeByIdAsync(int id);
+
+        Task<int> GetCommitteesCountAsync();
     }
 }

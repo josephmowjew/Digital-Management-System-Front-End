@@ -10,6 +10,7 @@ public interface IMemberService
 
 
     Task<ReadMemberDTO> GetMemberByUserIdAsync(string id);
+    Task<int> GetMembersCount();
 
     //Task<ReadMemberDTO> AddMember(CreateMemberDTO createMemberDTO);
 }

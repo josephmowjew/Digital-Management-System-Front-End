@@ -38,4 +38,18 @@ public class LicenseApplicationService : ILicenseApplicationService
             throw new InvalidOperationException($"Failed to get license application with ID {id}.");
         }
     }
+
+    public async Task<int> GetLicenseApplicationsTotal()
+    {
+        var response = await _httpClient.GetAsync($"api/licenseApplications/count");
+        if (response.IsSuccessStatusCode)
+        {
+            var responseData = await response.Content.ReadFromJsonAsync<int>();
+            return responseData;
+        }
+        else
+        {
+            throw new InvalidOperationException($"Failed to get license application count");
+        }
+    }
 }

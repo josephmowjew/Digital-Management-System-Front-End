@@ -5,5 +5,6 @@ namespace MLS_Digital_Management_System_Front_End.Services.Interfaces
     public interface IPenaltyService
     {
         Task<List<ReadPenaltyDTO>> GetAllPenaltiesAsync();
+        Task<int> GetPenaltiesCountAsync();
     }
 }

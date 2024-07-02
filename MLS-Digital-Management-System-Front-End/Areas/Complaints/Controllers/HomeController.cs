@@ -16,20 +16,19 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Complaints.Controllers
         {
             _service = serviceRepository;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {   
-    
-            /*ViewBag.LicenseApplications = await this.GetSummedCPDUnits();
-            ViewBag.proBonoApplicationsTotal = await this.GetProBonoApplications();
-            ViewBag.cpdTrainingsCount = await this.GetTotalCpdTrainings();
-            ViewBag.proBonoHours = await this.GetTotalProBonoHours();*/
+            string token = this.GetToken();
+            this._service.Token = token;
+            ViewBag.penalties = await this.GetPenalties();
+            ViewBag.proBonos = await this.GetProBonos();
+            /*ViewBag.cpdTrainingsCount = await this.GetTotalCpdTrainings();*/
+            ViewBag.totalLicenseApplications = await this.GetLicenseApplications();
             return View();
         }
 
         public async Task<IActionResult> Profile()
         {
-
-
             await PopulateViewBags();
 
             return View();
@@ -172,7 +171,29 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Complaints.Controllers
 
             return summedUnits;
         }
+
+        private async Task<int> GetLicenseApplications()
+        {
+            var totalLicenseApplications = await _service.LicenseApplicationService.GetLicenseApplicationsTotal();
+
+            return totalLicenseApplications;
+        }
+
+        private async Task<int> GetProBonos()
+        {
+            var proBonoCount = await _service.ProBonoService.GetProBonoCountAsync();
+
+            return proBonoCount;
+        }
+
+        private async Task<int> GetPenalties()
+        {
+            var penaltiesCount = await _service.PenaltyService.GetPenaltiesCountAsync();
+
+            return penaltiesCount;
+        }
+
+
     
-        
     }
 }

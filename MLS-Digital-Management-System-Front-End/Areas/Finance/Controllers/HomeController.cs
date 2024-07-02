@@ -16,8 +16,15 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Finance.Controllers
         {
             _service = serviceRepository;
         }
-        public IActionResult Index()
-        {
+        public async Task<IActionResult> Index()
+        {   
+            string token = this.GetToken();
+            this._service.Token = token;
+            ViewBag.firmCount = await this.GetFirmsCount();
+            ViewBag.proBonos = await this.GetProBonos();
+            ViewBag.membersCount = await this.GetMembersCount();
+            ViewBag.invoiceRequestsCount = await this.GetInvoiceRequestsCount();
+            ViewBag.totalLicenseApplications = await this.GetLicenseApplications();
             return View();
         }
 
@@ -169,6 +176,38 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Finance.Controllers
             var summedUnits = await _service.CpdUnitsEarnedService.GetCpdSummedUnitsEarnedById(member.Id);
 
             return summedUnits;
+        }
+
+        private async Task<int> GetLicenseApplications()
+        {
+            var totalLicenseApplications = await _service.LicenseApplicationService.GetLicenseApplicationsTotal();
+
+            return totalLicenseApplications;
+        }
+
+        private async Task<int> GetProBonos()
+        {
+            var proBonoCount = await _service.ProBonoService.GetProBonoCountAsync();
+
+            return proBonoCount;
+        }
+        private async Task<int> GetFirmsCount()
+        {
+            var firmCount = await _service.FirmService.GetFirmsCount();
+
+            return firmCount;
+        }
+        private async Task<int> GetMembersCount()
+        {
+            var memberCount = await _service.MemberService.GetMembersCount();
+
+            return memberCount;
+        }
+
+        private async Task<int> GetInvoiceRequestsCount(){
+            var invoiceRequestsCount = await _service.InvoiceRequestService.GetInvoiceRequestsCount();
+
+            return invoiceRequestsCount;
         }
 
     }

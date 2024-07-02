@@ -219,11 +219,11 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
             return totalCpdTrainings;
         }
 
-        private async Task<int> GetTotalProBonoHours()
+        private async Task<double> GetTotalProBonoHours()
         {
-            var totalCpdTrainings = await _service.CpdTrainingRegistrationService.GetCpdTrainingsAttendedCountAsync();
+            var totalProBonoHours = await _service.ProBonoReportService.GetProBonoHoursTotalAsync();
 
-            return totalCpdTrainings;
+            return totalProBonoHours;
         }
        
     

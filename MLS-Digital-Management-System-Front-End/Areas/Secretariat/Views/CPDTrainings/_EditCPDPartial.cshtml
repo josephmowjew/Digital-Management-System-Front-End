@@ -35,17 +35,18 @@
                     <span asp-validation-for="Duration" class="text-danger"></span>
                 </div>
             </div>
-            <div class="col-md-4">
+             <div class="col-md-4">
                 <div class="mb-3 form-check">
                     <label asp-for="DateToBeConducted" class="control-label"></label>
-                    <input asp-for="DateToBeConducted" type="date" class="form-control" />
+                    <input asp-for="DateToBeConducted" type="date" class="form-control" min="@DateTime.Now.ToString("yyyy-MM-dd")" />
                     <span asp-validation-for="DateToBeConducted" class="text-danger"></span>
                 </div>
             </div>
-             <div class="col-md-4">
+
+           <div class="col-md-4">
                 <div class="mb-3 form-check">
                     <label asp-for="RegistrationDueDate" class="control-label"></label>
-                    <input asp-for="RegistrationDueDate" type="date" class="form-control" />
+                    <input asp-for="RegistrationDueDate" type="date" class="form-control" min="@DateTime.Now.ToString("yyyy-MM-dd")" />
                     <span asp-validation-for="RegistrationDueDate" class="text-danger"></span>
                 </div>
             </div>

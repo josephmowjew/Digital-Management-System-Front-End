@@ -410,7 +410,7 @@ class InvoiceRequestHandler {
     this.confirmAndSendRequest(
       "Are you sure you want to mark this invoice as generated?",
       `${this.host}/api/InvoiceRequest/MarkAsGenerated/${id}`,
-      "Invoice marked as generated successfully"
+      "Invoice marked as generated successfully",
     );
   }
 
@@ -418,7 +418,7 @@ class InvoiceRequestHandler {
     this.confirmAndSendRequest(
       "Are you sure you want to mark this invoice as paid?",
       `${this.host}/api/InvoiceRequest/MarkAsPaid/${id}`,
-      "Invoice marked as paid successfully"
+      "Invoice marked as paid successfully",
     );
   }
   
@@ -429,7 +429,7 @@ class InvoiceRequestHandler {
         this.sendAjaxRequest(null, "POST", url, () => {
           this.hideSpinner();
           toastr.success(successMessage);
-         
+          window.location.reload();
         });
       }
     });

@@ -10,9 +10,5 @@ public interface IUserService{
     Task<CreateUserDTO> CreateUserAsync(CreateUserDTO user);
     Task<List<ReadUserDTO>> GetAllUsersAsync();
     Task<ReadUserDTO> GetUserByIdAsync(string id);
-
-    
-
-    
-    
+    Task<int> GetUsersCount();
 }

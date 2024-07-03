@@ -16,8 +16,15 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Admin.Controllers
         {
             _service = serviceRepository;
         }
-        public IActionResult Index()
-        {
+         public async Task<IActionResult> Index()
+        {   
+            string token = AuthHelper.GetToken(HttpContext);;
+            this._service.Token = token;
+            ViewBag.firmCount = await this.GetFirmsCount();
+            ViewBag.countriesCount = await this.GetCountriesCount();
+            ViewBag.userCount = await this.GetUsersCount();
+            ViewBag.departmentCount = await this.GetDepartmentsCount();
+            
             return View();
         }
 
@@ -160,6 +167,33 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Admin.Controllers
             var summedUnits = await _service.CpdUnitsEarnedService.GetCpdSummedUnitsEarnedById(member.Id);
 
             return summedUnits;
+        }
+    
+        private async Task<int> GetFirmsCount()
+        {
+            var firmCount = await _service.FirmService.GetFirmsCount();
+
+            return firmCount;
+        }
+
+        private async Task<int> GetCountriesCount()
+        {
+            var firmCount = await _service.CountryService.GetCountryCount();
+
+            return firmCount;
+        }
+
+        private async Task<int> GetDepartmentsCount()
+        {
+            var departmentCount = await _service.DepartmentService.GetDepartmentCount();
+
+            return departmentCount;
+        }
+
+        private async Task<int> GetUsersCount()
+        {
+            var userCount = await _service.UserService.GetUsersCount();
+            return userCount;
         }
     }
 }

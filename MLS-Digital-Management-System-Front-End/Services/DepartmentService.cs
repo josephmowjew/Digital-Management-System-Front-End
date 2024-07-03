@@ -46,4 +46,19 @@ public class DepartmentService : IDepartmentService
     {
         throw new NotImplementedException();
     }
+
+    public async Task<int> GetDepartmentCount()
+    {
+        var response = await _httpClient.GetAsync("api/Departments/count");
+        if (response.IsSuccessStatusCode)
+        {
+        var responseData = await response.Content.ReadFromJsonAsync<int>();
+        return responseData;
+        }
+        else
+        {
+        throw new InvalidOperationException("Failed to get countries.");
+        }
+    }
 }
+

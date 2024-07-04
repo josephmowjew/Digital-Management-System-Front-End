@@ -1,34 +1,25 @@
-﻿@using Microsoft.Extensions.Configuration
+@using Microsoft.Extensions.Configuration
 @inject IConfiguration Configuration
 @{
     ViewData["Title"] = "Pro Bono Clients";
-    Layout = "~/Areas/Member/Views/shared/_Layout.cshtml";
-
-     var host = Configuration.GetSection("APIURL")["Link"];
+    Layout = "~/Areas/Secretariat/Views/shared/_Layout.cshtml";
+    var host = Configuration.GetSection("APIURL")["Link"];
 }
-<div>
-    <img src="~/assets/images/91.gif" id="spinner" />
-</div>
-<div class="card  w-100 h-100 d-flex justify-content-center ">
+
+
+
+<div class="card ">
     <div class="card-body">
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-info my-3" data-bs-toggle="modal" data-bs-target="#create_client_modal">
-            Add Client
-        </button>
-      
-        <!-- Modal -->
-        <div class="modal fade" id="create_client_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <partial name="_CreateProBonoClientPartial" />
+        <div>
+            <img src="~/assets/images/91.gif" id="spinner" />
         </div>
 
-        <div class="modal fade" id="edit_client_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <partial name="_EditProBonoClientPartial" />
-        </div>
+        <a onclick="window.history.back()" class="btn btn-secondary my-3">Back</a>
 
-        <h5 class="card-title fw-semibold mb-4 text-uppercase">Available Active Clients</h5>
+        <h5 class="card-title fw-semibold mb-4 text-uppercase">Removal Requests</h5>
        
         <div class="table-responsive">
-            <table class="table table-bordered table-hover " id="my_table">
+            <table class="table table-bordered " id="my_table">
                 <thead>
                     <tr>
                         <th>
@@ -54,11 +45,11 @@
                            Other Contacts
                         </th>
 
-                       
                         <th>
-                            Status
+                           Occupation
                         </th>
-                        <th >
+                        
+                        <th>
                             Action
                         </th>
 
@@ -84,17 +75,19 @@
         <script>
             $(document).ready(function () {
                 datatable = $('#my_table').DataTable({
+
+
                     "processing": true,
                     "serverSide": true,
                     "order": [[0, "desc"]],
                     ajax: {
-                    url: '@host/api/probonoclients/paged',
+                    url: '@host/api/probonoclients/removal',
                         type: 'get',
                         datatype: 'Json',
                         headers: {
                             'Authorization': 'Bearer @ViewBag.token'
-                    },
-                        
+                        }
+
                   },
                     columnDefs: [
                         {
@@ -148,29 +141,21 @@
                             className: "text-left",
                             "orderable": false,
                         },
-                       
-                         {
-                            data: "status",
-                            name: "status",
+                        {
+                            data: "occupation",
+                            name: "occupation",
                             className: "text-left",
                             "orderable": true,
                         },
+                        
+
                         {
                             data: "id",
                             name: "id",
                             "orderable": false,
-                            render: function (data, type, row) {
-                                if(row.createdById == "@ViewBag.userId"){
-                                    if(row.deleteRequest){
-                                        return "";
-                                    }else{
-                                        return "<a href='#' onclick='EditForm(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='btn btn-outline-primary my-1 btn-sm ti ti-pencil' title='edit' > Edit</a> <a href='#' type='button' onclick='DeleteRequest(\"" + data + "\",\"" + tokenValue + "\")' title='delete' class='btn btn-outline-danger btn-sm  ti ti-trash red-icon' >Delete</a>";
-                                    }
-                                }else{
-                                    return "";
-                                }
-                                
-                            }                     
+                            render: function (data) {
+                                return "<a href='#' onclick='Delete(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='btn btn-danger my-1 btn-sm ti ti-check' title='edit' >Approve</a> <a href='#' type='button' onclick='DenyDeleteRequest(\"" + data + "\",\"" + tokenValue + "\")' title='delete' class='btn btn-success btn-sm bi bi-x'> Deny</a>";
+                            }
                         }
                     ],
                     responsive: true,

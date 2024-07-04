@@ -16,9 +16,14 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Secretariat.Controllers
         {
             _service = serviceRepository;
         }
-        public IActionResult Index()
-        {
-
+        public async Task<IActionResult> Index()
+        {   
+            string token = this.GetToken();
+            this._service.Token = token;
+            ViewBag.committeesCount = await this.GetCommittees();
+            ViewBag.proBonos = await this.GetProBonos();
+            ViewBag.clientsCount = await this.GetClientsCount();
+            ViewBag.totalLicenseApplications = await this.GetLicenseApplications();
             return View();
         }
 
@@ -31,19 +36,6 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Secretariat.Controllers
 
             return View();
         }
-
-        /*public async Task<IActionResult> ViewMember()
-        {
-            await PopulateViewBagsMinimal();
-
-            //get member record to pass to the view
-            var member = await _service.MemberService.GetMemberByUserIdAsync(HttpContext.Request.Cookies["UserId"]);
-
-            ViewBag.member = member;
-
-
-            return View();
-        }*/
 
 
         private async Task PopulateViewBags()
@@ -181,6 +173,34 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Secretariat.Controllers
             var summedUnits = await _service.CpdUnitsEarnedService.GetCpdSummedUnitsEarnedById(member.Id);
 
             return summedUnits;
+        }
+
+        private async Task<int> GetLicenseApplications()
+        {
+            var totalLicenseApplications = await _service.LicenseApplicationService.GetLicenseApplicationsTotal();
+
+            return totalLicenseApplications;
+        }
+
+        private async Task<int> GetProBonos()
+        {
+            var proBonoCount = await _service.ProBonoService.GetProBonoCountAsync();
+
+            return proBonoCount;
+        }
+
+        private async Task<int> GetCommittees()
+        {
+            var committeeCount = await _service.CommitteeService.GetCommitteesCountAsync();
+
+            return committeeCount;
+        }
+
+        public async Task<int> GetClientsCount()
+        {
+            var clientCount = await _service.ProbonoClientService.GetClientsCountAsync();
+
+            return clientCount;
         }
 
     } 

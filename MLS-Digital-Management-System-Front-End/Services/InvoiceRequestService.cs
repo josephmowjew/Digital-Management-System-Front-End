@@ -39,4 +39,17 @@ public class InvoiceRequestService : IInvoiceRequestService
             throw new InvalidOperationException($"Failed to get invoice request with id {id}.");
         }
     }
+
+    public async Task<int> GetInvoiceRequestsCount(){
+        var response = await _httpClient.GetAsync("api/invoiceRequest/count");
+        if (response.IsSuccessStatusCode)
+        {
+            var responseData = await response.Content.ReadFromJsonAsync<int>();
+            return responseData;
+        }
+        else
+        {
+            throw new InvalidOperationException("Failed to get invoice requests count.");
+        }
+    }
 }

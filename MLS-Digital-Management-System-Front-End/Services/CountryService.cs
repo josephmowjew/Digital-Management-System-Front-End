@@ -65,4 +65,18 @@ public class CountryService : ICountryService
         throw new InvalidOperationException("Failed to get countries.");
         }
     }
+
+    public async Task<int> GetCountryCount()
+    {
+        var response = await _httpClient.GetAsync("api/Countries/count");
+        if (response.IsSuccessStatusCode)
+        {
+        var responseData = await response.Content.ReadFromJsonAsync<int>();
+        return responseData;
+        }
+        else
+        {
+        throw new InvalidOperationException("Failed to get countries.");
+        }
+    }
 }

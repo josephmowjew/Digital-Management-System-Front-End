@@ -319,13 +319,8 @@ class InvoiceRequestHandler {
                 },
                 'qb_invoices_table': {
                     url: `${this.host}/api/InvoiceRequest/processed`,
-                    columns: [  
-                        {
-                            data: "invoiceDate",
-                            name: "invoiceDate",
-                            className: "text-left",
-                            "orderable": false,
-                        },
+                    columns: [
+                        
                         {
                             data: "invoiceAmount",
                             name: "invoiceAmount",
@@ -336,10 +331,19 @@ class InvoiceRequestHandler {
                             }
                         },
                         {
-                            data: "createdDate",
-                            name: "createdDate",
+                            data: "unpaidAmount",
+                            name: "unpaidAmount",
                             className: "text-left",
                             orderable: true,
+                            render: function (data) {
+                                return data.toLocaleString('en-MW', { style: 'currency', currency: 'MWK' })
+                            }
+                        },  
+                        {
+                            data: "invoiceDate",
+                            name: "invoiceDate",
+                            className: "text-left",
+                            "orderable": false,
                             render: function (data) {
                                 if (data) {
                                     const date = new Date(data);
@@ -359,7 +363,7 @@ class InvoiceRequestHandler {
                                 let buttonsHtml = `<div class="d-flex justify-content-center">`;
                                 // Always add the View button with spacing
                                 buttonsHtml += `
-                                    <a href='/Member/InvoiceRequests/ViewProcessedInvoiceRequest?invoiceRequestId=${data}' class='btn btn-primary btn-sm mx-2'>View</a>
+                                    <a href='/Member/InvoiceRequests/ViewProcessedInvoiceRequest?invoiceRequestId=${data}' class='btn btn-primary btn-sm mx-2'> <i class="bi bi-info-circle"></i> view</a>
                                 `;
 
                                 buttonsHtml += `</div>`;
@@ -410,7 +414,7 @@ class InvoiceRequestHandler {
     this.confirmAndSendRequest(
       "Are you sure you want to mark this invoice as generated?",
       `${this.host}/api/InvoiceRequest/MarkAsGenerated/${id}`,
-      "Invoice marked as generated successfully"
+      "Invoice marked as generated successfully",
     );
   }
 
@@ -418,7 +422,7 @@ class InvoiceRequestHandler {
     this.confirmAndSendRequest(
       "Are you sure you want to mark this invoice as paid?",
       `${this.host}/api/InvoiceRequest/MarkAsPaid/${id}`,
-      "Invoice marked as paid successfully"
+      "Invoice marked as paid successfully",
     );
   }
   
@@ -429,7 +433,7 @@ class InvoiceRequestHandler {
         this.sendAjaxRequest(null, "POST", url, () => {
           this.hideSpinner();
           toastr.success(successMessage);
-         
+          window.location.reload();
         });
       }
     });

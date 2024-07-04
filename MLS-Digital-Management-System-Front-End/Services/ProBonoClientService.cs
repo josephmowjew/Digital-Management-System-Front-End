@@ -49,4 +49,18 @@ public class ProBonoClientService : IProBonoClientService
     {
         throw new NotImplementedException();
     }
+
+    public async Task<int> GetClientsCountAsync()
+    {
+        var response = await _httpClient.GetAsync($"api/probonoclients/count");
+        if (response.IsSuccessStatusCode)
+        {
+            var responseData = await response.Content.ReadFromJsonAsync<int>();
+            return responseData;
+        }
+        else
+        {
+            throw new InvalidOperationException($"Failed to get probono clients count.");
+        }
+    }
 }

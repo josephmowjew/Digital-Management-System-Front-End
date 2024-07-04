@@ -8,4 +8,6 @@ public interface IInvoiceRequestService
     Task<ReadInvoiceRequestDTO> GetInvoiceRequestByIdAsync(int id);
 
     Task<ReadQBInvoiceDTO> GetProcessedInvoiceRequestByIdAsync(string id);
+
+    Task<int> GetInvoiceRequestsCount();
 }

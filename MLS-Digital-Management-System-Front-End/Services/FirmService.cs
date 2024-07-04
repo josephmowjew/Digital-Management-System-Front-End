@@ -29,6 +29,19 @@ public class FirmService : IFirmService
         }
     }
 
+    public async Task<int> GetFirmsCount(){
+        var response = await _httpClient.GetAsync($"api/firms/count");
+        if (response.IsSuccessStatusCode)
+        {
+            var count = await response.Content.ReadFromJsonAsync<int>();
+            return count;
+        }
+        else
+        {
+            throw new InvalidOperationException($"Failed to get Firm count");
+        }
+    }
+
    
 
    

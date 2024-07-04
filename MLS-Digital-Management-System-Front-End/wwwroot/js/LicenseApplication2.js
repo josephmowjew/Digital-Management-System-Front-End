@@ -467,7 +467,8 @@ class FormHandler {
 
     handleAcceptApplicationSuccess(response) {
         this.hideSpinner();
-        toastr.success("application has been approved accepted successfully");
+        toastr.success("application has been approved successfully");
+        window.location.reload();
     }
 
     denyForm(id) {

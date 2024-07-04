@@ -53,4 +53,18 @@ public class UserService : IUserService
             throw new InvalidOperationException($"Failed to get user with id {id}.");
         }
     }
+
+    public async Task<int> GetUsersCount()
+    {
+        var response = await _httpClient.GetAsync("api/users/count");
+        if (response.IsSuccessStatusCode)
+        {
+        var responseData = await response.Content.ReadFromJsonAsync<int>();
+        return responseData;
+        }
+        else
+        {
+        throw new InvalidOperationException("Failed to get countries.");
+        }
+    }
 }

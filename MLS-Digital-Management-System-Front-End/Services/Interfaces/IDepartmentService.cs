@@ -10,4 +10,6 @@ public interface IDepartmentService
     Task<ReadDepartmentDTO> UpdateDepartment(UpdateDepartmentDTO department);
     Task<ReadDepartmentDTO> DeleteDepartment(int id);
 
+    Task<int> GetDepartmentCount();
+
 }

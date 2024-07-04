@@ -9,4 +9,5 @@ public interface ICountryService
     Task<ReadCountryDTO> AddCountry(CreateCountryDTO country);
     Task<ReadCountryDTO> UpdateCountry(UpdateCountryDTO country);
     Task<ReadCountryDTO> RemoveCountry(int id);
+    Task<int> GetCountryCount();
 }

@@ -12,4 +12,6 @@ public interface IProBonoClientService
     Task<ReadProBonoClientDTO> CreateProBonoClientAsync(CreateProBonoClientDTO createProBonoClientDTO);
 
     Task<ReadProBonoClientDTO> UpdateProBonoClientAsync(UpdateProBonoClientDTO updateProBonoClientDTO);
+
+    Task<int> GetClientsCountAsync();
 }

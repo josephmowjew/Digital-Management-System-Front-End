@@ -13,10 +13,17 @@
         <div>
             <img src="~/assets/images/91.gif" id="spinner" />
         </div>
-        <!-- Button trigger modal -->
+
+        <div class="d-flex justify-content-between">
+             <!-- Button trigger modal -->
         <button type="button" class="btn btn-info my-3" data-bs-toggle="modal" data-bs-target="#create_client_modal">
             Add Client
         </button>
+
+        <a asp-controller="ProBonoClients" asp-area="secretariat" asp-action="DeleteRequestedClients" class="btn btn-danger my-3">
+            Delete Request(s): @ViewBag.deleteRequestCount
+        </a>
+        </div>
       
         <!-- Modal -->
         <div class="modal fade" id="create_client_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

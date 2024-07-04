@@ -63,4 +63,18 @@ public class ProBonoClientService : IProBonoClientService
             throw new InvalidOperationException($"Failed to get probono clients count.");
         }
     }
+
+    public async Task<int> GetDeleteRequestCount()
+    {
+        var response = await _httpClient.GetAsync($"api/probonoclients/count/deleteRequests");
+        if (response.IsSuccessStatusCode)
+        {
+            var responseData = await response.Content.ReadFromJsonAsync<int>();
+            return responseData;
+        }
+        else
+        {
+            throw new InvalidOperationException($"Failed to get probono clients delete requests count.");
+        }
+    }
 }

@@ -52,7 +52,12 @@
                         <th>
                             Penalty Status
                         </th>
-                        <th>Penalty Document</th>
+                        <th>
+                            Penalty Document
+                            </th>
+                        <th>
+                            Invoice Number
+                            </th>
                         <th>
                             Amount Paid
                         </th>
@@ -107,7 +112,7 @@
                         className: "text-left",
                         "orderable": false,
                         render: function (data, type, row) {
-                            console.log(@ViewBag.memberId);
+                            
                             if (@ViewBag.memberId === 0) {
                                 return ''; // Render nothing
                             }
@@ -120,7 +125,6 @@
                         className: "text-left",
                         "orderable": false,
                         render: function (data, type, row) {
-                            console.log(@ViewBag.memberId);
                             if (@ViewBag.memberId === 0) {
                                 return ''; // Render nothing
                             }
@@ -133,7 +137,6 @@
                         className: "text-left",
                         "orderable": false,
                         render: function (data, type, row) {
-                            console.log(@ViewBag.memberId);
                             if (@ViewBag.memberId === 0) {
                                 return ''; // Render nothing
                             }
@@ -157,6 +160,21 @@
                                     return '';
                                 }
                             }
+                        }
+                    },
+                    {
+                        data: "invoiceRequest",
+                        name: "Invoice ID",
+                        className: "text-left",
+                        "orderable": false,
+                        render: function (data, type, row) {
+                            var invoiceNumber = row.invoiceRequest?.qbInvoiceId ?? "processing";
+                            if (@ViewBag.memberId === 0) {
+                                return ''; // Render nothing
+                            }else{
+                                return invoiceNumber; // Render the original data
+                            }
+                            
                         }
                     },
                     {
@@ -221,6 +239,7 @@
                         "orderable": false,
                         render: function (data, type, row) {
                             var balance = row.amountRemaining
+                            var invoiceNumber = row.invoiceRequest?.qbInvoiceId ?? null;
 
                             if (@ViewBag.memberId === 0) {
                                 return ''; // Render nothing
@@ -228,9 +247,13 @@
                                 if (balance == 0) {
                                     return ""
                                 } else {
-                                    return `
-                                                <a href='#' onclick='penaltyHandler.editForm(${data},"${tokenValue}")' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-credit-card' title='edit'> Make Payment</a>
-                                            `
+                                    if(invoiceNumber != null){
+                                        return `
+                                                    <a href='#' onclick='penaltyHandler.editForm(${data},"${tokenValue}")' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-credit-card' title='edit'> Make Payment</a>
+                                                `
+                                    }else{
+                                        return "";
+                                    }
                                 }
                             }
                         }

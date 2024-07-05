@@ -6,11 +6,9 @@
 
      var host = Configuration.GetSection("APIURL")["Link"];
 }
-
-
-
-
-
+<div>
+    <img src="~/assets/images/91.gif" id="spinner" />
+</div>
 <div class="card  w-100 h-100 d-flex justify-content-center ">
     <div class="card-body">
         <!-- Button trigger modal -->
@@ -86,18 +84,17 @@
         <script>
             $(document).ready(function () {
                 datatable = $('#my_table').DataTable({
-
-
                     "processing": true,
                     "serverSide": true,
                     "order": [[0, "desc"]],
                     ajax: {
                     url: '@host/api/probonoclients/paged',
                         type: 'get',
-                        datatype: 'Json',headers: {
-                                        'Authorization': 'Bearer @ViewBag.token'
-                                    }
-
+                        datatype: 'Json',
+                        headers: {
+                            'Authorization': 'Bearer @ViewBag.token'
+                    },
+                        
                   },
                     columnDefs: [
                         {
@@ -162,9 +159,19 @@
                             data: "id",
                             name: "id",
                             "orderable": false,
-                            render: function (data) {
-                                return "<a href='#' onclick='EditForm(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='btn btn-outline-primary my-1 btn-sm ti ti-pencil' title='edit' > Edit</a> <a href='#' type='button' onclick='Delete(\"" + data + "\",\"" + tokenValue + "\")' title='delete' class='btn btn-outline-danger btn-sm  ti ti-trash red-icon' >Delete</a>"
-                            }                     }
+                            render: function (data, type, row) {
+                                if(row.createdById == "@ViewBag.userId"){
+                                    if(row.deleteRequest){
+                                        return "";
+                                    }else{
+                                        return "<a href='#' onclick='EditForm(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='btn btn-outline-primary my-1 btn-sm ti ti-pencil' title='edit' > Edit</a> <a href='#' type='button' onclick='DeleteRequest(\"" + data + "\",\"" + tokenValue + "\")' title='delete' class='btn btn-outline-danger btn-sm  ti ti-trash red-icon' >Delete</a>";
+                                    }
+                                }else{
+                                    return "";
+                                }
+                                
+                            }                     
+                        }
                     ],
                     responsive: true,
                     "autoWidth": false,

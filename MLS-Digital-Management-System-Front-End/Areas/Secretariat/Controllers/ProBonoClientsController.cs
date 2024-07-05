@@ -20,6 +20,7 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Secretariat.Controllers
 
             await PopulateViewBags();
 
+            ViewBag.deleteRequestCount = await GetDeleteRequestCount();
             return View();
         }
 
@@ -30,6 +31,20 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Secretariat.Controllers
             ViewBag.token = token;
             this._service.Token = token;
             
+        }
+
+        public async Task<IActionResult> DeleteRequestedClients()
+        {
+            await PopulateViewBags();
+
+            return View();
+        }
+
+        public async Task<int> GetDeleteRequestCount()
+        {
+            var count = await _service.ProbonoClientService.GetDeleteRequestCount();
+
+            return count;
         }
 
         

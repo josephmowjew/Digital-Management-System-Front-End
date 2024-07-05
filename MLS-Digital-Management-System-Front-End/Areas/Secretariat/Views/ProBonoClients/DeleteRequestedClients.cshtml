@@ -1,4 +1,4 @@
-﻿@using Microsoft.Extensions.Configuration
+@using Microsoft.Extensions.Configuration
 @inject IConfiguration Configuration
 @{
     ViewData["Title"] = "Pro Bono Clients";
@@ -14,27 +14,9 @@
             <img src="~/assets/images/91.gif" id="spinner" />
         </div>
 
-        <div class="d-flex justify-content-between">
-             <!-- Button trigger modal -->
-        <button type="button" class="btn btn-info my-3" data-bs-toggle="modal" data-bs-target="#create_client_modal">
-            Add Client
-        </button>
+        <a onclick="window.history.back()" class="btn btn-secondary my-3">Back</a>
 
-        <a asp-controller="ProBonoClients" asp-area="secretariat" asp-action="DeleteRequestedClients" class="btn btn-danger my-3">
-            Delete Request(s): @ViewBag.deleteRequestCount
-        </a>
-        </div>
-      
-        <!-- Modal -->
-        <div class="modal fade" id="create_client_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <partial name="_CreateProBonoClientPartial" />
-        </div>
-
-        <div class="modal fade" id="edit_client_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <partial name="_EditProBonoClientPartial" />
-        </div>
-
-        <h5 class="card-title fw-semibold mb-4 text-uppercase">Available Active Clients</h5>
+        <h5 class="card-title fw-semibold mb-4 text-uppercase">Removal Requests</h5>
        
         <div class="table-responsive">
             <table class="table table-bordered " id="my_table">
@@ -99,11 +81,12 @@
                     "serverSide": true,
                     "order": [[0, "desc"]],
                     ajax: {
-                    url: '@host/api/probonoclients/paged',
+                    url: '@host/api/probonoclients/removal',
                         type: 'get',
-                        datatype: 'Json',headers: {
-                                        'Authorization': 'Bearer @ViewBag.token'
-                                    }
+                        datatype: 'Json',
+                        headers: {
+                            'Authorization': 'Bearer @ViewBag.token'
+                        }
 
                   },
                     columnDefs: [
@@ -170,13 +153,8 @@
                             data: "id",
                             name: "id",
                             "orderable": false,
-                            render: function (data, type, row) {
-                            let links = "";
-                            if (row.status.toLowerCase() == "pending") {
-                            links += "<a href='#' onclick='Activate(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='ti ti-check' title='activate'></a>";
-                            }
-                            links += "<a href='#' onclick='EditForm(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='btn btn-outline-primary my-1 btn-sm ti ti-pencil' title='edit' >Edit</a> <a href='#' type='button' onclick='Delete(\"" + data + "\",\"" + tokenValue + "\")' title='delete' class='ti ti-trash red-icon btn btn-outline-danger btn-sm'>Delete</a>"
-                            return links;
+                            render: function (data) {
+                                return "<a href='#' onclick='Delete(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='btn btn-danger my-1 btn-sm ti ti-check' title='edit' >Approve</a> <a href='#' type='button' onclick='DenyDeleteRequest(\"" + data + "\",\"" + tokenValue + "\")' title='delete' class='btn btn-success btn-sm bi bi-x'> Deny</a>";
                             }
                         }
                     ],

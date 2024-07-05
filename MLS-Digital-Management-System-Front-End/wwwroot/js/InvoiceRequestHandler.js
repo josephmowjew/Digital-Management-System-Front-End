@@ -356,6 +356,12 @@ class InvoiceRequestHandler {
                             }
                         },
                         {
+                            data: "invoiceType",
+                            name: "invoiceType",
+                            className: "text-left",
+                            orderable: true,
+                        },
+                        {
                             data: "id",
                             name: "id",
                             "orderable": false,

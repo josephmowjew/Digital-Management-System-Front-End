@@ -29,7 +29,7 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
             string token = AuthHelper.GetToken(HttpContext);
             ViewBag.token = token;
             this._service.Token = token;
-            
+            ViewBag.userId = AuthHelper.GetUserId(HttpContext);
         }
 
         

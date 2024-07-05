@@ -13,7 +13,7 @@
                             <div class="card card-hover">
                                 <div class="p-2 rounded bg-light-primary text-center">
                                     <h1 class="fw-light text-primary">@ViewBag.totalLicenseApplications</h1>
-                                    <p class="text-primary">Licence Applications</p> 
+                                    <p class="text-primary">Pending Licence Applications</p> 
                                 </div>
                             </div>
                         </a>
@@ -23,8 +23,8 @@
                         <a asp-area="Complaints" asp-controller="Home" asp-action="Index" aria-expanded="false">
                             <div class="card card-hover">
                                 <div class="p-2 rounded bg-light-warning text-center">
-                                    <h1 class="fw-light text-secondary">@ViewBag.proBonos</h1>
-                                    <h6 class="text-primary">Pro Bono Cases Registered</h6>
+                                    <h1 class="fw-light text-warning">@ViewBag.proBonos</h1>
+                                    <p class="text-warning">Pro Bono Cases Registered</p>
                                 </div>
                             </div>
                         </a>
@@ -35,7 +35,7 @@
                             <div class="card card-hover">
                                 <div class="p-2 rounded bg-light-success text-center">
                                     <h1 class="fw-light text-success">@ViewBag.penalties</h1>
-                                    <h6 class="text-success">Penalties</h6>
+                                    <p class="text-success">Penalties</p>
                                 </div>
                             </div>
                         </a>

@@ -1,5 +1,7 @@
 ﻿using MLS_Digital_Management_System_Front_End.Core.DTOs.Attachment;
+using MLS_Digital_Management_System_Front_End.Core.DTOs.InvoiceRequest;
 using MLS_Digital_Management_System_Front_End.Core.DTOs.YearOfOperation;
+using MLS_Digital_Management_System_Front_End.Core.Models;
 using System.ComponentModel.DataAnnotations;
 
 namespace MLS_Digital_Management_System_Front_End.Core.DTOs.Penalty
@@ -17,5 +19,7 @@ namespace MLS_Digital_Management_System_Front_End.Core.DTOs.Penalty
         public int YearOfOperationId { get; set; }
         public double AmountRemaining { get; set; }
         public List<IFormFile>? Attachments { get; set; }
+        public int? InvoiceRequestId { get; set; }
+        public ReadInvoiceRequestDTO InvoiceRequest { get; set; }
     }
 }

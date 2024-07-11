@@ -217,7 +217,6 @@ function Activate(id,token) {
 }
 function DenyForm(id,token) { 
     
-    
     //get the input field inside the edit role modal form
 
     $("#deny_firm_modal input[name ='FirmId']").val(id)
@@ -226,11 +225,86 @@ function DenyForm(id,token) {
 
     $("#deny_firm_modal button[name='deny_firm_btn']").unbind().click(function () { DenyFirm() })
 
-
-    
     $("#deny_firm_modal").modal("show");
-  }
+}
 
+function LevyForm(id, token){
+    showSpinner();
+    
+    $("#levy_modal").modal("show");
+
+    // When the modal is shown, bind the submit button click event
+    $("#declareLevyBtn").off('click').on('click', function() {
+        onLevySubmit(id, token);
+    });
+
+    hideSpinner();
+    
+}
+
+function onLevySubmit(firmId, token){
+    
+    showSpinner();
+
+    var form = $("#levy_modal form")[0];
+
+    var formData = {};
+
+        // Iterate over the form's elements and build the formData object dynamically
+        $(form).find('input, select, textarea').each(function(index, element) {
+            var field = $(element);
+            var fieldName = field.attr('name');
+            var fieldValue = field.val();
+            formData[fieldName] = fieldValue;
+        });
+        
+        // Add FirmId to formData
+        formData['FirmId'] = firmId;
+
+        formData['LevyAmount'] = 0;
+        formData['Percentage'] = 10;
+
+        //send the request
+
+        $.ajax({
+            url:  `${host}/api/LevyDeclaration`,
+            type: 'POST',
+            data: JSON.stringify(formData), // Convert formData object to JSON string
+            contentType: 'application/json', // Set content type to JSON
+            headers: {
+                'Authorization': "Bearer "+ tokenValue
+            },
+            success: function (data) {
+
+                //parse whatever comes back to html
+
+                var parsedData = $.parseHTML(data)
+
+                hideSpinner();
+
+               
+                    //show success message to the firm
+                    var dataTable = $('#my_table').DataTable();
+
+                    toastr.success("Levy declared successfully")
+
+                    $("#levy_modal").modal("hide")
+
+                    dataTable.ajax.reload();
+
+            },
+            error: function (xhr, ajaxOtions, thrownError) {
+                hideSpinner();
+                var errorResponse = JSON.parse(xhr.responseText);
+                $.each(errorResponse, function (key, value) {
+                    $.each(value, function (index, message) {
+                        $("#" + key).siblings("span.text-danger").text(message);
+                    });
+                });
+            }
+
+        });
+}
 
 function DenyFirm() {
 

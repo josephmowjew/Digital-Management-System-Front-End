@@ -10,11 +10,11 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
     [Area("Member")]
     public class FirmsController : Controller
     {
-         private readonly IServiceRepository _service;
-         public FirmsController(IServiceRepository serviceRepository)
-         {
-             _service = serviceRepository;
-         }
+        private readonly IServiceRepository _service;
+        public FirmsController(IServiceRepository serviceRepository)
+        {
+            _service = serviceRepository;
+        }
         public async Task<IActionResult> Index()
         {
 
@@ -23,18 +23,23 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
 
         }
 
+        public async Task<IActionResult> FirmDetails(int Id)
+        {
+            await PopulateViewBags();
 
-         private async Task PopulateViewBags()
+            var firmDetails = await _service.FirmService.GetFirmByIdAsync(Id);
+
+            ViewBag.firm = firmDetails;
+
+            return View();
+        }
+
+        private async Task PopulateViewBags()
         {
             //get the token
             string token = AuthHelper.GetToken(HttpContext);
             ViewBag.token = token;
             this._service.Token = token;
-           
-
         }
-
-       
-
     }
 }

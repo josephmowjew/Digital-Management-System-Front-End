@@ -19,6 +19,11 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
         {
 
             await PopulateViewBags();
+
+            var member = await _service.MemberService.GetMemberByUserIdAsync(HttpContext.Request.Cookies["UserId"]);
+            ViewBag.member = member;
+            ViewBag.membersList = await GetAllMembersAsync();
+
             return View();
 
         }
@@ -40,6 +45,26 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
             string token = AuthHelper.GetToken(HttpContext);
             ViewBag.token = token;
             this._service.Token = token;
+        }
+
+        private async Task<List<SelectListItem>> GetAllMembersAsync()
+        {
+            List<SelectListItem> membersList = new() { new SelectListItem() { Text = "--- Select Member ---", Value = "" } };
+
+            //get identity types from remote
+            var memberListFromRemote = await this._service.MemberService.GetAllMembersAsync();
+
+            if (memberListFromRemote != null)
+            {
+                memberListFromRemote.ForEach(member =>
+                {
+                    if(member.CustomerId != null){
+                        membersList.Add(new SelectListItem() { Text = member.User.FullName, Value = member.Id.ToString() });
+                    }
+                });
+            }
+
+            return membersList;
         }
     }
 }

@@ -138,8 +138,6 @@ class ThreadHandler {
       const button = event.currentTarget;
       const id = button.getAttribute("data-id");
       const token = button.getAttribute("data-token");
-
-      console.log(id)
   
       bootbox.confirm("Are you sure you want to delete this thread?", result => {
         if (result) {

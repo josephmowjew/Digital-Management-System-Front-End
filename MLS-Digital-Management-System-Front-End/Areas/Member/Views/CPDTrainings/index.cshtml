@@ -209,12 +209,12 @@
                                         
 
                                     }else{
-                                         buttons += `<a href='#' onclick='cpdTrainingHandler.registerForm("${data}", "${JSON.stringify(row).replace(/"/g, "\\\"")}")' type='button' class='btn btn-outline-primary mx-1 btn-sm ' title='register'> Register</a>`;
+                                         buttons += `<a href='#' onclick='cpdTrainingHandler.registerForm("${data}", "${JSON.stringify(row).replace(/"/g, "\\\"")}")' type='button' class='btn btn-outline-primary mx-1 btn-sm my-1' title='register'> Register</a>`;
 
                                     }
                                     
                                     if (row.isFree != true && row.invoiceRequestId == null) {
-                                        buttons += "<a href='#' onclick='cpdTrainingHandler.invoiceForm(\"" + data + "\",\"" + JSON.stringify(row).replace(/"/g, "\\\"") + "\")' type='button' class='btn btn-outline-warning mx-1 btn-sm ' title='Invoice'> Invoice</a>";
+                                        buttons += "<a href='#' onclick='cpdTrainingHandler.invoiceForm(\"" + data + "\",\"" + JSON.stringify(row).replace(/"/g, "\\\"") + "\")' type='button' class='btn btn-outline-warning mx-1 btn-sm my-1 ' title='Invoice'> Invoice</a>";
                                     }
                                     
                                     buttons += "<a href='/member/CPDTrainings/TrainingDetails/" + data + "' type = 'button' class='btn btn-outline-success mx-1 btn-sm ti ti-eye text-lg' title = 'show details'> View </a>";

@@ -522,6 +522,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWVtYmVyXFZpZXdzXEludm9pY2VSZXF1ZXN0c1xWaWV3SW52b2ljZVJlcXVlc3QuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Joseph-Sparc/Documents/C\# Projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Member/Views/InvoiceRequests/ViewProcessedInvoiceRequest.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWVtYmVyXFZpZXdzXEludm9pY2VSZXF1ZXN0c1xWaWV3UHJvY2Vzc2VkSW52b2ljZVJlcXVlc3QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Joseph-Sparc/Documents/C\# Projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Member/Views/InvoiceRequests/_CreateInvoiceRequestPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWVtYmVyXFZpZXdzXEludm9pY2VSZXF1ZXN0c1xfQ3JlYXRlSW52b2ljZVJlcXVlc3RQYXJ0aWFsLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -772,6 +776,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/Joseph-Sparc/Documents/C\# Projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Secretariat/Views/ProBonoApplications/_ViewProBonoClientPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU2VjcmV0YXJpYXRcVmlld3NcUHJvQm9ub0FwcGxpY2F0aW9uc1xfVmlld1Byb0Jvbm9DbGllbnRQYXJ0aWFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Joseph-Sparc/Documents/C\# Projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Secretariat/Views/ProBonoClients/DeleteRequestedClients.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU2VjcmV0YXJpYXRcVmlld3NcUHJvQm9ub0NsaWVudHNcRGVsZXRlUmVxdWVzdGVkQ2xpZW50cy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Joseph-Sparc/Documents/C\# Projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Secretariat/Views/ProBonoClients/Index.cshtml]

@@ -42,6 +42,20 @@ public class FirmService : IFirmService
         }
     }
 
+    public async Task<ReadFirmDTO> GetFirmByIdAsync(int id)
+    {
+        var response = await _httpClient.GetAsync($"api/firms/getfirm/{id}");
+        if (response.IsSuccessStatusCode)
+        {
+            var responseData = await response.Content.ReadFromJsonAsync<ReadFirmDTO>();
+            return responseData;
+        }
+        else
+        {
+            throw new InvalidOperationException($"Failed to get firm by id.");
+        }   
+    }
+
    
 
    

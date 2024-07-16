@@ -22,18 +22,18 @@
                 <div class="row row-cols-lg-2">
                     <div class="mb-3">
                         <label asp-for="PrimaryContactPerson" class="form-label"></label>
-                        <input asp-for="PrimaryContactPerson" placeholder="Enter Primary Contact Person" class="form-control" />
+                        <input asp-for="PrimaryContactPerson" class="form-control" value="@ViewBag.member.User.FullName" readonly/>
                         <span asp-validation-for="PrimaryContactPerson" class="text-danger"></span>
                     </div>
                     <div class="mb-3">
                         <label asp-for="PrimaryPhoneNumber" class="form-label"></label>
-                        <input asp-for="PrimaryPhoneNumber" placeholder="Enter Primary Phone Number" class="form-control" />
+                        <input asp-for="PrimaryPhoneNumber" class="form-control" value="@ViewBag.member.User.PhoneNumber" readonly />
                         <span asp-validation-for="PrimaryPhoneNumber" class="text-danger"></span>
                     </div>
                     
                     <div class="mb-3">
                         <label asp-for="SecondaryContactPerson" class="form-label"></label>
-                        <input asp-for="SecondaryContactPerson" placeholder="Enter Secondary Contact Person" class="form-control" />
+                        <select asp-for="SecondaryContactPerson" asp-items="@ViewBag.membersList" class="form-control"></select>
                         <span asp-validation-for="SecondaryContactPerson" class="text-danger"></span>
                     </div>
               

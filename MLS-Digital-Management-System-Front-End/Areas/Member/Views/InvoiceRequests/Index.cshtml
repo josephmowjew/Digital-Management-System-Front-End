@@ -11,9 +11,20 @@
 <div>
     <img src="~/assets/images/91.gif" id="spinner" />
 </div>
-<button type="button" class="btn btn-info my-3" data-bs-toggle="modal" data-bs-target="#create_invoice_request_modal">
-    Request Invoice
-</button>
+
+@if (ViewBag.membership) {
+    @if (ViewBag.member?.CustomerId == null){
+        <button type="button" class="btn btn-info my-3">
+            Contact finance Officer
+        </button>
+    }else{
+        <button type="button" class="btn btn-info my-3" data-bs-toggle="modal" data-bs-target="#create_invoice_request_modal">
+            Request Invoice
+        </button>
+    }
+}else{
+    <a asp-area="Member" asp-action="ViewMember" asp-controller="Home" class="btn btn-warning my-3">Complete Membership Details</a>
+}
 
 <!-- Modal -->
 <div class="modal fade" id="create_invoice_request_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

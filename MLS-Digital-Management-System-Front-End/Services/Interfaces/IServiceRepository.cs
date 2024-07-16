@@ -30,5 +30,7 @@ public interface IServiceRepository{
     IProBonoReportService ProBonoReportService { get; }
     IProBonoService ProBonoService { get; }
     IInvoiceRequestService InvoiceRequestService { get; }
+    ILevyDeclarationService LevyDeclarationService { get; }
+    ILevyPercentService LevyPercentService { get; }
 }
 

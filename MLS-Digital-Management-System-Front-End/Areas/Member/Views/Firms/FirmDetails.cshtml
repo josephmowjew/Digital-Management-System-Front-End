@@ -1,0 +1,201 @@
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+@{
+    ViewData["Title"] = "Firm";
+    Layout = "~/Areas/Member/Views/shared/_Layout.cshtml";
+
+    var host = Configuration.GetSection("APIURL")["Link"];
+    var apiPrefix =  Configuration.GetSection("APISettings")["API_Prefix"];
+}
+
+<div>
+    <img src="~/assets/images/91.gif" id="spinner" />
+</div>
+
+<div>
+    <a asp-action="index" asp-controller="firms" asp-area="member" class="btn btn-secondary py-1 px-2">
+        Back
+    </a>
+</div>
+
+<div class="card w-100 h-100 d-flex justify-content-center mt-2">
+    <div class="card-body">
+        <h5 class="card-title fw-semibold mb-4 text-uppercase text-center fs-4">Firm Details</h5>
+
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="form-label">Name</label>
+                    <p class="form-control-static">@ViewBag.firm.Name</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="form-label">Postal Address</label>
+                    <p class="form-control-static">@ViewBag.firm.PostalAddress</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="form-label">Primary Contact Person</label>
+                    <p class="form-control-static">@ViewBag.firm.PrimaryContactPerson</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="form-label">Primary Phone Number</label>
+                    <p class="form-control-static">@ViewBag.firm.PrimaryPhoneNumber</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="form-label">Secondary Contact Person</label>
+                    <p class="form-control-static">@ViewBag.firm.SecondaryContactPerson</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="form-label">Secondary Phone Number</label>
+                    <p class="form-control-static">@ViewBag.firm.SecondaryPhoneNumber</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="form-label">Physical Address</label>
+                    <p class="form-control-static">@ViewBag.firm.PhysicalAddress</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title fw-semibold mb-4 text-uppercase text-center fs-4">Firm Levy</h5>
+        <div class="table-responsive">
+            <table class="table table-bordered " id="levy_table">
+                <thead>
+                    <tr>
+                        <th>
+                            Month
+                        </th>
+                        <th>
+                            Revenue
+                        </th>      
+                        <th>
+                            Calculated Levy
+                        </th> 
+
+                    </tr>
+                </thead>       
+                <tbody>
+                </tbody>      
+            </table>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+
+    <script>
+        var datatable;
+        var tokenValue = '@ViewBag.token';
+        var host = '@host';
+    </script>
+    <script src="~/js/Firm.js" asp-append-version="true"></script>
+    <script>
+        $(document).ready(function () {
+            datatable = $('#levy_table').DataTable({
+
+
+                "processing": true,
+                "serverSide": true,
+                "order": [[0, "desc"]],
+                ajax: {
+                url: "@host/api/LevyDeclaration/paged",
+                        type: 'get',
+                        datatype: 'Json',
+                        headers: {
+                            'Authorization': 'Bearer @ViewBag.token'
+                    },
+
+
+                  },
+                    columnDefs: [
+                        {
+                            defaultContent: "",
+                            targets: "_all",
+                            'orderable': true
+                        },
+                    ],
+                    columns: [
+                        {
+                            data: "month",
+                            name: "month",
+                            className: "text-left",
+                            "orderable": true,
+                            render: function (data, type, row) {
+                                if (type === 'display' || type === 'filter') {
+                                    const date = new Date(data);
+                                    return date.toLocaleString('default', { month: 'long' });
+                                }
+                            }
+                        },                      
+                        {
+                            data: "revenue",
+                            name: "revenue",
+                            className: "text-left",
+                            "orderable": true,
+                            render: function (data, type, row) {
+                                if (type === 'display' || type === 'filter') {
+                                    return new Intl.NumberFormat('en-MW', {
+                                        style: 'currency',
+                                        currency: 'MWK',
+                                        minimumFractionDigits: 2,
+                                        maximumFractionDigits: 2
+                                    }).format(data);
+                                }
+                                return data;
+                            }
+                        },
+                           {
+                            data: "levyAmount",
+                            name: "levyAmount",
+                            className: "text-left",
+                            "orderable": true,
+                            render: function (data, type, row) {
+                                if (type === 'display' || type === 'filter') {
+                                    return new Intl.NumberFormat('en-MW', {
+                                        style: 'currency',
+                                        currency: 'MWK',
+                                        minimumFractionDigits: 2,
+                                        maximumFractionDigits: 2
+                                    }).format(data);
+                                }
+                                return data;
+                            }
+                        },
+                        
+                    ],
+                    responsive: true,
+                    "autoWidth": false,
+            });
+        });
+    </script>
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

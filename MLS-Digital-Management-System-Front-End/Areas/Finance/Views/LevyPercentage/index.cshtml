@@ -1,0 +1,119 @@
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+@{
+    ViewData["Title"] = "Levy Percentage";
+    Layout = "~/Areas/Finance/Views/shared/_Layout.cshtml";
+
+    var host = Configuration.GetSection("APIURL")["Link"];
+}
+
+<div class="card">
+    <div class="card-body">
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-info my-3" data-bs-toggle="modal" data-bs-target="#create_levyPercentage_modal">
+            Create Levy Percentage
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="create_levyPercentage_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <partial name="_CreateLevyPercentagePartial" />
+        </div>
+
+        <div class="modal fade" id="edit_levyPercentage_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <partial name="_EditLevyPercentagePartial" />
+        </div>
+
+        <h5 class="card-title fw-semibold mb-4 text-uppercase">Available Levy Percentages</h5>
+       
+        <div class="table-responsive">
+            <table class="table table-bordered " id="my_table">
+                <thead>
+                    <tr>
+                        <th>
+                            Percentage
+                        </th>
+                        <th>
+                            Start Date
+                        </th>
+                        <th>
+                            End Date
+                        </th>
+                        <th>
+                            Action
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        var datatable;
+        var tokenValue = '@ViewBag.token';
+        var host = '@host';
+    </script>
+
+    <script src="~/js/LevyPercentage.js" asp-append-version="true"></script>
+    <script>
+        $(document).ready(function () {
+            datatable = $('#my_table').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "order": [[1, "desc"]],
+                ajax: {
+                    url: "@host/api/LevyPercentages/paged",
+                    type: 'get',
+                    datatype: 'Json',
+                    headers: {
+                        'Authorization': 'Bearer @ViewBag.token'
+                    }
+                },
+                columnDefs: [
+                    {
+                        defaultContent: "",
+                        targets: "_all",
+                        'orderable': true
+                    },
+                ],
+                columns: [
+                    {
+                        data: "percentage",
+                        name: "percentage",
+                        className: "text-left",
+                        "orderable": true,
+                    },
+                    {
+                        data: "startDate",
+                        name: "startDate",
+                        className: "text-left",
+                        "orderable": true,
+                    },
+                    {
+                        data: "endDate",
+                        name: "endDate",
+                        className: "text-left",
+                        "orderable": true,
+                    },
+                    {
+                        data: "id",
+                        name: "id",
+                        "orderable": false,
+                        render: function (data) {
+                            return "<a href='#' onclick='EditForm(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-pencil' title='edit' > Edit</a><a href='#' type='button' onclick='Delete(\"" + data + "\",\"" + tokenValue + "\")' title='delete' class='ti ti-trash red-icon btn btn-outline-danger my-1 btn-sm' > Delete</a>"
+                        }
+                    }
+                ],
+                responsive: true,
+                "autoWidth": false,
+            });
+        });
+    </script>
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

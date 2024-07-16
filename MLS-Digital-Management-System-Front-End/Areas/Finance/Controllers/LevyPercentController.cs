@@ -7,11 +7,11 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Finance.Controllers
 {
     [Authorize]
     [Area("Finance")]
-    public class LevyPercentageController : Controller
+    public class LevyPercentController : Controller
     {
         private readonly IServiceRepository _service;
 
-        public LevyPercentageController(IServiceRepository serviceRepository)
+        public LevyPercentController(IServiceRepository serviceRepository)
         {
             _service = serviceRepository;
         }

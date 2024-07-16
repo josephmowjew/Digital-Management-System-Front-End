@@ -26,6 +26,21 @@
        <div>
             <img src="~/assets/images/91.gif" id="spinner" />
         </div>
+
+        @if (ViewBag.membership) {
+            
+
+                @if (ViewBag.member?.CustomerId == null) {
+                    <button type="button" class="btn btn-info my-3">
+                        <span>Contact finance officer</span>
+                    </button>
+                }
+                else {
+                    
+                }
+        }else{
+            <a asp-area="Member" asp-action="ViewMember" asp-controller="Home" class="btn btn-warning my-3">Complete Membership Details</a>
+        }
         
          <!-- Modal -->
         <div class="modal fade" id="register_cpd_training_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -79,6 +94,7 @@
         var datatable;
         var tokenValue = '@ViewBag.token';
         var host = '@host';
+        var isCustomerId = @Json.Serialize(ViewBag.CustomerId);
     </script>
     <script>
       $(function () {
@@ -201,25 +217,33 @@
                                 // Convert the time difference from milliseconds to days
                                 const daysDiff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
 
+                                var memberCustomerId = '@ViewBag.member.CustomerId';
+                                
                                 let buttons = "";
                                 if (daysDiff >= 1) {
-                                    
-                                    if(row.isFree == false && row.invoiceRequestId == null)
-                                    {
+                                    if(isCustomerId){
                                         
 
-                                    }else{
-                                         buttons += `<a href='#' onclick='cpdTrainingHandler.registerForm("${data}", "${JSON.stringify(row).replace(/"/g, "\\\"")}")' type='button' class='btn btn-outline-primary mx-1 btn-sm my-1' title='register'> Register</a>`;
+                                        if(row.isFree == false && row.invoiceRequestId == null)
+                                        {
+                                            
 
+                                        }else{
+                                            buttons += `<a href='#' onclick='cpdTrainingHandler.registerForm("${data}", "${JSON.stringify(row).replace(/"/g, "\\\"")}")' type='button' class='btn btn-outline-primary m-1 btn-sm ' title='register'> Register</a>`;
+
+                                        }
+
+                                        if (row.isFree != true && row.invoiceRequest.customerId != memberCustomerId) {
+                                            buttons += "<a href='#' onclick='cpdTrainingHandler.invoiceForm(\"" + data + "\",\"" + JSON.stringify(row).replace(/"/g, "\\\"") + "\")' type='button' class='btn btn-outline-warning m-1 btn-sm ' title='Invoice'> Invoice</a>";
+                                        }
+                                        
+                                        buttons += "<a href='/member/CPDTrainings/TrainingDetails/" + data + "' type = 'button' class='btn btn-outline-success m-1 btn-sm ti ti-eye text-lg' title = 'show details'> View </a>";
+                                        
+                                        return buttons;
+
+                                    }else{
+                                        return "";
                                     }
-                                    
-                                    if (row.isFree != true && row.invoiceRequestId == null) {
-                                        buttons += "<a href='#' onclick='cpdTrainingHandler.invoiceForm(\"" + data + "\",\"" + JSON.stringify(row).replace(/"/g, "\\\"") + "\")' type='button' class='btn btn-outline-warning mx-1 btn-sm my-1 ' title='Invoice'> Invoice</a>";
-                                    }
-                                    
-                                    buttons += "<a href='/member/CPDTrainings/TrainingDetails/" + data + "' type = 'button' class='btn btn-outline-success mx-1 btn-sm ti ti-eye text-lg' title = 'show details'> View </a>";
-                                    
-                                    return buttons;
                                 }
                                 else {
                                     return "";

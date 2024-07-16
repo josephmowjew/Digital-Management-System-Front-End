@@ -48,6 +48,11 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
             this._service.Token = token;
             ViewBag.YearOfOperation = await GetCurrentYearOfOperationAsync();
             ViewBag.MemberId = await GetMemberRecordByUserId(HttpContext.Request.Cookies["UserId"]);
+            
+            var member = await _service.MemberService.GetMemberByUserIdAsync(AuthHelper.GetUserId(HttpContext));
+            ViewBag.member = member;
+            ViewBag.membership = member != null;
+            ViewBag.CustomerId = member.CustomerId != null;
         
         }
         private async Task<ReadYearOfOperationDTO> GetCurrentYearOfOperationAsync()

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using MLS_Digital_Management_System_Front_End.Core.DTOs.CPDTraining;
 using MLS_Digital_Management_System_Front_End.Core.DTOs.InvoiceRequest;
+using MLS_Digital_Management_System_Front_End.Core.DTOs.Member;
 using MLS_Digital_Management_System_Front_End.Core.DTOs.QBInvoices;
 using MLS_Digital_Management_System_Front_End.Helpers;
 using MLS_Digital_Management_System_Front_End.Services.Interfaces;
@@ -28,6 +29,10 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
             string token = AuthHelper.GetToken(HttpContext);
             ViewBag.token = token;
             this._service.Token = token;
+
+            var member = await _service.MemberService.GetMemberByUserIdAsync(AuthHelper.GetUserId(HttpContext));
+            ViewBag.member = member;
+            ViewBag.membership = member != null;
            
         }
 

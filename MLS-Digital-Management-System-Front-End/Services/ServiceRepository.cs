@@ -38,6 +38,8 @@ public class ServiceRepository : IServiceRepository
     private IProBonoApplicationService _proBonoApplicationService;
     private IProBonoReportService _proBonoReportService;
     private IProBonoService _proBonoService;
+    private ILevyDeclarationService _levyDeclarationService;
+    private ILevyPercentService _levyPercentService;
 
 
     public string Token 
@@ -79,6 +81,8 @@ public class ServiceRepository : IServiceRepository
             _invoiceRequestService = new InvoiceRequestService(_httpClient);
             _proBonoReportService = new ProBonoReportService(_httpClient);
             _proBonoService = new ProBonoService(_httpClient);
+            _levyDeclarationService = new LevyDeclarationService(_httpClient);
+            _levyPercentService = new LevyPercentService(_httpClient);
         } 
     } 
 
@@ -120,6 +124,7 @@ public class ServiceRepository : IServiceRepository
     public IProBonoReportService ProBonoReportService => _proBonoReportService ??= new ProBonoReportService(_httpClient);
     public IProBonoService ProBonoService => _proBonoService ??= new ProBonoService(_httpClient);
     public IInvoiceRequestService InvoiceRequestService => _invoiceRequestService ??= new InvoiceRequestService(_httpClient);
-
+    public ILevyDeclarationService LevyDeclarationService => _levyDeclarationService ??= new LevyDeclarationService(_httpClient);
+    public ILevyPercentService LevyPercentService => _levyPercentService ??= new LevyPercentService(_httpClient);
     
 }

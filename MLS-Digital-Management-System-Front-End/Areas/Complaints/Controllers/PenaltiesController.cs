@@ -55,7 +55,9 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Complaints.Controllers
             {
                 memberListFromRemote.ForEach(member =>
                 {
-                    membersList.Add(new SelectListItem() { Text = member.User.FullName + " - " + member.User.IdentityNumber, Value = member.Id.ToString() });
+                    if(member.CustomerId != null){
+                        membersList.Add(new SelectListItem() { Text = member.User.FullName + " - " + member.User.IdentityNumber, Value = member.Id.ToString() });
+                    }
                 });
             }
 

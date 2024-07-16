@@ -1,0 +1,39 @@
+@model MLS_Digital_Management_System_Front_End.Core.DTOs.LevyDeclarations.CreateLevyDeclarationDTO;
+<!-- Modal -->
+<div class="modal fade" id="levyModal" tabindex="-1" role="dialog" aria-labelledby="levyModalLabel" aria-hidden="true">
+    
+</div>
+
+<div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="levyModalLabel">Declare Levy</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="mb-3">
+                        <label asp-for="Revenue" class="form-label">Revenue (MWK)</label>
+                        <input asp-for="Revenue" class="form-control" required />
+                        <span asp-validation-for="Revenue" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Month" class="form-label">Month</label>
+                        <select asp-for="Month" class="form-control" required>
+                            <option value="">Select Month</option>
+                            @for (int i = 1; i <= 12; i++)
+                            {
+                                <option value="@(new DateTime(2024, i, 1).ToString("yyyy-MM-ddTHH:mm:ss.fffz"))">@(new DateTime(2024, i, 1).ToString("MMMM"))</option>
+                            }
+                        </select>
+                        <span asp-validation-for="Month" class="text-danger"></span>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="declareLevyBtn">Declare</button>
+            </div>
+        </div>
+    </div>

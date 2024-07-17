@@ -42,12 +42,11 @@ namespace MLS_Digital_Management_System_Front_End.Areas.CEO.Controllers
             ViewBag.userId = HttpContext.Request.Cookies["UserId"];
             ViewBag.roleName = HttpContext.Request.Cookies["RoleName"];
             ViewBag.currentYear = await CurrentYearOfOperation();
-            ViewBag.identityTypesList = await GetIdentityTypes();
-            ViewBag.personalTitlesList = await GetPersonalTitles();
-            ViewBag.rolesList = await GetRoles();
-            ViewBag.departmentsList = await GetDepartments();
-            ViewBag.countriesList = await GetCountries();
             ViewBag.qualificationTypesList = await GetQualificationTypes();
+            ViewBag.proBonos = await this.GetProBonos();
+            ViewBag.clientsCount = await this.GetClientsCount();
+             ViewBag.committeesCount = await this.GetCommittees();
+            ViewBag.totalLicenseApplications = await this.GetLicenseApplications();
         }
 
         private async Task<ReadYearOfOperationDTO> CurrentYearOfOperation()
@@ -168,6 +167,33 @@ namespace MLS_Digital_Management_System_Front_End.Areas.CEO.Controllers
             var summedUnits = await _service.CpdUnitsEarnedService.GetCpdSummedUnitsEarnedById(member.Id);
 
             return summedUnits;
+        }
+               private async Task<int> GetLicenseApplications()
+        {
+            var totalLicenseApplications = await _service.LicenseApplicationService.GetLicenseApplicationsTotal();
+
+            return totalLicenseApplications;
+        }
+
+        private async Task<int> GetProBonos()
+        {
+            var proBonoCount = await _service.ProBonoService.GetProBonoCountAsync();
+
+            return proBonoCount;
+        }
+
+        private async Task<int> GetCommittees()
+        {
+            var committeeCount = await _service.CommitteeService.GetCommitteesCountAsync();
+
+            return committeeCount;
+        }
+
+        public async Task<int> GetClientsCount()
+        {
+            var clientCount = await _service.ProbonoClientService.GetClientsCountAsync();
+
+            return clientCount;
         }
     }
 }

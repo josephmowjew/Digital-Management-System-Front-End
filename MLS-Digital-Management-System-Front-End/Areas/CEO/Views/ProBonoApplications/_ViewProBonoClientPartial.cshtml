@@ -1,0 +1,75 @@
+@model MLS_Digital_Management_System_Front_End.Core.DTOs.ProBonoClient.UpdateProBonoClientDTO
+
+<!-- Modal -->
+<div class="modal-dialog modal-lg">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">Pro Bono Client</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+
+    <div class="modal-body">
+      <form asp-action="Edit">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="Id">
+        <div class="row row-cols-lg-2">
+          
+          <div class="mb-3">
+            <label asp-for="Name" class="form-label"></label>
+            <input asp-for="Name" placeholder="Enter Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+          </div>
+          
+          <div class="mb-3">
+            <label asp-for="PostalAddress" class="form-label"></label>
+            <input asp-for="PostalAddress" placeholder="Enter Postal Address" class="form-control" />
+            <span asp-validation-for="PostalAddress" class="text-danger"></span>
+          </div>
+          
+          <div class="mb-3">
+            <label asp-for="PermanentAddress" class="form-label"></label>
+            <input asp-for="PermanentAddress" placeholder="Enter Permanent Address" class="form-control" />
+            <span asp-validation-for="PermanentAddress" class="text-danger"></span>
+          </div>
+          
+          <div class="mb-3">
+            <label asp-for="ResidentialAddress" class="form-label"></label>
+            <input asp-for="ResidentialAddress" placeholder="Enter Residential Address" class="form-control" />
+            <span asp-validation-for="ResidentialAddress" class="text-danger"></span>
+          </div>
+          
+          <div class="mb-3">
+            <label asp-for="PhoneNumber" class="form-label"></label>
+            <input asp-for="PhoneNumber" placeholder="Enter Phone Number" class="form-control" />
+            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+          </div>
+          
+          <div class="mb-3">
+            <label asp-for="OtherContacts" class="form-label"></label>
+            <input asp-for="OtherContacts" placeholder="Enter Other Contacts" class="form-control" />
+            <span asp-validation-for="OtherContacts" class="text-danger"></span>
+          </div>
+           <div class="mb-3">
+            <label asp-for="NationalId" class="form-label"></label>
+            <input asp-for="NationalId" placeholder="Enter Your National Id" class="form-control" />
+            <span asp-validation-for="NationalId" class="text-danger"></span>
+          </div>
+          <div class="mb-3">
+            <label asp-for="Occupation" class="form-label"></label>
+            <input asp-for="Occupation" placeholder="Enter Occupation" class="form-control" />
+            <span asp-validation-for="Occupation" class="text-danger"></span>
+          </div>
+          
+          <div class="mb-3">
+            <label asp-for="AnnualIncome" class="form-label"></label>
+            <input asp-for="AnnualIncome" type="number" min="0" step="0.01" placeholder="Enter Annual Income" class="form-control" />
+            <span asp-validation-for="AnnualIncome" class="text-danger"></span>
+          </div>
+          
+        </div>
+      </form>
+    </div>
+
+  </div>
+</div>
+

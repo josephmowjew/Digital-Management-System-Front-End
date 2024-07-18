@@ -1,0 +1,64 @@
+@model MLS_Digital_Management_System_Front_End.Core.DTOs.ProBonoApplications.CreateProBonoApplicationDTO;
+
+<!-- Modal -->
+<div class="modal-dialog modal-lg">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">Create Pro Bono Application</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+
+    <div class="modal-body">
+      <form asp-action="Edit">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="row row-cols-lg-2">
+          
+          <div class="mb-3">
+            <label asp-for="NatureOfDispute" class="form-label"></label>
+            <input asp-for="NatureOfDispute" placeholder="Enter Nature of Dispute" class="form-control" />
+            <span asp-validation-for="NatureOfDispute" class="text-danger"></span>
+          </div>
+          
+          <div class="mb-3">
+            <label asp-for="CaseDetails" class="form-label"></label>
+            <textarea asp-for="CaseDetails" placeholder="Enter Case Details" class="form-control"></textarea>
+            <span asp-validation-for="CaseDetails" class="text-danger"></span>
+          </div>
+          
+          <div class="mb-3">
+              <label asp-for="ProbonoClientId" class="form-label"></label>
+               <select asp-for="ProbonoClientId" asp-items="@ViewBag.probonoClientsList" class="form-control" ></select>
+               <span asp-validation-for="ProbonoClientId" class="text-danger"></span>
+          </div>
+          
+          
+          <div class="mb-3">
+            <label asp-for="SummaryOfDispute" class="form-label"></label>
+            <textarea asp-for="SummaryOfDispute" placeholder="Enter Summary of Dispute" class="form-control"></textarea>
+            <span asp-validation-for="SummaryOfDispute" class="text-danger"></span>
+          </div>
+          
+          <div class="mb-3" >
+            <label asp-for="YearOfOperationId" class="form-label"></label>
+            <select asp-for="YearOfOperationId" asp-items="@ViewBag.yearOperationsList" class="form-control"></select>
+            <span asp-validation-for="YearOfOperationId" class="text-danger"></span>
+          </div>
+          
+          <div class="mb-3">
+            <label asp-for="Attachments" class="form-label"></label>
+            <input asp-for="Attachments" type="file" accept="application/pdf, application/msword, application/vnd.ms-excel, text/plain" multiple class="form-control" />
+            <span asp-validation-for="Attachments" class="text-danger"></span>
+          </div>
+          
+        </div>
+      </form>
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      <button type="button" class="btn btn-primary" id="create_application_btn" name="create_application_btn">Create Pro Bono Application</button>
+    </div>
+
+  </div>
+</div>
+

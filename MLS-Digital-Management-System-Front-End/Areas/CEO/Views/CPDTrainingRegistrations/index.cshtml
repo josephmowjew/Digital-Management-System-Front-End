@@ -1,0 +1,180 @@
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+@{
+    ViewData["Title"] = "CPD Trainings";
+    Layout = "~/Areas/CEO/Views/shared/_Layout.cshtml";
+
+    var host = Configuration.GetSection("APIURL")["Link"];
+}
+
+
+<a asp-action="index" asp-controller="cpdtrainings" asp-area="ceo" class="btn btn-secondary mx-2 my-2">Back To Trainings List</a>
+<div class="card ">
+    <div class="card-body">
+      
+        <h5 class="card-title fw-semibold mb-4 text-uppercase text-center">Available Registered Members</h5>
+       
+        <div class="table-responsive">
+            <table class="table table-bordered " id="cpd_table">
+                <thead>
+                    <tr>
+                        <th>
+                            
+                        </th>
+                        <th>
+                           Member Name
+                        </th>
+                        <th>
+                            License Number
+                        </th>
+                        <th>
+                            License Registration Status
+                        </th>
+                        <th>
+                            Payment Proof
+                        </th>
+                        <th>
+                            Date Of Payment
+                        </th>
+                       
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="card-footer">
+        <button type="button" class="btn btn-success my-3" onclick="cpdTrainingHandler.markAttendance()" >Mark Attendance</button>
+    </div>
+</div>
+
+
+       @section Scripts{
+
+        <script>
+            var datatable;
+            var tokenValue = '@ViewBag.token';
+             var host = '@host';
+        </script>
+
+        <script src="~/js/CPDTraining.js" asp-append-version="true"></script>
+        <script>
+            $(document).ready(function () {
+                datatable = $('#cpd_table').DataTable({
+
+
+                    "processing": true,
+                    "serverSide": true,
+                    "order": [[0, "desc"]],
+                    ajax: {
+                    url: '@host/api/cpdtrainingregistrations/paged?cpdtrainingId=@ViewBag.cpdTrainingId',
+                        type: 'get',
+                        datatype: 'Json',headers: {
+                                        'Authorization': 'Bearer @ViewBag.token'
+                                    }
+
+                  },
+                    columnDefs: [
+                        {
+                            defaultContent: "",
+                            targets: "_all",
+                            'orderable': true
+                        },
+                    ],
+                    columns: [
+
+                        {
+                            data: "id",
+                            name: "id",
+                            className: "text-center",
+                            orderable: false,
+                            defaultContent: "",
+                            render: function(data, type, row) {
+                                return `<input type="checkbox" class="cpdTrainingCheckbox" data-id="${row.id}">`;
+                            }
+                        },
+                        {
+                            data: "member.user.fullName",
+                            name: "member",
+                            className: "text-left",
+                            "orderable": false,
+                        },
+                        {
+                            data: "member.currentLicense.licenseNumber",
+                            name: "member",
+                            className: "text-left",
+                            "orderable": false,
+                        },
+                        {
+                            data: "registrationStatus",
+                            name: "registrationStatus",
+                            "orderable": false,
+                            render: function (data, type, row) {
+
+                                    if (data == "Attended") {
+                                        return `<span class='badge bg-success bg-opacity-85 rounded-pill'>${data}</span>`
+                                    }
+                                    if (data == "Pending") {
+                                        return `<span class='badge bg-secondary bg-opacity-85 rounded-pill'>${data}</span>`
+                                    }
+                                    else if (data == "Denied") {
+                                        return `<span class='badge bg-danger bg-opacity-85 rounded-pill' data-toggle='tooltip' data-placement='right' title='${row.deniedReason}'>${data}</span>`
+                                    }
+                                    else {
+                                        return `<span class='badge bg-warning bg-opacity-85 rounded-pill'>${data}</span>`
+                                    }
+                                
+                            
+                           
+                        }
+                    },
+                        {
+                        data: "attachments",
+                        name: "attachments",
+                        className: "text-left",
+                        "orderable": true,
+                        render: function(data, type, row, meta) {
+                            if (data && data.length > 0) {
+                            return data.map((attachment) => {
+                                return `<a href="@host/${attachment.filePath}" target="_blank" download="${attachment.fileName}" class='ti ti-download btn btn-outline-info'> ${attachment.fileName}</a>`;
+                            }).join('<br>');
+                            } else {
+                            return '';
+                            }
+                        }
+                        },
+
+                        {
+                        data: "dateOfPayment",
+                        name: "dateOfPayment",
+                        className: "text-left",
+                        orderable: false,
+                        render: function(data, type, row) {
+                            if (data) {
+                                // Assuming the date is in ISO format (e.g., "2024-05-16T00:00:00")
+                                // Extract the date portion and return it
+                                var date = new Date(data);
+                                var day = ("0" + date.getDate()).slice(-2);
+                                var month = ("0" + (date.getMonth() + 1)).slice(-2);
+                                var year = date.getFullYear();
+                                return year + '-' + month + '-' + day;
+                            }
+                            return '';
+                        }
+                    },
+
+                        
+
+    
+                    ],
+                    responsive: true,
+                    "autoWidth": false,
+                });
+            });
+        </script>
+
+            @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+        }

@@ -1,0 +1,38 @@
+@model MLS_Digital_Management_System_Front_End.Core.DTOs.YearOfOperation.CreateYearOfOperationDTO;
+<!-- Modal -->
+
+
+<div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Create Practicing Year</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="DataInvalid" />
+                <div class="row row-cols-lg-2">
+                <div class="mb-3">
+                    <label asp-for="StartDate" class="form-label"></label>
+                    <input asp-for="StartDate" type="date" placeholder="Enter Start Date" class="form-control" />
+                    <span asp-validation-for="StartDate" class="text-danger"></span>
+                </div>
+                    <div class="mb-3">
+                        <label asp-for="EndDate" class="form-label"></label>
+                        <input asp-for="EndDate" type="date" placeholder="Enter End Date" class="form-control" />
+                        <span asp-validation-for="EndDate" class="text-danger"></span>
+                    </div>
+            </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="create_yearOfOperation_btn" name="create_yearOfOperation_btn">Create YearOfOperation</button>
+            <div>
+                <img src="~/assets/images/91.gif" id="spinner" />
+            </div>
+      </div>
+    </div>
+  </div>
+

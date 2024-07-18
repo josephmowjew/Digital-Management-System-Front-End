@@ -150,7 +150,39 @@ function Delete(id,token) {
 
             }).fail(function (response) {
 
-                toastr.error(response.responseText)
+                toastr.error("Failed to delete client")
+
+                datatable.ajax.reload();
+            });
+        }
+
+
+    });
+}
+function DeleteRequest(id,token) {
+
+    bootbox.confirm("Are you sure you want to request deletion/Suspension of this client?", function (result) {
+
+
+        if (result) {
+            $.ajax({
+                url: `${host}/api/probonoclients/deleteRequest/` + id,
+                type: 'PUT',
+                headers: {
+                    'Authorization': "Bearer "+ token
+                }
+
+            }).done(function (data) {
+
+              
+                    toastr.success("Request has been sent sucessfully")
+              
+                datatable.ajax.reload();
+
+
+            }).fail(function (response) {
+
+                toastr.error("Failed to send request")
 
                 datatable.ajax.reload();
             });
@@ -191,6 +223,40 @@ function Activate(id,token) {
 
     });
 }
+
+function DenyDeleteRequest(id,token) {
+
+    bootbox.confirm("Are you sure you want to deny deletion of this client account?", function (result) {
+
+        console.log(token)
+        if (result) {
+            $.ajax({
+                url: `${host}/api/probonoclients/denyDeletion/`+id,
+                type: 'PUT',
+                headers: {
+                    'Authorization': "Bearer "+ token
+                }
+
+            }).done(function (data) {
+
+               
+                    toastr.success("Deletion has been denied")
+              
+                datatable.ajax.reload();
+
+
+            }).fail(function (response) {
+
+                toastr.error("failed to deny the deletion")
+
+                datatable.ajax.reload();
+            });
+        }
+
+
+    });
+}
+
 function updateClient(token) {
     toastr.clear()
 

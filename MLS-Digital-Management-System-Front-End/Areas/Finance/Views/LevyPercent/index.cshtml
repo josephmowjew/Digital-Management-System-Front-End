@@ -9,14 +9,25 @@
 
 <div class="card">
     <div class="card-body">
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-info my-3" data-bs-toggle="modal" data-bs-target="#create_levyPercent_modal">
-            New Percentage
-        </button>
+        <div class="d-flex justify-content-between">
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-info my-3" data-bs-toggle="modal" data-bs-target="#create_levyPercent_modal">
+                New Percentage
+            </button>
+
+            <button type="button" class="btn btn-warning my-3" data-bs-toggle="modal" data-bs-target="#set_currentLevyPercent_modal">
+                <i class="bi bi-gear"></i> Set Current
+            </button>
+        </div>
+            
 
         <!-- Modal -->
         <div class="modal fade" id="create_levyPercent_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <partial name="_CreateLevyPercentPartial" />
+        </div>
+
+        <div class="modal fade" id="set_currentLevyPercent_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <partial name="_setCurrentLevyPercentPartial" />
         </div>
 
         <div class="modal fade" id="edit_levyPercent_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

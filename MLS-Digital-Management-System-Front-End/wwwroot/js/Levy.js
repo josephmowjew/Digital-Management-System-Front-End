@@ -53,6 +53,8 @@ $(function () {
 
                 $("#create_levyPercent_modal form")[0].reset();
 
+                window.location.reload();
+
             },
             error: function (xhr, ajaxOtions, thrownError) {
                 hideSpinner();
@@ -67,6 +69,47 @@ $(function () {
         });
     }
 
+    var setCurrentLevyPercentButton = $("#set_currentLevyPercent_modal button[name='mark_as_current_btn']").unbind().click(OnMarkClick);
+
+    function OnMarkClick(){
+        console.log("OnMarkClick function called");
+        showSpinner();
+
+        // Get the form itself 
+        var form = $("#set_currentLevyPercent_modal form");
+
+        // Get the selected PercentageValue from the form
+        var percentId = form.find('select[name="PercentageValue"]').val();
+        console.log("Selected Percent ID:", percentId);
+
+        // Send the request
+        $.ajax({
+            url: `${host}/api/LevyPercent/MarkAsCurrentLevyPercent/${percentId}`,
+            type: 'POST',
+            contentType: 'application/json',
+            headers: {
+                'Authorization': "Bearer " + tokenValue
+            },
+            success: function (response) {
+                console.log("Success response:", response);
+                hideSpinner();
+                
+                // Show success message
+                var dataTable = $('#my_table').DataTable();
+                toastr.success("Marked as current levy successfully");
+                $("#set_currentLevyPercent_modal").modal("hide");
+                dataTable.ajax.reload();
+                $("#set_currentLevyPercent_modal form")[0].reset();
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                console.log("Error status:", xhr.status);
+                console.log("Error response text:", xhr.responseText);
+                console.log("Error thrown:", thrownError);
+                hideSpinner();
+                toastr.error("An error occurred while marking the levy as current.");
+            }
+        });
+    }
 
 })
 
@@ -180,7 +223,6 @@ function updatelevyPercent(token) {
 
     // Stringify the formDataObject
     const formDataJson = JSON.stringify(formDataObject);
-    console.log(formDataJson)
    
     //send the request
 

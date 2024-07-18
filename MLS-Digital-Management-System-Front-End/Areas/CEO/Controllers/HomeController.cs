@@ -21,6 +21,11 @@ namespace MLS_Digital_Management_System_Front_End.Areas.CEO.Controllers
         {
             await PopulateViewBags();
 
+            ViewBag.firmCount = await this.GetFirmsCount();
+            ViewBag.countriesCount = await this.GetCountriesCount();
+            ViewBag.userCount = await this.GetUsersCount();
+            ViewBag.departmentCount = await this.GetDepartmentsCount();
+
             return View();
         }
 
@@ -31,14 +36,19 @@ namespace MLS_Digital_Management_System_Front_End.Areas.CEO.Controllers
             return View();
         }
 
+        public async Task MinimalViewBags()
+        {
+            string token = AuthHelper.GetToken(HttpContext);
+            ViewBag.token = token;
+            _service.Token = token;
+        }
+
        
 
         private async Task PopulateViewBags()
         {
-            //get the token
-            string token = AuthHelper.GetToken(HttpContext);
-            ViewBag.token = token;
-            _service.Token = token;
+            await this.MinimalViewBags();
+
             ViewBag.userId = HttpContext.Request.Cookies["UserId"];
             ViewBag.roleName = HttpContext.Request.Cookies["RoleName"];
             ViewBag.currentYear = await CurrentYearOfOperation();
@@ -195,5 +205,32 @@ namespace MLS_Digital_Management_System_Front_End.Areas.CEO.Controllers
 
             return clientCount;
         }
+         private async Task<int> GetFirmsCount()
+        {
+            var firmCount = await _service.FirmService.GetFirmsCount();
+
+            return firmCount;
+        }
+
+        private async Task<int> GetCountriesCount()
+        {
+            var firmCount = await _service.CountryService.GetCountryCount();
+
+            return firmCount;
+        }
+
+        private async Task<int> GetDepartmentsCount()
+        {
+            var departmentCount = await _service.DepartmentService.GetDepartmentCount();
+
+            return departmentCount;
+        }
+
+        private async Task<int> GetUsersCount()
+        {
+            var userCount = await _service.UserService.GetUsersCount();
+            return userCount;
+        }
+
     }
 }

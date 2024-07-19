@@ -1,0 +1,24 @@
+@model MLS_Digital_Management_System_Front_End.Core.DTOs.LevyPercent.UpdateLevyPercentDTO;    
+<!-- Modal -->
+<div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Mark Current Levy %</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="mb-3" >
+                <label asp-for="PercentageValue" class="form-label"> Percentage</label>
+                <select asp-for="PercentageValue" asp-items="@ViewBag.levyPercentList" class="form-control"></select>
+                <span asp-validation-for="PercentageValue" class="text-danger"></span>
+            </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+         <button type="button" class="btn btn-primary" id="mark_as_current_btn" name="mark_as_current_btn">Mark as Current</button>
+      </div>
+    </div>
+  </div>

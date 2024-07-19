@@ -26,5 +26,7 @@ public class ReadFirmDTO
 
     public string SecondaryPhoneNumber { get; set; }
 
+    public string? CustomerId { get; set; }
+
     public ICollection<ReadUserDTO> Users { get; set; }
 }

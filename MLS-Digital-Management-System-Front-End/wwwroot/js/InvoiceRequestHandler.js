@@ -207,6 +207,12 @@ class InvoiceRequestHandler {
                             }
                         },
                         {
+                            data: "qbInvoiceId",
+                            name: "qbInvoiceId",
+                            className: "text-left",
+                            "orderable": false,
+                        },
+                        {
                             data: "status",
                             name: "status",
                             "orderable": true,

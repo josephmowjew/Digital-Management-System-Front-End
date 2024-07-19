@@ -20,9 +20,9 @@
             <img src="~/assets/images/91.gif" id="spinner" />
         </div>
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-info my-3" data-bs-toggle="modal" data-bs-target="#create_application_modal">
+        <!--<button type="button" class="btn btn-info my-3" data-bs-toggle="modal" data-bs-target="#create_application_modal">
             Create Application
-        </button>
+        </button>-->
 
         <!-- Modal -->
         <div class="modal fade" id="create_application_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -67,7 +67,9 @@
                         <th>
                             Case Document
                         </th>
-                       
+                        <th>
+                            Application Status
+                        </th>
                         <th>
                             Action
                         </th>
@@ -151,7 +153,6 @@
                             className: "text-left",
                             "orderable": true,
                         },
-                        
                         {
                             data: "summaryOfDispute",
                             name: "summaryOfDispute",
@@ -174,12 +175,18 @@
                             }
                         },
                         {
+                            data: "applicationStatus",
+                            name: "applicationStatus",
+                            className: "text-left",
+                            "orderable": true,
+                        },
+                        {
                             data: "id",
                             name: "id",
                             "orderable": false,
                             render: function (data, type, row) {
                             let links = "";
-                            if (row.applicationStatus.toLowerCase() == "pending") {
+                            if (row.applicationStatus.toLowerCase() == "under review") {
                             links += "<a href='#' onclick='Activate(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='btn btn-outline-success mx-1 btn-sm ti ti-check my-1 mx-1' title='activate'>Activate</a>";
                             links += "<a href='#' onclick='DenyForm(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='btn btn-outline-danger mx-1 btn-sm ti ti-hand-stop' title='Deny'>Deny</a>";
                             

@@ -60,7 +60,9 @@
                         <th>
                             Case Document
                         </th>
-
+                        <th>
+                            Application Status
+                        </th>
                         <th>
                             Action
                         </th>
@@ -160,6 +162,12 @@
                                     return '';
                                 }
                             }
+                        },
+                        {
+                            data: "applicationStatus",
+                            name: "applicationStatus",
+                            className: "text-left",
+                            "orderable": true,
                         },
                        {
                         data: "id",

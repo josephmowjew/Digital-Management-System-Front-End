@@ -3,6 +3,8 @@ class CommunicationsHandler {
         this.hideSpinner();
         this.bindEvents();
         this.form = document.querySelector("#sendMessageForm");
+        this.sendButton = document.querySelector("#send_message_btn");
+        this.processingMessage = document.querySelector("#processingMessage");
         if (this.form) {
             this.setupFormBehavior();
         }
@@ -67,6 +69,40 @@ class CommunicationsHandler {
         }
     }
 
+    onSendMessageClick() {
+        if (!this.form.checkValidity()) {
+            this.form.reportValidity();
+            return;
+        }
+
+        this.setProcessingState(true);
+
+        const formData = new FormData(this.form);
+        const jsonData = this.prepareJsonData(formData);
+
+        this.sendFetchRequest(
+            JSON.stringify(jsonData),
+            "POST",
+            `${host}/api/Communications/send`,
+            this.handleSendMessageSuccess.bind(this),
+            this.handleError.bind(this)
+        );
+    }
+
+    prepareJsonData(formData) {
+        const jsonData = {};
+        formData.forEach((value, key) => {
+            if (key === 'DepartmentIds' || key === 'RoleNames') {
+                jsonData[key] = $('#' + key).val();
+            } else if (key === 'SendToAllUsers') {
+                jsonData[key] = value === 'on';
+            } else {
+                jsonData[key] = value;
+            }
+        });
+        return jsonData;
+    }
+
     sendFetchRequest(data, method, url, successCallback, errorCallback) {
         fetch(url, {
             method: method,
@@ -91,12 +127,11 @@ class CommunicationsHandler {
             }
         })
         .finally(() => {
-            this.hideSpinner();
+            this.setProcessingState(false);
         });
     }
 
     handleSendMessageSuccess(response) {
-        
         toastr.success("Message sent successfully");
         $("#create_communication_modal").modal("hide");
         if (typeof datatable !== 'undefined' && datatable.ajax) {
@@ -109,11 +144,9 @@ class CommunicationsHandler {
         toastr.error(error.message || "An error occurred while sending the message");
     }
 
-    showSpinner() {
-        const spinnerElement = document.getElementById("spinner");
-        if (spinnerElement) {
-            spinnerElement.classList.remove("hidden");
-        }
+    setProcessingState(isProcessing) {
+        this.sendButton.disabled = isProcessing;
+        this.processingMessage.style.display = isProcessing ? 'block' : 'none';
     }
 
     hideSpinner() {

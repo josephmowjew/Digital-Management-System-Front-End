@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using MLS_Digital_Management_System_Front_End.Core.DTOs.ProBonoApplications;
+using MLS_Digital_Management_System_Front_End.Core.DTOs.YearOfOperation;
 using MLS_Digital_Management_System_Front_End.Helpers;
 using MLS_Digital_Management_System_Front_End.Services.Interfaces;
 
@@ -25,6 +26,7 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
             ViewBag.proBonoApplicationsTotal = await this.GetProBonoApplications();
             ViewBag.cpdTrainingsCount = await this.GetTotalCpdTrainings();
             ViewBag.proBonoHours = await this.GetTotalProBonoHours();
+            ViewBag.currentYear = await CurrentYearOfOperation();
             return View();
         }
 
@@ -64,6 +66,7 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
             ViewBag.departmentsList = await GetDepartments();
             ViewBag.countriesList = await GetCountries();
             ViewBag.qualificationTypesList = await GetQualificationTypes();
+            ViewBag.currentYear = await CurrentYearOfOperation();
 
             ViewBag.userId = HttpContext.Request.Cookies["UserId"];
 
@@ -224,6 +227,11 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
             var totalProBonoHours = await _service.ProBonoReportService.GetProBonoHoursTotalAsync();
 
             return totalProBonoHours;
+        }
+
+        private async Task<ReadYearOfOperationDTO> CurrentYearOfOperation()
+        {
+           return await _service.YearOfOperationService.GetCurrentYearOfOperationAsync();
         }
        
     

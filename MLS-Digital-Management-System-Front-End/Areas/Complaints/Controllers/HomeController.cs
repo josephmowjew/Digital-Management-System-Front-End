@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using MLS_Digital_Management_System_Front_End.Core.DTOs.YearOfOperation;
 using MLS_Digital_Management_System_Front_End.Helpers;
 using MLS_Digital_Management_System_Front_End.Services.Interfaces;
 
@@ -24,6 +25,7 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Complaints.Controllers
             ViewBag.proBonos = await this.GetProBonos();
             /*ViewBag.cpdTrainingsCount = await this.GetTotalCpdTrainings();*/
             ViewBag.totalLicenseApplications = await this.GetLicenseApplications();
+            ViewBag.currentYear = await CurrentYearOfOperation();
             return View();
         }
 
@@ -50,6 +52,11 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Complaints.Controllers
             ViewBag.departmentsList = await GetDepartments();
             ViewBag.countriesList = await GetCountries();
             ViewBag.qualificationTypesList = await GetQualificationTypes();
+        }
+
+        private async Task<ReadYearOfOperationDTO> CurrentYearOfOperation()
+        {
+           return await _service.YearOfOperationService.GetCurrentYearOfOperationAsync();
         }
 
         private string GetToken()

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using MLS_Digital_Management_System_Front_End.Core.DTOs.YearOfOperation;
 using MLS_Digital_Management_System_Front_End.Helpers;
 using MLS_Digital_Management_System_Front_End.Services.Interfaces;
 
@@ -24,6 +25,7 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Admin.Controllers
             ViewBag.countriesCount = await this.GetCountriesCount();
             ViewBag.userCount = await this.GetUsersCount();
             ViewBag.departmentCount = await this.GetDepartmentsCount();
+            ViewBag.currentYear = await CurrentYearOfOperation();
             
             return View();
         }
@@ -53,6 +55,11 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Admin.Controllers
             ViewBag.departmentsList = await GetDepartments();
             ViewBag.countriesList = await GetCountries();
             ViewBag.qualificationTypesList = await GetQualificationTypes();
+        }
+
+        private async Task<ReadYearOfOperationDTO> CurrentYearOfOperation()
+        {
+           return await _service.YearOfOperationService.GetCurrentYearOfOperationAsync();
         }
 
         private async Task<List<SelectListItem>> GetIdentityTypes()

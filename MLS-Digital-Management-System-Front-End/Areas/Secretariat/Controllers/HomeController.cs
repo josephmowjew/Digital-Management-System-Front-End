@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using MLS_Digital_Management_System_Front_End.Core.DTOs.YearOfOperation;
 using MLS_Digital_Management_System_Front_End.Helpers;
 using MLS_Digital_Management_System_Front_End.Services.Interfaces;
 
@@ -24,6 +25,7 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Secretariat.Controllers
             ViewBag.proBonos = await this.GetProBonos();
             ViewBag.clientsCount = await this.GetClientsCount();
             ViewBag.totalLicenseApplications = await this.GetLicenseApplications();
+            ViewBag.currentYear = await CurrentYearOfOperation();
             return View();
         }
 
@@ -51,6 +53,7 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Secretariat.Controllers
             ViewBag.departmentsList = await GetDepartments();
             ViewBag.countriesList = await GetCountries();
             ViewBag.qualificationTypesList = await GetQualificationTypes();
+            ViewBag.currentYear = await CurrentYearOfOperation();
 
             ViewBag.userId = HttpContext.Request.Cookies["UserId"];
             ViewBag.roleName = HttpContext.Request.Cookies["RoleName"];
@@ -61,6 +64,12 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Secretariat.Controllers
             return AuthHelper.GetToken(HttpContext);
 
         }
+
+        private async Task<ReadYearOfOperationDTO> CurrentYearOfOperation()
+        {
+           return await _service.YearOfOperationService.GetCurrentYearOfOperationAsync();
+        }
+
         private async Task<List<SelectListItem>> GetIdentityTypes()
         {
             List<SelectListItem> identityTypes = new() { new SelectListItem() { Text = "---Select Identity Type---", Value = "" } };

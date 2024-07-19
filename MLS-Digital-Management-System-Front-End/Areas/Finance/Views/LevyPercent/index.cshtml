@@ -9,18 +9,29 @@
 
 <div class="card">
     <div class="card-body">
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-info my-3" data-bs-toggle="modal" data-bs-target="#create_levyPercentage_modal">
-            Create Levy Percentage
-        </button>
+        <div class="d-flex justify-content-between">
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-info my-3" data-bs-toggle="modal" data-bs-target="#create_levyPercent_modal">
+                New Percentage
+            </button>
+
+            <button type="button" class="btn btn-warning my-3" data-bs-toggle="modal" data-bs-target="#set_currentLevyPercent_modal">
+                <i class="bi bi-gear"></i> Set Current
+            </button>
+        </div>
+            
 
         <!-- Modal -->
-        <div class="modal fade" id="create_levyPercentage_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <partial name="_CreateLevyPercentagePartial" />
+        <div class="modal fade" id="create_levyPercent_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <partial name="_CreateLevyPercentPartial" />
         </div>
 
-        <div class="modal fade" id="edit_levyPercentage_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <partial name="_EditLevyPercentagePartial" />
+        <div class="modal fade" id="set_currentLevyPercent_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <partial name="_setCurrentLevyPercentPartial" />
+        </div>
+
+        <div class="modal fade" id="edit_levyPercent_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <partial name="_EditLevyPercentPartial" />
         </div>
 
         <h5 class="card-title fw-semibold mb-4 text-uppercase">Available Levy Percentages</h5>
@@ -33,10 +44,7 @@
                             Percentage
                         </th>
                         <th>
-                            Start Date
-                        </th>
-                        <th>
-                            End Date
+                            Year Of Operation
                         </th>
                         <th>
                             Action
@@ -57,7 +65,7 @@
         var host = '@host';
     </script>
 
-    <script src="~/js/LevyPercentage.js" asp-append-version="true"></script>
+    <script src="~/js/Levy.js" asp-append-version="true"></script>
     <script>
         $(document).ready(function () {
             datatable = $('#my_table').DataTable({
@@ -65,7 +73,7 @@
                 "serverSide": true,
                 "order": [[1, "desc"]],
                 ajax: {
-                    url: "@host/api/LevyPercentages/paged",
+                    url: "@host/api/LevyPercent/paged",
                     type: 'get',
                     datatype: 'Json',
                     headers: {
@@ -81,20 +89,14 @@
                 ],
                 columns: [
                     {
-                        data: "percentage",
+                        data: "percentageValue",
                         name: "percentage",
                         className: "text-left",
                         "orderable": true,
                     },
                     {
-                        data: "startDate",
-                        name: "startDate",
-                        className: "text-left",
-                        "orderable": true,
-                    },
-                    {
-                        data: "endDate",
-                        name: "endDate",
+                        data: "yearOfOperation.formatedDate",
+                        name: "yearOfOperation",
                         className: "text-left",
                         "orderable": true,
                     },

@@ -1,0 +1,25 @@
+@model MLS_Digital_Management_System_Front_End.Core.DTOs.LevyPercent.UpdateLevyPercentDTO;    
+<!-- Modal -->
+<div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit Percentage</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="mb-3">
+              <label asp-for="PercentageValue" class="form-label"></label>
+              <input asp-for="PercentageValue" type="number" step="1" placeholder="Enter Levy Percentage" class="form-control" />
+              <span asp-validation-for="PercentageValue" class="text-danger"></span>
+            </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+         <button type="button" class="btn btn-primary" id="update_levyPercent_btn" name="update_levyPercent_btn">Update</button>
+      </div>
+    </div>
+  </div>

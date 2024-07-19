@@ -14,7 +14,7 @@ namespace MLS_Digital_Management_System_Front_End.Services
 
         public async Task<List<ReadLevyPercentDTO>> GetAllLevyPercentsAsync()
         {
-            var response = await _httpClient.GetAsync($"api/LevyPercents/getAll");
+            var response = await _httpClient.GetAsync($"api/LevyPercent/getAll");
             if (response.IsSuccessStatusCode)
             {
                 var responseData = await response.Content.ReadFromJsonAsync<List<ReadLevyPercentDTO>>();

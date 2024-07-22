@@ -21,7 +21,7 @@
                         <option value="">Select Month</option>
                         @for (int i = 1; i <= 12; i++)
                         {
-                            <option value="@(new DateTime(2024, i, 1).ToString("yyyy-MM-ddTHH:mm:ss.fffz"))">@(new DateTime(2024, i, 1).ToString("MMMM"))</option>
+                            <option value="@(new DateTime(2024, i, 1).ToString("yyyy-MM-dd"))">@(new DateTime(2024, i, 1).ToString("MMMM"))</option>
                         }
                     </select>
                     <span asp-validation-for="Month" class="text-danger"></span>

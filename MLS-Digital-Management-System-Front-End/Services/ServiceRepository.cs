@@ -40,6 +40,8 @@ public class ServiceRepository : IServiceRepository
     private IProBonoService _proBonoService;
     private ILevyDeclarationService _levyDeclarationService;
     private ILevyPercentService _levyPercentService;
+    private ISubcommitteeMembershipService _subcommitteeMembershipService;
+    private ISubcommitteeService _subcommitteeService;
 
 
     public string Token 
@@ -83,6 +85,8 @@ public class ServiceRepository : IServiceRepository
             _proBonoService = new ProBonoService(_httpClient);
             _levyDeclarationService = new LevyDeclarationService(_httpClient);
             _levyPercentService = new LevyPercentService(_httpClient);
+            _subcommitteeMembershipService = new SubcommitteeMembershipService(_httpClient);
+            _subcommitteeService = new SubcommitteeService(_httpClient);
         } 
     } 
 
@@ -126,5 +130,6 @@ public class ServiceRepository : IServiceRepository
     public IInvoiceRequestService InvoiceRequestService => _invoiceRequestService ??= new InvoiceRequestService(_httpClient);
     public ILevyDeclarationService LevyDeclarationService => _levyDeclarationService ??= new LevyDeclarationService(_httpClient);
     public ILevyPercentService LevyPercentService => _levyPercentService ??= new LevyPercentService(_httpClient);
-    
+    public ISubcommitteeMembershipService SubcommitteeMembershipService => _subcommitteeMembershipService ??= new SubcommitteeMembershipService(_httpClient);
+    public ISubcommitteeService SubcommitteeService => _subcommitteeService ??= new SubcommitteeService(_httpClient);
 }

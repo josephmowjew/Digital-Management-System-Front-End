@@ -1,0 +1,30 @@
+@model MLS_Digital_Management_System_Front_End.Core.DTOs.Subcommittee.CreateSubcommitteeMembershipDTO
+
+<div class="modal-dialog modal-md">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Create Subcommittee Member</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="">
+                    
+                    <input asp-for="SubcommitteeId" value="@ViewBag.subommitteeId"  type="hidden" class="form-control" readonly />
+                    <input asp-for="Role" value="member" type="hidden" class="form-control"/>
+                     
+                    <div class="mb-3">
+                        <label asp-for="MembershipId" class="form-label"></label>
+                        <select asp-for="MembershipId" asp-items="@ViewBag.membersList" class="form-control"></select>
+                        <span asp-validation-for="MembershipId" class="text-danger"></span>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="create_committee_member_btn">Add To SubCommittee</button>
+        </div>
+    </div>
+</div>

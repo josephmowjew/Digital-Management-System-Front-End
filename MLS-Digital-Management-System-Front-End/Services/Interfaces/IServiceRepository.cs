@@ -32,5 +32,7 @@ public interface IServiceRepository{
     IInvoiceRequestService InvoiceRequestService { get; }
     ILevyDeclarationService LevyDeclarationService { get; }
     ILevyPercentService LevyPercentService { get; }
+    ISubcommitteeMembershipService SubcommitteeMembershipService { get; }
+    ISubcommitteeService SubcommitteeService { get; }
 }
 

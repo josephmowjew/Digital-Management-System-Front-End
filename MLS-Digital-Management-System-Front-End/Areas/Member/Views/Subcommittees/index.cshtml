@@ -32,28 +32,23 @@
        <div>
             <img src="~/assets/images/91.gif" id="spinner" />
         </div>
-        
-
        
-        <h5 class="card-title fw-semibold mb-4 text-uppercase text-center"> Committee's List</strong></h5>
+        <h5 class="card-title fw-semibold mb-4 text-uppercase text-center"> Subcommittee's List</strong></h5>
 
         <div class="table-responsive">
-            <table class="table table-bordered table-hover" id="committee_table">
+            <table class="table table-bordered table-hover" id="subcommittee_table">
                 <thead>
                     <tr>
                         <th>
-                           Committee Name
+                           Subcommittee Name
                         </th>
                         <th>
                            Description
                         </th>
                         <th>
-                            Practicing Year
-                        </th>
-                        <th>
                             Chairperson
                         </th>
-                        
+                        <th>Parent Committee</th>
                         <th>
                             Membership Status
                         </th>
@@ -78,17 +73,17 @@
         var tokenValue = '@ViewBag.token';
         var host = '@host';
     </script>
-     <script src="~/js/Committee.js" asp-append-version="true"></script>
+     <script src="~/js/Subcommittee.js" asp-append-version="true"></script>
     <script>
         $(document).ready(function () {
-            datatable = $('#committee_table').DataTable({
+            datatable = $('#subcommittee_table').DataTable({
 
 
                 "processing": true,
                 "serverSide": true,
                 "order": [[0, "desc"]],
                 ajax: {
-                    url: "@host/api/Committees/paged",
+                    url: "@host/api/Subcommittees/paged?memberId=@ViewBag.userId",
                     type: 'get',
                     datatype: 'Json', headers: {
                         'Authorization': 'Bearer @ViewBag.token'
@@ -103,20 +98,14 @@
                 ],
                 columns: [
                     {
-                        data: "committeeName",
-                        name: "committeeName",
+                        data: "subcommitteeName",
+                        name: "subcommitteeName",
                         className: "text-left",
-                        "orderable": true,
+                        "orderable": true,  
                     },
                     {
                         data: "description",
                         name: "description",
-                        className: "text-left",
-                        "orderable": false,
-                    },
-                     {
-                        data: "yearOfOperation.formatedDate",
-                        name: "yearOfOperation",
                         className: "text-left",
                         "orderable": false,
                     },
@@ -127,17 +116,22 @@
                         "orderable": false,
                     },
                     {
+                        data: "parentCommittee.committeeName",
+                        name: "parentCommitteeName",
+                        className: "text-left",
+                        "orderable": false,
+                    },
+                    {
                         data: "id",
                         name: "membership status",
                         className: "text-left",
                         "orderable": false,
                         render: function (data, type, row) {
                             let loggedInUserId = `@ViewBag.UserId`;
-                            let userMembership = row.committeeMemberships.find(reg => reg.memberShipId === loggedInUserId);
-                            //console.log(userMembership)
+                            let userMembership = row.subcommitteeMemberships.find(reg => reg.memberShipId === loggedInUserId);
+                            console.log(userMembership);
                             if (userMembership != null) {
                                 let membershipStatus = userMembership.memberShipStatus;
-                                //console.log("member status: ",membershipStatus)
                                 // Now you can use membershipStatus to determine what to return
                                 if (membershipStatus === 'Approved') {  // Adjust this condition based on your actual status values
                                     return `<span class="text-success">Member</span>`;
@@ -160,24 +154,24 @@
                         "orderable": false,
                         render: function (data, type, row) {
                             let loggedInUserId = `@ViewBag.UserId`;
-                            let isUserInCommittee = row.committeeMemberships.find(reg => reg.memberShipId === loggedInUserId);
-                            //console.log(isUserInCommittee);
+                            let isUserInCommittee = row.subcommitteeMemberships.find(reg => reg.memberShipId === loggedInUserId);
 
                             if (isUserInCommittee != null) {
                                 let membershipStatus = isUserInCommittee.memberShipStatus
+                                console.log(membershipStatus);
                                 if (membershipStatus == "Approved") {
                                     if (isUserInCommittee.role == "Chairperson") {
                                         return `
-                                                <a href='/member/threads?committeeId=${data}'  type='button' class='btn btn-outline-success mx-1 btn-sm ti  ti-hand-point-down' title='show threads'>Threads</a>
-                                                <a href='/member/Committees/CommitteeDetails?committeeId=${data}'  type='button' class='btn btn-outline-primary mx-1 btn-sm ti  ti-eye' title='show threads'>Details</a>
-                                                <a href='/member/Committees/ViewMemberRequests?committeeId=${data}'  type='button' class='btn btn-outline-warning mx-1 btn-sm ti  ti-eye' title='show threads'>Requests</a>
-                                                <a href='#' data-id='${data}' data-token='${tokenValue}' type='button' onclick='committeeHandler.exitCommittee(event)' title='delete' class='ti ti-trash red-icon btn btn-outline-danger btn-sm my-1 mx-1'>Exit</a>
+                                                <a href='/member/subcommitteeThreads?subcommitteeId=${data}'  type='button' class='btn btn-outline-success mx-1 btn-sm ti  ti-hand-point-down' title='show threads'>Threads</a>
+                                                <a href='/member/subcommittees/ViewMembers?subcommitteeId=${data}'  type='button' class='btn btn-outline-primary mx-1 btn-sm ti  ti-eye' title='show threads'>Members</a>
+                                                <a href='/member/subcommittees/ViewMemberRequests?subcommitteeId=${data}'  type='button' class='btn btn-outline-warning mx-1 btn-sm ti  ti-eye' title='show threads'>Requests</a>
+                                                <a href='#' data-id='${data}' data-token='${tokenValue}' type='button' onclick='subcommitteeHandler.exitSubcommittee(event)' title='delete' class='ti ti-trash red-icon btn btn-outline-danger btn-sm my-1 mx-1'>Exit</a>
                                             `
                                     } else {
                                         return `
-                                                <a href='/member/threads?committeeId=${data}'  type='button' class='btn btn-outline-success mx-1 btn-sm ti  ti-hand-point-down' title='show threads'>Threads</a>
-                                                <a href='/member/Committees/CommitteeDetails?committeeId=${data}'  type='button' class='btn btn-outline-primary mx-1 btn-sm ti  ti-eye' title='show threads'>Details</a>
-                                                <a href='#' data-id='${data}' data-token='${tokenValue}' type='button' onclick='committeeHandler.exitCommittee(event)' title='delete' class='ti ti-trash red-icon btn btn-outline-danger btn-sm my-1 mx-1'>Exit</a>
+                                                <a href='/member/subcommitteeThreads?subcommitteeId=${data}'  type='button' class='btn btn-outline-success mx-1 btn-sm ti  ti-hand-point-down' title='show threads'>Threads</a>
+                                                <a href='/member/subcommittees/ViewMembers?subcommitteeId=${data}'  type='button' class='btn btn-outline-primary mx-1 btn-sm ti  ti-eye' title='show threads'>Members</a>
+                                                <a href='#' data-id='${data}' data-token='${tokenValue}' type='button' onclick='subcommitteeHandler.exitSubcommittee(event)' title='delete' class='ti ti-trash red-icon btn btn-outline-danger btn-sm my-1 mx-1'>Exit</a>
                                             `
                                     }
                                     
@@ -185,10 +179,10 @@
                                 {
                                     return ``;
                                 }else{
-                                    return `<a href='#' data-id='${data}' data-token='${tokenValue}' onclick='committeeHandler.joinCommittee(event)' type='button' class='btn btn-outline-primary mx-1 btn-sm' title='edit'> <i class='bi bi-plus'></i> Join</a>`;
+                                    return `<a href='#' data-id='${data}' data-token='${tokenValue}' onclick='subcommitteeHandler.joinSubcommittee(event)' type='button' class='btn btn-outline-primary mx-1 btn-sm' title='edit'> <i class='bi bi-plus'></i> Join</a>`;
                                 }
                             } else {
-                                return `<a href='#' data-id='${data}' data-token='${tokenValue}' onclick='committeeHandler.joinCommittee(event)' type='button' class='btn btn-outline-primary mx-1 btn-sm' title='edit'> <i class='bi bi-plus'></i> Join</a>`;
+                                return `<a href='#' data-id='${data}' data-token='${tokenValue}' onclick='subcommitteeHandler.joinSubcommittee(event)' type='button' class='btn btn-outline-primary mx-1 btn-sm' title='edit'> <i class='bi bi-plus'></i> Join</a>`;
 
                             }
                         }

@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.CodeAnalysis.Elfie.Serialization;
 using MLS_Digital_Management_System_Front_End.Core.DTOs.Member;
 using MLS_Digital_Management_System_Front_End.Core.DTOs.YearOfOperation;
 using MLS_Digital_Management_System_Front_End.Helpers;
@@ -9,67 +8,58 @@ using MLS_Digital_Management_System_Front_End.Services.Interfaces;
 
 namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
 {
-  
     [Area("Member")]
-    public class CommitteesController : Controller
+    public class SubcommitteesController : Controller
     {
         private readonly IServiceRepository _service;
-        public CommitteesController(IServiceRepository serviceRepository)
+
+        public SubcommitteesController(IServiceRepository serviceRepository)
         {
             _service = serviceRepository;
         }
+
         public async Task<IActionResult> Index()
         {
-
             await PopulateViewBags();
-
-            ViewBag.UserId  = AuthHelper.GetUserId(HttpContext);
-
+            ViewBag.UserId = AuthHelper.GetUserId(HttpContext);
             return View();
-
-            
         }
 
-       
         private async Task PopulateViewBags()
         {
-            //get the token
             await this.PopulateViewBagsMinimal();
             ViewBag.YearOfOperationList = await GetAllYearOfOperations();
-
-        
         }
 
-        public async Task<IActionResult> CommitteeDetails(int committeeId)
+        public async Task<IActionResult> ViewMembers(int subcommitteeId)
         {
             await PopulateViewBagsMinimal();
             var UserId = AuthHelper.GetUserId(HttpContext);
-            ViewBag.userId = UserId;
 
-            ViewBag.CommitteeId = committeeId;
+            ViewBag.SubcommitteeId = subcommitteeId;
             var member = await _service.MemberService.GetMemberByUserIdAsync(UserId);
 
-            bool isChairperson = await IsUserChairpersonOfCommittee(member.Id, committeeId);
+            bool isChairperson = await IsUserChairpersonOfSubcommittee(member.Id, subcommitteeId);
             ViewBag.isChairperson = isChairperson;
-            ViewBag.MembersList = await GetAllUsers(committeeId);
-            ViewBag.YearOfOperationList = await GetAllYearOfOperations();
+            ViewBag.MembersList = await GetAllUsers(subcommitteeId);
             return View();
         }
 
-        public async Task<IActionResult> ViewMemberRequests(int committeeId)
+        public async Task<IActionResult> ViewMemberRequests(int subcommitteeId)
         {
             await PopulateViewBagsMinimal();
-            ViewBag.CommitteeId = committeeId;
-            ViewBag.MembersList = await GetAllUsers(committeeId);
+            ViewBag.SubcommitteeId = subcommitteeId;
+            ViewBag.MembersList = await GetAllUsers(subcommitteeId);
             return View();
         }
+
         private async Task<List<SelectListItem>> GetAllYearOfOperations()
         {
             var yearsList = await this._service.YearOfOperationService.GetAllYearOfOperationsAsync();
 
             List<SelectListItem> yearsOfOperationsList = new List<SelectListItem>();
 
-            if(yearsList != null)
+            if (yearsList != null)
             {
                 yearsList.ForEach(yearOfoperation =>
                 {
@@ -80,21 +70,15 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
             return yearsOfOperationsList;
         }
 
-       
         private async Task<List<ReadMemberDTO>> GetAllMembers()
         {
             var membersList = await this._service.MemberService.GetAllMembersAsync();
-
-            
-
             return membersList.ToList();
         }
 
-        private async Task<List<SelectListItem>> GetAllUsers(int committeeId)
+        private async Task<List<SelectListItem>> GetAllUsers(int subcommitteeId)
         {
-            //var usersList = await this._service.UserService.GetAllUsersAsync();
-
-            var usersList = await this._service.CommitteeMembershipService.GetAllNonMembersAsync(committeeId);
+            var usersList = await this._service.SubcommitteeMembershipService.GetAllNonMembersAsync(subcommitteeId);
 
             List<SelectListItem> usersSelectList = new() { new SelectListItem() { Text = "--- Select Member ---", Value = "" } };
 
@@ -116,14 +100,10 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
             this._service.Token = token;
         }
 
-        // Method to check if the user is the chairperson of the committee
-        private async Task<bool> IsUserChairpersonOfCommittee(int memberId, int committeeId)
+        private async Task<bool> IsUserChairpersonOfSubcommittee(int memberId, int subcommitteeId)
         {
-            // Implement your logic here to determine if the user is the chairperson
-            var committee = await _service.CommitteeService.GetCommitteeByIdAsync(committeeId);
-            return committee != null && committee.ChairpersonID == memberId;
+            var subcommittee = await _service.SubcommitteeService.GetSubcommitteeByIdAsync(subcommitteeId);
+            return subcommittee != null && subcommittee.ChairpersonID == memberId;
         }
-
-
     }
 }

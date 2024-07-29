@@ -550,8 +550,20 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRmluYW5jZVxWaWV3c1xJbnZvaWNlUmVxdWVzdFR5cGVzXF9FZGl0SW52b2ljZVJlcXVlc3RUeXBlUGFydGlhbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Joseph-Sparc/Documents/C\# Projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Finance/Views/LevyPercentage/index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRmluYW5jZVxWaWV3c1xMZXZ5UGVyY2VudGFnZVxpbmRleC5jc2h0bWw=
+[C:/Users/Joseph-Sparc/Documents/C\# Projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Finance/Views/LevyPercent/index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRmluYW5jZVxWaWV3c1xMZXZ5UGVyY2VudFxpbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Joseph-Sparc/Documents/C\# Projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Finance/Views/LevyPercent/_CreateLevyPercentPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRmluYW5jZVxWaWV3c1xMZXZ5UGVyY2VudFxfQ3JlYXRlTGV2eVBlcmNlbnRQYXJ0aWFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Joseph-Sparc/Documents/C\# Projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Finance/Views/LevyPercent/_EditLevyPercentPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRmluYW5jZVxWaWV3c1xMZXZ5UGVyY2VudFxfRWRpdExldnlQZXJjZW50UGFydGlhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Joseph-Sparc/Documents/C\# Projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Finance/Views/LevyPercent/_SetCurrentLevyPercentPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRmluYW5jZVxWaWV3c1xMZXZ5UGVyY2VudFxfU2V0Q3VycmVudExldnlQZXJjZW50UGFydGlhbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Joseph-Sparc/Documents/C\# Projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Finance/Views/LicenseApplications/Details.cshtml]

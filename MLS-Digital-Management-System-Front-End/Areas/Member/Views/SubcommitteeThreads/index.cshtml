@@ -1,79 +1,55 @@
 @using Microsoft.Extensions.Configuration
 @inject IConfiguration Configuration
 @{
-    ViewData["Title"] = "Threads";
+    ViewData["Title"] = "Subcommittee Threads";
     Layout = "~/Areas/Secretariat/Views/shared/_Layout.cshtml";
 
     var host = Configuration.GetSection("APIURL")["Link"];
 }
 
 @section Styles {
-
     <style>
-           .hidden {
-  display: none;
-}
+        .hidden {
+            display: none;
+        }
     </style>
-
-
 }
 
-
-<div class="card  w-100 h-100 d-flex justify-content-center">
+<div class="card w-100 h-100 d-flex justify-content-center">
     <div class="card-body">
-      
-       <div>
+        <div>
             <img src="~/assets/images/91.gif" id="spinner" />
         </div>
-        <!--<div>
-            <button onclick="window.history.back()" class="btn btn-warning my-3"><span class="ti ti-arrow-left"></span>Back</button>
-
-        </div>
-        
-        <button type="button" class="btn btn-info my-3" data-bs-toggle="modal" data-bs-target="#create_thread_modal">
-            Add New Thread
-        </button>-->
 
         <div class="d-flex justify-content-between">
             <div>
                 <button onclick="window.history.back()" class="btn btn-warning my-3"><span class="ti ti-arrow-left"></span>Back</button>
-
             </div>
             <div>
-                <!-- Button trigger modal -->
-                <button type="button" class="btn btn-info my-3" data-bs-toggle="modal" data-bs-target="#create_thread_modal">
-                    Add New Thread
+                <button type="button" class="btn btn-info my-3" data-bs-toggle="modal" data-bs-target="#create_subcommittee_thread_modal">
+                    New Thread
                 </button>
             </div>
         </div>
-         <!-- Modal -->
-        <div class="modal fade" id="create_thread_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <partial name="_CreateThreadPartial" />
-        </div>
-        <!-- Modal -->
-        <div class="modal fade" id="edit_thread_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <partial name="_EditThreadPartial" />
+
+        <div class="modal fade" id="create_subcommittee_thread_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <partial name="_CreateSubcommitteeThreadPartial" />
         </div>
 
-        <h5 class="card-title fw-semibold mb-4 text-uppercase text-center"> Threads</h5>
+        <div class="modal fade" id="edit_subcommittee_thread_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <partial name="_EditSubcommitteeThreadPartial" />
+        </div>
+
+        <h5 class="card-title fw-semibold mb-4 text-uppercase text-center">Subcommittee Threads</h5>
 
         <div class="table-responsive">
-            <table class="table table-bordered table-hover" id="threads_table">
+            <table class="table table-bordered table-hover" id="subcommittee_threads_table">
                 <thead>
                     <tr>
-                        
-                        <th>
-                           Subject
-                        </th>
-                        <th>
-                            Date Created
-                        </th>
-                        <th>
-                            Created By
-                        </th>
-                        <th>
-                            Action
-                        </th>
+                        <th>Subject</th>
+                        <th>Date Created</th>
+                        <th>Created By</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -83,27 +59,24 @@
     </div>
 </div>
 
-
-@section Scripts{
-
+@section Scripts {
     <script>
         var datatable;
         var tokenValue = '@ViewBag.token';
-         var host = '@host';
+        var host = '@host';
     </script>
-     <script src="~/js/Threads.js" asp-append-version="true"></script>
+    <script src="~/js/SubcommitteeThreads.js" asp-append-version="true"></script>
     <script>
         $(document).ready(function () {
-            datatable = $('#threads_table').DataTable({
-
-
+            datatable = $('#subcommittee_threads_table').DataTable({
                 "processing": true,
                 "serverSide": true,
                 "order": [[0, "desc"]],
                 ajax: {
-                    url: "@host/api/Threads/paged?committeeId=@ViewBag.CommitteeId",
+                    url: "@host/api/SubcommitteeThreads/paged?subcommitteeId=@ViewBag.SubcommitteeId",
                     type: 'get',
-                    datatype: 'Json', headers: {
+                    datatype: 'Json',
+                    headers: {
                         'Authorization': 'Bearer @ViewBag.token'
                     },
                 },
@@ -115,14 +88,13 @@
                     },
                 ],
                 columns: [
-                   
                     {
                         data: "subject",
                         name: "subject",
                         className: "text-left",
                         "orderable": true,
                     },
-                   {
+                    {
                         data: "createdDate",
                         name: "createdDate",
                         className: "text-left",
@@ -130,10 +102,9 @@
                         render: function(data) {
                             var date = new Date(data);
                             var day = date.getDate();
-                            var month = date.getMonth() + 1; // Months are zero-based
+                            var month = date.getMonth() + 1;
                             var year = date.getFullYear();
                             
-                            // Add leading zeros if needed
                             day = day < 10 ? '0' + day : day;
                             month = month < 10 ? '0' + month : month;
                             
@@ -151,11 +122,10 @@
                         name: "id",
                         "orderable": false,
                         render: function (data, type, row) {
-                                    
-                                return `<a href='#' onclick='threadHandler.editForm(${data},"${tokenValue}")' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-pencil' title='edit'>Edit</a>
-                                        <a href='/member/messages?threadId=${data}'  type='button' class='btn btn-outline-success mx-1 btn-sm ti  ti-hand-point-down' title='show messages'>Messages</a>
-                                        <a href='#' data-id='${data}' data-token='${tokenValue}' type='button' onclick='threadHandler.delete(event)' title='delete' class='ti ti-trash red-icon btn btn-outline-danger btn-sm my-1 mx-1'>Delete</a>`;
-                                }
+                            return `<a href='#' onclick='subcommitteeThreadHandler.editForm(${data},"${tokenValue}")' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-pencil' title='edit'>Edit</a>
+                                    <a href='/member/subcommitteemessages?threadId=${data}'  type='button' class='btn btn-outline-success mx-1 btn-sm ti  ti-hand-point-down' title='show messages'>Messages</a>
+                                    <a href='#' data-id='${data}' data-token='${tokenValue}' type='button' onclick='subcommitteeThreadHandler.delete(event)' title='delete' class='ti ti-trash red-icon btn btn-outline-danger btn-sm my-1 mx-1'>Delete</a>`;
+                        }
                     }
                 ],
                 responsive: true,

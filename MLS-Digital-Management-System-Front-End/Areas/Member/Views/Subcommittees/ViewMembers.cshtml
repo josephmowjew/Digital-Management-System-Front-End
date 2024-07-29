@@ -16,7 +16,7 @@
         </div>
          <!-- Button trigger modal -->
         <button type="button" class="btn btn-info my-3" data-bs-toggle="modal" data-bs-target="#create_committee_member_modal">
-            Add Member To Committe
+            Add Member
         </button>
       
         <!-- Modal -->
@@ -26,7 +26,7 @@
 
        
 
-        <h5 class="card-title fw-semibold mb-4 text-uppercase">Committee Members</h5>
+        <h5 class="card-title fw-semibold mb-4 text-uppercase">SubCommittee Members</h5>
 
         <div class="table-responsive">
             <table class="table table-bordered table-hover" id="my_table">
@@ -46,6 +46,8 @@
                 <tbody></tbody>
             </table>
         </div>
+
+        
     </div>
 </div>
 
@@ -57,7 +59,7 @@
         console.log('@ViewBag.UserId');
     </script>
 
- <script src="~/js/CommitteeMember.js" asp-append-version="true"></script>
+ <script src="~/js/SubcommitteeMember.js" asp-append-version="true"></script>
     
     <script>
     $(document).ready(function () {
@@ -114,7 +116,7 @@
             "serverSide": true,
             "order": [[0, "asc"]],
             ajax: {
-                url: "@host/api/CommitteeMembers/paged?committeeId=" + @ViewBag.CommitteeId,
+                url: "@host/api/SubcommitteeMembership/paged?subcommitteeId=" + @ViewBag.subcommitteeId,
                 type: 'get',
                 datatype: 'Json',
                 headers: {

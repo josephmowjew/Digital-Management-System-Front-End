@@ -40,10 +40,11 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
         
         }
 
-        public async Task<IActionResult> ViewMembers(int committeeId)
+        public async Task<IActionResult> CommitteeDetails(int committeeId)
         {
             await PopulateViewBagsMinimal();
             var UserId = AuthHelper.GetUserId(HttpContext);
+            ViewBag.userId = UserId;
 
             ViewBag.CommitteeId = committeeId;
             var member = await _service.MemberService.GetMemberByUserIdAsync(UserId);
@@ -51,6 +52,7 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
             bool isChairperson = await IsUserChairpersonOfCommittee(member.Id, committeeId);
             ViewBag.isChairperson = isChairperson;
             ViewBag.MembersList = await GetAllUsers(committeeId);
+            ViewBag.YearOfOperationList = await GetAllYearOfOperations();
             return View();
         }
 

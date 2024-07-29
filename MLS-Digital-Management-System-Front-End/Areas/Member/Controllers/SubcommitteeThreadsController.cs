@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using MLS_Digital_Management_System_Front_End.Core.DTOs.Thread;
 using MLS_Digital_Management_System_Front_End.Core.DTOs.YearOfOperation;
 using MLS_Digital_Management_System_Front_End.Helpers;
 using MLS_Digital_Management_System_Front_End.Services.Interfaces;
@@ -9,32 +8,26 @@ using MLS_Digital_Management_System_Front_End.Services.Interfaces;
 namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
 {
     [Area("Member")]
-    public class MessagesController : Controller
+    public class SubcommitteeThreadsController : Controller
     {
         private readonly IServiceRepository _service;
-        public MessagesController(IServiceRepository serviceRepository)
+        public SubcommitteeThreadsController(IServiceRepository serviceRepository)
         {
             _service = serviceRepository;
         }
 
-        public async Task<IActionResult> Index(int threadId)
+        public async Task<IActionResult> Index(int subcommitteeId)
         {
-            await PopulateViewBags(threadId);
+            await PopulateViewBags(subcommitteeId);
             return View();
         }
 
-        private async Task PopulateViewBags(int threadId)
+        private async Task PopulateViewBags(int subcommitteeId)
         {
             string token = AuthHelper.GetToken(HttpContext);
             ViewBag.token = token;
             this._service.Token = token;
-            ViewBag.ThreadId = threadId;
-            ViewBag.UserId = AuthHelper.GetUserId(HttpContext);
-            ViewBag.ThreadSubject = (await this._service.ThreadService.GetThreadByIdAsync(threadId)).Subject;
-            ViewBag.CommitteeId = (await this._service.ThreadService.GetThreadByIdAsync(threadId)).CommitteeId;
+            ViewBag.SubcommitteeId = subcommitteeId;
         }
-
-
-        
     }
 }

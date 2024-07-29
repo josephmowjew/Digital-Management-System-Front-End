@@ -1,52 +1,55 @@
-// SubcommitteeHandler class
-
-class SubcommitteeHandler {
+class SubcommitteeThreadHandler {
   constructor() {
     this.hideSpinner()
     this.bindEvents()
-    this.form = document.querySelector("#create_subcommittee_modal form")
+    this.form = document.querySelector("#create_subcommittee_thread_modal form")
     if (this.form) {
       this.formElements = this.form.querySelectorAll("input, select, textarea")
+      this.setupFormBehavior()
     }
   }
 
+  setupFormBehavior() {
+    document.addEventListener("DOMContentLoaded", () => {
+      const attachmentField = document.querySelector('div input[type="file"]')
+      if (attachmentField) {
+        attachmentField.style.display = "block"
+        attachmentField.required = true
+        const label = attachmentField.previousElementSibling
+        if (label) {
+          label.style.display = "inline-block"
+        }
+      }
+    })
+  }
+
   bindEvents() {
-    const createSubcommitteeBtn = document.querySelector(
-      "#create_subcommittee_modal button[name='create_subcommittee_btn']"
+    const createThreadBtn = document.querySelector(
+      "#create_subcommittee_thread_modal button[name='create_subcommittee_thread_btn']"
     )
 
-    if (createSubcommitteeBtn) {
-      createSubcommitteeBtn.addEventListener("click", this.onCreateClick.bind(this))
+    if (createThreadBtn) {
+      createThreadBtn.addEventListener("click", this.onCreateClick.bind(this))
     }
 
-    const updateSubcommitteeBtn = document.querySelector(
-      "#edit_subcommittee_modal button[name='update_subcommittee_btn']"
+    const updateThreadBtn = document.querySelector(
+      "#edit_subcommittee_thread_modal button[name='update_subcommittee_thread_btn']"
     )
-    if (updateSubcommitteeBtn) {
-      updateSubcommitteeBtn.addEventListener("click", this.updateClicked.bind(this))
+    if (updateThreadBtn) {
+      updateThreadBtn.addEventListener("click", this.updateClicked.bind(this))
     }
 
-    const deleteSubcommitteeBtns = document.querySelectorAll(
-      ".delete-subcommittee-btn"
+    const deleteThreadBtns = document.querySelectorAll(
+      ".delete-subcommittee-thread-btn"
     )
-    deleteSubcommitteeBtns.forEach(btn => {
+    deleteThreadBtns.forEach(btn => {
       btn.addEventListener("click", this.delete.bind(this))
-    })
-
-    const joinSubcommitteeBtns = document.querySelectorAll(".join-subcommittee-btn")
-    joinSubcommitteeBtns.forEach(btn => {
-      btn.addEventListener("click", this.joinSubcommittee.bind(this))
-    })
-
-    const exitSubcommitteeBtns = document.querySelectorAll(".exit-subcommittee-btn")
-    exitSubcommitteeBtns.forEach(btn => {
-      btn.addEventListener("click", this.exitSubcommittee.bind(this))
     })
   }
 
   onCreateClick() {
     this.showSpinner()
-    const form = document.querySelector("#create_subcommittee_modal form")
+    const form = document.querySelector("#create_subcommittee_thread_modal form")
     const errorMessages = form.querySelectorAll(".error-message")
     errorMessages.forEach(errorMessage => errorMessage.remove())
 
@@ -59,7 +62,7 @@ class SubcommitteeHandler {
       this.sendAjaxRequest(
         formData,
         "POST",
-        `${host}/api/Subcommittees`,
+        `${host}/api/SubcommitteeThreads`,
         this.handleCreateSuccess.bind(this),
         this.handleError.bind(this, form),
         {
@@ -71,8 +74,8 @@ class SubcommitteeHandler {
 
   updateClicked() {
     this.showSpinner()
-    const form = document.querySelector("#edit_subcommittee_modal form")
-    const id = document.querySelector("#edit_subcommittee_modal form input[name='Id']").value
+    const form = document.querySelector("#edit_subcommittee_thread_modal form")
+    const id = document.querySelector("#edit_subcommittee_thread_modal form input[name='Id']").value
     const errorMessages = form.querySelectorAll(".error-message")
     errorMessages.forEach(errorMessage => errorMessage.remove())
 
@@ -84,7 +87,7 @@ class SubcommitteeHandler {
       this.sendAjaxRequest(
         formData,
         "PUT",
-        `${host}/api/Subcommittees/${id}`,
+        `${host}/api/SubcommitteeThreads/${id}`,
         this.handleUpdateSuccess.bind(this),
         this.handleError.bind(this, form),
         {
@@ -98,7 +101,7 @@ class SubcommitteeHandler {
     this.showSpinner()
 
     if (id > 0) {
-      this.sendAjaxRequest(null, 'GET', `${host}/api/Subcommittees/GetSubcommitteeById/${id}`, this.handleEditFormSuccess.bind(this), this.handleError.bind(this), {
+      this.sendAjaxRequest(null, 'GET', `${host}/api/SubcommitteeThreads/GetSubcommitteeThreadById/${id}`, this.handleEditFormSuccess.bind(this), this.handleError.bind(this), {
         'Authorization': `Bearer ${token}`
       })
     }
@@ -106,7 +109,7 @@ class SubcommitteeHandler {
 
   handleEditFormSuccess(response) {
     this.hideSpinner()
-    const editform = document.querySelector("#edit_subcommittee_modal form")
+    const editform = document.querySelector("#edit_subcommittee_thread_modal form")
     const data = JSON.parse(response)
     const fieldMap = this.createFieldMap(data)
     const editformElements = [...editform.querySelectorAll('input, select, textarea, checkbox, label, textarea')]
@@ -119,7 +122,7 @@ class SubcommitteeHandler {
       element.value = fieldValue
     })
 
-    $("#edit_subcommittee_modal").modal("show")
+    $("#edit_subcommittee_thread_modal").modal("show")
   }
 
   createFieldMap(data) {
@@ -135,80 +138,34 @@ class SubcommitteeHandler {
     const id = button.getAttribute("data-id")
     const token = button.getAttribute("data-token")
 
-    bootbox.confirm("Are you sure you want to delete this subcommittee?", result => {
+    bootbox.confirm("Are you sure you want to delete this subcommittee thread?", result => {
       if (result) {
-        this.sendAjaxRequest(null, 'DELETE', `${host}/api/Subcommittees/${id}`, this.handleDeleteSuccess.bind(this), this.handleError.bind(this, null), {
+        this.sendAjaxRequest(null, 'DELETE', `${host}/api/SubcommitteeThreads/${id}`, this.handleDeleteSuccess.bind(this), this.handleError.bind(this, null), {
           'Authorization': `Bearer ${token}`
         })
       }
     })
-  }
-
-  joinSubcommittee(event) {
-    const button = event.currentTarget
-    const id = button.getAttribute("data-id")
-    const token = button.getAttribute("data-token")
-
-    bootbox.confirm("Are you sure you want to join this subcommittee?", result => {
-      if (result) {
-        this.sendAjaxRequest(null, 'GET', `${host}/api/SubcommitteeMembership/join/${id}`, this.handleJoinSuccess.bind(this), this.handleError.bind(this, null), {
-          'Authorization': `Bearer ${token}`
-        })
-      }
-    })
-
-    const dataTable = $("#subcommittee_table").DataTable();
-    dataTable.ajax.reload();
-  }
-
-  exitSubcommittee(event) {
-    const button = event.currentTarget
-    const id = button.getAttribute("data-id")
-    const token = button.getAttribute("data-token")
-
-    bootbox.confirm("Are you sure you want to exit this subcommittee?", result => {
-      if (result) {
-        this.sendAjaxRequest(null, 'GET', `${host}/api/SubcommitteeMembership/exit/${id}`, this.handleExitSuccess.bind(this), this.handleError.bind(this, null), {
-          'Authorization': `Bearer ${token}`
-        })
-      }
-    })
-
-    const dataTable = $("#subcommittee_table").DataTable();
-    dataTable.ajax.reload();
   }
 
   handleCreateSuccess(response) {
     this.hideSpinner()
-    const dataTable = $("#subcommittee_table").DataTable()
-    toastr.success("New subcommittee created successfully")
-    $("#create_subcommittee_modal").modal("hide")
+    const dataTable = $("#subcommittee_threads_table").DataTable()
+    toastr.success("New subcommittee thread created successfully")
+    $("#create_subcommittee_thread_modal").modal("hide")
     dataTable.ajax.reload()
   }
 
   handleUpdateSuccess(response) {
     this.hideSpinner()
-    const dataTable = $("#subcommittee_table").DataTable()
-    toastr.success("Subcommittee updated successfully")
-    $("#edit_subcommittee_modal").modal("hide")
+    const dataTable = $("#subcommittee_threads_table").DataTable()
+    toastr.success("Subcommittee thread updated successfully")
+    $("#edit_subcommittee_thread_modal").modal("hide")
     dataTable.ajax.reload()
   }
 
   handleDeleteSuccess(response) {
-    toastr.success("Subcommittee has been deleted successfully")
-    const dataTable = $('#subcommittee_table').DataTable()
-    dataTable.ajax.reload()
-  }
-
-  handleJoinSuccess(response) {
-    toastr.success("Your request to join the subcommittee has been sent successfully")
-    const dataTable = $('#subcommittee_table').DataTable()
-    dataTable.ajax.reload()
-  }
-
-  handleExitSuccess(response) {
-    toastr.success("Successfully exited the subcommittee")
-    const dataTable = $('#subcommittee_table').DataTable()
+    toastr.success("Subcommittee thread has been deleted successfully")
+    const dataTable = $('#subcommittee_threads_table').DataTable()
     dataTable.ajax.reload()
   }
 
@@ -288,4 +245,4 @@ class SubcommitteeHandler {
   }
 }
 
-window.subcommitteeHandler = new SubcommitteeHandler()
+window.subcommitteeThreadHandler = new SubcommitteeThreadHandler()

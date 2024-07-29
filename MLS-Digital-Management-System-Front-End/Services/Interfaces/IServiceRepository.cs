@@ -34,5 +34,6 @@ public interface IServiceRepository{
     ILevyPercentService LevyPercentService { get; }
     ISubcommitteeMembershipService SubcommitteeMembershipService { get; }
     ISubcommitteeService SubcommitteeService { get; }
+    ISubcommitteeThreadService SubcommitteeThreadService { get; }
 }
 

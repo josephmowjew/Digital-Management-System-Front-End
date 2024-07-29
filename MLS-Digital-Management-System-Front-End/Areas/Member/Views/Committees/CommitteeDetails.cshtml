@@ -1,39 +1,71 @@
 @using Microsoft.Extensions.Configuration
 @inject IConfiguration Configuration
+@using System.Text.Json;
 @{
-    ViewData["Title"] = "Committes";
+    ViewData["Title"] = "CommitteeDetails";
     Layout = "~/Areas/Member/Views/shared/_Layout.cshtml";
+    //bool isChairperson = ViewBag.IsChairperson;
 
     var host = Configuration.GetSection("APIURL")["Link"];
 }
 
-@section Styles {
-
-    <style>
-           .hidden {
-                display: none;
-                }
-            .fees-column {
-                padding: 10px;
-            }
-
-            .fee-item {
-                margin-bottom: 5px;
-            }
-    </style>
-
-
-}
-
-
-<div class="card  w-100 h-100 d-flex justify-content-center">
+<div class="card w-100 h-100 d-flex justify-content-center">
     <div class="card-body">
-      
-       <div>
+        <div>
             <img src="~/assets/images/91.gif" id="spinner" />
         </div>
+         <!-- Button trigger modal -->
+        <button type="button" class="btn btn-info my-3" data-bs-toggle="modal" data-bs-target="#create_committee_member_modal">
+            Add Member
+        </button>
+      
+        <!-- Modal -->
+        <div class="modal fade" id="create_committee_member_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <partial name="_CreateCommitteeMemberPartial" />
+        </div>
+
        
-        <h5 class="card-title fw-semibold mb-4 text-uppercase text-center"> Subcommittee's List</strong></h5>
+
+        <h5 class="card-title fw-semibold mb-4 text-capitalize">Committee Members</h5>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover" id="my_table">
+                <thead>
+                    <tr>
+                        <th>Member Name</th>
+                        <th>Member Role</th>
+                        <th>Gender</th>
+                        <th>Email</th>
+                        <th>Contact</th>
+                        @if (ViewBag.IsChairperson)
+                        {
+                            <th>Action</th>
+                        }
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="card w-100 h-100 d-flex justify-content-center">
+    <div class="card-body">
+        <div class="d-flex justify-content-between my-3">
+            <div>
+                <h5 class="card-title fw-semibold">Subcommittees</h5>
+            </div>
+            <!--<div>
+                <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#create_subcommittee_modal">
+                    Add Subcommittee
+                </button>
+            </div>-->
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="create_subcommittee_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <partial name="_CreateSubcommitteePartial" />
+        </div>
 
         <div class="table-responsive">
             <table class="table table-bordered table-hover" id="subcommittee_table">
@@ -58,6 +90,7 @@
                         </th>
                     </tr>
                 </thead>
+
                 <tbody>
                 </tbody>
             </table>
@@ -65,15 +98,92 @@
     </div>
 </div>
 
-
 @section Scripts{
-
     <script>
         var datatable;
         var tokenValue = '@ViewBag.token';
         var host = '@host';
     </script>
-     <script src="~/js/Subcommittee.js" asp-append-version="true"></script>
+
+ <script src="~/js/CommitteeMember.js" asp-append-version="true"></script>
+ <script src="~/js/Subcommittee.js" asp-append-version="true"></script>
+    
+    <script>
+        $(document).ready(function () {
+            const isChairperson = @Html.Raw(JsonSerializer.Serialize(@ViewBag.IsChairperson));
+
+            let columns = [
+                {
+                    data: "memberShip.fullName",
+                    name: "memberShip",
+                    className: "text-left",
+                    "orderable": false
+                },
+                {
+                    data: "role",
+                    name: "role",
+                    className: "text-left",
+                    "orderable": false
+                },
+                {
+                    data: "memberShip.gender",
+                    name: "gender",
+                    className: "text-left",
+                    "orderable": false
+                },
+                {
+                    data: "memberShip.email",
+                    name: "email",
+                    className: "text-left",
+                    "orderable": false
+                },
+                {
+                    data: "memberShip.phoneNumber",
+                    name: "contact",
+                    className: "text-left",
+                    "orderable": false
+                }
+            ];
+
+            if (isChairperson) {
+                columns.push({
+                    data: "id",
+                    name: "id",
+                    "orderable": false,
+                    render: function (data, type, row) {
+                        return `
+                            <a href='#' data-id="${data}" data-token="${tokenValue}" onclick='committeeMemberHandler.delete(event)' type='button' class='btn btn-outline-danger mx-1 btn-sm ti ti-trash' title='edit'> Remove</a> 
+                        `;
+                    }
+                });
+            }
+
+            datatable = $('#my_table').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "order": [[0, "asc"]],
+                ajax: {
+                    url: "@host/api/CommitteeMembers/paged?committeeId=" + @ViewBag.CommitteeId,
+                    type: 'get',
+                    datatype: 'Json',
+                    headers: {
+                        'Authorization': 'Bearer @ViewBag.token'
+                    },
+                },
+                columnDefs: [
+                    {
+                        defaultContent: "",
+                        targets: "_all",
+                        'orderable': true
+                    }
+                ],
+                columns: columns,
+                responsive: true,
+                "autoWidth": false
+            });
+        });
+    </script>
+
     <script>
         $(document).ready(function () {
             datatable = $('#subcommittee_table').DataTable({
@@ -83,7 +193,7 @@
                 "serverSide": true,
                 "order": [[0, "desc"]],
                 ajax: {
-                    url: "@host/api/Subcommittees/paged?memberId=@ViewBag.userId",
+                    url: "@host/api/Subcommittees/GetSubcommitteeByCommitteeId?committeeId="+@ViewBag.committeeId,
                     type: 'get',
                     datatype: 'Json', headers: {
                         'Authorization': 'Bearer @ViewBag.token'
@@ -129,7 +239,6 @@
                         render: function (data, type, row) {
                             let loggedInUserId = `@ViewBag.UserId`;
                             let userMembership = row.subcommitteeMemberships.find(reg => reg.memberShipId === loggedInUserId);
-                            console.log(userMembership);
                             if (userMembership != null) {
                                 let membershipStatus = userMembership.memberShipStatus;
                                 // Now you can use membershipStatus to determine what to return
@@ -155,10 +264,8 @@
                         render: function (data, type, row) {
                             let loggedInUserId = `@ViewBag.UserId`;
                             let isUserInCommittee = row.subcommitteeMemberships.find(reg => reg.memberShipId === loggedInUserId);
-
                             if (isUserInCommittee != null) {
                                 let membershipStatus = isUserInCommittee.memberShipStatus
-                                console.log(membershipStatus);
                                 if (membershipStatus == "Approved") {
                                     if (isUserInCommittee.role == "Chairperson") {
                                         return `

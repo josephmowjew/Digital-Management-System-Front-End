@@ -169,14 +169,14 @@
                                     if (isUserInCommittee.role == "Chairperson") {
                                         return `
                                                 <a href='/member/threads?committeeId=${data}'  type='button' class='btn btn-outline-success mx-1 btn-sm ti  ti-hand-point-down' title='show threads'>Threads</a>
-                                                <a href='/member/Committees/ViewMembers?committeeId=${data}'  type='button' class='btn btn-outline-primary mx-1 btn-sm ti  ti-eye' title='show threads'>Members</a>
+                                                <a href='/member/Committees/CommitteeDetails?committeeId=${data}'  type='button' class='btn btn-outline-primary mx-1 btn-sm ti  ti-eye' title='show threads'>Details</a>
                                                 <a href='/member/Committees/ViewMemberRequests?committeeId=${data}'  type='button' class='btn btn-outline-warning mx-1 btn-sm ti  ti-eye' title='show threads'>Requests</a>
                                                 <a href='#' data-id='${data}' data-token='${tokenValue}' type='button' onclick='committeeHandler.exitCommittee(event)' title='delete' class='ti ti-trash red-icon btn btn-outline-danger btn-sm my-1 mx-1'>Exit</a>
                                             `
                                     } else {
                                         return `
                                                 <a href='/member/threads?committeeId=${data}'  type='button' class='btn btn-outline-success mx-1 btn-sm ti  ti-hand-point-down' title='show threads'>Threads</a>
-                                                <a href='/member/Committees/ViewMembers?committeeId=${data}'  type='button' class='btn btn-outline-primary mx-1 btn-sm ti  ti-eye' title='show threads'>Members</a>
+                                                <a href='/member/Committees/CommitteeDetails?committeeId=${data}'  type='button' class='btn btn-outline-primary mx-1 btn-sm ti  ti-eye' title='show threads'>Details</a>
                                                 <a href='#' data-id='${data}' data-token='${tokenValue}' type='button' onclick='committeeHandler.exitCommittee(event)' title='delete' class='ti ti-trash red-icon btn btn-outline-danger btn-sm my-1 mx-1'>Exit</a>
                                             `
                                     }

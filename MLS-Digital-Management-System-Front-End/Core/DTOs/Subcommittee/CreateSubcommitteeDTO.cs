@@ -13,7 +13,7 @@ public class CreateSubcommitteeDTO
     [Display(Name = "Description")]
     public string Description { get; set; }
 
-    public int? ChairpersonID { get; set; }
+    public int? ChairpersonId { get; set; }
 
     [Display(Name = "Practicing Year")]
     public int YearOfOperationId { get; set; }

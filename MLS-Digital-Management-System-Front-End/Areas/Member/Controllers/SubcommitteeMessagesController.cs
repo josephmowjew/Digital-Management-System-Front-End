@@ -9,10 +9,10 @@ using MLS_Digital_Management_System_Front_End.Services.Interfaces;
 namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
 {
     [Area("Member")]
-    public class MessagesController : Controller
+    public class SubcommitteeMessagesController : Controller
     {
         private readonly IServiceRepository _service;
-        public MessagesController(IServiceRepository serviceRepository)
+        public SubcommitteeMessagesController(IServiceRepository serviceRepository)
         {
             _service = serviceRepository;
         }
@@ -30,11 +30,8 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
             this._service.Token = token;
             ViewBag.ThreadId = threadId;
             ViewBag.UserId = AuthHelper.GetUserId(HttpContext);
-            ViewBag.ThreadSubject = (await this._service.ThreadService.GetThreadByIdAsync(threadId)).Subject;
-            ViewBag.CommitteeId = (await this._service.ThreadService.GetThreadByIdAsync(threadId)).CommitteeId;
+            ViewBag.ThreadSubject = (await this._service.SubcommitteeThreadService.GetSubcommitteeThreadByIdAsync(threadId)).Subject;
+            ViewBag.SubcommitteeId = (await this._service.SubcommitteeThreadService.GetSubcommitteeThreadByIdAsync(threadId)).SubcommitteeId;
         }
-
-
-        
     }
 }

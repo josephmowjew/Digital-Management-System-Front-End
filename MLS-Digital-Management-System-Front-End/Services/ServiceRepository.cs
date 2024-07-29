@@ -42,6 +42,7 @@ public class ServiceRepository : IServiceRepository
     private ILevyPercentService _levyPercentService;
     private ISubcommitteeMembershipService _subcommitteeMembershipService;
     private ISubcommitteeService _subcommitteeService;
+    private ISubcommitteeThreadService _subcommitteeThreadService;
 
 
     public string Token 
@@ -87,6 +88,7 @@ public class ServiceRepository : IServiceRepository
             _levyPercentService = new LevyPercentService(_httpClient);
             _subcommitteeMembershipService = new SubcommitteeMembershipService(_httpClient);
             _subcommitteeService = new SubcommitteeService(_httpClient);
+            _subcommitteeThreadService = new SubcommitteeThreadService(_httpClient);
         } 
     } 
 
@@ -132,4 +134,5 @@ public class ServiceRepository : IServiceRepository
     public ILevyPercentService LevyPercentService => _levyPercentService ??= new LevyPercentService(_httpClient);
     public ISubcommitteeMembershipService SubcommitteeMembershipService => _subcommitteeMembershipService ??= new SubcommitteeMembershipService(_httpClient);
     public ISubcommitteeService SubcommitteeService => _subcommitteeService ??= new SubcommitteeService(_httpClient);
+    public ISubcommitteeThreadService SubcommitteeThreadService => _subcommitteeThreadService ??= new SubcommitteeThreadService(_httpClient);
 }

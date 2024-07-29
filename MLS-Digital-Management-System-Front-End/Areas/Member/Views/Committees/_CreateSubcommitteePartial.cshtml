@@ -1,0 +1,43 @@
+@model MLS_Digital_Management_System_Front_End.Core.DTOs.Subcommittee.CreateSubcommitteeDTO
+
+<div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createSubcommitteeModalLabel">Create Subcommittee</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="myForm" asp-action="CreateSubcommittee">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input asp-for="CommitteeId" value="@ViewBag.committeeId" type="hidden" />
+                    <div class="form-group">
+                        <label asp-for="SubcommitteeName" class="control-label"></label>
+                        <input asp-for="SubcommitteeName" class="form-control" />
+                        <span asp-validation-for="SubcommitteeName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Description" class="control-label"></label>
+                        <textarea asp-for="Description" class="form-control"></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="ChairpersonId" class="form-label">Chairperson</label>
+                        <select asp-for="ChairpersonId" asp-items="@ViewBag.membersList" class="form-control">
+                            <option value="">Select Chairperson</option>
+                        </select>
+                        <span asp-validation-for="ChairpersonId" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="YearOfOperationId" class="form-label">Practicing Year</label>
+                        <select asp-for="YearOfOperationId" asp-items="@ViewBag.YearOfOperationList" class="form-control"></select>
+                        <span asp-validation-for="YearOfOperationId" class="text-danger"></span>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" name="create_subcommittee_btn" id="create_subcommittee_btn">Create Committee</button>
+            </div>
+        </div>
+    </div>

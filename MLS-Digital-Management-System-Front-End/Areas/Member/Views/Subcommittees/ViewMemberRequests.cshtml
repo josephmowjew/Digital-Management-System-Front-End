@@ -1,7 +1,7 @@
 @using Microsoft.Extensions.Configuration
 @inject IConfiguration Configuration
 @{
-    ViewData["Title"] = "View Committee Members";
+    ViewData["Title"] = "View Subcommittee Members";
     Layout = "~/Areas/Member/Views/shared/_Layout.cshtml";
 
     var host = Configuration.GetSection("APIURL")["Link"];
@@ -14,7 +14,7 @@
         </div>
         <div class="d-flex justify-content-between mb-3">
             <div>
-                <a asp-action="index" asp-controller="committees" asp-area="member" class="btn btn-secondary p-1">
+                <a asp-action="index" asp-controller="subcommittees" asp-area="member" class="btn btn-secondary p-1">
                     <i class="bi bi-chevron-double-left"></i>
                     Back
                 </a>
@@ -49,7 +49,7 @@
         var host = '@host';
     </script>
 
- <script src="~/js/CommitteeMember.js" asp-append-version="true"></script>
+ <script src="~/js/SubcommitteeMember.js" asp-append-version="true"></script>
     
     <script>
         $(document).ready(function () {
@@ -58,7 +58,7 @@
                 "serverSide": true,
                 "order": [[0, "asc"]],
                 ajax: {
-                    url: "@host/api/CommitteeMembers/requests?committeeId=" + @ViewBag.CommitteeId,
+                    url: "@host/api/SubcommitteeMembership/requests?subcommitteeId=" + @ViewBag.subcommitteeId,
                     type: 'get',
                     datatype: 'Json',
                     headers: {
@@ -95,8 +95,8 @@
                             console.log(data)
                             return `
                             
-                            <a href='#' data-id="${data}" data-token="${tokenValue}" onclick='committeeMemberHandler.addMember(event)' type='button' class='btn btn-outline-success mx-1 btn-sm ti ti-check' title='edit'> Accept</a>
-                            <a href='#' data-id="${data}" data-token="${tokenValue}" onclick='committeeMemberHandler.delete(event)' type='button' class='btn btn-outline-danger mx-1 btn-sm ti ti-trash' title='edit'> Deny</a>
+                            <a href='#' data-id="${data}" data-token="${tokenValue}" onclick='subcommitteeMemberHandler.addMember(event)' type='button' class='btn btn-outline-success mx-1 btn-sm ti ti-check' title='edit'> Accept</a>
+                            <a href='#' data-id="${data}" data-token="${tokenValue}" onclick='subcommitteeMemberHandler.delete(event)' type='button' class='btn btn-outline-danger mx-1 btn-sm ti ti-trash' title='edit'> Deny</a>
                                            
                             `
                         }

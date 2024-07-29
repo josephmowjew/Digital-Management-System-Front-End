@@ -1,8 +1,8 @@
 @using Microsoft.Extensions.Configuration
 @inject IConfiguration Configuration
 @{
-    ViewData["Title"] = "Messages";
-    Layout = "~/Areas/Secretariat/Views/shared/_Layout.cshtml";
+    ViewData["Title"] = "Subcommittee Messages";
+    Layout = "~/Areas/Member/Views/shared/_Layout.cshtml";
 
     var host = Configuration.GetSection("APIURL")["Link"];
 }
@@ -122,29 +122,25 @@
 
 }
 
-
 <div class="w-100 h-100 d-flex justify-content-center">
     <div class="card-body">
-      
-      
         <div>
             <button onclick="window.history.back()" class="btn btn-warning my-3"><span class="ti ti-arrow-left"></span>Back</button>
         </div>
-      
-       
-        <h5 class="card-title fw-semibold mb-4 text-uppercase text-center"> Messages List for @ViewBag.ThreadSubject</strong></h5>
+        
+        <h5 class="card-title fw-semibold mb-4 text-uppercase text-center">Subcommittee Messages List for @ViewBag.ThreadSubject</h5>
 
         <div class="d-flex justify-content-center">
             <div class="chat-container">
                 <div class="chat-header text-white">
-                    <h5>ChatApp</h5>
+                    <h5>Subcommittee ChatApp</h5>
                 </div>
                 <div class="chat-body" id="messagesList">
                 </div>
                 <form id="chatForm">
                     <div class="form-input">
-                        <input id="ThreadId" name="ThreadId" value="@ViewBag.ThreadId" type="hidden" />
-                        <input id="CommitteeId" name="CommitteeId" value="@ViewBag.CommitteeId" type="hidden" />
+                        <input id="SubcommitteeThreadId" name="SubcommitteeThreadId" value="@ViewBag.ThreadId" type="hidden" />
+                        <input id="SubcommitteeId" name="SubcommitteeId" value="@ViewBag.SubcommitteeId" type="hidden" />
                         <input type="text" id="Content" name="Content" placeholder="Message" class="form-control" />
                         <button id="sendButton" class="send-button" type="button" id="create_message_btn" name="create_message_btn">
                             <i class="bi bi-send"></i>
@@ -153,14 +149,10 @@
                 </form>
             </div>
         </div>
-
-        
     </div>
 </div>
 
-
-@section Scripts{
-
+@section Scripts {
     <script>
         var datatable;
         var tokenValue = '@ViewBag.token';
@@ -168,10 +160,7 @@
         const threadId = '@ViewBag.ThreadId';
         var host = '@host';
     </script>
-     <script src="~/js/Message.js" asp-append-version="true"></script>
-    
-   
-   </script>
+    <script src="~/js/SubcommitteeMessage.js" asp-append-version="true"></script>
 
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");

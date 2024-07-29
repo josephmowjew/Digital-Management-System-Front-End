@@ -11,7 +11,6 @@ $(function () {
        
         //get the form itself 
         var form = $("#create_firm_modal form");
-
         
         var formData = {};
 
@@ -41,19 +40,14 @@ $(function () {
 
                 hideSpinner();
 
-               
-                    //show success message to the firm
-                    var dataTable = $('#my_table').DataTable();
+                //show success message to the firm
+                var dataTable = $('#my_table').DataTable();
 
-                    toastr.success("New Firm added successfully")
+                toastr.success("New Firm added successfully")
 
-                    $("#create_firm_modal").modal("hide")
+                $("#create_firm_modal").modal("hide")
 
-                    dataTable.ajax.reload();
-
-                
-
-
+                dataTable.ajax.reload();
             },
             error: function (xhr, ajaxOtions, thrownError) {
                 hideSpinner();
@@ -66,6 +60,60 @@ $(function () {
             }
 
         });
+    }
+
+    var declareLevyButton = $("#create_levy_Declaration_modal button[name='declare_levy_btn']").unbind().click(OnDeclareLevyClick);
+
+    function OnDeclareLevyClick() {
+        showSpinner();
+
+        var form = $("#create_levy_Declaration_modal form")[0];
+        var formData = new FormData(form);
+
+        // Add FirmId to formData
+        formData.append('FirmId', firmIdForLevy);
+
+        // Create the levyDeclarationDTO object
+        /*var levyDeclarationDTO = {
+            Revenue: formData.get('Revenue'),
+            Month: formData.get('Month'),
+            FirmId: firmId
+        };*/
+
+        // Append the levyDeclarationDTO as a JSON string
+        //formData.append('levyDeclarationDTO', JSON.stringify(levyDeclarationDTO));
+
+        $.ajax({
+            url: `${host}/api/LevyDeclaration`,
+            type: 'POST',
+            data: formData,
+            processData: false,  // tell jQuery not to process the data
+            contentType: false,  // tell jQuery not to set contentType
+            headers: {
+                'Authorization': "Bearer " + tokenValue
+            },
+            success: function (data) {
+                hideSpinner();
+                var dataTable = $('#levy_table').DataTable();
+                toastr.success("Levy declared successfully");
+                $("#create_levy_Declaration_modal").modal("hide");
+                dataTable.ajax.reload();
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                hideSpinner();
+                var errorResponse = JSON.parse(xhr.responseText);
+                $.each(errorResponse, function (key, value) {
+                    if (Array.isArray(value)) {
+                        value.forEach(function(message) {
+                            toastr.error(message);
+                        });
+                    } else {
+                        toastr.error(value);
+                    }
+                });
+            }
+        });
+
     }
 
 
@@ -217,7 +265,6 @@ function Activate(id,token) {
 }
 function DenyForm(id,token) { 
     
-    
     //get the input field inside the edit role modal form
 
     $("#deny_firm_modal input[name ='FirmId']").val(id)
@@ -226,11 +273,73 @@ function DenyForm(id,token) {
 
     $("#deny_firm_modal button[name='deny_firm_btn']").unbind().click(function () { DenyFirm() })
 
-
-    
     $("#deny_firm_modal").modal("show");
-  }
+}
 
+function LevyForm(id, token){
+    showSpinner();
+    
+    $("#levy_modal").modal("show");
+
+    // When the modal is shown, bind the submit button click event
+    $("#declareLevyBtn").off('click').on('click', function() {
+        onLevySubmit(id, token);
+    });
+
+    hideSpinner();
+    
+}
+
+function onLevySubmit(firmId, token) {
+    showSpinner();
+
+    var form = $("#levy_modal form")[0];
+    var formData = new FormData(form);
+
+    // Add FirmId to formData
+    formData.append('FirmId', firmId);
+
+    // Create the levyDeclarationDTO object
+    /*var levyDeclarationDTO = {
+        Revenue: formData.get('Revenue'),
+        Month: formData.get('Month'),
+        FirmId: firmId
+    };*/
+
+    // Append the levyDeclarationDTO as a JSON string
+    //formData.append('levyDeclarationDTO', JSON.stringify(levyDeclarationDTO));
+
+    $.ajax({
+        url: `${host}/api/LevyDeclaration`,
+        type: 'POST',
+        data: formData,
+        processData: false,  // tell jQuery not to process the data
+        contentType: false,  // tell jQuery not to set contentType
+        headers: {
+            'Authorization': "Bearer " + tokenValue
+        },
+        success: function (data) {
+            hideSpinner();
+            var dataTable = $('#my_table').DataTable();
+            toastr.success("Levy declared successfully");
+            $("#levy_modal").modal("hide");
+            dataTable.ajax.reload();
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            hideSpinner();
+            var errorResponse = JSON.parse(xhr.responseText);
+            $.each(errorResponse, function (key, value) {
+                if (Array.isArray(value)) {
+                    value.forEach(function(message) {
+                        toastr.error(message);
+                    });
+                } else {
+                    toastr.error(value);
+                }
+            });
+        }
+    });
+}
 
 function DenyFirm() {
 

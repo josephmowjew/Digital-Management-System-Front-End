@@ -11,7 +11,7 @@
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="">
                     
-                    <input asp-for="SubcommitteeId" value="@ViewBag.subommitteeId"  type="hidden" class="form-control" readonly />
+                    <input asp-for="SubcommitteeId" value="@ViewBag.SubcommitteeId"  type="hidden" class="form-control" readonly />
                     <input asp-for="Role" value="member" type="hidden" class="form-control"/>
                      
                     <div class="mb-3">
@@ -24,7 +24,7 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" id="create_committee_member_btn">Add To SubCommittee</button>
+            <button type="button" class="btn btn-primary" id="create_member_btn">Add To SubCommittee</button>
         </div>
     </div>
 </div>

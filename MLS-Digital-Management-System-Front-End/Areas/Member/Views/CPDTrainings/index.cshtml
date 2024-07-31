@@ -202,12 +202,16 @@
                     name: "id",
                     "orderable": false,
                     render: function (data, type, row) {  
+
+                         console.log(row);
                         const dueDate = new Date(row.registrationDueDate);
                         const today = new Date();
                         const dueDateOnly = dueDate.getDate();
                         const todayOnly = today.getDate();
                         var memberRegistration = row.cpdTrainingRegistration.find(registration => registration.memberId == @ViewBag.MemberId);
                         if (!memberRegistration) {
+
+                           
                             const dueDate = row.registrationDueDate ? new Date(Date.parse(row.registrationDueDate)) : null;
                             const today = new Date();
                           
@@ -233,7 +237,9 @@
 
                                         }
 
-                                        if (row.isFree != true && row.invoiceRequest.customerId != memberCustomerId) {
+                                        
+                                        
+                                        if (row.isFree != true && (row.invoiceRequest == null || row.invoiceRequest.customerId != memberCustomerId)) {
                                             buttons += "<a href='#' onclick='cpdTrainingHandler.invoiceForm(\"" + data + "\",\"" + JSON.stringify(row).replace(/"/g, "\\\"") + "\")' type='button' class='btn btn-outline-warning m-1 btn-sm ' title='Invoice'> Invoice</a>";
                                         }
                                         

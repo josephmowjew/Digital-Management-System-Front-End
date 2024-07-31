@@ -27,6 +27,7 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
             ViewBag.cpdTrainingsCount = await this.GetTotalCpdTrainings();
             ViewBag.proBonoHours = await this.GetTotalProBonoHours();
             ViewBag.currentYear = await CurrentYearOfOperation();
+            ViewBag.userId = HttpContext.Request.Cookies["UserId"];
             return View();
         }
 

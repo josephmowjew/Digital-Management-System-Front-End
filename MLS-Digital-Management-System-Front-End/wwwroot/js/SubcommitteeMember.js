@@ -25,7 +25,7 @@ class SubcommitteeMemberHandler {
 
     onCreateClick() {
         this.showSpinner()
-        const form = document.querySelector("#create_member_modal form")
+        const form = document.querySelector("#create_committee_member_modal form")
         const errorMessages = form.querySelectorAll(".error-message")
         errorMessages.forEach(errorMessage => errorMessage.remove())
 
@@ -37,7 +37,7 @@ class SubcommitteeMemberHandler {
             this.sendAjaxRequest(
                 formData,
                 "POST",
-                `${host}/api/SubcommitteeMemberships`,
+                `${host}/api/SubcommitteeMembership`,
                 this.handleCreateSuccess.bind(this),
                 this.handleError.bind(this, form),
                 {
@@ -79,7 +79,7 @@ class SubcommitteeMemberHandler {
         this.hideSpinner()
         const dataTable = $("#my_table").DataTable()
         toastr.success("New subcommittee member added successfully")
-        $("#create_subcommittee_member_modal").modal("hide")
+        $("#create_committee_member_modal").modal("hide")
         dataTable.ajax.reload()
         this.form.reset()
     }

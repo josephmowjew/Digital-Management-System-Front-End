@@ -73,6 +73,7 @@ namespace MLS_Digital_Management_System_Front_End.Controllers
                         new Claim(ClaimTypes.NameIdentifier, authData.TokenData.UserId),
                         new Claim(ClaimTypes.Name, $"{authData.TokenData.FirstName} {authData.TokenData.LastName}"),
                         new Claim(ClaimTypes.Role, authData.TokenData.Role),
+                        new Claim(ClaimTypes.Email, authData.TokenData.Email),
                         new Claim("MLS-Digital-MGM", "Malawi Law Society Digital Management System"),
                     };
 
@@ -196,6 +197,7 @@ namespace MLS_Digital_Management_System_Front_End.Controllers
                         new Claim(ClaimTypes.NameIdentifier, authData.TokenData.UserId),
                         new Claim(ClaimTypes.Name, $"{authData.TokenData.FirstName} {authData.TokenData.LastName}"),
                         new Claim(ClaimTypes.Role, authData.TokenData.Role),
+                        new Claim(ClaimTypes.Email, authData.TokenData.Email),
                         new Claim("MLS-Digital-MGM", "Malawi Law Society Digital Management System"),
                     };
 

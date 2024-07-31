@@ -19,6 +19,11 @@ class AuthHandler {
         if (forgotPasswordBtn) {
             forgotPasswordBtn.addEventListener("click", () => this.forgotPassword());
         }
+
+        const changePasswordBtn = document.getElementById("change_password_btn");
+        if (changePasswordBtn) {
+            changePasswordBtn.addEventListener("click", () => this.changePassword());
+        }
     }
 
     showSpinner() {
@@ -43,23 +48,64 @@ class AuthHandler {
             console.error("Reset password form not found");
             return;
         }
-
+    
         const formData = new FormData(form);
-
+    
+        // Convert FormData to JSON
+        const plainFormData = Object.fromEntries(formData.entries());
+        const formDataJsonString = JSON.stringify(plainFormData);
+    
         try {
             const response = await fetch(`${this.host}/api/auth/PasswordReset`, {
                 method: 'POST',
-                body: formData
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: formDataJsonString
             });
-
+    
             const data = await response.text(); // Parse the response as JSON
-
-          
+    
             this.handleResponse(data, "#resetPasswordForm", this.resetPassword.bind(this));
         } catch (error) {
             console.error(`Error: ${error}`);
         }
+    }   
+    
+    async changePassword() {
+        const form = document.querySelector("#changePasswordForm")
+        if (!form) {
+            console.error("Change password form not found")
+            return
+        }
+
+        console.log(form)
+
+        const formData = new FormData(form);
+        console.log("FormData entries:", Array.from(formData.entries()));
+
+        // Convert FormData to JSON
+        const plainFormData = Object.fromEntries(formData.entries())
+        const formDataJsonString = JSON.stringify(plainFormData)
+
+        try {
+            this.showSpinner()
+            const response = await fetch(`${this.host}/api/auth/ChangePassword`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: formDataJsonString
+            })
+
+            const data = await response.text()
+
+            this.handleResponse(data, "#changePasswordForm", this.changePassword.bind(this))
+        } catch (error) {
+            console.error(`Error: ${error}`)
+        }
     }
+
 
 
     async forgotPassword() {
@@ -91,8 +137,6 @@ class AuthHandler {
        //parse the data coming to json
         data = JSON.parse(data);
 
-        console.log("data", data);
-
         // Check if data has the expected properties
         if (data.hasOwnProperty('isSuccess') && data.hasOwnProperty('message')) {
             if (data.isSuccess) {
@@ -104,14 +148,12 @@ class AuthHandler {
                 }, 3000);
             } else {
                 toastr.error(data.message);
+                //window.location.reload();
             }
         } else {
             // Handle the case where data does not have the expected properties
-            toastr.error('Unexpected data format received');
-}
-
-        
-       
+            toastr.error(data.message);
+        }  
     }
 
     rewireFormEvents(formSelector, retryFunction) {

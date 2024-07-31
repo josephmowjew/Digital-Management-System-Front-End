@@ -23,7 +23,6 @@
                     <div class="mb-3">
                         <label asp-for="ChairpersonId" class="form-label">Chairperson</label>
                         <select asp-for="ChairpersonId" asp-items="@ViewBag.membersList" class="form-control">
-                            <option value="">Select Chairperson</option>
                         </select>
                         <span asp-validation-for="ChairpersonId" class="text-danger"></span>
                     </div>

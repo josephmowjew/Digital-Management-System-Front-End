@@ -51,7 +51,7 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
 
             bool isChairperson = await IsUserChairpersonOfCommittee(member.Id, committeeId);
             ViewBag.isChairperson = isChairperson;
-            ViewBag.MembersList = await GetAllUsers(committeeId);
+            ViewBag.MembersList = await GetAllMembers();
             ViewBag.YearOfOperationList = await GetAllYearOfOperations();
             return View();
         }
@@ -81,13 +81,31 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
         }
 
        
-        private async Task<List<ReadMemberDTO>> GetAllMembers()
+        /*private async Task<List<ReadMemberDTO>> GetAllMembers()
         {
             var membersList = await this._service.MemberService.GetAllMembersAsync();
 
             
 
             return membersList.ToList();
+        }*/
+
+        private async Task<List<SelectListItem>> GetAllMembers()
+        {
+
+            List<SelectListItem> membersSelectList = new() { new SelectListItem() { Text = "--- Select Member ---", Value = "" } };
+
+            var membersList = await this._service.MemberService.GetAllMembersAsync();
+
+            if (membersList != null)
+            {
+                membersList.ForEach(member =>
+                {
+                    membersSelectList.Add(new SelectListItem() { Text = $"{member.User.FullName} - {member.User.IdentityNumber}" , Value = member.Id.ToString() });
+                });
+            }
+
+            return membersSelectList;
         }
 
         private async Task<List<SelectListItem>> GetAllUsers(int committeeId)

@@ -14,23 +14,29 @@
          <div>
             <img src="~/assets/images/91.gif" id="spinner" />
         </div>
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-info my-3" data-bs-toggle="modal" data-bs-target="#create_firm_modal">
-            Create Firm
-        </button>
 
-        <!-- Modal -->
-        <div class="modal fade" id="create_firm_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <partial name="_CreateFirmPartial" />
-        </div>
+        @if(ViewBag.member){
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-info my-3" data-bs-toggle="modal" data-bs-target="#create_firm_modal">
+                Create Firm
+            </button>
 
-        <div class="modal fade" id="edit_firm_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <partial name="_EditFirmPartial" />
-        </div>
+            <!-- Modal -->
+            <div class="modal fade" id="create_firm_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <partial name="_CreateFirmPartial" />
+            </div>
 
-        <div class="modal fade" id="levy_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <partial name="_CreateLevyDeclarationPartial" />
-        </div>
+            <div class="modal fade" id="edit_firm_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <partial name="_EditFirmPartial" />
+            </div>
+
+            <div class="modal fade" id="levy_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <partial name="_CreateLevyDeclarationPartial" />
+            </div>
+        }else{
+            <a asp-area="Member" asp-action="ViewMember" asp-controller="Home" class="btn btn-warning my-3">Complete Membership Details</a>
+        }
+        
 
         <h5 class="card-title fw-semibold mb-4 text-uppercase">Available Active Firms</h5>
        

@@ -52,7 +52,7 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
             var member = await _service.MemberService.GetMemberByUserIdAsync(AuthHelper.GetUserId(HttpContext));
             ViewBag.member = member;
             ViewBag.membership = member != null;
-            ViewBag.CustomerId = member.CustomerId != null;
+            ViewBag.CustomerId = member?.CustomerId != null;
         
         }
         private async Task<ReadYearOfOperationDTO> GetCurrentYearOfOperationAsync()

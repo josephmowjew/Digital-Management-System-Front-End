@@ -201,9 +201,7 @@
                     data: "id",
                     name: "id",
                     "orderable": false,
-                    render: function (data, type, row) {  
-
-                         console.log(row);
+                    render: function (data, type, row) {
                         const dueDate = new Date(row.registrationDueDate);
                         const today = new Date();
                         const dueDateOnly = dueDate.getDate();
@@ -221,7 +219,7 @@
                                 // Convert the time difference from milliseconds to days
                                 const daysDiff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
 
-                                var memberCustomerId = '@ViewBag.member.CustomerId';
+                                var memberCustomerId = '@ViewBag.member?.CustomerId';
                                 
                                 let buttons = "";
                                 if (daysDiff >= 1) {

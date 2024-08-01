@@ -21,7 +21,8 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
             await PopulateViewBags();
 
             var member = await _service.MemberService.GetMemberByUserIdAsync(HttpContext.Request.Cookies["UserId"]);
-            ViewBag.member = member;
+            ViewBag.member = member != null;
+            //ViewBag.membership = member != null;
             ViewBag.membersList = await GetAllMembersAsync();
 
             return View();

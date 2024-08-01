@@ -8,7 +8,7 @@ class AuthHandler {
     }
 
     init() {
-        this.hideSpinner();
+        //this.hideSpinner();
 
         const resetPasswordBtn = document.getElementById("reset_password_btn");
         if (resetPasswordBtn) {

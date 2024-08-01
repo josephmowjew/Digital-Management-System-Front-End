@@ -64,19 +64,47 @@
             </div>
             <div class="col-md-4">
                 <div class="mb-3 form-check">
-                    <label asp-for="AccreditingInstitution" class="control-label"></label>
-                    <input asp-for="AccreditingInstitution" placeholder="Enter Accrediting Institution" class="form-control" />
-                    <span asp-validation-for="AccreditingInstitution" class="text-danger"></span>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="mb-3 form-check">
                     <label asp-for="PhysicalVenue" class="control-label"></label>
                     <input asp-for="PhysicalVenue" placeholder="Enter Physical Venue"  class="form-control" />
                     <span asp-validation-for="PhysicalVenue" class="text-danger"></span>
                 </div>
             </div>
-           
+            <div class="col-md-4">
+                <div class="mb-3 form-check">
+                    <label class="control-label">Training Poster</label>
+                    <div class="custom-file">
+                        <input class="form-control custom-file-input" id="Attachments" accept="image/*" name="Attachments" type="file">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="mb-3 form-check">
+                    <label asp-for="AccreditingInstitution" class="control-label"></label>
+                    <input asp-for="AccreditingInstitution" placeholder="Enter Accrediting Institution" class="form-control" />
+                    <span asp-validation-for="AccreditingInstitution" class="text-danger"></span>
+                </div>
+
+            </div>
+
+            <div class="col-md-4">
+                <div class="mb-3 form-check">
+                    <label asp-for="AccreditingInstitutionRepresentativePosition" class="control-label">Representative Position</label>
+                    <input asp-for="AccreditingInstitutionRepresentativePosition" placeholder="Enter Representative Positon" class="form-control" />
+                    <span asp-validation-for="AccreditingInstitutionRepresentativePosition" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="mb-3 form-check">
+                    <label  class="control-label">Representative Signature</label>
+                    <div class="custom-file">
+                        <input class="form-control custom-file-input" id="Attachments" accept="image/*" name="Attachments" type="file">
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="row">
@@ -110,7 +138,7 @@
             </div>
            
         </div>
-        <div class="row">
+        <!--<div class="row">
              <div class="col-md-12">
                 <div class="mb-3 form-check">
                     <label class="control-label">Training Poster</label>
@@ -119,7 +147,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>-->
        </form>
     </div>
      <div class="modal-footer">

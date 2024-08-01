@@ -59,13 +59,28 @@
     </div>
 
     <div class="col-12 col-md-4">
-        @foreach (var attachment in ViewBag.training.Attachments)
+        @{
+            var firstAttachment = ViewBag.training.Attachments[0];
+        }
+        <a href="@firstAttachment.FilePath" data-lightbox="image-1" class="d-flex justify-content-center align-items-center">
+            <img src="@firstAttachment.FilePath" alt="cpd poster" class="w-75 h-75" />
+        </a>
+    </div>
+
+    @*<div class="col-12 col-md-4">
+         @foreach (var attachment in ViewBag.training.Attachments)
         {
             <a href="@attachment.FilePath" data-lightbox="image-1" class="d-flex justify-content-center align-items-center">
                 <img src="@attachment.FilePath" alt="cpd poster" class="w-75 h-75" />
             </a>
         }
-    </div>
+        @{
+            var firstAttachment = ViewBag.training.Attachments.First();
+        }
+        <a href="@firstAttachment.FilePath" data-lightbox="image-1" class="d-flex justify-content-center align-items-center">
+            <img src="@firstAttachment.FilePath" alt="cpd poster" class="w-75 h-75" />
+        </a>
+    </div>*@
 </div>
 
 <div class="card ">

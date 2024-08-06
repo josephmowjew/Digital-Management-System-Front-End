@@ -15,6 +15,7 @@ public interface IServiceRepository{
     IMemberService MemberService { get; }
     IQualificationTypeService QualificationTypeService { get; }
     IFirmService FirmService { get; }
+    ILicenseService LicenseService { get; }
     ILicenseApplicationService LicenseApplicationService{ get; }
     ILicenseApprovalHistoryService LicenseApprovalHistoryService { get; }
     ICpdUnitsEarnedService CpdUnitsEarnedService { get; }

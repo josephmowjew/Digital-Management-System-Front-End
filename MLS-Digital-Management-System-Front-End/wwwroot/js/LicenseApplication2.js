@@ -588,6 +588,18 @@ class FormHandler {
             }
         });
     }
+
+    generateCertificate(licenseId){
+        // Open a new window with the certificate template 
+        var certificateWindow = window.open(`/member/LicenseApplications/LicenseCertificate/${licenseId}`, '_blank');
+        
+        // Wait for the new window to load
+        certificateWindow.onload = function() {
+            
+            // Use html2pdf to convert the certificate to PDF
+            html2pdf().from(certificateWindow.document.body).save('Certificate_of_Attendance.pdf');
+        };
+    }
 }
 
 // expose-form-handler.js

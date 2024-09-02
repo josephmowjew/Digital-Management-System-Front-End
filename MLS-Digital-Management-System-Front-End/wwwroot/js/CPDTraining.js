@@ -664,6 +664,18 @@ handleMarkAttendanceSuccess(response) {
       }
     });
   }
+
+  generateCertificate(trainingId) {
+    // Open a new window with the certificate template
+    var certificateWindow = window.open(`/Member/CPDTrainings/CDPCertificate/${trainingId}`, '_blank');
+    
+    // Wait for the new window to load
+    certificateWindow.onload = function() {
+        
+        // Use html2pdf to convert the certificate to PDF
+        html2pdf().from(certificateWindow.document.body).save('Certificate_of_Attendance.pdf');
+    };
+}
 }
 
 window.cpdTrainingHandler = new CPDTrainingHandler();

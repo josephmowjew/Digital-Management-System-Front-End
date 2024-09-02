@@ -1,7 +1,7 @@
 @using Microsoft.Extensions.Configuration
 @inject IConfiguration Configuration
 @{
-    ViewData["Title"] = "License Applications";
+    ViewData["Title"] = "CPD Trainings";
     Layout = "~/Areas/Member/Views/shared/_Layout.cshtml";
 
     var host = Configuration.GetSection("APIURL")["Link"];
@@ -256,6 +256,9 @@
                             else {
                                 return "<a href='/member/CPDTrainings/TrainingDetails/" + data +"' type = 'button' class='btn btn-outline-primary mx-1 btn-sm ti ti-eye text-lg' title = 'show details'> View </a>";
                             }
+                        }
+                        if (memberRegistration && memberRegistration.registrationStatus === "Attended") {
+                            return `<a href='#' onclick='cpdTrainingHandler.generateCertificate(${data})' type='button' class='btn btn-outline-info m-1 btn-sm' title='Generate Certificate'>Certificate</a>`;
                         }
                     }
                 }

@@ -4,174 +4,174 @@
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Certificate of Attendance</title>
-    <style>
-        body {
-            font-family: 'Times New Roman', serif;
-            background-color: #f0f0f0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .certificate {
-            background-color: #f9f9f1;
-            border: 15px solid #d4af37;
-            border-image: linear-gradient(45deg, #927e0f, #ffcc00, #d4af37, #7a6a0c) 1;
-            box-shadow: 
-                inset 0 0 0 2px #d4af37,
-                inset 0 0 0 5px #f9f9f1,
-                inset 0 0 0 7px #d4af37,
-                0 0 10px rgba(0,0,0,0.2);
-            padding: 40px;
-            width: 800px;
-            position: relative;
-        }
-        .header {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
-        }
-        .logo {
-            width: 100px;
-            height: 100px;
-            object-fit: contain;
-        }
-        h1 {
-            color: #d4af37;
-            font-size: 48px;
-            margin-bottom: 0;
-            margin-top: 0;
-            text-align: center;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-        }
-        .subtitle {
-            text-align: center;
-            font-size: 18px;
-            margin-top: 5px;
-            margin-bottom: 30px;
-        }
-        .recipient {
-            font-size: 24px;
-            margin: 20px 0;
-            text-align: center;
-            font-style: italic;
-        }
-        .title_header {
-            font-size: 26px;
-            margin: 10px 0;
-            text-align: center;
-            font-weight: bold;
-        }
-        .description {
-            font-size: 18px;
-            margin-bottom: 30px;
-            text-align: center;
-        }
-        .signatures {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            margin-top: 60px;
-        }
-        .signature {
-            text-align: center;
-            flex: 1;
-        }
-        .signature img {
-            width: 100px;
-            height: auto;
-        }
-        .seal {
-            text-align: center;
-            flex: 1;
-        }
-        .seal img {
-            width: 100px;
-            height: auto;
-        }
-        #downloadButton {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 10px 20px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-    </style>
-</head>
-<body>
-    <button id="downloadButton">Download Certificate</button>
-    <div class="certificate" id="certificate">   
-        <div class="header">
-            <img src="/assets/images/logos/cropped-mls-logo-clear-192x192.png" alt="The Malawi Law Society" class="logo">
-            @{
-                var accreditingInstitutionLogo = ViewBag.training.Attachments[1];
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Certificate of Attendance</title>
+        <style>
+            body {
+                font-family: 'Times New Roman', serif;
+                background-color: #f0f0f0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                margin: 0;
             }
-            <img src="@accreditingInstitutionLogo.FilePath" alt="@ViewBag.training.AccreditingInstitution" class="logo"/>
-        </div>
-        <h1>CERTIFICATE</h1>
-        <p class="subtitle">OF ATTENDANCE</p>
-        <p class="title_header">THIS CERTIFICATE IS PRESENTED TO</p>
-        <p class="recipient" id="recipientName">@ViewBag.member.User.FullName</p>
-        <p class="description" id="description">Having attended a Continuing Professional Development Training on @ViewBag.training.Title on @ViewBag.training.DateToBeConducted.ToString("MMMM dd, yyyy") at @ViewBag.training.PhysicalVenue</p>
-        <div class="signatures">
-            <div class="signature">
-                <img src="/assets/images/logos/cropped-mls-logo-clear-192x192.png" alt="President Signature">
-                <p>PRESIDENT<br>Malawi Law Society</p>
-            </div>
-            <div class="seal">
-                <img src="/assets/images/logos/cropped-mls-logo-clear-192x192.png" alt="Seal">
-            </div>
-            <div class="signature">
+            .certificate {
+                background-color: #f9f9f1;
+                border: 15px solid #d4af37;
+                border-image: linear-gradient(45deg, #927e0f, #ffcc00, #d4af37, #7a6a0c) 1;
+                box-shadow: 
+                    inset 0 0 0 2px #d4af37,
+                    inset 0 0 0 5px #f9f9f1,
+                    inset 0 0 0 7px #d4af37,
+                    0 0 10px rgba(0,0,0,0.2);
+                padding: 40px;
+                width: 800px;
+                position: relative;
+            }
+            .header {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 20px;
+            }
+            .logo {
+                width: 100px;
+                height: 100px;
+                object-fit: contain;
+            }
+            h1 {
+                color: #d4af37;
+                font-size: 48px;
+                margin-bottom: 0;
+                margin-top: 0;
+                text-align: center;
+                text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            }
+            .subtitle {
+                text-align: center;
+                font-size: 18px;
+                margin-top: 5px;
+                margin-bottom: 30px;
+            }
+            .recipient {
+                font-size: 24px;
+                margin: 20px 0;
+                text-align: center;
+                font-style: italic;
+            }
+            .title_header {
+                font-size: 26px;
+                margin: 10px 0;
+                text-align: center;
+                font-weight: bold;
+            }
+            .description {
+                font-size: 18px;
+                margin-bottom: 30px;
+                text-align: center;
+            }
+            .signatures {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-end;
+                margin-top: 60px;
+            }
+            .signature {
+                text-align: center;
+                flex: 1;
+            }
+            .signature img {
+                width: 100px;
+                height: auto;
+            }
+            .seal {
+                text-align: center;
+                flex: 1;
+            }
+            .seal img {
+                width: 100px;
+                height: auto;
+            }
+            #downloadButton {
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                padding: 10px 20px;
+                background-color: #4CAF50;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 16px;
+            }
+        </style>
+    </head>
+    <body>
+        <button id="downloadButton">Download Certificate</button>
+        <div class="certificate" id="certificate">   
+            <div class="header">
+                <img src="/assets/images/logos/cropped-mls-logo-clear-192x192.png" alt="The Malawi Law Society" class="logo">
                 @{
-                    var representativeSignature = ViewBag.training.Attachments[1];
+                    var accreditingInstitutionLogo = ViewBag.training.Attachments[1];
                 }
-                <img src="@representativeSignature.FilePath" alt="Representative Signature"/>
-                <p>EXECUTIVE DIRECTOR<br>@ViewBag.training.AccreditingInstitution</p>
+                <img src="@accreditingInstitutionLogo.FilePath" alt="@ViewBag.training.AccreditingInstitution" class="logo"/>
+            </div>
+            <h1>CERTIFICATE</h1>
+            <p class="subtitle">OF ATTENDANCE</p>
+            <p class="title_header">THIS CERTIFICATE IS PRESENTED TO</p>
+            <p class="recipient" id="recipientName">@ViewBag.member.User.FullName</p>
+            <p class="description" id="description">Having attended a Continuing Professional Development Training on @ViewBag.training.Title on @ViewBag.training.DateToBeConducted.ToString("MMMM dd, yyyy") at @ViewBag.training.PhysicalVenue</p>
+            <div class="signatures">
+                <div class="signature">
+                    <img src="/assets/images/logos/cropped-mls-logo-clear-192x192.png" alt="President Signature">
+                    <p>PRESIDENT<br>Malawi Law Society</p>
+                </div>
+                <div class="seal">
+                    <img src="/assets/images/logos/cropped-mls-logo-clear-192x192.png" alt="Seal">
+                </div>
+                <div class="signature">
+                    @{
+                        var representativeSignature = ViewBag.training.Attachments[2];
+                    }
+                    <img src="@representativeSignature.FilePath" alt="Representative Signature"/>
+                    <p>EXECUTIVE DIRECTOR<br>@ViewBag.training.AccreditingInstitution</p>
+                </div>
             </div>
         </div>
-    </div>
 
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const element = document.getElementById('certificate');
-            const downloadButton = document.getElementById('downloadButton');
-            const recipientName = document.getElementById('recipientName').textContent;
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const element = document.getElementById('certificate');
+                const downloadButton = document.getElementById('downloadButton');
+                const recipientName = document.getElementById('recipientName').textContent;
 
-            const opt = {
-                margin: 0.5,
-                filename: `${recipientName.replace(/\s+/g, '_')}_Certificate.pdf`,
-                image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: {
-                    scale: 2,
-                    useCORS: true,  // Add this line to allow loading cross-origin images
-                    allowTaint: true
-                },
-                jsPDF: { unit: 'in', format: 'letter', orientation: 'landscape' }
-            };
+                const opt = {
+                    margin: 0.5,
+                    filename: `${recipientName.replace(/\s+/g, '_')}_Certificate.pdf`,
+                    image: { type: 'jpeg', quality: 0.98 },
+                    html2canvas: {
+                        scale: 2,
+                        useCORS: true,  // Add this line to allow loading cross-origin images
+                        allowTaint: true
+                    },
+                    jsPDF: { unit: 'in', format: 'letter', orientation: 'landscape' }
+                };
 
-            // Function to generate and download PDF
-            function downloadPDF() {
-                html2pdf().set(opt).from(element).save();
-            }
+                // Function to generate and download PDF
+                function downloadPDF() {
+                    html2pdf().set(opt).from(element).save();
+                }
 
-            // Attach click event to download button
-            downloadButton.addEventListener('click', downloadPDF);
+                // Attach click event to download button
+                downloadButton.addEventListener('click', downloadPDF);
 
-            // Uncomment the line below if you want to trigger download automatically when the page loads
-            //setTimeout(downloadPDF, 1000);  // Delay of 1 second to ensure all content is loaded
-        });
-    </script>
-</body>
+                // Uncomment the line below if you want to trigger download automatically when the page loads
+                //setTimeout(downloadPDF, 1000);  // Delay of 1 second to ensure all content is loaded
+            });
+        </script>
+    </body>
 </html>

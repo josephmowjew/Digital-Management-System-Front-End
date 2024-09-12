@@ -1,0 +1,41 @@
+@model MLS_Digital_Management_System_Front_End.Core.DTOs.Signature.UpdateSignatureDTO;
+
+<div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="signatureModalLabel">New Stamp</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form asp-action="Update">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id"/>
+            <div class="row row-cols-lg-1">
+                <div class="mb-3 form-check">
+                    <label asp-for="Name" class="form-label"></label>
+                    <input asp-for="Name" placeholder="Enter Signature Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3 form-check">
+                    <div class="custom-file">
+                        <label class="form-label" asp-for="Attachments"></label>
+                        <input class="form-control custom-file-input" id="Attachments" accept="image/*," name="Attachments" type="file">
+                    </div>
+                </div>
+
+                <div class="mb-3 form-check" >
+                  <label asp-for="YearOfOperationId" class="form-label"></label>
+                  <select asp-for="YearOfOperationId" asp-items="@ViewBag.yearOperationsList" class="form-control"></select>
+                  <span asp-validation-for="YearOfOperationId" class="text-danger"></span>
+                </div>
+            </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="update_signature_btn" name="update_signature_btn">Update Signature</button>
+            
+      </div>
+    </div>
+  </div>

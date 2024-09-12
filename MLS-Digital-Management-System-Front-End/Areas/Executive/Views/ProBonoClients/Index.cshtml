@@ -1,0 +1,152 @@
+﻿@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+@{
+    ViewData["Title"] = "Pro Bono Clients";
+    Layout = "~/Areas/Executive/Views/shared/_Layout.cshtml";
+    var host = Configuration.GetSection("APIURL")["Link"];
+}
+
+
+
+<div class="card ">
+    <div class="card-body">
+        <div>
+            <img src="~/assets/images/91.gif" id="spinner" />
+        </div>
+
+        <h5 class="card-title fw-semibold mb-4 text-uppercase">Available Active Clients</h5>
+       
+        <div class="table-responsive">
+            <table class="table table-bordered " id="my_table">
+                <thead>
+                    <tr>
+                        <th>
+                           Name
+                        </th>
+                        <th>
+                            Postal Address
+                        </th>
+                        <th>
+                            Permanent Address
+                        </th>
+                        <th>
+                            Residential Address
+                        </th>
+                        <th>
+                            Phone Number
+                        </th>
+                        <th>
+                            Annual Income (MWK
+                        </th>
+
+                        <th>
+                           Other Contacts
+                        </th>
+
+                        <th>
+                           Occupation
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+       @section Scripts{
+
+        <script>
+            var datatable;
+            var tokenValue = '@ViewBag.token';
+            var host = '@host';
+        </script>
+
+        <script src="~/js/ProBonoClient.js" asp-append-version="true"></script>
+        <script>
+            $(document).ready(function () {
+                datatable = $('#my_table').DataTable({
+
+
+                    "processing": true,
+                    "serverSide": true,
+                    "order": [[0, "desc"]],
+                    ajax: {
+                    url: '@host/api/probonoclients/paged',
+                        type: 'get',
+                        datatype: 'Json',headers: {
+                                        'Authorization': 'Bearer @ViewBag.token'
+                                    }
+
+                  },
+                    columnDefs: [
+                        {
+                            defaultContent: "",
+                            targets: "_all",
+                            'orderable': true
+                        },
+                    ],
+                    columns: [
+                        {
+                            data: "name",
+                            name: "name",
+                            className: "text-left",
+                            "orderable": true,
+                        },
+                        {
+                            data: "postalAddress",
+                            name: "postalAddress",
+                            className: "text-left",
+                            "orderable": true,
+                        },
+                        {
+                            data: "permanentAddress",
+                            name: "permanentAddress",
+                            className: "text-left",
+                            "orderable": true,
+                        },
+                        {
+                            data: "residentialAddress",
+                            name: "residentialAddress",
+                            className: "text-left",
+                            "orderable": true,
+                        },
+                        {
+                            data: "phoneNumber",
+                            name: "phoneNumber",
+                            className: "text-left",
+                            "orderable": false,
+                        },
+                         {
+                            data: "annualIncome",
+                            name: "annualIncome",
+                            className: "text-left",
+                            "orderable": true,
+                        },
+
+                        
+                         {
+                            data: "otherContacts",
+                            name: "otherContacts",
+                            className: "text-left",
+                            "orderable": false,
+                        },
+                        {
+                            data: "occupation",
+                            name: "occupation",
+                            className: "text-left",
+                            "orderable": true,
+                        },
+                    ],
+                    responsive: true,
+                    "autoWidth": false,
+                });
+            });
+        </script>
+
+            @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+        }

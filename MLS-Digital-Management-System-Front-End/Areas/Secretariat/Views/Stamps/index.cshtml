@@ -24,9 +24,13 @@
             </div>
         </div>
 
-         <!-- Modal -->
+         <!-- Modals -->
         <div class="modal fade" id="create_stamp_modal" tabindex="-1" aria-labelledby="stampModalLabel" aria-hidden="true">
             <partial name="_CreateStampPartial" />
+        </div>
+
+        <div class="modal fade" id="edit_stamp_modal" tabindex="-1" aria-labelledby="stampModalLabel" aria-hidden="true">
+            <partial name="_EditStampPartial" />
         </div>
 
         <div class="table-responsive">
@@ -91,7 +95,7 @@
                         className: "text-left",
                         "orderable": false,
                     },
-                    {
+                    {   
                         data: "yearOfOperation.formatedDate",
                         name: "yearOfOperation.formatedDate",
                         className: "text-left",
@@ -103,11 +107,10 @@
                         "orderable": false,
                         render: function (data, type, row) {
                             return `
-                                <a href='#' onclick='cpdTrainingHandler.editForm(${data},"${tokenValue}")' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-pencil' title='edit' >Edit</a> 
-                                <a href='#' type='button' onclick='cpdTrainingHandler.delete(${data}, "${tokenValue}")' title='delete' class='ti ti-trash red-icon btn btn-outline-danger btn-sm my-1 mx-1'>Delete</a>
-                                <a href='/Secretariat/CPDTrainings/TrainingDetails/${data}' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-eye text-lg' title='show details' > View</a>
+                                <a href='#' onclick='stampHandler.editForm(${data},"${tokenValue}")' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-pencil' title='edit'>Edit</a> 
+                                <a href='#' type='button' onclick='stampHandler.delete(${data}, "${tokenValue}")' title='delete' class='ti ti-trash red-icon btn btn-outline-danger btn-sm my-1 mx-1'>Delete</a>
+                                <a href='/Secretariat/Stamps/StampDetails/${data}' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-eye text-lg' title='show details' > View</a>
                             `
-
                         }
                     }
                 ],

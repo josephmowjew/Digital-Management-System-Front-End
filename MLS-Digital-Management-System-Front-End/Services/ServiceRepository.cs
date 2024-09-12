@@ -44,7 +44,8 @@ public class ServiceRepository : IServiceRepository
     private ISubcommitteeMembershipService _subcommitteeMembershipService;
     private ISubcommitteeService _subcommitteeService;
     private ISubcommitteeThreadService _subcommitteeThreadService;
-
+    private IStampService _stampService;
+    private ISignatureService _signatureService;
 
     public string Token 
     { 
@@ -91,6 +92,8 @@ public class ServiceRepository : IServiceRepository
             _subcommitteeMembershipService = new SubcommitteeMembershipService(_httpClient);
             _subcommitteeService = new SubcommitteeService(_httpClient);
             _subcommitteeThreadService = new SubcommitteeThreadService(_httpClient);
+            _stampService = new StampService(_httpClient);
+            _signatureService = new SignatureService(_httpClient);
         } 
     } 
 
@@ -138,4 +141,6 @@ public class ServiceRepository : IServiceRepository
     public ISubcommitteeMembershipService SubcommitteeMembershipService => _subcommitteeMembershipService ??= new SubcommitteeMembershipService(_httpClient);
     public ISubcommitteeService SubcommitteeService => _subcommitteeService ??= new SubcommitteeService(_httpClient);
     public ISubcommitteeThreadService SubcommitteeThreadService => _subcommitteeThreadService ??= new SubcommitteeThreadService(_httpClient);
+    public IStampService StampService => _stampService ??= new StampService(_httpClient);
+    public ISignatureService SignatureService => _signatureService ??= new SignatureService(_httpClient);
 }

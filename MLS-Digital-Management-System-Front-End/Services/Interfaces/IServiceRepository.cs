@@ -36,5 +36,7 @@ public interface IServiceRepository{
     ISubcommitteeMembershipService SubcommitteeMembershipService { get; }
     ISubcommitteeService SubcommitteeService { get; }
     ISubcommitteeThreadService SubcommitteeThreadService { get; }
+    IStampService StampService { get; }
+    ISignatureService SignatureService { get; }
 }
 

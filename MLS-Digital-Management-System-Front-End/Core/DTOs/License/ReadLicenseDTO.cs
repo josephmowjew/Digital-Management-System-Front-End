@@ -1,3 +1,4 @@
+using MLS_Digital_Management_System_Front_End.Core.DTOs.Attachment;
 using MLS_Digital_Management_System_Front_End.Core.DTOs.LicenseApplication;
 using MLS_Digital_Management_System_Front_End.Core.DTOs.Member;
 using MLS_Digital_Management_System_Front_End.Core.DTOs.YearOfOperation;
@@ -17,5 +18,6 @@ namespace MLS_Digital_Management_System_Front_End.Core.DTOs.License;
         public int LicenseApplicationId { get; set; }
         public ReadLicenseApplicationDTO LicenseApplication { get; set; }
         public DateTime CreatedDate { get; set; }
+        public List<ReadAttachmentDTO> Attachments { get; set; } = new List<ReadAttachmentDTO>();
     }
 

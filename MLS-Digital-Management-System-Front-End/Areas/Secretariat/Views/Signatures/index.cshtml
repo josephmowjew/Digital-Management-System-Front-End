@@ -1,0 +1,14 @@
+@*
+    Generate code for storing signatures, editing, deleting...to be used in official documents
+*@
+
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+@{
+    ViewData["Title"] = "Signatures";
+    Layout = "~/Areas/Secretariat/Views/shared/_Layout.cshtml";
+
+    var host = Configuration.GetSection("APIURL")["Link"];
+}
+
+

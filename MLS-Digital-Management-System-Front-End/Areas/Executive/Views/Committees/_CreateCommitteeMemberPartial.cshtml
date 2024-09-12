@@ -1,0 +1,40 @@
+@model MLS_Digital_Management_System_Front_End.Core.DTOs.Committe.CommitteeMemberDTO
+
+<div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Create Committee Member</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="row row-cols-lg-2">
+                    
+                        <input asp-for="CommitteeId" value="@ViewBag.CommitteeId"  type="hidden" class="form-control" readonly />
+                     
+                    <div class="mb-3">
+                        <label asp-for="MemberShipId" class="form-label"></label>
+                        <select asp-for="MemberShipId" asp-items="@ViewBag.membersList" class="form-control"></select>
+                        <span asp-validation-for="MemberShipId" class="text-danger"></span>
+                    </div>
+                       
+                    
+                     <div class="mb-3">
+                        <label asp-for="Role" class="form-label"></label>
+                        <select asp-for="Role" placeholder="Enter Role" class="form-control" >
+                            <option value="">Please Select Role</option>
+                            <option value="ChairPerson">ChairPerson</option>
+                            <option value="member">Committe Member</option>
+                        </select>
+                        <span asp-validation-for="Role" class="text-danger"></span>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="create_committee_member_btn">Add To Committee</button>
+        </div>
+    </div>
+</div>

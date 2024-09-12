@@ -176,7 +176,7 @@
     </style>
 </head>
 <body>
-    <button id="downloadButton">Download Certificate</button>
+    <button id="downloadButton" disabled>Download Certificate</button>
     <div class="certificate">
         <div class="logo-background"></div>
         <div class="background-text" id="backgroundText"></div>
@@ -238,12 +238,20 @@
             </div>
             <div class="signature">
                 <div>
-                    <img src="/assets/images/signature_2.png" alt="The Malawi Law Society" class="signature-image">
+                    @if (ViewBag.license.Attachments.Count > 0)
+                    {
+                        var firstAttachment = ViewBag.license.Attachments[1];
+                        <img src="@firstAttachment.FilePath" alt="signature" class="signature-image"/>
+                    }
                     <p>____________________</p>
                     <p>Chairman</p>
                 </div>
                 <div>
-                    <img src="/assets/images/signature.png" alt="The Malawi Law Society" class="signature-image">
+                    @if (ViewBag.license.Attachments.Count > 0)
+                    {
+                        var firstAttachment = ViewBag.license.Attachments[0];
+                        <img src="@firstAttachment.FilePath" alt="signature" class="signature-image"/>
+                    }
                     <p>____________________</p>
                     <p>Secretary</p>
                 </div>
@@ -286,33 +294,78 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const element = document.querySelector('.certificate');  // Changed from getElementById to querySelector
-            const downloadButton = document.getElementById('downloadButton');
-            const recipientName = document.getElementById('recipientName').textContent;
+    const element = document.querySelector('.certificate');
+    const downloadButton = document.getElementById('downloadButton');
+    const recipientName = document.getElementById('recipientName').textContent;
+    let preloadedImages = {};
 
-            const opt = {
-                margin: 0.5,
-                filename: `${recipientName.replace(/\s+/g, '_')}_license.pdf`,
-                image: { type: 'jpeg', quality: 1.0 },
-                html2canvas: { 
-                    scale: 2,
-                    logging: true,  // Enable logging
-                    useCORS: true,  // Allow loading cross-origin images
-                    allowTaint: true
-                },
-                jsPDF: { unit: 'in', format: 'letter', orientation: 'landscape' }
-            };
-
-            // Function to generate and download PDF
-            function downloadPDF() {
-                html2pdf().set(opt).from(element).save();
-            }
-
-            // Attach click event to download button
-            downloadButton.addEventListener('click', downloadPDF);
-
-            console.log('Script loaded, download button should be functional');
+    // Function to preload images
+    function preloadImages() {
+        const images = element.querySelectorAll('img');
+        const preloadPromises = Array.from(images).map(img => {
+            return new Promise((resolve, reject) => {
+                const newImg = new Image();
+                newImg.crossOrigin = "anonymous";  // This is important for CORS
+                newImg.onload = () => {
+                    preloadedImages[img.src] = newImg;
+                    resolve();
+                };
+                newImg.onerror = reject;
+                newImg.src = img.src;
+            });
         });
+
+        return Promise.all(preloadPromises);
+    }
+
+    // Function to replace image sources with preloaded images
+    function replaceImagesWithPreloaded() {
+        const images = element.querySelectorAll('img');
+        images.forEach(img => {
+            if (preloadedImages[img.src]) {
+                img.src = preloadedImages[img.src].src;
+            }
+        });
+    }
+
+    // Function to generate and download PDF
+    function downloadPDF() {
+        // Replace image sources before generating PDF
+        replaceImagesWithPreloaded();
+
+        const opt = {
+            margin: 0.5,
+            filename: `${recipientName.replace(/\s+/g, '_')}_license.pdf`,
+            image: { type: 'jpeg', quality: 1.0 },
+            html2canvas: { 
+                scale: 2,
+                logging: true,
+                useCORS: true,
+                allowTaint: true
+            },
+            jsPDF: { unit: 'in', format: 'letter', orientation: 'landscape' }
+        };
+
+        html2pdf().set(opt).from(element).save();
+    }
+
+    // Preload images when the page loads
+    preloadImages().then(() => {
+        console.log('Images preloaded successfully');
+        downloadButton.disabled = false;  // Enable the download button
+    }).catch(error => {
+        console.error('Error preloading images:', error);
+        downloadButton.disabled = false;  // Enable the button anyway, in case some images loaded
+    });
+
+    // Attach click event to download button
+    downloadButton.addEventListener('click', downloadPDF);
+
+    // Initially disable the download button
+    downloadButton.disabled = true;
+
+    console.log('Script loaded, preloading images...');
+});
     </script>
 </body>
 </html>

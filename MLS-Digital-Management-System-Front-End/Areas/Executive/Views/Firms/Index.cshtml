@@ -1,0 +1,150 @@
+﻿@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+@{
+    ViewData["Title"] = "Firms";
+    Layout = "~/Areas/Executive/Views/shared/_Layout.cshtml";
+
+     var host = Configuration.GetSection("APIURL")["Link"];
+}
+
+
+
+<div class="card">
+    <div class="card-body">
+         <div>
+            <img src="~/assets/images/91.gif" id="spinner" />
+        </div>
+        
+        <h5 class="card-title fw-semibold mb-4 text-uppercase">Available Active Firms</h5>
+       
+        <div class="table-responsive">
+            <table class="table table-bordered " id="my_table">
+                <thead>
+                    <tr>
+                        <th>
+                            Name
+                        </th>
+                        <th>
+                            Postal Address
+                        </th>
+                        <th>
+                            Physical Address
+                        </th>
+                        <th>
+                            Primary Contact Person
+                        </th>
+                        <th>
+                            Primary Phone Number
+                        </th>
+                        <th>
+                            Secondary Contact Person
+                        </th>
+                        <th>
+                            Secondary Phone Number
+                        </th>
+                         <th>
+                            Status
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+       @section Scripts{
+
+        <script>
+            var datatable;
+            var tokenValue = '@ViewBag.token';
+            var host = "@host";
+        </script>
+
+        <script src="~/js/Firm.js" asp-append-version="true"></script>
+        <script>
+            $(document).ready(function () {
+                datatable = $('#my_table').DataTable({
+
+
+                    "processing": true,
+                    "serverSide": true,
+                    "order": [[0, "desc"]],
+                    ajax: {
+                    url: "@host/api/Firms/paged",
+                        type: 'get',
+                        datatype: 'Json',headers: {
+                                        'Authorization': 'Bearer @ViewBag.token'
+                                    },
+
+
+                  },
+                    columnDefs: [
+                        {
+                            defaultContent: "",
+                            targets: "_all",
+                            'orderable': true
+                        },
+                    ],
+                    columns: [
+                        {
+                            data: "name",
+                            name: "name",
+                            className: "text-left",
+                            "orderable": true,
+                        },                      
+                           {
+                            data: "postalAddress",
+                            name: "postalAddress",
+                            className: "text-left",
+                            "orderable": true,
+                        },
+                           {
+                            data: "physicalAddress",
+                            name: "physicalAddress",
+                            className: "text-left",
+                            "orderable": true,
+                        },
+                           {
+                            data: "primaryContactPerson",
+                            name: "primaryContactPerson",
+                            className: "text-left",
+                            "orderable": true,
+                        },
+                           {
+                            data: "primaryPhoneNumber",
+                            name: "primaryPhoneNumber",
+                            className: "text-left",
+                            "orderable": true,
+                        },
+                           {
+                            data: "secondaryContactPerson",
+                            name: "secondaryContactPerson",
+                            className: "text-left",
+                            "orderable": true,
+                        },
+                           {
+                            data: "secondaryPhoneNumber",
+                            name: "secondaryPhoneNumber",
+                            className: "text-left",
+                            "orderable": true,
+                        },
+                        {
+                            data: "status",
+                            name: "status",
+                            className: "text-left",
+                            "orderable": false,
+                        },
+                    ],
+                    responsive: true,
+                    "autoWidth": false,
+                });
+            });
+        </script>
+
+            @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+        }

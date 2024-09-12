@@ -50,5 +50,21 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Secretariat.Controllers
 
             return yearOperationsList;
         }
+
+        public async Task<IActionResult> StampDetails(int Id)
+        {
+
+            await PopulateViewBags();
+            var stamp = await _service.StampService.GetStampByIdAsync(Id);
+
+            if (stamp == null)
+            {
+                return NotFound();
+            }
+
+            ViewBag.stamp = stamp;
+
+            return View();
+        }
     }
 }

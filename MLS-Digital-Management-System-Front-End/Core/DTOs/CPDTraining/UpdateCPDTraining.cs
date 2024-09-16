@@ -39,4 +39,5 @@ public class UpdateCPDTrainingDTO
         public string? AccreditingInstitution { get; set; }
         [Display(Name = "Poster")]
         public List<IFormFile> Attachments = new List<IFormFile>();
+        public string? AccreditingInstitutionRepresentativePosition { get; set; }
     }

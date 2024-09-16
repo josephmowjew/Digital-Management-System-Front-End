@@ -9,14 +9,20 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Certificate of Attendance</title>
         <style>
-            body {
+            body, html {
+                margin: 0;
+                padding: 0;
+                width: 100%;
+                height: 100%;
                 font-family: 'Times New Roman', serif;
                 background-color: #f0f0f0;
+            }
+            .pdf-container {
                 display: flex;
                 justify-content: center;
                 align-items: center;
+                width: 100%;
                 height: 100vh;
-                margin: 0;
             }
             .certificate {
                 background-color: #f9f9f1;
@@ -110,33 +116,41 @@
     </head>
     <body>
         <button id="downloadButton">Download Certificate</button>
-        <div class="certificate" id="certificate">   
-            <div class="header">
-                <img src="/assets/images/logos/cropped-mls-logo-clear-192x192.png" alt="The Malawi Law Society" class="logo">
-                @{
-                    var accreditingInstitutionLogo = ViewBag.training.Attachments[1];
-                }
-                <img src="@accreditingInstitutionLogo.FilePath" alt="@ViewBag.training.AccreditingInstitution" class="logo"/>
-            </div>
-            <h1>CERTIFICATE</h1>
-            <p class="subtitle">OF ATTENDANCE</p>
-            <p class="title_header">THIS CERTIFICATE IS PRESENTED TO</p>
-            <p class="recipient" id="recipientName">@ViewBag.member.User.FullName</p>
-            <p class="description" id="description">Having attended a Continuing Professional Development Training on @ViewBag.training.Title on @ViewBag.training.DateToBeConducted.ToString("MMMM dd, yyyy") at @ViewBag.training.PhysicalVenue</p>
-            <div class="signatures">
-                <div class="signature">
-                    <img src="/assets/images/logos/cropped-mls-logo-clear-192x192.png" alt="President Signature">
-                    <p>PRESIDENT<br>Malawi Law Society</p>
-                </div>
-                <div class="seal">
-                    <img src="/assets/images/logos/cropped-mls-logo-clear-192x192.png" alt="Seal">
-                </div>
-                <div class="signature">
+        <div>
+            <div class="certificate" id="certificate">   
+                <div class="header">
+                    <img src="/assets/images/logos/cropped-mls-logo-clear-192x192.png" alt="The Malawi Law Society" class="logo">
                     @{
-                        var representativeSignature = ViewBag.training.Attachments[2];
+                        var accreditingInstitutionLogo = ViewBag.training.Attachments[1];
                     }
-                    <img src="@representativeSignature.FilePath" alt="Representative Signature"/>
-                    <p>EXECUTIVE DIRECTOR<br>@ViewBag.training.AccreditingInstitution</p>
+                    <img src="@accreditingInstitutionLogo.FilePath" alt="@ViewBag.training.AccreditingInstitution" class="logo"/>
+                </div>
+                <h1>CERTIFICATE</h1>
+                <p class="subtitle">OF ATTENDANCE</p>
+                <p class="title_header">THIS CERTIFICATE IS PRESENTED TO</p>
+                <p class="recipient" id="recipientName">@ViewBag.member.User.FullName</p>
+                <p class="description" id="description">Having attended a Continuing Professional Development Training on @ViewBag.training.Title on @ViewBag.training.DateToBeConducted.ToString("MMMM dd, yyyy") at @ViewBag.training.PhysicalVenue</p>
+                <div class="signatures">
+                    <div class="signature">
+                        @{
+                            var presidentSignature = ViewBag.training.Attachments[4];
+                        }
+                        <img src="@presidentSignature.FilePath" alt="President Signature"/>
+                        <p>PRESIDENT<br>Malawi Law Society</p>
+                    </div>
+                    <div class="seal">
+                        @{
+                            var seal = ViewBag.training.Attachments[3];
+                        }
+                        <img src="@seal.FilePath" alt="Seal"/>
+                    </div>
+                    <div class="signature">
+                        @{
+                            var representativeSignature = ViewBag.training.Attachments[2];
+                        }
+                        <img src="@representativeSignature.FilePath" alt="Representative Signature"/>
+                        <p>EXECUTIVE DIRECTOR<br>@ViewBag.training.AccreditingInstitution</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -150,27 +164,31 @@
                 const recipientName = document.getElementById('recipientName').textContent;
 
                 const opt = {
-                    margin: 0.5,
+                    margin: 0,
                     filename: `${recipientName.replace(/\s+/g, '_')}_Certificate.pdf`,
                     image: { type: 'jpeg', quality: 0.98 },
                     html2canvas: {
                         scale: 2,
-                        useCORS: true,  // Add this line to allow loading cross-origin images
+                        useCORS: true,
                         allowTaint: true
                     },
-                    jsPDF: { unit: 'in', format: 'letter', orientation: 'landscape' }
+                    jsPDF: { 
+                        unit: 'in', 
+                        format: 'letter', 
+                        orientation: 'landscape',
+                        compress: true
+                    }
                 };
 
-                // Function to generate and download PDF
                 function downloadPDF() {
-                    html2pdf().set(opt).from(element).save();
+                    const pdfContainer = document.createElement('div');
+                    pdfContainer.className = 'pdf-container';
+                    pdfContainer.appendChild(element.cloneNode(true));
+
+                    html2pdf().set(opt).from(pdfContainer).save();
                 }
 
-                // Attach click event to download button
                 downloadButton.addEventListener('click', downloadPDF);
-
-                // Uncomment the line below if you want to trigger download automatically when the page loads
-                //setTimeout(downloadPDF, 1000);  // Delay of 1 second to ensure all content is loaded
             });
         </script>
     </body>

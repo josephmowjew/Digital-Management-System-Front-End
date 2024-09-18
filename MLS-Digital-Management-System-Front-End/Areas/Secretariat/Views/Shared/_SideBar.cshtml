@@ -53,6 +53,34 @@
                 <span class="hide-menu">Applications</span>
             </a>
         </li>
+        <li class="nav-small-cap">
+            <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+            <span class="hide-menu">Member Management</span>
+        </li>
+        <li class="sidebar-item">
+            <a class="sidebar-link" asp-action="index" asp-area="Secretariat" asp-controller="Members" aria-expanded="false">
+                <span>
+                    <i class="bi bi-people"></i>
+                </span>
+                <span class="hide-menu">All</span>
+            </a>
+        </li>
+        <li class="sidebar-item">
+            <a class="sidebar-link" asp-area="Secretariat" asp-controller="Members" asp-action="LicensedMembers" aria-expanded="false">
+                <span>
+                    <i class="bi bi-briefcase"  style="font-size: 1.1rem;"></i>
+                </span>
+                <span class="hide-menu">Licensed</span>
+            </a>
+        </li>
+        <li class="sidebar-item">
+            <a class="sidebar-link" asp-area="Secretariat" asp-controller="Members" asp-action="UnlicensedMembers" aria-expanded="false">
+                <span>
+                    <i class="bi bi-archive"  style="font-size: 1.1rem;"></i>
+                </span>
+                <span class="hide-menu">Unlicensed</span>
+            </a>
+        </li>
          <li class="nav-small-cap">
             <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
             <span class="hide-menu">CPDs</span>
@@ -83,6 +111,26 @@
                     <i class="bi bi-people" style="font-size: 1.rem;"></i>
                 </span>
                 <span class="hide-menu">Communications</span>
+            </a>
+        </li>
+        <li class="nav-small-cap">
+            <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+            <span class="hide-menu">Stamps</span>
+        </li>
+        <!--<li class="sidebar-item">
+            <a class="sidebar-link" asp-action="index" asp-area="Secretariat" asp-controller="Committees" aria-expanded="false">
+                <span>
+                    <i class="bi bi-vector-pen" style="font-size: 1.rem;"></i>
+                </span>
+                <span class="hide-menu">Signatures</span>
+            </a>
+        </li>-->
+         <li class="sidebar-item">
+            <a class="sidebar-link" asp-action="index" asp-area="Secretariat" asp-controller="stamps" aria-expanded="false">
+                <span>
+                    <i class="bi bi-postage" style="font-size: 1.rem;"></i>
+                </span>
+                <span class="hide-menu">Stamps</span>
             </a>
         </li>
         

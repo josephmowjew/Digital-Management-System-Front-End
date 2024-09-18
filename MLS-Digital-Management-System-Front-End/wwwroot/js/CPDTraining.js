@@ -201,11 +201,11 @@ handleMarkAttendanceSuccess(response) {
         this.setCheckboxValue(element, fieldValue);
       } else if (element.type === 'file') {
           //this.handleFileUpload(element, data.attachments, fieldName);
-          this.fileUploadHandler.handleFileUpload(element, data.attachments, fieldName);
+        this.fileUploadHandler.handleFileUpload(element, data.attachments, fieldName);
       } 
       else if(fieldName == "CPDUnitsAwarded")
       {
-          element.value = data.cpdUnitsAwarded;
+        element.value = data.cpdUnitsAwarded;
       }
       else {
         element.value = fieldValue;
@@ -663,6 +663,18 @@ handleMarkAttendanceSuccess(response) {
         }
       }
     });
+  }
+
+  generateCertificate(trainingId) {
+    // Open a new window with the certificate template
+    var certificateWindow = window.open(`/Member/CPDTrainings/CDPCertificate/${trainingId}`, '_blank');
+    
+    // Wait for the new window to load
+    certificateWindow.onload = function() {
+        
+        // Use html2pdf to convert the certificate to PDF
+        html2pdf().from(certificateWindow.document.body).save('Certificate_of_Attendance.pdf');
+    };
   }
 }
 

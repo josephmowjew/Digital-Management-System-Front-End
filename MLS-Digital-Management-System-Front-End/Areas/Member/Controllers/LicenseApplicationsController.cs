@@ -17,6 +17,7 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
         {
             _service = serviceRepository;
         }
+
         public async Task<IActionResult> Index()
         {
 
@@ -24,7 +25,6 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
 
             return View();
         }
-
 
         private async Task PopulateViewBags()
         {
@@ -40,6 +40,7 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
             ViewBag.membership = member != null;
 
         }
+
          public async Task<IActionResult> Details(int id)
         {
             //get the license application record from remote 
@@ -56,7 +57,8 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
 
             return View(licenseApplication);
         }
-         private async Task<List<SelectListItem>> GetFirms()
+
+        private async Task<List<SelectListItem>> GetFirms()
         {
             List<SelectListItem> firmsList = new() { new SelectListItem() { Text = "---Select Firm---", Value = "" } };
 
@@ -77,6 +79,7 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
 
             return firmsList;
         }
+
         private async Task<bool> HasPreviousLicenseApplication()
         {
             string userId = AuthHelper.GetUserId(HttpContext);
@@ -93,5 +96,13 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
             return licenseApprovalHistory;
         }
 
+        public async Task<IActionResult> LicenseCertificate(int id)
+        {
+            await PopulateViewBags();
+
+            var license = await _service.LicenseService.GetLicense(id);
+            ViewBag.license = license;
+            return View();
+        }
     }
 }

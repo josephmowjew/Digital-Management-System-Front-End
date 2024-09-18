@@ -103,6 +103,15 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
 
         }
 
+        public async Task<IActionResult> CDPCertificate(int Id)
+        {
+            await PopulateViewBags();
+
+            var training = await _service.CpdTrainingService.GetCpdTrainingByIdAsync(Id);
+            ViewBag.training = training;
+            return View();
+        }
+
 
     }
 }

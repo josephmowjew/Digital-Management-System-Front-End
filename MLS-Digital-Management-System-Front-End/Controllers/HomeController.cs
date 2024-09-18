@@ -129,6 +129,10 @@ namespace MLS_Digital_Management_System_Front_End.Controllers
                     {
                         return RedirectToAction("Index", "Home", new { Area = "Executive" });
                     }
+                    if(authData.TokenData.Role.Equals("Honorary Secretary", StringComparison.OrdinalIgnoreCase))
+                    {
+                        return RedirectToAction("Index", "Home", new { Area = "Executive" });
+                    }
                     if (authData.TokenData.Role.Equals("CEO", StringComparison.OrdinalIgnoreCase))
                     {
                         return RedirectToAction("Index", "Home", new { Area = "CEO" });

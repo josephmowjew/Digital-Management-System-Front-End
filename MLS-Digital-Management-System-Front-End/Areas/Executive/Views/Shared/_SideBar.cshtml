@@ -12,12 +12,12 @@
                 <span class="hide-menu">Dashboard</span>
             </a>
         </li>
-        <!--<li class="nav-small-cap">
+        <li class="nav-small-cap">
             <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
             <span class="hide-menu">ProBono Management</span>
         </li>
         <li class="sidebar-item">
-            <a class="sidebar-link"  asp-area="Secretariat" asp-controller="ProBonoClients" asp-action="Index" aria-expanded="false">
+            <a class="sidebar-link"  asp-area="Executive" asp-controller="ProBonoClients" asp-action="Index" aria-expanded="false">
                 <span>
                     <i class="ti ti-user
                     "></i>
@@ -26,7 +26,7 @@
             </a>
         </li>
         <li class="sidebar-item">
-            <a class="sidebar-link"  asp-area="Secretariat" asp-controller="probonoapplications" asp-action="Index" aria-expanded="false">
+            <a class="sidebar-link"  asp-area="Executive" asp-controller="probonoapplications" asp-action="Index" aria-expanded="false">
                 <span>
                     <i class="ti ti-briefcase"></i>
                 </span>
@@ -34,13 +34,14 @@
             </a>
         </li>
         <li class="sidebar-item">
-            <a class="sidebar-link" asp-area="Secretariat" asp-controller="ProBonos" asp-action="Index" aria-expanded="false">
+            <a class="sidebar-link" asp-area="Executive" asp-controller="ProBonos" asp-action="Index" aria-expanded="false">
                 <span>
                     <i class="ti ti-cards"></i>
                 </span>
                 <span class="hide-menu">Pro Bono Cases</span>
             </a>
-        </li>-->
+        </li>
+
          <li class="nav-small-cap">
             <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
             <span class="hide-menu">License Management</span>
@@ -54,6 +55,90 @@
             </a>
         </li>
 
+        <li class="nav-small-cap">
+            <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+            <span class="hide-menu">Member Management</span>
+        </li>
+        <li class="sidebar-item">
+            <a class="sidebar-link" asp-action="index" asp-area="Executive" asp-controller="Members" aria-expanded="false">
+                <span>
+                    <i class="bi bi-people"></i>
+                </span>
+                <span class="hide-menu">All</span>
+            </a>
+        </li>
+        <li class="sidebar-item">
+            <a class="sidebar-link" asp-area="Executive" asp-controller="Members" asp-action="LicensedMembers" aria-expanded="false">
+                <span>
+                    <i class="ti ti-briefcase" style="font-size: 1.1rem;"></i>
+                </span>
+                <span class="hide-menu">Licensed</span>
+            </a>
+        </li>
+        <li class="sidebar-item">
+            <a class="sidebar-link" asp-area="Executive" asp-controller="Members" asp-action="UnlicensedMembers" aria-expanded="false">
+                <span>
+                    <i class="ti ti-archive"  style="font-size: 1.1rem;"></i>
+                </span>
+                <span class="hide-menu">Unlicensed</span>
+            </a>
+        </li>
+        <li class="nav-small-cap">
+            <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+            <span class="hide-menu">CPDs</span>
+        </li>
+        <li class="sidebar-item">
+            <a class="sidebar-link" asp-action="index" asp-area="Executive" asp-controller="CPDTrainings" aria-expanded="false">
+                <span>
+                    <i class="bi bi-mortarboard"></i>
+                </span>
+                <span class="hide-menu">Trainings</span>
+            </a>
+        </li>
+        <li class="nav-small-cap">
+            <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+            <span class="hide-menu">Configurations</span>
+        </li>
+        <li class="sidebar-item">
+            <a class="sidebar-link" asp-action="index" asp-area="Executive" asp-controller="Signatures" aria-expanded="false">
+                <span>
+                    <i class="bi bi-vector-pen" style="font-size: 1.rem;"></i>
+                </span>
+                <span class="hide-menu">Signatures</span>
+            </a>
+        </li>
+        <li class="sidebar-item">
+            <a class="sidebar-link" asp-area="Executive" asp-controller="Countries" asp-action="Index" aria-expanded="false">
+                <span>
+                    <i class="ti ti-flag" style="font-size: 1.1rem;"></i>
+                </span>
+                <span class="hide-menu">Countries</span>
+            </a>
+        </li>
+        <li class="sidebar-item">
+            <a class="sidebar-link" asp-area="Executive" asp-controller="Departments" asp-action="Index" aria-expanded="false">
+                <span>
+                    <i class="ti ti-briefcase"  style="font-size: 1.1rem;"></i>
+                </span>
+                <span class="hide-menu">Departments</span>
+            </a>
+        </li>
+        <li class="sidebar-item">
+            <a class="sidebar-link" asp-area="Executive" asp-controller="YearOfOperations" asp-action="Index" aria-expanded="false">
+                <span>
+                    <i class="ti ti-clock" style="font-size: 1.1rem;"></i>
+                </span>
+                <span class="hide-menu">Practicing Year</span>
+            </a>
+        </li>
+        <li class="sidebar-item">
+            <a class="sidebar-link" asp-area="Executive" asp-controller="Firms" asp-action="Index" aria-expanded="false">
+                <span>
+                    <i class="ti ti-building" style="font-size: 1.1rem;"></i>
+                </span>
+                <span class="hide-menu">Firms</span>
+            </a>
+        </li>
     </ul>
     @* <div class="unlimited-access hide-menu bg-light-primary position-relative mb-7 mt-5 rounded">
         <div class="d-flex">

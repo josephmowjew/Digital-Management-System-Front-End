@@ -1,0 +1,142 @@
+﻿@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+@{
+    ViewData["Title"] = "Pro Bono Applications";
+    Layout = "~/Areas/Executive/Views/shared/_Layout.cshtml";
+
+     var host = Configuration.GetSection("APIURL")["Link"];
+}
+
+@section Styles {
+
+    <link href="~/assets/css/custom_select.css" rel="stylesheet" />
+}
+
+
+<div class="card  w-100 h-100 d-flex justify-content-center">
+    <div class="card-body">
+         <div>
+            <img src="~/assets/images/91.gif" id="spinner" />
+        </div>
+       
+        <h5 class="card-title fw-semibold mb-4 text-uppercase">Pro Bono Cases</h5>
+       
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover" id="my_table">
+                <thead>
+                    <tr>
+                         <th>
+                            File Number
+                        </th>
+                        <th>
+                            Nature Of Dispute
+                        </th>
+                        <th>
+                            Client Name
+                        </th>
+                        <th>
+                            Year of Practice
+                        </th>
+                          <th>
+                            Accumulated Hours
+                        </th>
+                        
+                        <th>
+                            Case Details
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+       @section Scripts{
+
+        <script>
+            var datatable;
+            var tokenValue = '@ViewBag.token';
+             var host = '@host';
+        </script>
+
+        <script src="~/js/Probono.js" asp-append-version="true"></script>
+        <script src="~/assets/js/custom_select.js" asp-append-version="true"></script>
+        <script>
+            $(document).ready(function () {
+                datatable = $('#my_table').DataTable({
+
+
+                    "processing": true,
+                    "serverSide": true,
+                    "order": [[0, "desc"]],
+                    ajax: {
+                    url: "@host/api/ProBonos/paged",
+                        type: 'get',
+                        datatype: 'Json',headers: {
+                                        'Authorization': 'Bearer @ViewBag.token'
+                                    }
+
+                  },
+                    columnDefs: [
+                        {
+                            defaultContent: "",
+                            targets: "_all",
+                            'orderable': true
+                        },
+                    ],
+                   columns: [
+
+                        {
+                            data: "fileNumber",
+                            name: "fileNumber",
+                            className: "text-left",
+                            "orderable": true,
+                        },
+
+                        {
+                            data: "natureOfDispute",
+                            name: "natureOfDispute",
+                            className: "text-left",
+                            "orderable": true,
+                        },
+                        {
+                            data: "probonoClient.name",
+                            name: "client",
+                            className: "text-left",
+                            "orderable": false,
+                        },
+                        {
+                            data: "yearOfOperation.formatedDate",
+                            name: "yearOfOperation",
+                            className: "text-left",
+                            "orderable": false,
+                        },
+                         {
+                            data: "proBonoHoursAccoumulated",
+                            name: "proBonoHoursAccoumulated",
+                            className: "text-left",
+                            "orderable": false,
+                        },
+                        {
+                            data: "caseDetails",
+                            name: "caseDetails",
+                            className: "text-left",
+                            "orderable": true,
+                        },
+                    ],                    
+                    responsive: true,
+                    "autoWidth": false,
+                });
+            });
+        </script>
+
+        
+
+
+            @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+        }

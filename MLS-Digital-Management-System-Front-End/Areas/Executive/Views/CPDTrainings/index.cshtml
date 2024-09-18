@@ -1,0 +1,156 @@
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+@{
+    ViewData["Title"] = "License Applications";
+    Layout = "~/Areas/Executive/Views/shared/_Layout.cshtml";
+
+    var host = Configuration.GetSection("APIURL")["Link"];
+}
+
+@section Styles {
+
+    <style>
+           .hidden {
+                display: none;
+                }
+            .fees-column {
+                padding: 10px;
+            }
+
+            .fee-item {
+                margin-bottom: 5px;
+            }
+    </style>
+
+
+}
+
+
+<div class="card  w-100 h-100 d-flex justify-content-center">
+    <div class="card-body">
+      
+       <div>
+            <img src="~/assets/images/91.gif" id="spinner" />
+        </div>
+
+        <h5 class="card-title fw-semibold mb-4 text-uppercase text-center"> CPD's In Practice Year <strong>(@ViewBag.YearOfOperation.FormatedDate)</strong></h5>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover" id="cpd_table">
+                <thead>
+                    <tr>
+                        <th>
+                           Title
+                        </th>
+                        <th>
+                           Duration(Hours)
+                        </th>
+                        <th>
+                            Event Date
+                        </th>
+                        <th>
+                            Units Awarded
+                        </th>
+                        <th>
+                            Accrediting Institution
+                        </th>
+                        <th>
+                            Action
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+
+    <script>
+        var datatable;
+        var tokenValue = '@ViewBag.token';
+        var host = '@host';
+    </script>
+    <script src="~/js/FileUploadHandler.js" asp-append-version="true"></script>
+     <script src="~/js/CPDTraining.js" asp-append-version="true"></script>
+    <script>
+        $(document).ready(function () {
+            datatable = $('#cpd_table').DataTable({
+
+
+                "processing": true,
+                "serverSide": true,
+                "order": [[0, "desc"]],
+                ajax: {
+                    url: "@host/api/CPDTrainings/paged",
+                    type: 'get',
+                    datatype: 'Json', headers: {
+                        'Authorization': 'Bearer @ViewBag.token'
+                    },
+
+                   
+
+                },
+                columnDefs: [
+                    {
+                        defaultContent: "",
+                        targets: "_all",
+                        'orderable': true
+                    },
+                ],
+                columns: [
+                    {
+                        data: "title",
+                        name: "title",
+                        className: "text-left",
+                        "orderable": false,
+                    },
+                    {
+                        data: "duration",
+                        name: "duration",
+                        className: "text-left",
+                        "orderable": false,
+                    },
+                    {
+                        data: "dateToBeConducted",
+                        name: "dateToBeConducted",
+                        className: "text-left",
+                        "orderable": false,
+                    },
+                    {
+                        data: "cpdUnitsAwarded",
+                        name: "cpdUnitsAwarded",
+                        className: "text-left",
+                        "orderable": true,
+                    },
+                     {
+                        data: "accreditingInstitution",
+                        name: "accreditingInstitution",
+                        className: "text-left",
+                        "orderable": true,
+                    },
+                    {
+                        data: "id",
+                        name: "id",
+                        "orderable": false,
+                        render: function (data, type, row) {
+                                  
+                                    return `
+                                        <a href='/Executive/CPDTrainings/TrainingDetails/${data}' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-eye text-lg' title='show details' > View</a>
+                                    `
+                                }
+                    }
+                ],
+                responsive: true,
+                "autoWidth": false,
+            });
+        });
+    </script>
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

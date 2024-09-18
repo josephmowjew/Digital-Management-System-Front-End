@@ -62,8 +62,37 @@
                 <span class="hide-menu">Pro Bono Cases</span>
             </a>
         </li>
+
+        <li class="nav-small-cap">
+            <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+            <span class="hide-menu">Member Management</span>
+        </li>
+        <li class="sidebar-item">
+            <a class="sidebar-link" asp-action="index" asp-area="CEO" asp-controller="Members" aria-expanded="false">
+                <span>
+                    <i class="bi bi-people"></i>
+                </span>
+                <span class="hide-menu">All</span>
+            </a>
+        </li>
+        <li class="sidebar-item">
+            <a class="sidebar-link" asp-area="ceo" asp-controller="Members" asp-action="LicensedMembers" aria-expanded="false">
+                <span>
+                    <i class="bi bi-briefcase"  style="font-size: 1.1rem;"></i>
+                </span>
+                <span class="hide-menu">Licensed</span>
+            </a>
+        </li>
+        <li class="sidebar-item">
+            <a class="sidebar-link" asp-area="ceo" asp-controller="Members" asp-action="UnlicensedMembers" aria-expanded="false">
+                <span>
+                    <i class="bi bi-archive"  style="font-size: 1.1rem;"></i>
+                </span>
+                <span class="hide-menu">Unlicensed</span>
+            </a>
+        </li>
          
-         <li class="nav-small-cap">
+        <li class="nav-small-cap">
             <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
             <span class="hide-menu">License Management</span>
         </li>

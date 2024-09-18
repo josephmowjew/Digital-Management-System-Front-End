@@ -23,6 +23,7 @@ public class ServiceRepository : IServiceRepository
     private IQualificationTypeService _qualificationTypeService;
     private IFirmService _firmService;
     private  IConfiguration _configuration;
+    private ILicenseService _licenseService;
     private ILicenseApplicationService _licenseApplicationService;
     private ILicenseApprovalHistoryService _licenseApprovalHistoryService;
     private ICpdUnitsEarnedService _cpdUnitsEarnedService;
@@ -43,7 +44,8 @@ public class ServiceRepository : IServiceRepository
     private ISubcommitteeMembershipService _subcommitteeMembershipService;
     private ISubcommitteeService _subcommitteeService;
     private ISubcommitteeThreadService _subcommitteeThreadService;
-
+    private IStampService _stampService;
+    private ISignatureService _signatureService;
 
     public string Token 
     { 
@@ -68,6 +70,7 @@ public class ServiceRepository : IServiceRepository
             _memberService = new MemberService(_httpClient);
             _qualificationTypeService = new QualificationTypeService(_httpClient);
             _firmService = new FirmService(_httpClient);
+            _licenseService = new LicenseService(_httpClient);
             _licenseApplicationService = new LicenseApplicationService(_httpClient);
             _licenseApprovalHistoryService = new LicenseApprovalHistoryService(_httpClient);
             _cpdUnitsEarnedService = new CpdUnitsEarnedService(_httpClient);
@@ -89,6 +92,8 @@ public class ServiceRepository : IServiceRepository
             _subcommitteeMembershipService = new SubcommitteeMembershipService(_httpClient);
             _subcommitteeService = new SubcommitteeService(_httpClient);
             _subcommitteeThreadService = new SubcommitteeThreadService(_httpClient);
+            _stampService = new StampService(_httpClient);
+            _signatureService = new SignatureService(_httpClient);
         } 
     } 
 
@@ -115,6 +120,7 @@ public class ServiceRepository : IServiceRepository
     public IMemberService MemberService => _memberService ??= new MemberService(_httpClient);
     public IQualificationTypeService QualificationTypeService => _qualificationTypeService ??= new QualificationTypeService(_httpClient);
     public IFirmService FirmService => _firmService ??= new FirmService(_httpClient);
+    public ILicenseService LicenseService => _licenseService ??= new LicenseService(_httpClient);
     public ILicenseApplicationService LicenseApplicationService => _licenseApplicationService ??= new LicenseApplicationService(_httpClient);
     public ILicenseApprovalHistoryService LicenseApprovalHistoryService => _licenseApprovalHistoryService ??= new LicenseApprovalHistoryService(_httpClient);
     public ICpdUnitsEarnedService CpdUnitsEarnedService => _cpdUnitsEarnedService ??= new CpdUnitsEarnedService(_httpClient);
@@ -135,4 +141,6 @@ public class ServiceRepository : IServiceRepository
     public ISubcommitteeMembershipService SubcommitteeMembershipService => _subcommitteeMembershipService ??= new SubcommitteeMembershipService(_httpClient);
     public ISubcommitteeService SubcommitteeService => _subcommitteeService ??= new SubcommitteeService(_httpClient);
     public ISubcommitteeThreadService SubcommitteeThreadService => _subcommitteeThreadService ??= new SubcommitteeThreadService(_httpClient);
+    public IStampService StampService => _stampService ??= new StampService(_httpClient);
+    public ISignatureService SignatureService => _signatureService ??= new SignatureService(_httpClient);
 }

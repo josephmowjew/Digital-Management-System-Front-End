@@ -1,0 +1,46 @@
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+@{
+    ViewData["Title"] = "Signature";
+    Layout = "~/Areas/Secretariat/Views/shared/_Layout.cshtml";
+
+    var host = Configuration.GetSection("APIURL")["Link"];
+    var apiPrefix =  Configuration.GetSection("APISettings")["API_Prefix"];
+}
+
+<div class="d-flex justify-content-between align-items-center mb-5">
+    <div>
+        <a asp-action="index" asp-controller="signatures" asp-area="executive" class="btn btn-secondary p-1">
+            <i class="bi bi-chevron-double-left"></i>
+            Back
+        </a>
+    </div>
+
+    <div class="row gap-0">
+        <div class="col-6">
+            <a href='#' onclick='signatureHandler.editForm(@ViewBag.signature.Id, "@ViewBag.token")' class='btn btn-outline-primary btn-sm ti ti-pencil' title='edit'>Edit</a>
+        </div>
+    </div>
+</div>
+
+<div class="d-flex justify-content-center">
+    <div class="row mb-4 px-3 border" style="max-width: 900px; width: 100%;">
+        <div class="col-12 col-md-6 d-flex justify-content-center">
+            <div class="py-5">
+                <h1 class="fs-4 text-center">
+                    Signature: @ViewBag.signature.Name
+                </h1>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-6 d-flex justify-content-start align-items-center">
+            @if (ViewBag.signature.Attachments.Count > 0)
+            {
+                var firstAttachment = ViewBag.signature.Attachments[0];
+                <a href="@firstAttachment.FilePath" data-lightbox="image-1" class="d-flex justify-content-center align-items-center">
+                    <img src="@firstAttachment.FilePath" alt="stamp logo" class="w-50 h-50" />
+                </a>
+            }
+        </div>
+    </div>
+</div>

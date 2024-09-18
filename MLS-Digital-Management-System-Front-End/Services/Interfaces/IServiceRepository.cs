@@ -15,6 +15,7 @@ public interface IServiceRepository{
     IMemberService MemberService { get; }
     IQualificationTypeService QualificationTypeService { get; }
     IFirmService FirmService { get; }
+    ILicenseService LicenseService { get; }
     ILicenseApplicationService LicenseApplicationService{ get; }
     ILicenseApprovalHistoryService LicenseApprovalHistoryService { get; }
     ICpdUnitsEarnedService CpdUnitsEarnedService { get; }
@@ -35,5 +36,7 @@ public interface IServiceRepository{
     ISubcommitteeMembershipService SubcommitteeMembershipService { get; }
     ISubcommitteeService SubcommitteeService { get; }
     ISubcommitteeThreadService SubcommitteeThreadService { get; }
+    IStampService StampService { get; }
+    ISignatureService SignatureService { get; }
 }
 

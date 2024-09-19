@@ -272,6 +272,8 @@ class FormHandler {
         const dataTable = $('#my_table').DataTable();
         toastr.success("Application saved successfully");
         $("#create_application_modal").modal("hide");
+        //clear the form
+        $("#create_application_modal form")[0].reset();
         dataTable.ajax.reload();
     }
 
@@ -447,6 +449,8 @@ class FormHandler {
 
     handleDeleteSuccess(response) {
         toastr.success("application has been deleted successfully");
+
+        $("#create_application_modal form")[0].reset();
         const dataTable = $('#my_table').DataTable();
         dataTable.ajax.reload();
     }
@@ -587,6 +591,18 @@ class FormHandler {
                 element.disabled = true;
             }
         });
+    }
+
+    generateCertificate(licenseId){
+        // Open a new window with the certificate template 
+        var certificateWindow = window.open(`/member/LicenseApplications/LicenseCertificate/${licenseId}`, '_blank');
+        
+        // Wait for the new window to load
+        certificateWindow.onload = function() {
+            
+            // Use html2pdf to convert the certificate to PDF
+            html2pdf().from(certificateWindow.document.body).save('Certificate_of_Attendance.pdf');
+        };
     }
 }
 

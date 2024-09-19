@@ -36,6 +36,7 @@
                 padding: 40px;
                 width: 800px;
                 position: relative;
+                margin: auto; /* Center the certificate */
             }
             .header {
                 display: flex;
@@ -116,7 +117,7 @@
     </head>
     <body>
         <button id="downloadButton">Download Certificate</button>
-        <div>
+        <div class="pdf-container">
             <div class="certificate" id="certificate">   
                 <div class="header">
                     <img src="/assets/images/logos/cropped-mls-logo-clear-192x192.png" alt="The Malawi Law Society" class="logo">
@@ -154,7 +155,6 @@
                 </div>
             </div>
         </div>
-
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
         <script>

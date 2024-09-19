@@ -272,6 +272,8 @@ class FormHandler {
         const dataTable = $('#my_table').DataTable();
         toastr.success("Application saved successfully");
         $("#create_application_modal").modal("hide");
+        //clear the form
+        $("#create_application_modal form")[0].reset();
         dataTable.ajax.reload();
     }
 
@@ -447,6 +449,8 @@ class FormHandler {
 
     handleDeleteSuccess(response) {
         toastr.success("application has been deleted successfully");
+
+        $("#create_application_modal form")[0].reset();
         const dataTable = $('#my_table').DataTable();
         dataTable.ajax.reload();
     }

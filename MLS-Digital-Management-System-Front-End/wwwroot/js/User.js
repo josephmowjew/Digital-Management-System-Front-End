@@ -440,3 +440,46 @@ function hideSpinner() {
 
 
 
+
+function uploadExcelFile(file, host, tokenValue) {
+    var formData = new FormData();
+    formData.append('uploadedFile', file);  // Change 'file' to 'uploadedFile'
+
+    return $.ajax({
+        url: host + '/api/Members/bulk-register',
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        headers: {
+            'Authorization': 'Bearer ' + tokenValue
+        },
+        xhr: function() {
+            var xhr = new window.XMLHttpRequest();
+            xhr.upload.addEventListener("progress", function(evt) {
+                if (evt.lengthComputable) {
+                    var percentComplete = evt.loaded / evt.total;
+                    $('.progress-bar').width(percentComplete * 100 + '%');
+                    $('.progress-bar').text(Math.round(percentComplete * 100) + '%');
+                    
+                    if (percentComplete === 1) {
+                        $('.progress').hide();
+                        $('#processingMessage').text('File uploaded. Waiting for server response...');
+                        $('#processingMessage').show();
+                    }
+                }
+            }, false);
+            return xhr;
+        }
+    });
+}
+
+function validateExcelFile(file) {
+    var validExtensions = ['xlsx', 'xls'];
+    var fileName = file.name;
+    var fileExtension = fileName.split('.').pop().toLowerCase();
+    return validExtensions.indexOf(fileExtension) > -1;
+}
+
+
+

@@ -14,6 +14,15 @@
             <h5 class="card-title fw-semibold mb-4 text-uppercase">Available Members</h5>
 
             <div>
+                <input type="file" id="excelFile" accept=".xlsx, .xls" style="display: none;">
+                <button id="uploadExcelBtn" class="btn btn-primary my-3 mx-1">Upload Excel</button>
+                <div class="progress mt-2" style="display: none; height: 25px;">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <div id="processingMessage" class="mt-2" style="display: none;">
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    Processing uploaded data. Please wait...
+                </div>
                 <a asp-action="LicensedMembers" asp-area="secretariat" asp-controller="Members" class="btn btn-success my-3 ">Licensed</a>
                 <a asp-action="UnlicensedMembers" asp-area="secretariat" asp-controller="Members" class="btn btn-warning my-3 mx-1">Unlicensed</a>
             </div>
@@ -124,6 +133,81 @@
                 responsive: true,
                 "autoWidth": false,
             });
+
+            $('#uploadExcelBtn').click(function() {
+                $('#excelFile').click();
+            });
+
+            $('#excelFile').change(function(e) {
+                var file = e.target.files[0];
+                if (file) {
+                    if (validateExcelFile(file)) {
+                        $('#uploadExcelBtn').prop('disabled', true).text('Uploading...');
+                        showSpinner();
+                        $('.progress').show();
+                        $('#processingMessage').hide();
+
+                        uploadExcelFile(file, host, tokenValue)
+                            .done(function(response) {
+                                toastr.success(response);
+                                $('#processingMessage').text('Bulk registration process has started. You will receive an email when it\'s completed.');
+                                $('#processingMessage').show();
+                            })
+                            .fail(function(xhr, status, error) {
+                                toastr.error('Error starting bulk registration: ' + xhr.responseText);
+                            })
+                            .always(function() {
+                                hideSpinner();
+                                $('#uploadExcelBtn').prop('disabled', false).text('Upload Excel');
+                                $('.progress').hide();
+                            });
+                    } else {
+                        toastr.error('Please select a valid Excel file (.xlsx or .xls)');
+                    }
+                }
+            });
+
+            function validateExcelFile(file) {
+                var validExtensions = ['xlsx', 'xls'];
+                var fileName = file.name;
+                var fileExtension = fileName.split('.').pop().toLowerCase();
+                return validExtensions.indexOf(fileExtension) > -1;
+            }
+
+            function uploadExcelFile(file, host, tokenValue) {
+                var formData = new FormData();
+                formData.append('uploadedFile', file);  // Change 'file' to 'uploadedFile'
+
+                return $.ajax({
+                    url: host + '/api/Members/bulk-register',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    headers: {
+                        'Authorization': 'Bearer ' + tokenValue
+                    },
+                    xhr: function() {
+                        var xhr = new window.XMLHttpRequest();
+                        xhr.upload.addEventListener("progress", function(evt) {
+                            if (evt.lengthComputable) {
+                                var percentComplete = evt.loaded / evt.total;
+                                $('.progress-bar').width(percentComplete * 100 + '%');
+                            }
+                        }, false);
+                        return xhr;
+                    }
+                });
+            }
+
+            // Add these functions if they don't exist in User.js
+            function showSpinner() {
+                $('#spinner').show();
+            }
+
+            function hideSpinner() {
+                $('#spinner').hide();
+            }
         });
     </script>
 

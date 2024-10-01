@@ -30,6 +30,7 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Secretariat.Controllers
         }
 
 
+
         public async Task<IActionResult> Profile()
         {
 

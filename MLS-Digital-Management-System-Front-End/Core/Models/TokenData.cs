@@ -28,6 +28,6 @@ namespace Core.Models
         [JsonProperty("token_expiry_minutes")]
         public DateTime TokenExpiryMinutes { get; set; }
         [JsonProperty("date_of_birth")]
-        public DateTime DateOfBirth { get; set; }
+        public DateTime? DateOfBirth { get; set; }
     }
 }

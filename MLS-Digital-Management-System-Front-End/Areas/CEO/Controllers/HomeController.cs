@@ -55,8 +55,12 @@ namespace MLS_Digital_Management_System_Front_End.Areas.CEO.Controllers
             ViewBag.qualificationTypesList = await GetQualificationTypes();
             ViewBag.proBonos = await this.GetProBonos();
             ViewBag.clientsCount = await this.GetClientsCount();
-             ViewBag.committeesCount = await this.GetCommittees();
+            ViewBag.committeesCount = await this.GetCommittees();
             ViewBag.totalLicenseApplications = await this.GetLicenseApplications();
+            ViewBag.totalMembers = await this.GetMembersCount();
+            ViewBag.unlicensedMembers = await this.GetUnlicensedMembersCount();
+            ViewBag.licensedMembers = await this.GetLicensedMembersCount();
+            ViewBag.notariesPublic = await this.GetNotariesPublicCount();
         }
 
         private async Task<ReadYearOfOperationDTO> CurrentYearOfOperation()
@@ -231,6 +235,31 @@ namespace MLS_Digital_Management_System_Front_End.Areas.CEO.Controllers
             var userCount = await _service.UserService.GetUsersCount();
             return userCount;
         }
+
+        private async Task<int> GetMembersCount()
+        {
+            var memberCount = await _service.MemberService.GetMembersCount();
+            return memberCount;
+        }
+
+        private async Task<int> GetUnlicensedMembersCount()
+        {
+            var memberCount = await _service.MemberService.GetUnlicensedMembersCount();
+            return memberCount;
+        }
+
+        private async Task<int> GetLicensedMembersCount()
+        {
+            var memberCount = await _service.MemberService.GetLicensedMembersCount();
+            return memberCount;
+        }
+
+        private async Task<int> GetNotariesPublicCount()
+        {
+            var memberCount = await _service.NotariesPublicService.GetNotariesPublicCountAsync();
+            return memberCount;
+        }
+
 
     }
 }

@@ -11,6 +11,8 @@ public interface IMemberService
 
     Task<ReadMemberDTO> GetMemberByUserIdAsync(string id);
     Task<int> GetMembersCount();
+    Task<int> GetUnlicensedMembersCount();
+    Task<int> GetLicensedMembersCount();
 
     //Task<ReadMemberDTO> AddMember(CreateMemberDTO createMemberDTO);
 }

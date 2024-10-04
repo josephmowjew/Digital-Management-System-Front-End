@@ -1,0 +1,140 @@
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+@{
+    ViewData["Title"] = "Members";
+    Layout = "~/Areas/Secretariat/Views/shared/_Layout.cshtml";
+
+    var host = Configuration.GetSection("APIURL")["Link"];
+}
+
+<div class="card">
+    <div class="card-body">
+        <div>
+            <img src="~/assets/images/91.gif" id="spinner" />
+        </div>
+        <div class="justify-content-between d-flex">
+            <h5 class="card-title fw-semibold mb-4 text-uppercase">Pending Notaries Public</h5>
+        </div>
+
+        <div class="modal fade" id="deny_notary_submission_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <partial name="_DenyFormPartial" />
+        </div>
+       
+        <div class="table-responsive">
+            <table class="table table-bordered " id="members_table">
+                <thead>
+                    <tr>
+                        <th>
+                            First Name
+                        </th>
+                        <th>
+                            Surname
+                        </th>
+                        <th>
+                            Gender
+                        </th>
+                        <th>
+                            Email
+                        </th>
+                        <th>
+                            Contact
+                        </th>
+                        <th>
+                            Actions
+                        </th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        var datatable;
+        var tokenValue = '@ViewBag.token';
+        var host = '@host';
+    </script>
+
+    <script src="~/js/Notary.js" asp-append-version="true"></script>
+    
+    <script>
+        $(document).ready(function () {
+            datatable = $('#members_table').DataTable({
+                    "processing": true,
+                    "serverSide": true,
+                    "order": [[0, "desc"]],
+                    ajax: {
+                    url: "@host/api/NotaryPublic/pending",
+                        type: 'get',
+                        datatype: 'Json',headers: {
+                                        'Authorization': 'Bearer @ViewBag.token'
+                                    }
+
+                  },
+                    columnDefs: [
+                        {
+                            defaultContent: "",
+                            targets: "_all",
+                            'orderable': true
+                        },
+                    ],
+                    columns: [
+                        {
+                            data: "member.user.firstName",
+                            name: "member",
+                            className: "text-left",
+                            "orderable": true,
+                        },
+                        {
+                            data: "member.user.lastName",
+                            name: "member",
+                            className: "text-left",
+                            "orderable": true,
+                        },
+                        {
+                            data: "member.user.gender",
+                            name: "member",
+                            className: "text-left",
+                            "orderable": true,
+                        },
+                        {
+                            data: "member.user.email",
+                            name: "member",
+                            className: "text-left",
+                            "orderable": true,
+                        },
+                        {
+                            data: "member.user.phoneNumber",
+                            name: "member",
+                            className: "text-left",
+                            "orderable": true,
+                        },
+                        {
+                            data: "id",
+                            name: "id",
+                            "orderable": false,
+                            render: function (data, type, row) {
+                                let links = "";
+                                if(row.applicationStatus.toLowerCase() == "pending"){
+                                    links += "<a href='#' onclick='notariesHandler.Activate(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='ti ti-check btn btn-outline-success my-1 btn-sm mx-1' title='approve'>Approve</a>";
+                                    links += "<a href='#' onclick='notariesHandler.denyForm(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='btn btn-outline-danger my-1 btn-sm ti ti-hand-stop' title='deny' >Deny</a> ";
+                                }
+                                return links;
+                                
+                            }
+                        }
+                ],
+                responsive: true,
+                "autoWidth": false,
+            });
+        });
+    </script>
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

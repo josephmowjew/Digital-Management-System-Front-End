@@ -64,4 +64,32 @@ public class MemberService : IMemberService
         }
     }
 
+    //get number of unlicensedMembers
+    public async Task<int> GetUnlicensedMembersCount(){
+        var response = await _httpClient.GetAsync($"api/Members/countUnlicensed");
+        if (response.IsSuccessStatusCode)
+        {
+            var count = await response.Content.ReadFromJsonAsync<int>();
+            return count;
+        }
+        else
+        {
+            throw new InvalidOperationException($"Failed to get Unlicensed Member count");
+        }
+    }
+
+    //get number of licensedMembers
+    public async Task<int> GetLicensedMembersCount(){
+        var response = await _httpClient.GetAsync($"api/Members/countLicensed");
+        if (response.IsSuccessStatusCode)
+        {
+            var count = await response.Content.ReadFromJsonAsync<int>();
+            return count;
+        }
+        else
+        {
+            throw new InvalidOperationException($"Failed to get Licensed Member count");
+        }
+    }
+
 }

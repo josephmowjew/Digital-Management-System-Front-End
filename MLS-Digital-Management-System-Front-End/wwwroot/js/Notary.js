@@ -152,7 +152,8 @@ class NotariesHandler {
   handleDeleteSuccess(response) {
     toastr.success("Notaries Public Submission has been deleted successfully");
     const dataTable = $('#members_table').DataTable();
-    dataTable.ajax.reload();
+    //dataTable.ajax.reload();
+    window.location.reload();
   }
 
   handleFileUpload(fileInput, attachments, fieldName) {
@@ -195,7 +196,7 @@ class NotariesHandler {
     var authenticationToken = $("#edit_notariesPublicSubmission_modal input[name='__RequestVerificationToken']").val(token);
 
     //console.log("this is the form",$("#edit_application_modal form")[0])
-        
+
     // Get the form itself
     var form = $("#edit_notariesPublicSubmission_modal form")[0];
 
@@ -205,63 +206,64 @@ class NotariesHandler {
 
     // Append the form field values
     $(form).find('input, select, textarea').each(function (index, element) {
-        var field = $(element);
-        var fieldName = field.attr('name');
-        var fieldValue = field.val();
-        formData.append(fieldName, fieldValue);
+      var field = $(element);
+      var fieldName = field.attr('name');
+      var fieldValue = field.val();
+      formData.append(fieldName, fieldValue);
     });
 
-     let id = $("#edit_notariesPublicSubmission_modal input[name='Id']").val()
+    let id = $("#edit_notariesPublicSubmission_modal input[name='Id']").val()
 
 
     // Append the file attachments
     var attachments = $("#edit_notariesPublicSubmission_modal input[name='Attachments']")[0].files;
     for (var i = 0; i < attachments.length; i++) {
-        formData.append("Attachments", attachments[i]);
+      formData.append("Attachments", attachments[i]);
     }
     //send the request
 
     $.ajax({
-        url: `${host}/api/NotaryPublic/`+id,
-        type: 'PUT',
-        data: formData,
-        processData: false, // Set processData to false to prevent automatic serialization
-        contentType: false, // Prevent jQuery from processing the data (since it's already in FormData format)
-        headers: {
-            'Authorization': "Bearer "+ token
-        },
-        success: (data) => {
-                //show success message to the user
-                var dataTable = $('#my_table').DataTable();
+      url: `${host}/api/NotaryPublic/` + id,
+      type: 'PUT',
+      data: formData,
+      processData: false, // Set processData to false to prevent automatic serialization
+      contentType: false, // Prevent jQuery from processing the data (since it's already in FormData format)
+      headers: {
+        'Authorization': "Bearer " + token
+      },
+      success: (data) => {
+        //show success message to the user
+        var dataTable = $('#my_table').DataTable();
 
-                toastr.success("Notaries Public submission updated successfully")
+        toastr.success("Notaries Public submission updated successfully")
 
-                $("#edit_notariesPublicSubmission_modal").modal("hide")
+        $("#edit_notariesPublicSubmission_modal").modal("hide")
 
-                dataTable.ajax.reload();
-        },
-        error: (xhr, ajaxOtions, thrownError) => {
+        //dataTable.ajax.reload();
+        window.location.reload();
+      },
+      error: (xhr, ajaxOtions, thrownError) => {
 
-            this.hideSpinner();
-            var errorResponse = JSON.parse(xhr.responseText);
-            $.each(errorResponse, function (key, value) {
-                $.each(value, function (index, message) {
-                   
-                    const elementName = key ? key.charAt(0).toUpperCase() + key.slice(1) : null;
-                    const element = $("#edit_notariesPublicSubmission_modal").find("form :input[name='" + (elementName || '') + "']");
-                    
-                    if (element && element.length) {
-                      element.siblings("span.text-danger").text(message);
-                    }
- 
-                });
-            });
-        }
+        this.hideSpinner();
+        var errorResponse = JSON.parse(xhr.responseText);
+        $.each(errorResponse, function (key, value) {
+          $.each(value, function (index, message) {
+
+            const elementName = key ? key.charAt(0).toUpperCase() + key.slice(1) : null;
+            const element = $("#edit_notariesPublicSubmission_modal").find("form :input[name='" + (elementName || '') + "']");
+
+            if (element && element.length) {
+              element.siblings("span.text-danger").text(message);
+            }
+
+          });
+        });
+      }
 
     });
 
 
-}
+  }
 
   createFieldMap(data) {
     return Object.entries(data).reduce((map, [key, value]) => {
@@ -296,6 +298,8 @@ class NotariesHandler {
     $("#submit_notariesPublicSubmission_modal").modal("hide");
     dataTable.ajax.reload();
     this.form.reset();
+    window.location.reload();
+
   }
   handleError(xhr) {
     this.hideSpinner();
@@ -309,7 +313,7 @@ class NotariesHandler {
           )
           : null;
 
-        console.log(key.charAt(0).toUpperCase() + key.slice(1));
+        //console.log(key.charAt(0).toUpperCase() + key.slice(1));
 
         if (element) {
           const errorSpan = element.nextElementSibling;

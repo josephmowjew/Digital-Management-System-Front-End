@@ -1,0 +1,207 @@
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+@{
+    ViewData["Title"] = "Notaries Public";
+    Layout = "~/Areas/CEO/Views/shared/_Layout.cshtml";
+
+    var host = Configuration.GetSection("APIURL")["Link"];
+}
+
+<div class="card">
+    <div class="card-body">
+
+        <div class="justify-content-between d-flex">
+            <h5 class="card-title fw-semibold mb-4 text-uppercase">Notaries Public</h5>
+
+            <div>
+                <a asp-action="Pending" asp-area="ceo" asp-controller="NotariesPublic" class="btn btn-success my-3 ">Submissions</a>
+            </div>
+        </div>
+       
+        <div class="table-responsive">
+            <table class="table table-bordered " id="members_table">
+                <thead>
+                    <tr>
+                        <th>
+                            First Name
+                        </th>
+                        <th>
+                            Surname
+                        </th>
+                        <th>
+                            Gender
+                        </th>
+                        <th>
+                            Email
+                        </th>
+                        <th>
+                            Firm
+                        </th>
+                        <th>
+                            Contact
+                        </th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        var datatable;
+        var tokenValue = '@ViewBag.token';
+        var host = '@host';
+    </script>
+
+    <script src="~/js/User.js" asp-append-version="true"></script>
+    
+    <script>
+        $(document).ready(function () {
+            datatable = $('#members_table').DataTable({
+
+
+                    "processing": true,
+                    "serverSide": true,
+                    "order": [[0, "desc"]],
+                    ajax: {
+                    url: "@host/api/NotaryPublic/paged",
+                        type: 'get',
+                        datatype: 'Json',headers: {
+                                        'Authorization': 'Bearer @ViewBag.token'
+                                    }
+
+                  },
+                    columnDefs: [
+                        {
+                            defaultContent: "",
+                            targets: "_all",
+                            'orderable': true
+                        },
+                    ],
+                    columns: [
+                        {
+                            data: "member.user.firstName",
+                            name: "member",
+                            className: "text-left",
+                            "orderable": true,
+                        },
+                        {
+                            data: "member.user.lastName",
+                            name: "member",
+                            className: "text-left",
+                            "orderable": true,
+                        },
+                        {
+                            data: "member.user.gender",
+                            name: "member",
+                            className: "text-left",
+                            "orderable": true,
+                        },
+                        {
+                            data: "member.user.email",
+                            name: "member",
+                            className: "text-left",
+                            "orderable": true,
+                        },
+                        {
+                            data: "member.firm.name",
+                            name: "member",
+                            className: "text-left",
+                            "orderable": true,
+                        },
+                        {
+                            data: "member.user.phoneNumber",
+                            name: "member",
+                            className: "text-left",
+                            "orderable": true,
+                        },
+                ],
+                responsive: true,
+                "autoWidth": false,
+            });
+
+            $('#uploadExcelBtn').click(function() {
+                $('#excelFile').click();
+            });
+
+            $('#excelFile').change(function(e) {
+                var file = e.target.files[0];
+                if (file) {
+                    if (validateExcelFile(file)) {
+                        $('#uploadExcelBtn').prop('disabled', true).text('Uploading...');
+                        showSpinner();
+                        $('.progress').show();
+                        $('#processingMessage').hide();
+
+                        uploadExcelFile(file, host, tokenValue)
+                            .done(function(response) {
+                                toastr.success(response);
+                                $('#processingMessage').text('Bulk registration process has started. You will receive an email when it\'s completed.');
+                                $('#processingMessage').show();
+                            })
+                            .fail(function(xhr, status, error) {
+                                toastr.error('Error starting bulk registration: ' + xhr.responseText);
+                            })
+                            .always(function() {
+                                hideSpinner();
+                                $('#uploadExcelBtn').prop('disabled', false).text('Upload Excel');
+                                $('.progress').hide();
+                            });
+                    } else {
+                        toastr.error('Please select a valid Excel file (.xlsx or .xls)');
+                    }
+                }
+            });
+
+            function validateExcelFile(file) {
+                var validExtensions = ['xlsx', 'xls'];
+                var fileName = file.name;
+                var fileExtension = fileName.split('.').pop().toLowerCase();
+                return validExtensions.indexOf(fileExtension) > -1;
+            }
+
+            function uploadExcelFile(file, host, tokenValue) {
+                var formData = new FormData();
+                formData.append('uploadedFile', file);  // Change 'file' to 'uploadedFile'
+
+                return $.ajax({
+                    url: host + '/api/Members/bulk-register',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    headers: {
+                        'Authorization': 'Bearer ' + tokenValue
+                    },
+                    xhr: function() {
+                        var xhr = new window.XMLHttpRequest();
+                        xhr.upload.addEventListener("progress", function(evt) {
+                            if (evt.lengthComputable) {
+                                var percentComplete = evt.loaded / evt.total;
+                                $('.progress-bar').width(percentComplete * 100 + '%');
+                            }
+                        }, false);
+                        return xhr;
+                    }
+                });
+            }
+
+            // Add these functions if they don't exist in User.js
+            function showSpinner() {
+                $('#spinner').show();
+            }
+
+            function hideSpinner() {
+                $('#spinner').hide();
+            }
+        });
+    </script>
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -5,7 +5,7 @@ namespace MLS_Digital_Management_System_Front_End.Core.DTOs.CPDTraining;
 public class CreateCPDTrainingDTO
     {
         [Required]
-        [StringLength(maximumLength: 100)]
+        [StringLength(maximumLength: 250)]
         public string Title { get; set; }
 
         [StringLength(maximumLength: 250)]

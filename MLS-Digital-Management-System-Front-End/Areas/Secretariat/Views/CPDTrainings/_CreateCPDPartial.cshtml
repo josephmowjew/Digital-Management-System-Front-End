@@ -13,7 +13,7 @@
             <div class="col-md-6">
                 <div class="mb-3 form-check">
                     <label asp-for="Title" class="control-label"></label>
-                    <input asp-for="Title" placeholder="Enter Title" class="form-control" required/>
+                    <textarea asp-for="Title" class="form-control" placeholder="Enter Title" required></textarea>
                     <span asp-validation-for="Title" class="text-danger"></span>
                 </div>
             </div>
@@ -113,7 +113,7 @@
             <div class="col-md-6">
                 <div class="mb-3 form-check">
                     <label asp-for="AccreditingInstitution" class="control-label"></label>
-                    <input asp-for="AccreditingInstitution" placeholder="Enter Accrediting Institution" class="form-control" required/>
+                    <input asp-for="AccreditingInstitution" placeholder="Enter Accrediting Institution" class="form-control"/>
                     <span asp-validation-for="AccreditingInstitution" class="text-danger"></span>
                 </div>
 
@@ -122,7 +122,7 @@
             <div class="col-md-6">
                 <div class="mb-3 form-check">
                     <label asp-for="AccreditingInstitutionRepresentativePosition" class="control-label">Representative Position</label>
-                    <input asp-for="AccreditingInstitutionRepresentativePosition" placeholder="Enter Representative Positon" class="form-control" required/>
+                    <input asp-for="AccreditingInstitutionRepresentativePosition" placeholder="Enter Representative Positon" class="form-control"/>
                     <span asp-validation-for="AccreditingInstitutionRepresentativePosition" class="text-danger"></span>
                 </div>
             </div>
@@ -133,7 +133,7 @@
                 <div class="mb-3 form-check">
                     <label  class="control-label">Accrediting Institution Logo</label>
                     <div class="custom-file">
-                        <input class="form-control custom-file-input" id="Attachments" accept="image/*" name="Attachments" type="file" required>
+                        <input class="form-control custom-file-input" id="Attachments" accept="image/*" name="Attachments" type="file">
                     </div>
                 </div>
             </div>
@@ -142,7 +142,7 @@
                 <div class="mb-3 form-check">
                     <label  class="control-label">Representative Signature</label>
                     <div class="custom-file">
-                        <input class="form-control custom-file-input" id="Attachments" accept="image/*" name="Attachments" type="file" required>
+                        <input class="form-control custom-file-input" id="Attachments" accept="image/*" name="Attachments" type="file">
                     </div>
                 </div>
             </div>

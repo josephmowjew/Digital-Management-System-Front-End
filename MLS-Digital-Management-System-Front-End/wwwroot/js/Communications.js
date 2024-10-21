@@ -24,48 +24,30 @@ class CommunicationsHandler {
         const sendToAllUsersCheckbox = document.getElementById('SendToAllUsers');
         const targetOptions = document.getElementById('targetOptions');
 
-        sendToAllUsersCheckbox.addEventListener('change', function() {
+        const attachDocumentCheckBox = document.getElementById('attachDocument');
+        const attachmentInput = document.getElementById('attachmentInput');
+
+        sendToAllUsersCheckbox.addEventListener('change', function () {
             if (this.checked) {
                 targetOptions.style.display = 'none';
             } else {
                 targetOptions.style.display = 'block';
             }
         });
+
+        attachDocumentCheckBox.addEventListener('change', function () {
+            attachmentInput.style.display = this.checked ? 'block' : 'none';
+        });
+
+        attachmentInput.style.display = 'none';
     }
 
     bindEvents() {
         const sendMessageBtn = document.querySelector("#send_message_btn");
         if (sendMessageBtn) {
+
+
             sendMessageBtn.addEventListener("click", this.onSendMessageClick.bind(this));
-        }
-    }
-
-    onSendMessageClick() {
-        this.showSpinner();
-
-        if (!this.form.checkValidity()) {
-            this.hideSpinner();
-            this.form.reportValidity();
-        } else {
-            const formData = new FormData(this.form);
-            const jsonData = {};
-            formData.forEach((value, key) => {
-                if (key === 'DepartmentIds' || key === 'RoleNames') {
-                    jsonData[key] = $('#' + key).val();
-                } else if (key === 'SendToAllUsers') {
-                    jsonData[key] = value === 'on';
-                } else {
-                    jsonData[key] = value;
-                }
-            });
-
-            this.sendFetchRequest(
-                JSON.stringify(jsonData),
-                "POST",
-                `${host}/api/Communications/send`,
-                this.handleSendMessageSuccess.bind(this),
-                this.handleError.bind(this)
-            );
         }
     }
 
@@ -76,17 +58,7 @@ class CommunicationsHandler {
         }
 
         this.setProcessingState(true);
-
-        const formData = new FormData(this.form);
-        const jsonData = this.prepareJsonData(formData);
-
-        this.sendFetchRequest(
-            JSON.stringify(jsonData),
-            "POST",
-            `${host}/api/Communications/send`,
-            this.handleSendMessageSuccess.bind(this),
-            this.handleError.bind(this)
-        );
+        this.sendMessageData();
     }
 
     prepareJsonData(formData) {
@@ -103,29 +75,45 @@ class CommunicationsHandler {
         return jsonData;
     }
 
-    sendFetchRequest(data, method, url, successCallback, errorCallback) {
-        fetch(url, {
-            method: method,
+    sendMessageData() {
+        const formData = new FormData(this.form);
+
+        // Handle multi-select fields
+        const departmentIds = $('#DepartmentIds').val();
+        formData.delete('DepartmentIds');
+        departmentIds.forEach(id => formData.append('DepartmentIds', id));
+
+        const roleNames = $('#RoleNames').val();
+        formData.delete('RoleNames');
+        roleNames.forEach(role => formData.append('RoleNames', role));
+
+        // Handle checkbox
+        formData.set('SendToAllUsers', this.form.querySelector('#SendToAllUsers').checked);
+
+        // Handle optional attachment
+        const fileInput = this.form.querySelector('#attachments');
+        if (fileInput && fileInput.files.length > 0) {
+            formData.set('Attachment', fileInput.files[0]);
+        } else {
+            formData.delete('Attachment');
+        }
+
+        fetch(`${host}/api/Communications/send`, {
+            method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
                 'Authorization': `Bearer ${tokenValue}`
+                // Don't set Content-Type header, let the browser set it for FormData
             },
-            body: data
+            body: formData
         })
         .then(response => {
             if (!response.ok) {
-                throw response;
+                return response.text().then(text => { throw new Error(text) });
             }
             return response.json();
         })
-        .then(successCallback)
-        .catch(error => {
-            if (error instanceof Response) {
-                error.json().then(errorCallback);
-            } else {
-                errorCallback(error);
-            }
-        })
+        .then(this.handleSendMessageSuccess.bind(this))
+        .catch(this.handleError.bind(this))
         .finally(() => {
             this.setProcessingState(false);
         });

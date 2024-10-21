@@ -16,5 +16,6 @@ namespace MLS_Digital_Management_System_Front_End.Core.DTOs.Communication
         public List<string> RoleNames { get; set; } = new List<string>();
 
         public bool SendToAllUsers { get; set; }
+        public List<IFormFile>? Attachments = new List<IFormFile>();
     }
 }

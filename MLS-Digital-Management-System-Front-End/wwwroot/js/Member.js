@@ -11,65 +11,61 @@ $(function () {
 
 
 
-   
 
-  
+
+
 
     function OnMemberCreateClick() {
 
         showSpinner();
-       
+
         //get the form itself 
         var form = $("#create_member_modal form");
 
-        
+
         var formData = {};
 
         // Iterate over the form's elements and build the formData object dynamically
-        $(form).find('input, select, textarea').each(function(index, element) {
+        $(form).find('input, select, textarea').each(function (index, element) {
             var field = $(element);
             var fieldName = field.attr('name');
             var fieldValue = field.val();
             formData[fieldName] = fieldValue;
         });
-        
+
         //send the request
 
         $.ajax({
-            url:  `${host}/api/members`,
+            url: `${host}/api/members`,
             type: 'POST',
             data: JSON.stringify(formData), // Convert formData object to JSON string
             contentType: 'application/json', // Set content type to JSON
             headers: {
-                'Authorization': "Bearer "+ tokenValue
+                'Authorization': "Bearer " + tokenValue
             },
             success: function (data) {
-                
+
                 //set the Id of the edit form
-               $("#edit_member_modal input[name='Id']").val(data.id)
+                $("#edit_member_modal input[name='Id']").val(data.id)
                 //parse whatever comes back to html
 
-               
-                    //show success message to the firm
-                    var dataTable = $('#my_table').DataTable();
 
-                    toastr.success("member record added successfully")
+                //show success message to the firm
+                var dataTable = $('#my_table').DataTable();
 
-                    $("#create_member_modal").modal("hide")
+                toastr.success("member record added successfully")
 
-                    hideSpinner();
+                $("#create_member_modal").modal("hide")
 
-                    
-                    //envoke current page refresh after 3 seconds
-                    setTimeout(function () {
-
-                        location.reload();
-
-                    }, 2000);
+                hideSpinner();
 
 
-                
+                //envoke current page refresh after 3 seconds
+                setTimeout(function () {
 
+                    location.reload();
+
+                }, 2000);
 
             },
             error: function (xhr, ajaxOtions, thrownError) {
@@ -106,7 +102,7 @@ function EditMemberForm(id) {
     }).done(function (data) {
         hideSpinner();
 
-     
+
         // Iterate over the keys of the data object and map them to form field names dynamically
         var fieldMap = {};
         for (var key in data) {
@@ -121,29 +117,28 @@ function EditMemberForm(id) {
             var field = $(element);
             var fieldName = field.attr('name');
             var dataKey = fieldMap[fieldName]; // Get corresponding key from data
-            
+
             if (fieldName === 'CustomerId') {
 
                 // If the field is Customer Id, set the value and trigger EnhancedSelect with the retrieved Customer ID
                 field.val(data[dataKey]);
-                if(data.customer != null)
-                    {
-                        new EnhancedSelect({
-                            url: `${host}/api/Customers`,
-                            hiddenFieldId: "CustomerId",
-                            pageSize: 20,
-                            initialSearchValue: data.customer.id,
-                            }, "edit_member_modal");
-                    }else{
-                        new EnhancedSelect({
-                            url: `${host}/api/Customers`,
-                            hiddenFieldId: "CustomerId",
-                            pageSize: 20,
-                            initialSearchValue: "",
-                            }, "edit_member_modal");
-                    }
-               
-              
+                if (data.customer != null) {
+                    new EnhancedSelect({
+                        url: `${host}/api/Customers`,
+                        hiddenFieldId: "CustomerId",
+                        pageSize: 20,
+                        initialSearchValue: data.customer.id,
+                    }, "edit_member_modal");
+                } else {
+                    new EnhancedSelect({
+                        url: `${host}/api/Customers`,
+                        hiddenFieldId: "CustomerId",
+                        pageSize: 20,
+                        initialSearchValue: "",
+                    }, "edit_member_modal");
+                }
+
+
             } else {
                 // For other fields, set the value as usual
                 field.val(data[dataKey]);
@@ -173,23 +168,23 @@ function UpdateMember() {
     //upDateRole
     var authenticationToken = $("#edit_member_modal input[name='__RequestVerificationToken']").val();
 
-     //get the form itself 
-     var form = $("#edit_member_modal form");
+    //get the form itself 
+    var form = $("#edit_member_modal form");
 
-        
-     var formData = {};
 
-     // Iterate over the form's elements and build the formData object dynamically
-     $(form).find('input, select, textarea').each(function(index, element) {
-         var field = $(element);
-         var fieldName = field.attr('name');
-         var fieldValue = field.val();
-         formData[fieldName] = fieldValue;
-     });
+    var formData = {};
 
-     let id = $("#edit_member_modal input[name='Id']").val()
+    // Iterate over the form's elements and build the formData object dynamically
+    $(form).find('input, select, textarea').each(function (index, element) {
+        var field = $(element);
+        var fieldName = field.attr('name');
+        var fieldValue = field.val();
+        formData[fieldName] = fieldValue;
+    });
 
-     // Convert formData object to an array of key-value pairs
+    let id = $("#edit_member_modal input[name='Id']").val()
+
+    // Convert formData object to an array of key-value pairs
     const formDataEntries = Object.entries(formData);
 
     // Convert the array of key-value pairs back to an object
@@ -199,16 +194,16 @@ function UpdateMember() {
     const formDataJson = JSON.stringify(formDataObject);
 
 
-   
+
     //send the request
 
     $.ajax({
-        url: `${host}/api/members/`+id,
+        url: `${host}/api/members/` + id,
         type: 'PUT',
         data: formDataJson,
         contentType: 'application/json',
         headers: {
-            'Authorization': "Bearer "+ tokenValue
+            'Authorization': "Bearer " + tokenValue
         },
         success: function (data) {
 
@@ -224,25 +219,25 @@ function UpdateMember() {
             var isInvalid = $(parsedData).find("input[name='DataInvalid']").val() == "true"
 
 
-           
 
-                //show success message to the firm
-                var dataTable = $('#my_table').DataTable();
 
-                toastr.success("Member data updated successfully")
+            //show success message to the firm
+            var dataTable = $('#my_table').DataTable();
 
-                $("#edit_member_modal").modal("hide")
+            toastr.success("Member data updated successfully")
 
-                //envoke current page refresh after 3 seconds
-                setTimeout(function () {
+            $("#edit_member_modal").modal("hide")
 
-                    location.reload();
+            //envoke current page refresh after 3 seconds
+            setTimeout(function () {
 
-                }, 2000);
+                location.reload();
 
-                
+            }, 2000);
 
-            
+
+
+
 
 
 
@@ -254,11 +249,11 @@ function UpdateMember() {
             $.each(errorResponse, function (key, value) {
                 $.each(value, function (index, message) {
                     //console.log("joseph")
-                   
+
                     const elementName = key.charAt(0).toUpperCase() + key.slice(1); // Replace with the desired element name
                     const element = $("#edit_member_modal").find("form :input[name='" + elementName + "']");
-                   console.log(element)
-                   element.siblings("span.text-danger").text(message);
+                    console.log(element)
+                    element.siblings("span.text-danger").text(message);
                     //$("#edit_member_modal input[name='" + key+']').siblings("span.text-danger").text(message);
                 });
             });
@@ -272,7 +267,7 @@ function UpdateMember() {
 function showSpinner() {
 
     var spinnerElement = document.getElementById('spinner');
-    if(spinnerElement){
+    if (spinnerElement) {
         spinnerElement.style.display = 'block';
     } else {
         console.error('Spinner element with id "spinner" was not found');

@@ -60,7 +60,7 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
             _service.Token = token;
 
             var member = await _service.MemberService.GetMemberByUserIdAsync(userId);
-            return member.Id;
+            return member != null ? member.Id : 0;
         }
         
         private async Task<List<SelectListItem>> GetYearOfOperations()
@@ -105,8 +105,13 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
         private async Task<bool> HasUserAppliedForNotariesPublic()
         {
             int memberId = await GetMember();
-            var notariesPublicApplication = await _service.NotariesPublicService.GetNotaryPublicByMemberIdAsync(memberId);
+
+            if(memberId == 0){
+                return false;
+            }else{
+                var notariesPublicApplication = await _service.NotariesPublicService.GetNotaryPublicByMemberIdAsync(memberId);
             return notariesPublicApplication != null;
+            }
         }
 
     }

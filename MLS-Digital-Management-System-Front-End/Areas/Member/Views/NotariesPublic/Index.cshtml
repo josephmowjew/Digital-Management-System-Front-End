@@ -16,57 +16,86 @@
             <h5 class="card-title fw-semibold mb-4 text-uppercase">Notaries Public</h5>
 
             <!-- Button trigger modal -->
-            @if(ViewBag.notariesPublicByMemberId){
-                
-            }else{
-                <button type="button" class="btn btn-info my-3" data-bs-toggle="modal" data-bs-target="#submit_notariesPublicSubmission_modal">
-                    Submit
-                </button>
+            @if (ViewBag.notariesPublicByMemberId)
+            {
+
+            }
+            else
+            {
+                @if (ViewBag.memberId == 0)
+                {
+
+                }
+                else
+                {
+                    <button type="button" class="btn btn-info my-3" data-bs-toggle="modal"
+                        data-bs-target="#submit_notariesPublicSubmission_modal">
+                        Submit
+                    </button>
+                }
             }
 
             <!-- Modal -->
-            <div class="modal fade" id="submit_notariesPublicSubmission_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal fade" id="submit_notariesPublicSubmission_modal" tabindex="-1"
+                aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <partial name="_SubmitNotariesPublicPartial" />
             </div>
 
-            <div class="modal fade" id="edit_notariesPublicSubmission_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal fade" id="edit_notariesPublicSubmission_modal" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <partial name="_EditNotariesPublicPartial" />
             </div>
         </div>
-       
-        <div class="table-responsive">
-            <table class="table table-bordered " id="members_table">
-                <thead>
-                    <tr>
-                        <th>
-                            First Name
-                        </th>
-                        <th>
-                            Surname
-                        </th>
-                        <th>
-                            Gender
-                        </th>
-                        <th>
-                            Email
-                        </th>
-                        <th>
-                            Contact
-                        </th>
-                        <th>
-                            Action
-                        </th>
-                    </tr>
-                </thead>
 
-                <tbody>
-                </tbody>
-            </table>
-        </div>
+        @if (ViewBag.notariesPublicByMemberId)
+        {
+
+            <div class="table-responsive">
+                <table class="table table-bordered " id="members_table">
+                    <thead>
+                        <tr>
+                            <th>
+                                First Name
+                            </th>
+                            <th>
+                                Surname
+                            </th>
+                            <th>
+                                Gender
+                            </th>
+                            <th>
+                                Email
+                            </th>
+                            <th>
+                                Contact
+                            </th>
+                            <th>
+                                Application Status
+                            </th>
+                            <th>
+                                Action
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            @if (ViewBag.memberId == 0)
+            {
+                <a asp-area="Member" asp-action="ViewMember" asp-controller="Home" class="btn btn-warning my-3">Complete
+                    Membership Details
+                </a>
+            }
+        }
     </div>
 </div>
 
-@section Scripts{
+@section Scripts {
     <script>
         var datatable;
         var tokenValue = '@ViewBag.token';
@@ -74,75 +103,82 @@
     </script>
 
     <script src="~/js/Notary.js" asp-append-version="true"></script>
-    
+
     <script>
         $(document).ready(function () {
             datatable = $('#members_table').DataTable({
 
 
-                    "processing": true,
-                    "serverSide": true,
-                    "order": [[0, "desc"]],
-                    ajax: {
+                "processing": true,
+                "serverSide": true,
+                "order": [[0, "desc"]],
+                ajax: {
                     url: "@host/api/NotaryPublic/paged?memberId=" + @ViewBag.memberId,
-                        type: 'get',
-                        datatype: 'Json',headers: {
-                                        'Authorization': 'Bearer @ViewBag.token'
-                                    }
+                    type: 'get',
+                    datatype: 'Json', headers: {
+                        'Authorization': 'Bearer @ViewBag.token'
+                    }
 
-                  },
-                    columnDefs: [
-                        {
-                            defaultContent: "",
-                            targets: "_all",
-                            'orderable': true
-                        },
-                    ],
-                    columns: [
-                        {
-                            data: "member.user.firstName",
-                            name: "member",
-                            className: "text-left",
-                            "orderable": true,
-                        },
-                        {
-                            data: "member.user.lastName",
-                            name: "member",
-                            className: "text-left",
-                            "orderable": true,
-                        },
-                        {
-                            data: "member.user.gender",
-                            name: "member",
-                            className: "text-left",
-                            "orderable": true,
-                        },
-                        {
-                            data: "member.user.email",
-                            name: "member",
-                            className: "text-left",
-                            "orderable": true,
-                        },
-                        {
-                            data: "member.user.phoneNumber",
-                            name: "member",
-                            className: "text-left",
-                            "orderable": true,
-                        },
-                        {
-                            data: "id",
-                            name: "id",
-                            "orderable": false,
-                            render: function (data, type, row) {
-                                let links = "";
-                                if(row.applicationStatus.toLowerCase() == "pending"){
-                                    links += "<a href='#' onclick='notariesHandler.EditForm(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='ti ti-pencil btn btn-outline-success my-1 btn-sm mx-1' title='edit'>Edit</a>";
-                                    links += "<a href='#' onclick='notariesHandler.delete(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='btn btn-outline-danger my-1 btn-sm ti ti-trash red-icon' title='delete' >Delete</a> ";
-                                }
-                                return links;
-                                
+                },
+                columnDefs: [
+                    {
+                        defaultContent: "",
+                        targets: "_all",
+                        'orderable': true
+                    },
+                ],
+                columns: [
+                    {
+                        data: "member.user.firstName",
+                        name: "member",
+                        className: "text-left",
+                        "orderable": true,
+                    },
+                    {
+                        data: "member.user.lastName",
+                        name: "member",
+                        className: "text-left",
+                        "orderable": true,
+                    },
+                    {
+                        data: "member.user.gender",
+                        name: "member",
+                        className: "text-left",
+                        "orderable": true,
+                    },
+                    {
+                        data: "member.user.email",
+                        name: "member",
+                        className: "text-left",
+                        "orderable": true,
+                    },
+                    {
+                        data: "member.user.phoneNumber",
+                        name: "member",
+                        className: "text-left",
+                        "orderable": true,
+                    },
+                    {
+                        data: "applicationStatus",
+                        name: "applicationStatus",
+                        className: "text-left",
+                        "orderable": true,
+                    },
+                    {
+                        data: "id",
+                        name: "id",
+                        "orderable": false,
+                        render: function (data, type, row) {
+                            console.log(row);
+                            let links = "";
+                            if (row.applicationStatus.toLowerCase() == "pending") {
+                                links += "<a href='#' onclick='notariesHandler.EditForm(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='ti ti-pencil btn btn-outline-success my-1 btn-sm mx-1' title='edit'>Edit</a>";
+                                links += "<a href='#' onclick='notariesHandler.delete(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='btn btn-outline-danger my-1 btn-sm ti ti-trash red-icon' title='delete' >Delete</a> ";
                             }
-                        },
+                            return links;
+
+                        }
+                    },
                 ],
                 responsive: true,
                 "autoWidth": false,

@@ -1,0 +1,41 @@
+@model MLS_Digital_Management_System_Front_End.Core.DTOs.Stamp.CreateStampDTO;
+<!-- Modal -->
+<div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="stampModalLabel">New Stamp</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row row-cols-lg-1">
+                <div class="mb-3 form-check">
+                    <label asp-for="Name" class="form-label"></label>
+                    <input asp-for="Name" placeholder="Enter Stamp Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3 form-check">
+                    <div class="custom-file">
+                        <label class="form-label" asp-for="Attachments"></label>
+                        <input class="form-control custom-file-input" id="Attachments" accept="image/*," name="Attachments" type="file">
+                    </div>
+                </div>
+
+                <div class="mb-3 form-check" >
+                  <label asp-for="YearOfOperationId" class="form-label"></label>
+                  <select asp-for="YearOfOperationId" asp-items="@ViewBag.yearOperationsList" class="form-control"></select>
+                  <span asp-validation-for="YearOfOperationId" class="text-danger"></span>
+                </div>
+            </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="create_stamp_btn" name="create_stamp_btn">Add Stamp</button>
+            
+      </div>
+    </div>
+  </div>
+

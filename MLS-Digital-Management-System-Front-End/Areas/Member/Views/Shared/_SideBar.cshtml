@@ -41,6 +41,20 @@
                 <span class="hide-menu">Pro Bono Cases</span>
             </a>
         </li>
+        <li class="nav-small-cap">
+            <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+            <span class="hide-menu">Member Management</span>
+        </li>
+       
+        <li class="sidebar-item">
+            <a class="sidebar-link" asp-area="Member" asp-controller="Members" asp-action="LicensedMembers" aria-expanded="false">
+                <span>
+                    <i class="bi bi-briefcase"  style="font-size: 1.1rem;"></i>
+                </span>
+                <span class="hide-menu">Licensed</span>
+            </a>
+        </li>
+       
         
         <li class="nav-small-cap">
             <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
@@ -64,6 +78,12 @@
                     <i class="ti ti-cards"></i>
                 </span>
                 <span class="hide-menu">Submissions</span>
+            </a>
+             <a class="sidebar-link" asp-action="RegisteredNotariesPublic" asp-area="member" asp-controller="NotariesPublic" aria-expanded="false">
+                <span>
+                    <i class="ti ti-cards"></i>
+                </span>
+                <span class="hide-menu">Registered Notaries</span>
             </a>
         </li>
          <li class="nav-small-cap">

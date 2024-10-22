@@ -23,6 +23,12 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
             return View();
         }
 
+        public async Task<IActionResult> RegisteredNotariesPublic()
+        {
+            await PopulateViewBagsMinimal();
+            return View();
+        }
+
         /*public async Task<IActionResult> LicensedMembers()
         {
             await PopulateViewBags();
@@ -37,13 +43,6 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
 
         private async Task PopulateViewBags()
         {
-            await PopulateViewBagsMinimal();
-        }
-
-        
-
-        private async Task PopulateViewBagsMinimal()
-        {
             string token = AuthHelper.GetToken(HttpContext);
             ViewBag.token = token;
             _service.Token = token;
@@ -51,8 +50,18 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
             ViewBag.membersList = await GetAllMembersAsync();
             ViewBag.memberId = await GetMember();
             ViewBag.notariesPublicByMemberId = await HasUserAppliedForNotariesPublic();
+          
         }
 
+        
+        private async Task PopulateViewBagsMinimal()
+        {
+             string token = AuthHelper.GetToken(HttpContext);
+            ViewBag.token = token;
+            _service.Token = token;
+        }
+
+      
         private async Task<int> GetMember()
         {
             string token = AuthHelper.GetToken(HttpContext);

@@ -9,15 +9,26 @@
 
 <div class="card">
     <div class="card-body">
-
+        <div>
+            <img src="~/assets/images/91.gif" id="spinner" />
+        </div>
         <div class="justify-content-between d-flex">
             <h5 class="card-title fw-semibold mb-4 text-uppercase">Notaries Public</h5>
-
             <div>
-                <a asp-action="Pending" asp-area="secretariat" asp-controller="NotariesPublic" class="btn btn-success my-3 ">Submissions</a>
+                <button type="button" class="btn btn-info my-3" data-bs-toggle="modal"
+                    data-bs-target="#submit_notariesPublicSubmission_modal">
+                    Submit
+                </button>
+                <a asp-action="Pending" asp-area="secretariat" asp-controller="NotariesPublic"
+                    class="btn btn-success my-3 ">Submissions</a>
+            </div>
+
+            <div class="modal fade" id="submit_notariesPublicSubmission_modal" tabindex="-1"
+                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <partial name="_SubmitNotariesPublicPartial" />
             </div>
         </div>
-       
+
         <div class="table-responsive">
             <table class="table table-bordered " id="members_table">
                 <thead>
@@ -50,85 +61,85 @@
     </div>
 </div>
 
-@section Scripts{
+@section Scripts {
     <script>
         var datatable;
         var tokenValue = '@ViewBag.token';
         var host = '@host';
     </script>
 
-    <script src="~/js/User.js" asp-append-version="true"></script>
-    
+    <script src="~/js/Notary.js" asp-append-version="true"></script>
+
     <script>
         $(document).ready(function () {
             datatable = $('#members_table').DataTable({
 
 
-                    "processing": true,
-                    "serverSide": true,
-                    "order": [[0, "desc"]],
-                    ajax: {
+                "processing": true,
+                "serverSide": true,
+                "order": [[0, "desc"]],
+                ajax: {
                     url: "@host/api/NotaryPublic/paged",
-                        type: 'get',
-                        datatype: 'Json',headers: {
-                                        'Authorization': 'Bearer @ViewBag.token'
-                                    }
+                    type: 'get',
+                    datatype: 'Json', headers: {
+                        'Authorization': 'Bearer @ViewBag.token'
+                    }
 
-                  },
-                    columnDefs: [
-                        {
-                            defaultContent: "",
-                            targets: "_all",
-                            'orderable': true
-                        },
-                    ],
-                    columns: [
-                        {
-                            data: "member.user.firstName",
-                            name: "member",
-                            className: "text-left",
-                            "orderable": true,
-                        },
-                        {
-                            data: "member.user.lastName",
-                            name: "member",
-                            className: "text-left",
-                            "orderable": true,
-                        },
-                        {
-                            data: "member.user.gender",
-                            name: "member",
-                            className: "text-left",
-                            "orderable": true,
-                        },
-                        {
-                            data: "member.user.email",
-                            name: "member",
-                            className: "text-left",
-                            "orderable": true,
-                        },
-                        {
-                            data: "member.firm.name",
-                            name: "member",
-                            className: "text-left",
-                            "orderable": true,
-                        },
-                        {
-                            data: "member.user.phoneNumber",
-                            name: "member",
-                            className: "text-left",
-                            "orderable": true,
-                        },
+                },
+                columnDefs: [
+                    {
+                        defaultContent: "",
+                        targets: "_all",
+                        'orderable': true
+                    },
+                ],
+                columns: [
+                    {
+                        data: "member.user.firstName",
+                        name: "member",
+                        className: "text-left",
+                        "orderable": true,
+                    },
+                    {
+                        data: "member.user.lastName",
+                        name: "member",
+                        className: "text-left",
+                        "orderable": true,
+                    },
+                    {
+                        data: "member.user.gender",
+                        name: "member",
+                        className: "text-left",
+                        "orderable": true,
+                    },
+                    {
+                        data: "member.user.email",
+                        name: "member",
+                        className: "text-left",
+                        "orderable": true,
+                    },
+                    {
+                        data: "member.firm.name",
+                        name: "member",
+                        className: "text-left",
+                        "orderable": true,
+                    },
+                    {
+                        data: "member.user.phoneNumber",
+                        name: "member",
+                        className: "text-left",
+                        "orderable": true,
+                    },
                 ],
                 responsive: true,
                 "autoWidth": false,
             });
 
-            $('#uploadExcelBtn').click(function() {
+            $('#uploadExcelBtn').click(function () {
                 $('#excelFile').click();
             });
 
-            $('#excelFile').change(function(e) {
+            $('#excelFile').change(function (e) {
                 var file = e.target.files[0];
                 if (file) {
                     if (validateExcelFile(file)) {
@@ -138,15 +149,15 @@
                         $('#processingMessage').hide();
 
                         uploadExcelFile(file, host, tokenValue)
-                            .done(function(response) {
+                            .done(function (response) {
                                 toastr.success(response);
                                 $('#processingMessage').text('Bulk registration process has started. You will receive an email when it\'s completed.');
                                 $('#processingMessage').show();
                             })
-                            .fail(function(xhr, status, error) {
+                            .fail(function (xhr, status, error) {
                                 toastr.error('Error starting bulk registration: ' + xhr.responseText);
                             })
-                            .always(function() {
+                            .always(function () {
                                 hideSpinner();
                                 $('#uploadExcelBtn').prop('disabled', false).text('Upload Excel');
                                 $('.progress').hide();
@@ -177,9 +188,9 @@
                     headers: {
                         'Authorization': 'Bearer ' + tokenValue
                     },
-                    xhr: function() {
+                    xhr: function () {
                         var xhr = new window.XMLHttpRequest();
-                        xhr.upload.addEventListener("progress", function(evt) {
+                        xhr.upload.addEventListener("progress", function (evt) {
                             if (evt.lengthComputable) {
                                 var percentComplete = evt.loaded / evt.total;
                                 $('.progress-bar').width(percentComplete * 100 + '%');

@@ -47,6 +47,7 @@ public class ServiceRepository : IServiceRepository
     private IStampService _stampService;
     private ISignatureService _signatureService;
     private INotariesPublicService _notariesPublicService;
+    private ICommunicationService _communicationService;
 
     public string Token 
     { 
@@ -96,6 +97,7 @@ public class ServiceRepository : IServiceRepository
             _stampService = new StampService(_httpClient);
             _signatureService = new SignatureService(_httpClient);
             _notariesPublicService = new NotariesPublicService(_httpClient);
+            _communicationService = new CommunicationService(_httpClient);
         } 
     } 
 
@@ -146,4 +148,5 @@ public class ServiceRepository : IServiceRepository
     public IStampService StampService => _stampService ??= new StampService(_httpClient);
     public ISignatureService SignatureService => _signatureService ??= new SignatureService(_httpClient);
     public INotariesPublicService NotariesPublicService => _notariesPublicService ??= new NotariesPublicService(_httpClient);
+    public ICommunicationService CommunicationService => _communicationService ??= new CommunicationService(_httpClient);
 }

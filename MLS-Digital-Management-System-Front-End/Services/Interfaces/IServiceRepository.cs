@@ -39,5 +39,6 @@ public interface IServiceRepository{
     IStampService StampService { get; }
     ISignatureService SignatureService { get; }
     INotariesPublicService NotariesPublicService { get; }
+    ICommunicationService CommunicationService { get; }
 }
 

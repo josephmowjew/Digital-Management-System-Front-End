@@ -10,16 +10,17 @@
 @section Styles {
 
     <style>
-           .hidden {
-                display: none;
-                }
-            .fees-column {
-                padding: 10px;
-            }
+        .hidden {
+            display: none;
+        }
 
-            .fee-item {
-                margin-bottom: 5px;
-            }
+        .fees-column {
+            padding: 10px;
+        }
+
+        .fee-item {
+            margin-bottom: 5px;
+        }
     </style>
 
 
@@ -28,8 +29,8 @@
 
 <div class="card  w-100 h-100 d-flex justify-content-center">
     <div class="card-body">
-      
-       <div>
+
+        <div>
             <img src="~/assets/images/91.gif" id="spinner" />
         </div>
         <!-- Button trigger modal -->
@@ -37,26 +38,30 @@
             Add New CPD Training
         </button>
 
-         <!-- Modal -->
-        <div class="modal fade" id="create_cpd_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <!-- Modal -->
+        <div class="modal fade" id="create_cpd_modal" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
             <partial name="_CreateCPDPartial" />
         </div>
         <!-- Modal -->
-        <div class="modal fade" id="edit_cpd_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="edit_cpd_modal" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
             <partial name="_EditCPDPartial" />
         </div>
 
-        <h5 class="card-title fw-semibold mb-4 text-uppercase text-center"> CPD's In Practice Year <strong>(@ViewBag.YearOfOperation.FormatedDate)</strong></h5>
+        <h5 class="card-title fw-semibold mb-4 text-uppercase text-center"> CPD's In Practice Year
+            <strong>(@ViewBag.YearOfOperation.FormatedDate)</strong>
+        </h5>
 
         <div class="table-responsive">
             <table class="table table-bordered table-hover" id="cpd_table">
                 <thead>
                     <tr>
                         <th>
-                           Title
+                            Title
                         </th>
                         <th>
-                           Duration(Hours)
+                            Duration(Hours)
                         </th>
                         <th>
                             Event Date
@@ -80,7 +85,7 @@
 </div>
 
 
-@section Scripts{
+@section Scripts {
 
     <script>
         var datatable;
@@ -88,7 +93,7 @@
         var host = '@host';
     </script>
     <script src="~/js/FileUploadHandler.js" asp-append-version="true"></script>
-     <script src="~/js/CPDTraining.js" asp-append-version="true"></script>
+    <script src="~/js/CPDTraining.js" asp-append-version="true"></script>
     <script>
         $(document).ready(function () {
             datatable = $('#cpd_table').DataTable({
@@ -104,7 +109,7 @@
                         'Authorization': 'Bearer @ViewBag.token'
                     },
 
-                   
+
 
                 },
                 columnDefs: [
@@ -139,7 +144,7 @@
                         className: "text-left",
                         "orderable": true,
                     },
-                     {
+                    {
                         data: "accreditingInstitution",
                         name: "accreditingInstitution",
                         className: "text-left",
@@ -150,14 +155,12 @@
                         name: "id",
                         "orderable": false,
                         render: function (data, type, row) {
-                                  
-                                    return `
-                                        <a href='#' onclick='cpdTrainingHandler.editForm(${data},"${tokenValue}")' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-pencil' title='edit' >Edit</a> 
-                                        <a href='#' type='button' onclick='cpdTrainingHandler.delete(${data}, "${tokenValue}")' title='delete' class='ti ti-trash red-icon btn btn-outline-danger btn-sm my-1 mx-1'>Delete</a>
-                                        <a href='/Secretariat/CPDTrainings/TrainingDetails/${data}' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-eye text-lg' title='show details' > View</a>
-                                    `
-
-                                }
+                            return `
+                                <a href='#' onclick='cpdTrainingHandler.editForm(${data},"${tokenValue}")' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-pencil' title='edit' >Edit</a> 
+                                <a href='#' type='button' onclick='cpdTrainingHandler.delete(${data}, "${tokenValue}")' title='delete' class='ti ti-trash red-icon btn btn-outline-danger btn-sm my-1 mx-1'>Delete</a>
+                                <a href='/Secretariat/CPDTrainings/TrainingDetails/${data}' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-eye text-lg' title='show details' > View</a>
+                            `
+                        }
                     }
                 ],
                 responsive: true,

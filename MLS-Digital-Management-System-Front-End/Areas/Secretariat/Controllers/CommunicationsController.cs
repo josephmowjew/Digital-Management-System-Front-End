@@ -23,6 +23,22 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Secretariat.Controllers
             return View();
         }
 
+        public async Task<IActionResult> Details(int Id)
+        {
+
+            await PopulateViewBags();
+            var training = await _service.CommunicationService.GetCommunicationByIdAsync(Id);
+
+            if (training == null)
+            {
+                return NotFound();
+            }
+
+            ViewBag.training = training;
+
+            return View();
+        }
+
         private async Task PopulateViewBags()
         {
             string token = AuthHelper.GetToken(HttpContext);

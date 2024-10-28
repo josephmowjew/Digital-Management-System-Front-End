@@ -10,7 +10,13 @@
       <form asp-action="Create">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="row">
-          <input asp-for="MemberId" type="hidden" value="@ViewBag.memberId" />
+          <div class="col-md-12">
+            <div class="mb-3 form-check">
+              <label asp-for="MemberId" class="form-label"></label>
+              <select asp-for="MemberId" asp-items="@ViewBag.membersList" class="form-control"></select>
+              <span asp-validation-for="MemberId" class="text-danger"></span>
+            </div>
+          </div>
           <div class="col-md-12">
             <div class="mb-3 form-check">
               <label asp-for="YearOfOperationId" class="form-label"></label>

@@ -246,11 +246,11 @@
                                         return buttons;
 
                                     }else{
-                                        return "";
+                                        return "<a href='/member/CPDTrainings/TrainingDetails/" + data +"' type = 'button' class='btn btn-outline-primary mx-1 btn-sm ti ti-eye text-lg' title = 'show details'> View </a>";
                                     }
                                 }
                                 else {
-                                    return "";
+                                    return "<a href='/member/CPDTrainings/TrainingDetails/" + data +"' type = 'button' class='btn btn-outline-primary mx-1 btn-sm ti ti-eye text-lg' title = 'show details'> View </a>";
                                 }
                             }
                             else {
@@ -258,7 +258,7 @@
                             }
                         }
                         if (memberRegistration && memberRegistration.registrationStatus === "Attended") {
-                            return `<a href='#' onclick='cpdTrainingHandler.generateCertificate(${data})' type='button' class='btn btn-outline-info m-1 btn-sm' title='Generate Certificate'>Certificate</a>`;
+                            return `<a href='#' onclick='cpdTrainingHandler.generateCertificate(${data})' type='button' class='btn btn-outline-info m-1 btn-sm' title='Generate Certificate'>Certificate</a> <a href='/member/CPDTrainings/TrainingDetails/" + data +"' type = 'button' class='btn btn-outline-primary mx-1 btn-sm ti ti-eye text-lg' title = 'show details'> View </a>`;
                         }
                     }
                 }

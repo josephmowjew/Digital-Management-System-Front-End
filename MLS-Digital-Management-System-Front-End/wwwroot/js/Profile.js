@@ -10,29 +10,29 @@ $(function () {
 
     function OnUpdateClick() {
         showSpinner();
-       
+
         //get the form itself 
         var form = $("#update_user_form form");
         var formData = {};
 
         // Iterate over the form's elements and build the formData object dynamically
-        $(form).find('input, select, textarea').each(function(index, element) {
+        $(form).find('input, select, textarea').each(function (index, element) {
             var field = $(element);
             var fieldName = field.attr('name');
             var fieldValue = field.val();
             formData[fieldName] = fieldValue;
         });
-        
+
         //var userId = $("#update_user_form input[name='Id']").val()
         //send the request
 
         $.ajax({
-            url:  `${host}/api/users/`+ userIdGlobal,
+            url: `${host}/api/users/` + userIdGlobal,
             type: 'PUT',
             data: JSON.stringify(formData), // Convert formData object to JSON string
             contentType: 'application/json', // Set content type to JSON
             headers: {
-                'Authorization': "Bearer "+ tokenValue
+                'Authorization': "Bearer " + tokenValue
             },
             success: function (data) {
                 hideSpinner();
@@ -47,7 +47,7 @@ $(function () {
                     type: 'GET',  // Changed to GET
                     success: function () {
                         // Redirect to the login page or home page after logout
-                        window.location.href = '/'; 
+                        window.location.href = '/';
                     },
                     error: function () {
                         toastr.error("Logout failed. Please try again.");
@@ -59,14 +59,14 @@ $(function () {
                 var errorResponse = JSON.parse(xhr.responseText);
                 $.each(errorResponse, function (key, value) {
                     $.each(value, function (index, message) {
-                       
+
                         const elementName = key ? key.charAt(0).toUpperCase() + key.slice(1) : null;
                         const element = $("#update_user_form").find("form :input[name='" + (elementName || '') + "']");
-                        
+
                         if (element && element.length) {
-                          element.siblings("span.text-danger").text(message);
+                            element.siblings("span.text-danger").text(message);
                         }
-     
+
                     });
                 });
             }
@@ -84,19 +84,17 @@ function EditForm(id) {
     //get the record from the database
     showSpinner();
 
-   
-    
     $.ajax({
-        url: `${host}/api/users/`+ id,
+        url: `${host}/api/users/` + id,
         type: 'GET',
         headers: {
-            'Authorization': "Bearer "+ tokenValue
+            'Authorization': "Bearer " + tokenValue
         }
 
     }).done(function (data) {
 
         //console.log(data)
-        
+
         hideSpinner();
         // Iterate over the keys of the data object and map them to form field names dynamically
         var fieldMap = {};
@@ -108,7 +106,7 @@ function EditForm(id) {
         }
 
         // Iterate over the form elements and populate values dynamically
-        $("#update_user_form form").find('input, select').each(function(index, element) {
+        $("#update_user_form form").find('input, select').each(function (index, element) {
             var field = $(element);
             var fieldName = field.attr('name');
             var dataKey = fieldMap[fieldName]; // Get corresponding key from data
@@ -139,23 +137,22 @@ function upDateUser(token) {
     //upDateRole
     var authenticationToken = $("#edit_user_modal input[name='__RequestVerificationToken']").val();
 
-     //get the form itself 
-     var form = $("#edit_user_modal form");
+    //get the form itself 
+    var form = $("#edit_user_modal form");
 
-        
-     var formData = {};
+    var formData = {};
 
-     // Iterate over the form's elements and build the formData object dynamically
-     $(form).find('input, select, textarea').each(function(index, element) {
-         var field = $(element);
-         var fieldName = field.attr('name');
-         var fieldValue = field.val();
-         formData[fieldName] = fieldValue;
-     });
+    // Iterate over the form's elements and build the formData object dynamically
+    $(form).find('input, select, textarea').each(function (index, element) {
+        var field = $(element);
+        var fieldName = field.attr('name');
+        var fieldValue = field.val();
+        formData[fieldName] = fieldValue;
+    });
 
-     let id = $("#edit_user_modal input[name='Id']").val()
+    let id = $("#edit_user_modal input[name='Id']").val()
 
-     // Convert formData object to an array of key-value pairs
+    // Convert formData object to an array of key-value pairs
     const formDataEntries = Object.entries(formData);
 
     // Convert the array of key-value pairs back to an object
@@ -164,48 +161,35 @@ function upDateUser(token) {
     // Stringify the formDataObject
     const formDataJson = JSON.stringify(formDataObject);
 
-
-   
     //send the request
 
     $.ajax({
-        url: `${host}/api/users/`+id,
+        url: `${host}/api/users/` + id,
         type: 'PUT',
         data: formDataJson,
         contentType: 'application/json',
         headers: {
-            'Authorization': "Bearer "+ token
+            'Authorization': "Bearer " + token
         },
         success: function (data) {
 
-
             //parse whatever comes back to html
 
-            var parsedData = $.parseHTML(data)
-
-
+            var parsedData = $.parseHTML(data);
 
             //check if there is an error in the data that is coming back from the user
 
             var isInvalid = $(parsedData).find("input[name='DataInvalid']").val() == "true"
 
-
-           
-
             //show success message to the user
             var dataTable = $('#my_table').DataTable();
 
-            toastr.success("User updated successfully")
+            toastr.success("User updated successfully");
 
-            $("#edit_user_modal").modal("hide")
+            $("#edit_user_modal").modal("hide");
 
             //dataTable.ajax.reload();
             location.reload();
-
-            
-
-
-
         },
         error: function (xhr, ajaxOtions, thrownError) {
 
@@ -213,14 +197,14 @@ function upDateUser(token) {
             var errorResponse = JSON.parse(xhr.responseText);
             $.each(errorResponse, function (key, value) {
                 $.each(value, function (index, message) {
-                   
+
                     const elementName = key ? key.charAt(0).toUpperCase() + key.slice(1) : null;
                     const element = $("#edit_user_modal").find("form :input[name='" + (elementName || '') + "']");
-                    
+
                     if (element && element.length) {
-                      element.siblings("span.text-danger").text(message);
+                        element.siblings("span.text-danger").text(message);
                     }
- 
+
                 });
             });
         }
@@ -233,7 +217,7 @@ function upDateUser(token) {
 function showSpinner() {
 
     var spinnerElement = document.getElementById('spinner');
-    if(spinnerElement){
+    if (spinnerElement) {
         spinnerElement.style.display = 'block';
     } else {
         console.error('Spinner element with id "spinner" was not found');

@@ -11,22 +11,23 @@
 
 <div class="card  w-100 h-100 d-flex justify-content-center ">
     <div class="card-body">
-         <div>
+        <div>
             <img src="~/assets/images/91.gif" id="spinner" />
         </div>
-        @if((ViewBag.roleName).ToLower() == "member")
+        @if ((ViewBag.roleName).ToLower() == "member")
         {
-         <a asp-action="ViewMember" class="btn btn-secondary my-3 " asp-area="member" asp-controller="Home" >View Member Details</a>
+            <a asp-action="ViewMember" class="btn btn-secondary my-3 " asp-area="member" asp-controller="Home">View Member
+                Details
+            </a>
 
         }
-     
-         
-         <h5 class="card-title fw-semibold mb-4 text-uppercase">My Profile</h5>
-         <div id="update_user_form">
-             <form asp-action="Edit">
+
+        <h5 class="card-title fw-semibold mb-4 text-uppercase">My Profile</h5>
+        <div id="update_user_form">
+            <form asp-action="Edit">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <input type="hidden" asp-for="Id" value=""/>
-                
+                <input type="hidden" asp-for="Id" value="" />
+
                 <div class="row row-cols-lg-2">
                     <div class="mb-3">
                         <label asp-for="FirstName" class="form-label"></label>
@@ -45,7 +46,8 @@
                     </div>
                     <div class="mb-3">
                         <label asp-for="TitleId" class="form-label"></label>
-                        <select required asp-for="TitleId" asp-items="@ViewBag.personalTitlesList" class="form-control"></select>
+                        <select required asp-for="TitleId" asp-items="@ViewBag.personalTitlesList"
+                            class="form-control"></select>
                         <span asp-validation-for="TitleId" class="text-danger"></span>
                     </div>
                     <div class="mb-3">
@@ -63,17 +65,20 @@
                     </div>
                     <div class="mb-3">
                         <label asp-for="IdentityTypeId" class="form-label"></label>
-                        <select required asp-for="IdentityTypeId" asp-items="@ViewBag.identityTypesList" class="form-control" disabled></select>
+                        <select required asp-for="IdentityTypeId" asp-items="@ViewBag.identityTypesList"
+                            class="form-control" disabled></select>
                         <span asp-validation-for="IdentityTypeId" class="text-danger"></span>
                     </div>
                     <div class="mb-3">
                         <label asp-for="IdentityNumber" class="form-label"></label>
-                        <input asp-for="IdentityNumber" class="form-control" placeholder="Enter Indentity Number MX285496477" readonly/>
+                        <input asp-for="IdentityNumber" class="form-control"
+                            placeholder="Enter Indentity Number MX285496477" readonly />
                         <span asp-validation-for="IdentityNumber" class="text-danger"></span>
                     </div>
                     <div class="mb-3">
                         <label asp-for="IdentityExpiryDate" class="form-label"></label>
-                        <input asp-for="IdentityExpiryDate" type="date" class="form-control" placeholder="Set Identity Expiry Date" readonly/>
+                        <input asp-for="IdentityExpiryDate" type="date" class="form-control"
+                            placeholder="Set Identity Expiry Date" readonly />
                         <span asp-validation-for="IdentityExpiryDate" class="text-danger"></span>
                     </div>
                     <div class="mb-3">
@@ -84,27 +89,28 @@
                     </div>
                     <div class="mb-3">
                         <label asp-for="PhoneNumber" class="form-label"></label>
-                        <input asp-for="PhoneNumber" class="form-control" placeholder="265999999999"/>
+                        <input asp-for="PhoneNumber" class="form-control" placeholder="265999999999" />
                         <span asp-validation-for="PhoneNumber" class="text-danger"></span>
                     </div>
                     <div class="mb-3">
                         <label asp-for="DateOfBirth" class="form-label"></label>
-                        <input asp-for="DateOfBirth" type="date" class="form-control" placeholder="Set Date of Birth" readonly/>
+                        <input asp-for="DateOfBirth" type="date" class="form-control" placeholder="Set Date of Birth"
+                            readonly />
                         <span asp-validation-for="DateOfBirth" class="text-danger"></span>
                     </div>
                     <div class="mb-3">
-                        <button type="button" class="btn btn-primary" id="update_user_btn" name="update_user_btn">Update Profile</button>
-                       
+                        <button type="button" class="btn btn-primary" id="update_user_btn" name="update_user_btn">Update
+                            Profile</button>
+
                     </div>
-                
+
                 </div>
             </form>
-         </div>
-       
+        </div>
     </div>
-  </div>
+</div>
 
- @section Scripts{
+@section Scripts {
 
     <script>
         var datatable;

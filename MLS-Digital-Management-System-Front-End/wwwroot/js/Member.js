@@ -9,12 +9,6 @@ $(function () {
 
     var editFirmButton = $("#edit_member_btn").unbind().click(EditMemberForm);
 
-
-
-
-
-
-
     function OnMemberCreateClick() {
 
         showSpinner();
@@ -80,7 +74,6 @@ $(function () {
 
         });
     }
-
 
 })
 
@@ -158,8 +151,6 @@ function EditMemberForm(id) {
         $("#edit_member_modal").modal("show");
     });
 }
-
-
 
 function UpdateMember() {
     toastr.clear()

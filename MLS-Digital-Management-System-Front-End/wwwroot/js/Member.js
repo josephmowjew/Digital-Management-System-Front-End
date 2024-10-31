@@ -226,12 +226,6 @@ function UpdateMember() {
 
             }, 2000);
 
-
-
-
-
-
-
         },
         error: function (xhr, ajaxOtions, thrownError) {
 
@@ -251,8 +245,6 @@ function UpdateMember() {
         }
 
     });
-
-
 }
 // Function to start the spinner
 function showSpinner() {

@@ -20,22 +20,26 @@
                 <input type="file" id="excelFile" accept=".xlsx, .xls" style="display: none;">
                 <button id="uploadExcelBtn" class="btn btn-primary my-3 mx-1">Upload Excel</button>
                 <div class="progress mt-2" style="display: none; height: 25px;">
-                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+                        style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
                 <div id="processingMessage" class="mt-2" style="display: none;">
                     <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                     Processing uploaded data. Please wait...
                 </div>
-                <a asp-action="LicensedMembers" asp-area="secretariat" asp-controller="Members" class="btn btn-success my-3 ">Licensed</a>
-                <a asp-action="UnlicensedMembers" asp-area="secretariat" asp-controller="Members" class="btn btn-warning my-3 mx-1">Unlicensed</a>
+                <a asp-action="LicensedMembers" asp-area="secretariat" asp-controller="Members"
+                    class="btn btn-success my-3 ">Licensed</a>
+                <a asp-action="UnlicensedMembers" asp-area="secretariat" asp-controller="Members"
+                    class="btn btn-warning my-3 mx-1">Unlicensed</a>
             </div>
         </div>
 
         <!-- Modal -->
-        <div class="modal fade" id="edit_user_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="edit_user_modal" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
             <partial name="_EditMemberProfilePartial" />
         </div>
-       
+
         <div class="table-responsive">
             <table class="table table-bordered " id="members_table">
                 <thead>
@@ -71,7 +75,7 @@
     </div>
 </div>
 
-@section Scripts{
+@section Scripts {
     <script>
         var datatable;
         var tokenValue = '@ViewBag.token';
@@ -79,68 +83,68 @@
     </script>
 
     <script src="~/js/User.js" asp-append-version="true"></script>
-    
+
     <script>
         $(document).ready(function () {
             datatable = $('#members_table').DataTable({
 
 
-                    "processing": true,
-                    "serverSide": true,
-                    "order": [[0, "desc"]],
-                    ajax: {
+                "processing": true,
+                "serverSide": true,
+                "order": [[0, "desc"]],
+                ajax: {
                     url: "@host/api/Members/paged",
-                        type: 'get',
-                        datatype: 'Json',headers: {
-                                        'Authorization': 'Bearer @ViewBag.token'
-                                    }
+                    type: 'get',
+                    datatype: 'Json', headers: {
+                        'Authorization': 'Bearer @ViewBag.token'
+                    }
 
-                  },
-                    columnDefs: [
-                        {
-                            defaultContent: "",
-                            targets: "_all",
-                            'orderable': true
-                        },
-                    ],
-                    columns: [
-                        {
-                            data: "user.firstName",
-                            name: "user",
-                            className: "text-left",
-                            "orderable": true,
-                        },
-                        {
-                            data: "user.lastName",
-                            name: "user",
-                            className: "text-left",
-                            "orderable": true,
-                        },
-                        {
-                            data: "user.gender",
-                            name: "user",
-                            className: "text-left",
-                            "orderable": true,
-                        },
-                        {
-                            data: "user.email",
-                            name: "user",
-                            className: "text-left",
-                            "orderable": true,
-                        },
-                        {
-                            data: "firm.name",
-                            name: "user",
-                            className: "text-left",
-                            "orderable": true,
-                        },
-                        {
-                            data: "user.phoneNumber",
-                            name: "user",
-                            className: "text-left",
-                            "orderable": true,
-                        },
-                        {
+                },
+                columnDefs: [
+                    {
+                        defaultContent: "",
+                        targets: "_all",
+                        'orderable': true
+                    },
+                ],
+                columns: [
+                    {
+                        data: "user.firstName",
+                        name: "user",
+                        className: "text-left",
+                        "orderable": true,
+                    },
+                    {
+                        data: "user.lastName",
+                        name: "user",
+                        className: "text-left",
+                        "orderable": true,
+                    },
+                    {
+                        data: "user.gender",
+                        name: "user",
+                        className: "text-left",
+                        "orderable": true,
+                    },
+                    {
+                        data: "user.email",
+                        name: "user",
+                        className: "text-left",
+                        "orderable": true,
+                    },
+                    {
+                        data: "firm.name",
+                        name: "user",
+                        className: "text-left",
+                        "orderable": true,
+                    },
+                    {
+                        data: "user.phoneNumber",
+                        name: "user",
+                        className: "text-left",
+                        "orderable": true,
+                    },
+                    {
                         data: "id",
                         name: "id",
                         "orderable": false,
@@ -160,11 +164,11 @@
                 "autoWidth": false,
             });
 
-            $('#uploadExcelBtn').click(function() {
+            $('#uploadExcelBtn').click(function () {
                 $('#excelFile').click();
             });
 
-            $('#excelFile').change(function(e) {
+            $('#excelFile').change(function (e) {
                 var file = e.target.files[0];
                 if (file) {
                     if (validateExcelFile(file)) {
@@ -174,15 +178,15 @@
                         $('#processingMessage').hide();
 
                         uploadExcelFile(file, host, tokenValue)
-                            .done(function(response) {
+                            .done(function (response) {
                                 toastr.success(response);
                                 $('#processingMessage').text('Bulk registration process has started. You will receive an email when it\'s completed.');
                                 $('#processingMessage').show();
                             })
-                            .fail(function(xhr, status, error) {
+                            .fail(function (xhr, status, error) {
                                 toastr.error('Error starting bulk registration: ' + xhr.responseText);
                             })
-                            .always(function() {
+                            .always(function () {
                                 hideSpinner();
                                 $('#uploadExcelBtn').prop('disabled', false).text('Upload Excel');
                                 $('.progress').hide();
@@ -213,9 +217,9 @@
                     headers: {
                         'Authorization': 'Bearer ' + tokenValue
                     },
-                    xhr: function() {
+                    xhr: function () {
                         var xhr = new window.XMLHttpRequest();
-                        xhr.upload.addEventListener("progress", function(evt) {
+                        xhr.upload.addEventListener("progress", function (evt) {
                             if (evt.lengthComputable) {
                                 var percentComplete = evt.loaded / evt.total;
                                 $('.progress-bar').width(percentComplete * 100 + '%');

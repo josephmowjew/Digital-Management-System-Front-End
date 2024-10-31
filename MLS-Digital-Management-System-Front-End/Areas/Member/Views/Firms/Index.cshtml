@@ -152,12 +152,16 @@
                         "orderable": false,
                         render: function (data, type, row) {
                             console.log(row);
+                            var declareLevyButton = "";
+                            //console.log('@ViewBag.member.User.Id');
                             if (row.status.toLowerCase() === "pending") {
                                 return "<a href='#' onclick='EditForm(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-pencil text-lg' title='edit' >Edit</a><a href='#' type='button' onclick='Delete(\"" + data + "\",\"" + tokenValue + "\")' title='delete' class='btn btn-outline-danger my-1 btn-sm ti ti-trash red-icon' >Delete</a>"
                             } else {
-                                var declareLevyButton = row.customerId ? 
-                                    "<a href='#' onclick='LevyForm(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='btn btn-outline-success m-1 btn-sm' title='declare levy'>Declare Levy</a>" 
-                                    : "";  
+                                if('@ViewBag.member.User.Id' == row.createdById){
+                                    declareLevyButton += row.customerId ? 
+                                    "<a href='#' onclick='LevyForm(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='btn btn-outline-success m-1 btn-sm' title='declare levy'>Declare Levy</a> <a href='#' onclick='EditForm(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-pencil text-lg' title='edit' >Edit</a>" 
+                                    : "";
+                                }
                                 
                                 return declareLevyButton +
                                     "<a href='/member/Firms/FirmDetails/" + data + "' class='btn btn-outline-warning mx-1 btn-sm' title='details'>Details</a>";

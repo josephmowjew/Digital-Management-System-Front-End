@@ -5,7 +5,7 @@
     Layout = "~/Areas/Member/Views/shared/_Layout.cshtml";
 
     var host = Configuration.GetSection("APIURL")["Link"];
-    var apiPrefix =  Configuration.GetSection("APISettings")["API_Prefix"];
+    var apiPrefix = Configuration.GetSection("APISettings")["API_Prefix"];
 }
 
 <div>
@@ -20,7 +20,7 @@
 
 <div class="card w-100 h-100 d-flex justify-content-center mt-2">
     <div class="card-body">
-        
+
         <h5 class="card-title fw-semibold mb-4 text-uppercase text-center fs-4">Firm Details</h5>
 
         <div class="row mb-3">
@@ -69,7 +69,7 @@
         </div>
 
         <div class="row mb-3">
-            
+
             <div class="col-md-6">
                 <div class="form-group">
                     <label class="form-label">Physical Address</label>
@@ -80,58 +80,64 @@
     </div>
 </div>
 
+@if (ViewBag.member.User.Id == ViewBag.firm.CreatedById)
+{
+    <div class="card">
+        <div class="card-body">
 
-<div class="card">
-    <div class="card-body">
-
-        @if (ViewBag.firm?.CustomerId == null){
-            <div class="card">
-                <div class="card-body">
-                    <p class="text-danger">
-                        Please contact the finance office to complete details set up with the accounts
-                    </p>
+            @if (ViewBag.firm?.CustomerId == null)
+            {
+                <div class="card">
+                    <div class="card-body">
+                        <p class="text-danger">
+                            Please contact the finance office to complete details set up with the accounts
+                        </p>
+                    </div>
                 </div>
+            }
+            else
+            {
+                <button type="button" class="btn btn-info my-3" data-bs-toggle="modal"
+                    data-bs-target="#create_levy_Declaration_modal">
+                    Declare Levy
+                </button>
+            }
+
+            <!-- Modal -->
+            <div class="modal fade" id="create_levy_Declaration_modal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <partial name="_CreateLevyDeclarationPartial" />
             </div>
-        } 
-        else{
-            <button type="button" class="btn btn-info my-3" data-bs-toggle="modal" data-bs-target="#create_levy_Declaration_modal">
-                Declare Levy
-            </button>
-        }
+            <h5 class="card-title fw-semibold mb-4 text-uppercase text-center fs-4">firm levy</h5>
+            <div class="table-responsive">
+                <table class="table table-bordered " id="levy_table">
+                    <thead>
+                        <tr>
+                            <th>
+                                Month
+                            </th>
+                            <th>
+                                Revenue
+                            </th>
+                            <th>
+                                Calculated Levy
+                            </th>
+                            <th>
+                                Document
+                            </th>
+                            <th>
+                                Invoice Number
+                            </th>
 
-        <!-- Modal -->
-        <div class="modal fade" id="create_levy_Declaration_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <partial name="_CreateLevyDeclarationPartial" />
-        </div>
-        <h5 class="card-title fw-semibold mb-4 text-uppercase text-center fs-4">firm levy</h5>
-        <div class="table-responsive">
-            <table class="table table-bordered " id="levy_table">
-                <thead>
-                    <tr>
-                        <th>
-                            Month
-                        </th>
-                        <th>
-                            Revenue
-                        </th>      
-                        <th>
-                            Calculated Levy
-                        </th>
-                        <th>
-                            Document
-                        </th>
-                        <th>
-                            Invoice Number
-                        </th>
-
-                    </tr>
-                </thead>       
-                <tbody>
-                </tbody>      
-            </table>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-</div>
+}
 
 
 @section Scripts {
@@ -152,70 +158,70 @@
                 "serverSide": true,
                 "order": [[0, "desc"]],
                 ajax: {
-                url: "@host/api/LevyDeclaration/paged?firmId=" + firmIdForLevy,
-                        type: 'get',
-                        datatype: 'Json',
-                        headers: {
-                            'Authorization': 'Bearer @ViewBag.token'
+                    url: "@host/api/LevyDeclaration/paged?firmId=" + firmIdForLevy,
+                    type: 'get',
+                    datatype: 'Json',
+                    headers: {
+                        'Authorization': 'Bearer @ViewBag.token'
                     },
 
 
-                  },
-                    columnDefs: [
-                        {
-                            defaultContent: "",
-                            targets: "_all",
-                            'orderable': true
-                        },
-                    ],
-                    columns: [
-                        {
-                            data: "month",
-                            name: "month",
-                            className: "text-left",
-                            "orderable": true,
-                            render: function (data, type, row) {
-                                if (type === 'display' || type === 'filter') {
-                                    const date = new Date(data);
-                                    return date.toLocaleString('default', { month: 'long' });
-                                }
+                },
+                columnDefs: [
+                    {
+                        defaultContent: "",
+                        targets: "_all",
+                        'orderable': true
+                    },
+                ],
+                columns: [
+                    {
+                        data: "month",
+                        name: "month",
+                        className: "text-left",
+                        "orderable": true,
+                        render: function (data, type, row) {
+                            if (type === 'display' || type === 'filter') {
+                                const date = new Date(data);
+                                return date.toLocaleString('default', { month: 'long' });
                             }
-                        },                      
-                        {
-                            data: "revenue",
-                            name: "revenue",
-                            className: "text-left",
-                            "orderable": true,
-                            render: function (data, type, row) {
-                                if (type === 'display' || type === 'filter') {
-                                    return new Intl.NumberFormat('en-MW', {
-                                        style: 'currency',
-                                        currency: 'MWK',
-                                        minimumFractionDigits: 2,
-                                        maximumFractionDigits: 2
-                                    }).format(data);
-                                }
-                                return data;
+                        }
+                    },
+                    {
+                        data: "revenue",
+                        name: "revenue",
+                        className: "text-left",
+                        "orderable": true,
+                        render: function (data, type, row) {
+                            if (type === 'display' || type === 'filter') {
+                                return new Intl.NumberFormat('en-MW', {
+                                    style: 'currency',
+                                    currency: 'MWK',
+                                    minimumFractionDigits: 2,
+                                    maximumFractionDigits: 2
+                                }).format(data);
                             }
-                        },
-                           {
-                            data: "levyAmount",
-                            name: "levyAmount",
-                            className: "text-left",
-                            "orderable": true,
-                            render: function (data, type, row) {
-                                if (type === 'display' || type === 'filter') {
-                                    return new Intl.NumberFormat('en-MW', {
-                                        style: 'currency',
-                                        currency: 'MWK',
-                                        minimumFractionDigits: 2,
-                                        maximumFractionDigits: 2
-                                    }).format(data);
-                                }
-                                return data;
+                            return data;
+                        }
+                    },
+                    {
+                        data: "levyAmount",
+                        name: "levyAmount",
+                        className: "text-left",
+                        "orderable": true,
+                        render: function (data, type, row) {
+                            if (type === 'display' || type === 'filter') {
+                                return new Intl.NumberFormat('en-MW', {
+                                    style: 'currency',
+                                    currency: 'MWK',
+                                    minimumFractionDigits: 2,
+                                    maximumFractionDigits: 2
+                                }).format(data);
                             }
-                        },
-                        {
+                            return data;
+                        }
+                    },
+                    {
                         data: "attachments",
                         name: "attachments",
                         className: "text-left",
@@ -241,10 +247,10 @@
                             return invoiceNumber;
                         }
                     },
-                        
-                    ],
-                    responsive: true,
-                    "autoWidth": false,
+
+                ],
+                responsive: true,
+                "autoWidth": false,
             });
         });
     </script>

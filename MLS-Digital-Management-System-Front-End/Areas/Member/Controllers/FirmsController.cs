@@ -35,8 +35,10 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
             await PopulateViewBags();
 
             var firmDetails = await _service.FirmService.GetFirmByIdAsync(Id);
-
             ViewBag.firm = firmDetails;
+
+            var member = await _service.MemberService.GetMemberByUserIdAsync(HttpContext.Request.Cookies["UserId"]);
+            ViewBag.member = member;
 
             return View();
         }

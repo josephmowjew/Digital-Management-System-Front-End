@@ -26,6 +26,8 @@ class CommunicationsHandler {
 
         const attachDocumentCheckBox = document.getElementById('attachDocument');
         const attachmentInput = document.getElementById('attachmentInput');
+        const includeSignatureCheckbox = document.getElementById('includeSignature');
+        const signaturePreview = document.getElementById('signaturePreview');
 
         sendToAllUsersCheckbox.addEventListener('change', function () {
             if (this.checked) {
@@ -38,6 +40,35 @@ class CommunicationsHandler {
         attachDocumentCheckBox.addEventListener('change', function () {
             attachmentInput.style.display = this.checked ? 'block' : 'none';
         });
+
+        if (includeSignatureCheckbox) {
+            includeSignatureCheckbox.addEventListener('change', () => {
+                if (includeSignatureCheckbox.checked) {
+                    signaturePreview.innerHTML = '<div class="spinner-border spinner-border-sm" role="status"></div>';
+                    signaturePreview.style.display = 'block';
+
+                    fetch(`${host}/api/Users/signature/html`, {
+                        headers: {
+                            'Authorization': `Bearer ${tokenValue}`
+                        }
+                    })
+                    .then(response => {
+                        if (!response.ok) throw new Error('Failed to fetch signature');
+                        return response.json();
+                    })
+                    .then(data => {
+                        signaturePreview.innerHTML = data.html;
+                    })
+                    .catch(error => {
+                        signaturePreview.innerHTML = '<div class="text-danger">Failed to load signature</div>';
+                        console.error('Signature fetch error:', error);
+                    });
+                } else {
+                    signaturePreview.style.display = 'none';
+                    signaturePreview.innerHTML = '';
+                }
+            });
+        }
 
         attachmentInput.style.display = 'none';
     }
@@ -66,7 +97,7 @@ class CommunicationsHandler {
         formData.forEach((value, key) => {
             if (key === 'DepartmentIds' || key === 'RoleNames') {
                 jsonData[key] = $('#' + key).val();
-            } else if (key === 'SendToAllUsers') {
+            } else if (key === 'SendToAllUsers' || key === 'includeSignature') {
                 jsonData[key] = value === 'on';
             } else {
                 jsonData[key] = value;

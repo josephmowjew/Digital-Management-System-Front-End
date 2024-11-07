@@ -54,10 +54,10 @@ class CommunicationsHandler {
                     })
                     .then(response => {
                         if (!response.ok) throw new Error('Failed to fetch signature');
-                        return response.text();
+                        return response.json();
                     })
-                    .then(html => {
-                        signaturePreview.innerHTML = html;
+                    .then(data => {
+                        signaturePreview.innerHTML = data.html;
                     })
                     .catch(error => {
                         signaturePreview.innerHTML = '<div class="text-danger">Failed to load signature</div>';

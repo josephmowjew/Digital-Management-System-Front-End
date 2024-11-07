@@ -23,21 +23,19 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
             return View();
         }
 
+        public async Task<IActionResult> FreeProBono()
+        {
+            await PopulateViewBags();
+
+            return View();
+        }
 
         private async Task PopulateViewBags()
         {
             //get the token
             string token = AuthHelper.GetToken(HttpContext);
             ViewBag.token = token;
-            this._service.Token = token;
-
-            
+            this._service.Token = token; 
         }
-
-        
-
-       
-
-
     }
 }

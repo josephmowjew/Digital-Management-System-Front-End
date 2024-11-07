@@ -17,5 +17,7 @@ namespace MLS_Digital_Management_System_Front_End.Core.DTOs.Communication
 
         public bool SendToAllUsers { get; set; }
         public List<IFormFile>? Attachments = new List<IFormFile>();
+
+        public bool IncludeSignature { get; set; }
     }
 }

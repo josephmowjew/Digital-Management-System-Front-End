@@ -317,6 +317,58 @@ $(document).ready(function() {
         const form = document.getElementById('signatureForm');
         form.reset();
         $(".signature-validation").text("");
+        
+        // Show spinner while loading
+        showSpinner();
+        
+        // Fetch existing signature data
+        $.ajax({
+            url: `${host}/api/Users/signature`,
+            type: 'GET',
+            headers: {
+                'Authorization': `Bearer ${tokenValue}`
+            },
+            success: function(data) {
+                // Populate form fields with existing data
+                if (data) {
+                    Object.keys(data).forEach(key => {
+                        const elementName = key.charAt(0).toUpperCase() + key.slice(1);
+                        const element = form.querySelector(`[name="${elementName}"]`);
+                        if (element && element.type !== 'file') {
+                            element.value = data[key];
+                        }
+                    });
+                    
+                    // If there's a banner image URL, show it
+                    if (data.bannerImageUrl) {
+                        const previewDiv = document.createElement('div');
+                        previewDiv.className = 'mt-2';
+                        previewDiv.innerHTML = `
+                            <label class="form-label">Current Banner:</label><br>
+                            <img src="${data.bannerImageUrl}" alt="Current signature banner" 
+                                 style="max-width: 200px; max-height: 100px; object-fit: contain" 
+                                 class="mb-2">
+                        `;
+                        const attachmentInput = form.querySelector('[name="Attachments"]');
+                        attachmentInput.parentNode.insertBefore(previewDiv, attachmentInput.nextSibling);
+                        
+                        // Make file input optional if we already have an image
+                        attachmentInput.removeAttribute('required');
+                    }
+                }
+                hideSpinner();
+            },
+            error: function(xhr) {
+                hideSpinner();
+                if (xhr.status !== 404) { // Ignore 404 as it just means no signature exists yet
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Failed to fetch existing signature data',
+                        icon: 'error'
+                    });
+                }
+            }
+        });
     });
 });
 

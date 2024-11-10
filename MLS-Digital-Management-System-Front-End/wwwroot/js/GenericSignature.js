@@ -2,16 +2,19 @@ class SignatureHandler {
     constructor() {
         this.hideSpinner();
         this.bindEvents();
+        this.isProcessing = false;
         
         $('#create_signature_modal').on('hidden.bs.modal', () => {
             document.getElementById('createSignatureForm').reset();
             $(".signature-validation").text("");
+            this.enableButton('#save_generic_signature_btn', 'Save Signature');
         });
 
         $('#edit_signature_modal').on('hidden.bs.modal', () => {
             document.getElementById('editSignatureForm').reset();
             $(".signature-validation").text("");
             $('.signature-preview').empty();
+            this.enableButton('#update_generic_signature_btn', 'Update Signature');
         });
     }
 
@@ -21,10 +24,18 @@ class SignatureHandler {
     }
 
     createSignature() {
+        if (this.isProcessing) return;
+        
+        this.isProcessing = true;
+        this.disableButton('#save_generic_signature_btn');
         this.showSpinner();
+        
         const form = document.getElementById('createSignatureForm');
         const fileInput = form.querySelector('[name="Attachments"]');
         if (fileInput.files.length && !this.validateFile(fileInput.files[0])) {
+            this.isProcessing = false;
+            this.enableButton('#save_generic_signature_btn', 'Save Signature');
+            this.hideSpinner();
             return;
         }
         const formData = new FormData(form);
@@ -39,15 +50,18 @@ class SignatureHandler {
                 'Authorization': `Bearer ${tokenValue}`
             },
             success: () => {
-                this.hideSpinner();
                 toastr.success('Signature created successfully');
                 $('#create_signature_modal').modal('hide');
                 form.reset();
                 datatable.ajax.reload();
             },
             error: (xhr) => {
-                this.hideSpinner();
                 this.handleError(xhr);
+            },
+            complete: () => {
+                this.isProcessing = false;
+                this.enableButton('#save_generic_signature_btn', 'Save Signature');
+                this.hideSpinner();
             }
         });
     }
@@ -58,8 +72,7 @@ class SignatureHandler {
         $(".signature-validation").text("");
         $('.signature-preview').empty();
         
-        showSpinner();
-        
+        this.showSpinner();
         $.ajax({
             url: `${host}/api/GenericSignatures/${id}`,
             type: 'GET',
@@ -88,7 +101,7 @@ class SignatureHandler {
                         attachmentInput.removeAttribute('required');
                     }
                 }
-                hideSpinner();
+                this.hideSpinner();
                 $('#edit_signature_modal').modal('show');
             },
             error: (xhr) => {
@@ -99,20 +112,32 @@ class SignatureHandler {
     }
 
     updateSignature() {
+        if (this.isProcessing) return;
+        
+        this.isProcessing = true;
+        this.disableButton('#update_generic_signature_btn');
+        this.showSpinner();
+        
         const form = document.getElementById('editSignatureForm');
         const fileInput = form.querySelector('[name="Attachments"]');
         if (fileInput.files.length && !this.validateFile(fileInput.files[0])) {
+            this.isProcessing = false;
+            this.enableButton('#update_generic_signature_btn', 'Update Signature');
+            this.hideSpinner();
             return;
         }
+        
         const formData = new FormData(form);
         const id = form.querySelector('[name="Id"]').value;
         
         if (!id) {
             toastr.error('Invalid signature ID');
+            this.isProcessing = false;
+            this.enableButton('#update_generic_signature_btn', 'Update Signature');
+            this.hideSpinner();
             return;
         }
         
-        // Only include file if a new one was selected
         if (!fileInput.files.length) {
             formData.delete('Attachments');
         }
@@ -131,7 +156,12 @@ class SignatureHandler {
                 $('#edit_signature_modal').modal('hide');
                 datatable.ajax.reload();
             },
-            error: this.handleError
+            error: this.handleError,
+            complete: () => {
+                this.isProcessing = false;
+                this.enableButton('#update_generic_signature_btn', 'Update Signature');
+                this.hideSpinner();
+            }
         });
     }
 
@@ -259,6 +289,17 @@ class SignatureHandler {
             return false;
         }
         return true;
+    }
+
+    disableButton(selector, loadingText = 'Processing...') {
+        const button = $(selector);
+        button.prop('disabled', true)
+              .html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> ${loadingText}`);
+    }
+
+    enableButton(selector, originalText) {
+        const button = $(selector);
+        button.prop('disabled', false).html(originalText);
     }
 }
 

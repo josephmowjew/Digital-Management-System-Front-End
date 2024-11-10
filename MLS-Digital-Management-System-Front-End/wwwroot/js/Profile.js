@@ -318,6 +318,9 @@ $(document).ready(function() {
         form.reset();
         $(".signature-validation").text("");
         
+        // Remove any existing preview elements
+        $('.signature-preview').remove();
+        
         // Show spinner while loading
         showSpinner();
         
@@ -342,7 +345,7 @@ $(document).ready(function() {
                     // If there's a banner image URL, show it
                     if (data.bannerImageUrl) {
                         const previewDiv = document.createElement('div');
-                        previewDiv.className = 'mt-2';
+                        previewDiv.className = 'mt-2 signature-preview'; // Added signature-preview class
                         previewDiv.innerHTML = `
                             <label class="form-label">Current Banner:</label><br>
                             <img src="${data.bannerImageUrl}" alt="Current signature banner" 

@@ -1258,6 +1258,18 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXMvU2VjcmV0YXJpYXQvVmlld3MvRmlybXMvX0VkaXRGaXJtUGFydGlhbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[/Users/software/projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Secretariat/Views/GenericSignatures/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXMvU2VjcmV0YXJpYXQvVmlld3MvR2VuZXJpY1NpZ25hdHVyZXMvSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/software/projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Secretariat/Views/GenericSignatures/_CreateSignaturePartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXMvU2VjcmV0YXJpYXQvVmlld3MvR2VuZXJpY1NpZ25hdHVyZXMvX0NyZWF0ZVNpZ25hdHVyZVBhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/software/projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Secretariat/Views/GenericSignatures/_EditSignaturePartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXMvU2VjcmV0YXJpYXQvVmlld3MvR2VuZXJpY1NpZ25hdHVyZXMvX0VkaXRTaWduYXR1cmVQYXJ0aWFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [/Users/software/projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Secretariat/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXMvU2VjcmV0YXJpYXQvVmlld3MvSG9tZS9JbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 

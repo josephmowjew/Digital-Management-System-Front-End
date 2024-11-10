@@ -236,5 +236,101 @@ function hideSpinner() {
     }
 }
 
+$(document).ready(function() {
+    $("#save_signature_btn").click(function() {
+        $(".signature-validation").text("");
+        
+        const form = document.getElementById('signatureForm');
+        const formData = new FormData(form);
+        
+        $.ajax({
+            url: `${host}/api/Users/signature`,
+            type: 'PUT',
+            data: formData,
+            processData: false,
+            contentType: false,
+            headers: {
+                'Authorization': `Bearer ${tokenValue}`
+            },
+            success: function(response) {
+                toastr.success('Email signature updated successfully');
+                $('#signatureModal').modal('hide');
+                form.reset();
+            },
+            error: function(xhr) {
+                if (xhr.status === 400) {
+                    try {
+                        const errorResponse = JSON.parse(xhr.responseText);
+                        $.each(errorResponse, function(key, value) {
+                            if (Array.isArray(value)) {
+                                value.forEach(message => {
+                                    const elementName = key.charAt(0).toUpperCase() + key.slice(1);
+                                    const validationSpan = $(`[data-valmsg-for="${elementName}"]`);
+                                    if (validationSpan.length) {
+                                        validationSpan.text(message);
+                                    }
+                                });
+                            }
+                        });
+                    } catch (e) {
+                        toastr.error('Failed to update email signature');
+                    }
+                } else {
+                    toastr.error('Failed to update email signature');
+                }
+            }
+        });
+    });
+
+    $('#signatureModal').on('show.bs.modal', function() {
+        const form = document.getElementById('signatureForm');
+        form.reset();
+        $(".signature-validation").text("");
+        $('.signature-preview').remove();
+        
+        showSpinner();
+        
+        $.ajax({
+            url: `${host}/api/Users/signature`,
+            type: 'GET',
+            headers: {
+                'Authorization': `Bearer ${tokenValue}`
+            },
+            success: function(data) {
+                if (data) {
+                    Object.keys(data).forEach(key => {
+                        const elementName = key.charAt(0).toUpperCase() + key.slice(1);
+                        const element = form.querySelector(`[name="${elementName}"]`);
+                        if (element && element.type !== 'file') {
+                            element.value = data[key];
+                        }
+                    });
+                    
+                    if (data.bannerImageUrl) {
+                        const previewDiv = document.createElement('div');
+                        previewDiv.className = 'mt-2 signature-preview';
+                        previewDiv.innerHTML = `
+                            <label class="form-label">Current Banner:</label><br>
+                            <img src="${data.bannerImageUrl}" alt="Current signature banner" 
+                                 style="max-width: 200px; max-height: 100px; object-fit: contain" 
+                                 class="mb-2">
+                        `;
+                        const attachmentInput = form.querySelector('[name="Attachments"]');
+                        attachmentInput.parentNode.insertBefore(previewDiv, attachmentInput.nextSibling);
+                        attachmentInput.removeAttribute('required');
+                    }
+                }
+                hideSpinner();
+            },
+            error: function(xhr) {
+                hideSpinner();
+                if (xhr.status !== 404) {
+                    toastr.error('Failed to fetch existing signature data');
+                }
+            }
+        });
+    });
+});
+
 
 

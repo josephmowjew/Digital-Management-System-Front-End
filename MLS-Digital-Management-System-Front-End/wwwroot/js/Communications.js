@@ -120,7 +120,7 @@ class CommunicationsHandler {
 
         // Handle checkbox
         formData.set('SendToAllUsers', this.form.querySelector('#SendToAllUsers').checked);
-
+        formData.set('includeSignature', this.form.querySelector('#includeSignature').checked);
         // Handle optional attachment
         const fileInput = this.form.querySelector('#attachments');
         if (fileInput && fileInput.files.length > 0) {

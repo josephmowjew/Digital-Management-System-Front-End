@@ -254,7 +254,6 @@ function hideSpinner() {
 
 $(document).ready(function() {
     $("#save_signature_btn").click(function() {
-        // Clear previous validation messages
         $(".signature-validation").text("");
         
         const form = document.getElementById('signatureForm');
@@ -270,14 +269,9 @@ $(document).ready(function() {
                 'Authorization': `Bearer ${tokenValue}`
             },
             success: function(response) {
-                Swal.fire({
-                    title: 'Success!',
-                    text: 'Email signature updated successfully',
-                    icon: 'success'
-                }).then(() => {
-                    $('#signatureModal').modal('hide');
-                    form.reset();
-                });
+                toastr.success('Email signature updated successfully');
+                $('#signatureModal').modal('hide');
+                form.reset();
             },
             error: function(xhr) {
                 if (xhr.status === 400) {
@@ -295,36 +289,23 @@ $(document).ready(function() {
                             }
                         });
                     } catch (e) {
-                        Swal.fire({
-                            title: 'Error!',
-                            text: 'Failed to update email signature',
-                            icon: 'error'
-                        });
+                        toastr.error('Failed to update email signature');
                     }
                 } else {
-                    Swal.fire({
-                        title: 'Error!',
-                        text: 'Failed to update email signature',
-                        icon: 'error'
-                    });
+                    toastr.error('Failed to update email signature');
                 }
             }
         });
     });
 
-    // Add form validation on modal open
     $('#signatureModal').on('show.bs.modal', function() {
         const form = document.getElementById('signatureForm');
         form.reset();
         $(".signature-validation").text("");
-        
-        // Remove any existing preview elements
         $('.signature-preview').remove();
         
-        // Show spinner while loading
         showSpinner();
         
-        // Fetch existing signature data
         $.ajax({
             url: `${host}/api/Users/signature`,
             type: 'GET',
@@ -332,7 +313,6 @@ $(document).ready(function() {
                 'Authorization': `Bearer ${tokenValue}`
             },
             success: function(data) {
-                // Populate form fields with existing data
                 if (data) {
                     Object.keys(data).forEach(key => {
                         const elementName = key.charAt(0).toUpperCase() + key.slice(1);
@@ -342,10 +322,9 @@ $(document).ready(function() {
                         }
                     });
                     
-                    // If there's a banner image URL, show it
                     if (data.bannerImageUrl) {
                         const previewDiv = document.createElement('div');
-                        previewDiv.className = 'mt-2 signature-preview'; // Added signature-preview class
+                        previewDiv.className = 'mt-2 signature-preview';
                         previewDiv.innerHTML = `
                             <label class="form-label">Current Banner:</label><br>
                             <img src="${data.bannerImageUrl}" alt="Current signature banner" 
@@ -354,8 +333,6 @@ $(document).ready(function() {
                         `;
                         const attachmentInput = form.querySelector('[name="Attachments"]');
                         attachmentInput.parentNode.insertBefore(previewDiv, attachmentInput.nextSibling);
-                        
-                        // Make file input optional if we already have an image
                         attachmentInput.removeAttribute('required');
                     }
                 }
@@ -363,12 +340,8 @@ $(document).ready(function() {
             },
             error: function(xhr) {
                 hideSpinner();
-                if (xhr.status !== 404) { // Ignore 404 as it just means no signature exists yet
-                    Swal.fire({
-                        title: 'Error!',
-                        text: 'Failed to fetch existing signature data',
-                        icon: 'error'
-                    });
+                if (xhr.status !== 404) {
+                    toastr.error('Failed to fetch existing signature data');
                 }
             }
         });

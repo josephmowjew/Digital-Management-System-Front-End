@@ -1,6 +1,18 @@
 class SignatureHandler {
     constructor() {
+        this.hideSpinner();
         this.bindEvents();
+        
+        $('#create_signature_modal').on('hidden.bs.modal', () => {
+            document.getElementById('createSignatureForm').reset();
+            $(".signature-validation").text("");
+        });
+
+        $('#edit_signature_modal').on('hidden.bs.modal', () => {
+            document.getElementById('editSignatureForm').reset();
+            $(".signature-validation").text("");
+            $('.signature-preview').empty();
+        });
     }
 
     bindEvents() {
@@ -9,7 +21,12 @@ class SignatureHandler {
     }
 
     createSignature() {
+        this.showSpinner();
         const form = document.getElementById('createSignatureForm');
+        const fileInput = form.querySelector('[name="Attachments"]');
+        if (fileInput.files.length && !this.validateFile(fileInput.files[0])) {
+            return;
+        }
         const formData = new FormData(form);
         
         $.ajax({
@@ -22,11 +39,16 @@ class SignatureHandler {
                 'Authorization': `Bearer ${tokenValue}`
             },
             success: () => {
+                this.hideSpinner();
                 toastr.success('Signature created successfully');
                 $('#create_signature_modal').modal('hide');
+                form.reset();
                 datatable.ajax.reload();
             },
-            error: this.handleError
+            error: (xhr) => {
+                this.hideSpinner();
+                this.handleError(xhr);
+            }
         });
     }
 
@@ -78,6 +100,10 @@ class SignatureHandler {
 
     updateSignature() {
         const form = document.getElementById('editSignatureForm');
+        const fileInput = form.querySelector('[name="Attachments"]');
+        if (fileInput.files.length && !this.validateFile(fileInput.files[0])) {
+            return;
+        }
         const formData = new FormData(form);
         const id = form.querySelector('[name="Id"]').value;
         
@@ -87,7 +113,6 @@ class SignatureHandler {
         }
         
         // Only include file if a new one was selected
-        const fileInput = form.querySelector('[name="Attachments"]');
         if (!fileInput.files.length) {
             formData.delete('Attachments');
         }
@@ -111,34 +136,82 @@ class SignatureHandler {
     }
 
     delete(id) {
-        if (confirm('Are you sure you want to delete this signature?')) {
-            $.ajax({
-                url: `${host}/api/GenericSignatures/${id}`,
-                type: 'DELETE',
-                headers: {
-                    'Authorization': `Bearer ${tokenValue}`
+        bootbox.confirm({
+            title: '<i class="ti ti-alert-triangle text-danger"></i> Delete Signature',
+            message: '<p class="text-center">Are you sure you want to delete this signature?</p><p class="text-center text-danger"><small>This action cannot be undone.</small></p>',
+            buttons: {
+                cancel: {
+                    label: '<i class="ti ti-x"></i> Cancel',
+                    className: 'btn-secondary'
                 },
-                success: () => {
-                    toastr.success('Signature deleted successfully');
-                    datatable.ajax.reload();
-                },
-                error: this.handleError
-            });
-        }
+                confirm: {
+                    label: '<i class="ti ti-trash"></i> Delete',
+                    className: 'btn-danger'
+                }
+            },
+            centerVertical: true,
+            closeButton: false,
+            callback: (result) => {
+                if (result) {
+                    this.showSpinner();
+                    $.ajax({
+                        url: `${host}/api/GenericSignatures/${id}`,
+                        type: 'DELETE',
+                        headers: {
+                            'Authorization': `Bearer ${tokenValue}`
+                        },
+                        success: () => {
+                            this.hideSpinner();
+                            toastr.success('Signature deleted successfully');
+                            datatable.ajax.reload();
+                        },
+                        error: (xhr) => {
+                            this.hideSpinner();
+                            this.handleError(xhr);
+                        }
+                    });
+                }
+            }
+        });
     }
 
     activate(id) {
-        $.ajax({
-            url: `${host}/api/GenericSignatures/activate/${id}`,
-            type: 'PUT',
-            headers: {
-                'Authorization': `Bearer ${tokenValue}`
+        bootbox.confirm({
+            title: '<i class="ti ti-alert-circle"></i> Activate Signature',
+            message: '<p class="text-center">Are you sure you want to activate this signature?</p><p class="text-center text-warning"><small>This will deactivate any currently active signature.</small></p>',
+            buttons: {
+                cancel: {
+                    label: '<i class="ti ti-x"></i> Cancel',
+                    className: 'btn-secondary'
+                },
+                confirm: {
+                    label: '<i class="ti ti-check"></i> Activate',
+                    className: 'btn-success'
+                }
             },
-            success: () => {
-                toastr.success('Signature activated successfully');
-                datatable.ajax.reload();
-            },
-            error: this.handleError
+            centerVertical: true,
+            closeButton: false,
+            callback: (result) => {
+                if (result) {
+                    this.showSpinner();
+                    $.ajax({
+                        url: `${host}/api/GenericSignatures/activate/${id}`,
+                        type: 'PUT',
+                        headers: {
+                            'Authorization': `Bearer ${tokenValue}`
+                        },
+                        success: () => {
+                            this.hideSpinner();
+                            toastr.success('Signature activated successfully');
+                            datatable.ajax.reload();
+                        },
+                        error: (xhr) => {
+                            this.hideSpinner();
+                            this.handleError(xhr);
+                        }
+                    });
+                }
+            }
         });
     }
 
@@ -163,6 +236,29 @@ class SignatureHandler {
         } else {
             toastr.error('Operation failed');
         }
+    }
+
+    showSpinner() {
+        const spinnerElement = document.getElementById('spinner');
+        if(spinnerElement) {
+            spinnerElement.style.display = 'block';
+        }
+    }
+
+    hideSpinner() {
+        const spinnerElement = document.getElementById('spinner');
+        if(spinnerElement) {
+            spinnerElement.style.display = 'none';
+        }
+    }
+
+    validateFile(file) {
+        const allowedTypes = ['image/jpeg', 'image/png'];
+        if (!allowedTypes.includes(file.type)) {
+            toastr.error('Please select a valid image file (PNG or JPG)');
+            return false;
+        }
+        return true;
     }
 }
 

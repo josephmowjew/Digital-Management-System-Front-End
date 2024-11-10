@@ -230,6 +230,18 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXMvQ0VPL1ZpZXdzL0Zpcm1zL19FZGl0RmlybVBhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[/Users/software/projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/CEO/Views/GenericSignatures/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXMvQ0VPL1ZpZXdzL0dlbmVyaWNTaWduYXR1cmVzL0luZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/software/projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/CEO/Views/GenericSignatures/_CreateSignaturePartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXMvQ0VPL1ZpZXdzL0dlbmVyaWNTaWduYXR1cmVzL19DcmVhdGVTaWduYXR1cmVQYXJ0aWFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/software/projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/CEO/Views/GenericSignatures/_EditSignaturePartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXMvQ0VPL1ZpZXdzL0dlbmVyaWNTaWduYXR1cmVzL19FZGl0U2lnbmF0dXJlUGFydGlhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [/Users/software/projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/CEO/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXMvQ0VPL1ZpZXdzL0hvbWUvSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -260,6 +272,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [/Users/software/projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/CEO/Views/Members/unlicensedMembers.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXMvQ0VPL1ZpZXdzL01lbWJlcnMvdW5saWNlbnNlZE1lbWJlcnMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/software/projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/CEO/Views/Members/_EditMemberProfilePartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXMvQ0VPL1ZpZXdzL01lbWJlcnMvX0VkaXRNZW1iZXJQcm9maWxlUGFydGlhbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Users/software/projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/CEO/Views/NotariesPublic/index.cshtml]
@@ -1110,6 +1126,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXMvTWVtYmVyL1ZpZXdzL1Byb0Jvbm9SZXBvcnRzL19FZGl0UHJvQm9ub1JlcG9ydFBhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[/Users/software/projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Member/Views/ProBonos/freeProBono.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXMvTWVtYmVyL1ZpZXdzL1Byb0Jvbm9zL2ZyZWVQcm9Cb25vLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [/Users/software/projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Member/Views/ProBonos/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXMvTWVtYmVyL1ZpZXdzL1Byb0Jvbm9zL0luZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -1300,6 +1320,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [/Users/software/projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Secretariat/Views/Members/unlicensedMembers.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXMvU2VjcmV0YXJpYXQvVmlld3MvTWVtYmVycy91bmxpY2Vuc2VkTWVtYmVycy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/software/projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Secretariat/Views/Members/_EditMemberProfilePartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXMvU2VjcmV0YXJpYXQvVmlld3MvTWVtYmVycy9fRWRpdE1lbWJlclByb2ZpbGVQYXJ0aWFsLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Users/software/projects/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Secretariat/Views/Messages/index copy.cshtml]

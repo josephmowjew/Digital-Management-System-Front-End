@@ -1,0 +1,66 @@
+<div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Edit Generic Signature</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+            <form id="editSignatureForm">
+                <input type="hidden" name="Id" />
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Name</label>
+                        <input type="text" class="form-control" name="Name" placeholder="John Doe" required>
+                        <span class="text-danger signature-validation" data-valmsg-for="Name"></span>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Title</label>
+                        <input type="text" class="form-control" name="Title" placeholder="Senior Attorney" required>
+                        <span class="text-danger signature-validation" data-valmsg-for="Title"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Company Name</label>
+                        <input type="text" class="form-control" name="CompanyName" placeholder="Law Firm LLC" required>
+                        <span class="text-danger signature-validation" data-valmsg-for="CompanyName"></span>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Mobile</label>
+                        <input type="text" class="form-control" name="Mobile" placeholder="265999999999" required>
+                        <span class="text-danger signature-validation" data-valmsg-for="Mobile"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Tel</label>
+                        <input type="text" class="form-control" name="Tel" placeholder="265111222333" required>
+                        <span class="text-danger signature-validation" data-valmsg-for="Tel"></span>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Website</label>
+                        <input type="url" class="form-control" name="Website" placeholder="https://www.example.com" required>
+                        <span class="text-danger signature-validation" data-valmsg-for="Website"></span>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Address</label>
+                    <textarea class="form-control" name="Address" placeholder="123 Law Street, City, Country" required></textarea>
+                    <span class="text-danger signature-validation" data-valmsg-for="Address"></span>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Signature Banner</label>
+                    <div class="signature-preview"></div>
+                    <input type="file" class="form-control" name="Attachments" accept="image/*">
+                    <span class="text-danger signature-validation" data-valmsg-for="Attachments"></span>
+                    <small class="text-muted">Upload your signature banner image (PNG, JPG)</small>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="update_generic_signature_btn">Update Signature</button>
+        </div>
+    </div>
+</div>

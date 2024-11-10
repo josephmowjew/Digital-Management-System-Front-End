@@ -1,0 +1,120 @@
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+@{
+    ViewData["Title"] = "Generic Email Signatures";
+    Layout = "~/Areas/CEO/Views/shared/_Layout.cshtml";
+
+    var host = Configuration.GetSection("APIURL")["Link"];
+}
+
+@section Styles {
+    <style>
+        #spinner {
+            display: none;
+        }
+    </style>
+}
+
+<div class="card w-100 h-100 d-flex justify-content-center">
+    <div class="card-body">
+        <div>
+            <img src="~/assets/images/91.gif" id="spinner" />
+        </div>
+        
+        <button type="button" class="btn btn-info my-3" data-bs-toggle="modal" data-bs-target="#create_signature_modal">
+            Add New Signature
+        </button>
+
+        <div class="modal fade" id="create_signature_modal" tabindex="-1">
+            <partial name="_CreateSignaturePartial" />
+        </div>
+
+        <div class="modal fade" id="edit_signature_modal" tabindex="-1">
+            <partial name="_EditSignaturePartial" />
+        </div>
+
+        <h5 class="card-title fw-semibold mb-4 text-uppercase">Generic Email Signatures</h5>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover" id="signatures_table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Title</th>
+                        <th>Company</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        var datatable;
+        var tokenValue = '@ViewBag.token';
+        var host = '@host';
+    </script>
+    <script src="~/js/GenericSignature.js" asp-append-version="true"></script>
+    <script>
+        $(document).ready(function () {
+            datatable = $('#signatures_table').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "order": [[0, "asc"]],
+                ajax: {
+                    url: `${host}/api/GenericSignatures/paged`,
+                    type: 'get',
+                    datatype: 'Json',
+                    headers: {
+                        'Authorization': `Bearer ${tokenValue}`
+                    }
+                },
+                columns: [
+                    {
+                        data: "name",
+                        name: "name",
+                        className: "text-left"
+                    },
+                    {
+                        data: "title",
+                        name: "title",
+                        className: "text-left"
+                    },
+                    {
+                        data: "companyName",
+                        name: "companyName",
+                        className: "text-left"
+                    },
+                    {
+                        data: "isActive",
+                        name: "isActive",
+                        render: function(data) {
+                            return data ? 
+                                '<span class="badge bg-success">Active</span>' : 
+                                '<span class="badge bg-secondary">Inactive</span>';
+                        }
+                    },
+                    {
+                        data: "id",
+                        name: "id",
+                        orderable: false,
+                        render: function(data, type, row) {
+                            const editBtn = `<a href='#' onclick='signatureHandler.editForm(${data})' class='btn btn-outline-primary mx-1 btn-sm ti ti-pencil'>Edit</a>`;
+                            const deleteBtn = `<a href='#' onclick='signatureHandler.delete(${data})' class='btn btn-outline-danger mx-1 btn-sm ti ti-trash'>Delete</a>`;
+                            const activateBtn = !row.isActive ? 
+                                `<a href='#' onclick='signatureHandler.activate(${data})' class='btn btn-outline-success mx-1 btn-sm'>Activate</a>` : '';
+                            
+                            return editBtn + deleteBtn + activateBtn;
+                        }
+                    }
+                ],
+                responsive: true,
+                "autoWidth": false
+            });
+        });
+    </script>
+} 

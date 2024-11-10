@@ -252,5 +252,39 @@ function hideSpinner() {
     }
 }
 
+$(document).ready(function() {
+    $("#save_signature_btn").click(function() {
+        const form = document.getElementById('signatureForm');
+        const formData = new FormData(form);
+        
+        $.ajax({
+            url: `${host}/api/Users/signature`,
+            type: 'PUT',
+            data: formData,
+            processData: false,
+            contentType: false,
+            headers: {
+                'Authorization': `Bearer ${tokenValue}`
+            },
+            success: function(response) {
+                Swal.fire({
+                    title: 'Success!',
+                    text: 'Email signature updated successfully',
+                    icon: 'success'
+                }).then(() => {
+                    $('#signatureModal').modal('hide');
+                });
+            },
+            error: function(xhr) {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Failed to update email signature',
+                    icon: 'error'
+                });
+            }
+        });
+    });
+});
+
 
 

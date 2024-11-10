@@ -254,6 +254,9 @@ function hideSpinner() {
 
 $(document).ready(function() {
     $("#save_signature_btn").click(function() {
+        // Clear previous validation messages
+        $(".signature-validation").text("");
+        
         const form = document.getElementById('signatureForm');
         const formData = new FormData(form);
         
@@ -273,16 +276,47 @@ $(document).ready(function() {
                     icon: 'success'
                 }).then(() => {
                     $('#signatureModal').modal('hide');
+                    form.reset();
                 });
             },
             error: function(xhr) {
-                Swal.fire({
-                    title: 'Error!',
-                    text: 'Failed to update email signature',
-                    icon: 'error'
-                });
+                if (xhr.status === 400) {
+                    try {
+                        const errorResponse = JSON.parse(xhr.responseText);
+                        $.each(errorResponse, function(key, value) {
+                            if (Array.isArray(value)) {
+                                value.forEach(message => {
+                                    const elementName = key.charAt(0).toUpperCase() + key.slice(1);
+                                    const validationSpan = $(`[data-valmsg-for="${elementName}"]`);
+                                    if (validationSpan.length) {
+                                        validationSpan.text(message);
+                                    }
+                                });
+                            }
+                        });
+                    } catch (e) {
+                        Swal.fire({
+                            title: 'Error!',
+                            text: 'Failed to update email signature',
+                            icon: 'error'
+                        });
+                    }
+                } else {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Failed to update email signature',
+                        icon: 'error'
+                    });
+                }
             }
         });
+    });
+
+    // Add form validation on modal open
+    $('#signatureModal').on('show.bs.modal', function() {
+        const form = document.getElementById('signatureForm');
+        form.reset();
+        $(".signature-validation").text("");
     });
 });
 

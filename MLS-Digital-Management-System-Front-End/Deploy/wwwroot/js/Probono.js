@@ -7,7 +7,6 @@ $(function () {
 })
 
 function Delete(id, token) {
-    console.log("we here")
     bootbox.confirm("Are you sure you want to delete this pro bono case?", function (result) {
 
 
@@ -39,7 +38,32 @@ function Delete(id, token) {
     });
 }
 
+function ApplyForCase(id, token){
+    bootbox.confirm("Are you sure you want to apply to handle this case?", function (result) {
+        if (result) {
+            $.ajax({
+                url: `${host}/api/probonos/applyForCase/${id}`,
+                type: 'GET',
+                headers: {
+                    'Authorization': "Bearer " + token
+                }
 
+            }).done(function (data) {
+
+                toastr.success("Your application has been sent sucessfully");
+
+                datatable.ajax.reload();
+
+            }).fail(function (response) {
+
+                toastr.error(response.responseText)
+
+                datatable.ajax.reload();
+            });
+        }
+
+    });
+}
 
 // Function to start the spinner
 function showSpinner() {

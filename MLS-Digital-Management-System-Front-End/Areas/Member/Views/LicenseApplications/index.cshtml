@@ -141,6 +141,8 @@
                             if (row.applicationStatus.toLowerCase() === "pending" || row.applicationStatus.toLowerCase() === "draft" || row.applicationStatus.toLowerCase() === "denied") {
                                 return "<a href='#' onclick='formHandler.editForm(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-pencil text-lg' title='edit' >Edit</a>" +
                                     "<a href='#' type='button' onclick='formHandler.delete(\"" + data + "\",\"" + tokenValue + "\")' title='delete' class='btn btn-outline-danger my-1 btn-sm ti ti-trash red-icon' >Delete</a>";
+                            } else if(row.applicationStatus.toLowerCase() == "under review"){
+                                return "";
                             } else {
                                 return "<a href='LicenseApplications/Details/" + data + "' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-eye text-lg' title='show details' > Show Details</a>" +
                                     `<a href='#' onclick='formHandler.generateCertificate("${row.license.id}")' type='button' class='btn btn-outline-success my-1 btn-sm'>Download</a>`;

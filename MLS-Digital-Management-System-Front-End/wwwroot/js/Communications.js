@@ -107,33 +107,35 @@ class CommunicationsHandler {
     }
 
     sendMessageData() {
-        const formData = new FormData(this.form);
+        const formData = new FormData();
+
+        // Add basic form fields
+        formData.append('Subject', this.form.querySelector('#Subject').value);
+        formData.append('Body', this.form.querySelector('#Body').value);
 
         // Handle multi-select fields
-        const departmentIds = $('#DepartmentIds').val();
-        formData.delete('DepartmentIds');
+        const departmentIds = $('#DepartmentIds').val() || [];
         departmentIds.forEach(id => formData.append('DepartmentIds', id));
 
-        const roleNames = $('#RoleNames').val();
-        formData.delete('RoleNames');
+        const roleNames = $('#RoleNames').val() || [];
         roleNames.forEach(role => formData.append('RoleNames', role));
 
-        // Handle checkbox
-        formData.set('SendToAllUsers', this.form.querySelector('#SendToAllUsers').checked);
-        formData.set('includeSignature', this.form.querySelector('#includeSignature').checked);
-        // Handle optional attachment
+        // Handle checkboxes
+        formData.append('SendToAllUsers', this.form.querySelector('#SendToAllUsers').checked);
+        formData.append('includeSignature', this.form.querySelector('#includeSignature').checked);
+        
+        // Handle multiple attachments
         const fileInput = this.form.querySelector('#attachments');
         if (fileInput && fileInput.files.length > 0) {
-            formData.set('Attachment', fileInput.files[0]);
-        } else {
-            formData.delete('Attachment');
+            Array.from(fileInput.files).forEach(file => {
+                formData.append('Attachments', file);
+            });
         }
 
         fetch(`${host}/api/Communications/send`, {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${tokenValue}`
-                // Don't set Content-Type header, let the browser set it for FormData
             },
             body: formData
         })

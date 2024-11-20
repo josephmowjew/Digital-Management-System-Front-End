@@ -10,29 +10,29 @@ $(function () {
 
     function OnUpdateClick() {
         showSpinner();
-       
+
         //get the form itself 
         var form = $("#update_user_form form");
         var formData = {};
 
         // Iterate over the form's elements and build the formData object dynamically
-        $(form).find('input, select, textarea').each(function(index, element) {
+        $(form).find('input, select, textarea').each(function (index, element) {
             var field = $(element);
             var fieldName = field.attr('name');
             var fieldValue = field.val();
             formData[fieldName] = fieldValue;
         });
-        
+
         //var userId = $("#update_user_form input[name='Id']").val()
         //send the request
 
         $.ajax({
-            url:  `${host}/api/users/`+ userIdGlobal,
+            url: `${host}/api/users/` + userIdGlobal,
             type: 'PUT',
             data: JSON.stringify(formData), // Convert formData object to JSON string
             contentType: 'application/json', // Set content type to JSON
             headers: {
-                'Authorization': "Bearer "+ tokenValue
+                'Authorization': "Bearer " + tokenValue
             },
             success: function (data) {
                 hideSpinner();
@@ -47,7 +47,7 @@ $(function () {
                     type: 'GET',  // Changed to GET
                     success: function () {
                         // Redirect to the login page or home page after logout
-                        window.location.href = '/'; 
+                        window.location.href = '/';
                     },
                     error: function () {
                         toastr.error("Logout failed. Please try again.");
@@ -59,14 +59,14 @@ $(function () {
                 var errorResponse = JSON.parse(xhr.responseText);
                 $.each(errorResponse, function (key, value) {
                     $.each(value, function (index, message) {
-                       
+
                         const elementName = key ? key.charAt(0).toUpperCase() + key.slice(1) : null;
                         const element = $("#update_user_form").find("form :input[name='" + (elementName || '') + "']");
-                        
+
                         if (element && element.length) {
-                          element.siblings("span.text-danger").text(message);
+                            element.siblings("span.text-danger").text(message);
                         }
-     
+
                     });
                 });
             }
@@ -84,19 +84,17 @@ function EditForm(id) {
     //get the record from the database
     showSpinner();
 
-   
-    
     $.ajax({
-        url: `${host}/api/users/`+ id,
+        url: `${host}/api/users/` + id,
         type: 'GET',
         headers: {
-            'Authorization': "Bearer "+ tokenValue
+            'Authorization': "Bearer " + tokenValue
         }
 
     }).done(function (data) {
 
         //console.log(data)
-        
+
         hideSpinner();
         // Iterate over the keys of the data object and map them to form field names dynamically
         var fieldMap = {};
@@ -108,7 +106,7 @@ function EditForm(id) {
         }
 
         // Iterate over the form elements and populate values dynamically
-        $("#update_user_form form").find('input, select').each(function(index, element) {
+        $("#update_user_form form").find('input, select').each(function (index, element) {
             var field = $(element);
             var fieldName = field.attr('name');
             var dataKey = fieldMap[fieldName]; // Get corresponding key from data
@@ -139,23 +137,22 @@ function upDateUser(token) {
     //upDateRole
     var authenticationToken = $("#edit_user_modal input[name='__RequestVerificationToken']").val();
 
-     //get the form itself 
-     var form = $("#edit_user_modal form");
+    //get the form itself 
+    var form = $("#edit_user_modal form");
 
-        
-     var formData = {};
+    var formData = {};
 
-     // Iterate over the form's elements and build the formData object dynamically
-     $(form).find('input, select, textarea').each(function(index, element) {
-         var field = $(element);
-         var fieldName = field.attr('name');
-         var fieldValue = field.val();
-         formData[fieldName] = fieldValue;
-     });
+    // Iterate over the form's elements and build the formData object dynamically
+    $(form).find('input, select, textarea').each(function (index, element) {
+        var field = $(element);
+        var fieldName = field.attr('name');
+        var fieldValue = field.val();
+        formData[fieldName] = fieldValue;
+    });
 
-     let id = $("#edit_user_modal input[name='Id']").val()
+    let id = $("#edit_user_modal input[name='Id']").val()
 
-     // Convert formData object to an array of key-value pairs
+    // Convert formData object to an array of key-value pairs
     const formDataEntries = Object.entries(formData);
 
     // Convert the array of key-value pairs back to an object
@@ -164,48 +161,35 @@ function upDateUser(token) {
     // Stringify the formDataObject
     const formDataJson = JSON.stringify(formDataObject);
 
-
-   
     //send the request
 
     $.ajax({
-        url: `${host}/api/users/`+id,
+        url: `${host}/api/users/` + id,
         type: 'PUT',
         data: formDataJson,
         contentType: 'application/json',
         headers: {
-            'Authorization': "Bearer "+ token
+            'Authorization': "Bearer " + token
         },
         success: function (data) {
 
-
             //parse whatever comes back to html
 
-            var parsedData = $.parseHTML(data)
-
-
+            var parsedData = $.parseHTML(data);
 
             //check if there is an error in the data that is coming back from the user
 
             var isInvalid = $(parsedData).find("input[name='DataInvalid']").val() == "true"
 
-
-           
-
             //show success message to the user
             var dataTable = $('#my_table').DataTable();
 
-            toastr.success("User updated successfully")
+            toastr.success("User updated successfully");
 
-            $("#edit_user_modal").modal("hide")
+            $("#edit_user_modal").modal("hide");
 
             //dataTable.ajax.reload();
             location.reload();
-
-            
-
-
-
         },
         error: function (xhr, ajaxOtions, thrownError) {
 
@@ -213,14 +197,14 @@ function upDateUser(token) {
             var errorResponse = JSON.parse(xhr.responseText);
             $.each(errorResponse, function (key, value) {
                 $.each(value, function (index, message) {
-                   
+
                     const elementName = key ? key.charAt(0).toUpperCase() + key.slice(1) : null;
                     const element = $("#edit_user_modal").find("form :input[name='" + (elementName || '') + "']");
-                    
+
                     if (element && element.length) {
-                      element.siblings("span.text-danger").text(message);
+                        element.siblings("span.text-danger").text(message);
                     }
- 
+
                 });
             });
         }
@@ -233,7 +217,7 @@ function upDateUser(token) {
 function showSpinner() {
 
     var spinnerElement = document.getElementById('spinner');
-    if(spinnerElement){
+    if (spinnerElement) {
         spinnerElement.style.display = 'block';
     } else {
         console.error('Spinner element with id "spinner" was not found');
@@ -250,6 +234,143 @@ function hideSpinner() {
     } else {
         console.error('Spinner element with id "spinner" was not found');
     }
+}
+
+$(document).ready(function() {
+    $("#save_signature_btn").click(function() {
+        $(".signature-validation").text("");
+        
+        const form = document.getElementById('signatureForm');
+        const formData = new FormData(form);
+        
+        $.ajax({
+            url: `${host}/api/Users/signature`,
+            type: 'PUT',
+            data: formData,
+            processData: false,
+            contentType: false,
+            headers: {
+                'Authorization': `Bearer ${tokenValue}`
+            },
+            success: function(response) {
+                toastr.success('Email signature updated successfully');
+                $('#signatureModal').modal('hide');
+                form.reset();
+            },
+            error: function(xhr) {
+                if (xhr.status === 400) {
+                    try {
+                        const errorResponse = JSON.parse(xhr.responseText);
+                        $.each(errorResponse, function(key, value) {
+                            if (Array.isArray(value)) {
+                                value.forEach(message => {
+                                    const elementName = key.charAt(0).toUpperCase() + key.slice(1);
+                                    const validationSpan = $(`[data-valmsg-for="${elementName}"]`);
+                                    if (validationSpan.length) {
+                                        validationSpan.text(message);
+                                    }
+                                });
+                            }
+                        });
+                    } catch (e) {
+                        toastr.error('Failed to update email signature');
+                    }
+                } else {
+                    toastr.error('Failed to update email signature');
+                }
+            }
+        });
+    });
+
+    $('#signatureModal').on('show.bs.modal', function() {
+        const form = document.getElementById('signatureForm');
+        form.reset();
+        $(".signature-validation").text("");
+        $('.banner-preview').empty();
+        
+        showSpinner();
+        
+        $.ajax({
+            url: `${host}/api/Users/signature`,
+            type: 'GET',
+            headers: {
+                'Authorization': `Bearer ${tokenValue}`
+            },
+            success: function(data) {
+                if (data) {
+                    Object.keys(data).forEach(key => {
+                        const elementName = key.charAt(0).toUpperCase() + key.slice(1);
+                        const element = form.querySelector(`[name="${elementName}"]`);
+                        if (element && element.type !== 'file') {
+                            element.value = data[key];
+                        }
+                    });
+                    
+                    if (data.bannerImageUrl) {
+                        $('.banner-preview').html(`
+                            <label class="form-label">Current Banner:</label>
+                            <div class="d-flex align-items-start gap-3 mb-2">
+                                <img src="${data.bannerImageUrl}" alt="Current signature banner" 
+                                     style="max-width: 200px; max-height: 100px; object-fit: contain">
+                                <button type="button" class="btn btn-outline-danger btn-sm" onclick="removeBanner()">
+                                    <i class="ti ti-trash me-1"></i>Remove Banner
+                                </button>
+                            </div>
+                        `);
+                        const attachmentInput = form.querySelector('[name="Attachments"]');
+                        attachmentInput.removeAttribute('required');
+                    }
+                }
+                hideSpinner();
+            },
+            error: function(xhr) {
+                hideSpinner();
+                if (xhr.status !== 404) {
+                    toastr.error('Failed to fetch existing signature data');
+                }
+            }
+        });
+    });
+});
+
+// Add this function
+function removeBanner() {
+    Swal.fire({
+        title: 'Remove Banner?',
+        text: 'Are you sure you want to remove the banner image?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes, remove it!',
+        cancelButtonText: 'Cancel'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: `${host}/api/Users/signature/banner`,
+                type: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${tokenValue}`
+                },
+                success: function(response) {
+                    Swal.fire(
+                        'Removed!',
+                        'Banner has been removed successfully.',
+                        'success'
+                    );
+                    $('#signatureModal').modal('hide');
+                    setTimeout(() => $('#signatureModal').modal('show'), 500);
+                },
+                error: function() {
+                    Swal.fire(
+                        'Error!',
+                        'Failed to remove banner.',
+                        'error'
+                    );
+                }
+            });
+        }
+    });
 }
 
 

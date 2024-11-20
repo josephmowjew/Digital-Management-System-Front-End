@@ -286,7 +286,7 @@ $(document).ready(function() {
         const form = document.getElementById('signatureForm');
         form.reset();
         $(".signature-validation").text("");
-        $('.signature-preview').remove();
+        $('.banner-preview').empty();
         
         showSpinner();
         
@@ -307,16 +307,17 @@ $(document).ready(function() {
                     });
                     
                     if (data.bannerImageUrl) {
-                        const previewDiv = document.createElement('div');
-                        previewDiv.className = 'mt-2 signature-preview';
-                        previewDiv.innerHTML = `
-                            <label class="form-label">Current Banner:</label><br>
-                            <img src="${data.bannerImageUrl}" alt="Current signature banner" 
-                                 style="max-width: 200px; max-height: 100px; object-fit: contain" 
-                                 class="mb-2">
-                        `;
+                        $('.banner-preview').html(`
+                            <label class="form-label">Current Banner:</label>
+                            <div class="d-flex align-items-start gap-3 mb-2">
+                                <img src="${data.bannerImageUrl}" alt="Current signature banner" 
+                                     style="max-width: 200px; max-height: 100px; object-fit: contain">
+                                <button type="button" class="btn btn-outline-danger btn-sm" onclick="removeBanner()">
+                                    <i class="ti ti-trash me-1"></i>Remove Banner
+                                </button>
+                            </div>
+                        `);
                         const attachmentInput = form.querySelector('[name="Attachments"]');
-                        attachmentInput.parentNode.insertBefore(previewDiv, attachmentInput.nextSibling);
                         attachmentInput.removeAttribute('required');
                     }
                 }
@@ -331,6 +332,46 @@ $(document).ready(function() {
         });
     });
 });
+
+// Add this function
+function removeBanner() {
+    Swal.fire({
+        title: 'Remove Banner?',
+        text: 'Are you sure you want to remove the banner image?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes, remove it!',
+        cancelButtonText: 'Cancel'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: `${host}/api/Users/signature/banner`,
+                type: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${tokenValue}`
+                },
+                success: function(response) {
+                    Swal.fire(
+                        'Removed!',
+                        'Banner has been removed successfully.',
+                        'success'
+                    );
+                    $('#signatureModal').modal('hide');
+                    setTimeout(() => $('#signatureModal').modal('show'), 500);
+                },
+                error: function() {
+                    Swal.fire(
+                        'Error!',
+                        'Failed to remove banner.',
+                        'error'
+                    );
+                }
+            });
+        }
+    });
+}
 
 
 

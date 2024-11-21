@@ -47,6 +47,9 @@
                             Application Status
                         </th>
                         <th>
+                            License No.
+                        </th>
+                        <th>
                             Action
                         </th>
                     </tr>
@@ -122,12 +125,18 @@
                         className: "text-left",
                         "orderable": true,
                     },
-                  
+                    {
+                        data: "license.licenseNumber",
+                        name: "license.licenseNumber",
+                        className: "text-left",
+                        "orderable": true,
+                    },
                     {
                         data: "id",
                         name: "id",
                         "orderable": false,
                         render: function (data, type, row) {
+                            console.log(row);
                                     return "<a href='LicenseApplications/Details/" + data + "' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-eye text-lg' title='show details' > Show Details</a>"
                                 }
                     }

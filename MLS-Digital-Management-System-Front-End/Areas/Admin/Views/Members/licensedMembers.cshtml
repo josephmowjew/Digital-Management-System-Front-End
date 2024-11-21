@@ -10,12 +10,15 @@
 
 <div class="card">
     <div class="card-body">
+        <div>
+            <img src="~/assets/images/91.gif" id="spinner" />
+        </div>
         <div class="justify-content-between d-flex">
             <h5 class="card-title fw-semibold mb-4 text-uppercase">Licensed Members</h5>
             
             <div class="mb-4">
-                <a asp-action="Index" asp-area="secretariat" asp-controller="Members" class="btn btn-primary my-3 mx-1">All</a>
-                <a asp-action="UnlicensedMembers" asp-area="secretariat" asp-controller="Members" class="btn btn-warning my-3 ">Unlicensed</a>
+                <a asp-action="Index" asp-area="admin" asp-controller="Members" class="btn btn-primary my-3 mx-1">All</a>
+                <a asp-action="UnlicensedMembers" asp-area="admin" asp-controller="Members" class="btn btn-warning my-3 ">Unlicensed</a>
             </div>
         </div>
         <div class="table-responsive">
@@ -31,7 +34,6 @@
                         <th>
                             Gender
                         </th>
-                        <th>Licensed No.</th>
                         <th>
                             Email
                         </th>
@@ -97,12 +99,6 @@
                         },
                         {
                             data: "user.gender",
-                            name: "user",
-                            className: "text-left",
-                            "orderable": true,
-                        },
-                        {
-                            data: "licenses[0].licenseNumber",
                             name: "user",
                             className: "text-left",
                             "orderable": true,

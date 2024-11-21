@@ -17,7 +17,7 @@
             <h5 class="card-title fw-semibold mb-4 text-uppercase">Available Members</h5>
 
             <div>
-                <input type="file" id="excelFile" accept=".xlsx, .xls" style="display: none;">
+                <!--<input type="file" id="excelFile" accept=".xlsx, .xls" style="display: none;">
                 <button id="uploadExcelBtn" class="btn btn-primary my-3 mx-1">Upload Excel</button>
                 <div class="progress mt-2" style="display: none; height: 25px;">
                     <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
@@ -26,10 +26,10 @@
                 <div id="processingMessage" class="mt-2" style="display: none;">
                     <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                     Processing uploaded data. Please wait...
-                </div>
-                <a asp-action="LicensedMembers" asp-area="secretariat" asp-controller="Members"
+                </div>-->
+                <a asp-action="LicensedMembers" asp-area="admin" asp-controller="Members"
                     class="btn btn-success my-3 ">Licensed</a>
-                <a asp-action="UnlicensedMembers" asp-area="secretariat" asp-controller="Members"
+                <a asp-action="UnlicensedMembers" asp-area="admin" asp-controller="Members"
                     class="btn btn-warning my-3 mx-1">Unlicensed</a>
             </div>
         </div>
@@ -59,7 +59,9 @@
                         <th>
                             Firm
                         </th>
-                        <th>Licensed No.</th>
+                        <th>
+                            License No.
+                        </th> 
                         <th>
                             Contact
                         </th>
@@ -156,7 +158,7 @@
                         name: "id",
                         "orderable": false,
                         render: function (data, type, row) {
-                            //console.log(row);
+                            console.log(row);
                             let links = "";
                             //onclick='penaltyHandler.editForm(${data},"${tokenValue}")
                             links += `<a href='#' type='button' onclick="EditMemberForm('${row.userId}', '${tokenValue}')" class='ti ti-pencil btn btn-outline-success my-1 btn-sm mx-1' title='edit'>Edit</a>`;

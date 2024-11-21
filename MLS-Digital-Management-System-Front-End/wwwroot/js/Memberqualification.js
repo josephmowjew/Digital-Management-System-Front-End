@@ -57,7 +57,7 @@ $(function () {
 
                     $("#create_member_qualification_modal").modal("hide")
 
-                    
+                    $("#create_member_qualification_modal form")[0].reset();
 
                     dataTable.ajax.reload();
 

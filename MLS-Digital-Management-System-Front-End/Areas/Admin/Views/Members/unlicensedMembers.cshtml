@@ -11,15 +11,15 @@
 <div class="card">
     <div class="card-body">
         <div class="justify-content-between d-flex">
-            <h5 class="card-title fw-semibold mb-4 text-uppercase">Licensed Members</h5>
+            <h5 class="card-title fw-semibold mb-4 text-uppercase">Unlicensed Members</h5>
             
             <div class="mb-4">
-                <a asp-action="Index" asp-area="secretariat" asp-controller="Members" class="btn btn-primary my-3 mx-1">All</a>
-                <a asp-action="UnlicensedMembers" asp-area="secretariat" asp-controller="Members" class="btn btn-warning my-3 ">Unlicensed</a>
+                <a asp-action="Index" asp-area="admin" asp-controller="Members" class="btn btn-primary my-3 mx-1">All</a>
+                <a asp-action="LicensedMembers" asp-area="admin" asp-controller="Members" class="btn btn-success my-3 ">Licensed</a>
             </div>
         </div>
         <div class="table-responsive">
-            <table class="table table-bordered " id="my_table">
+            <table class="table table-bordered " id="members_table">
                 <thead>
                     <tr>
                         <th>
@@ -31,14 +31,12 @@
                         <th>
                             Gender
                         </th>
-                        <th>Licensed No.</th>
                         <th>
                             Email
                         </th>
                         <th>
                             Contact
                         </th>
-
                     </tr>
                 </thead>
                 <tbody>
@@ -60,14 +58,14 @@
     <script src="~/js/User.js" asp-append-version="true"></script>
     <script>
         $(document).ready(function () {
-            datatable = $('#my_table').DataTable({
+            datatable = $('#members_table').DataTable({
 
 
                     "processing": true,
                     "serverSide": true,
                     "order": [[0, "desc"]],
                     ajax: {
-                    url: `${host}/api/Members/getLicensedMembers`,
+                    url: `${host}/api/Members/getUnlicensedMembers`,
                         type: 'get',
                         datatype: 'Json',
                         headers: {
@@ -97,12 +95,6 @@
                         },
                         {
                             data: "user.gender",
-                            name: "user",
-                            className: "text-left",
-                            "orderable": true,
-                        },
-                        {
-                            data: "licenses[0].licenseNumber",
                             name: "user",
                             className: "text-left",
                             "orderable": true,

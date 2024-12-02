@@ -29,5 +29,7 @@ namespace Core.Models
         public DateTime TokenExpiryMinutes { get; set; }
         [JsonProperty("date_of_birth")]
         public DateTime? DateOfBirth { get; set; }
+        [JsonProperty("profile_picture")]
+        public string ProfilePicture { get; set; }
     }
 }

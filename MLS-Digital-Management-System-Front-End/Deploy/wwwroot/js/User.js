@@ -53,6 +53,8 @@ $(function () {
 
                 $("#create_user_modal").modal("hide")
 
+                $("#create_user_modal form")[0].reset();
+
                 dataTable.ajax.reload();
 
 

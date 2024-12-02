@@ -21,6 +21,20 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Secretariat.Controllers
             await PopulateViewBags();
             return View();
         }
+        public async Task<IActionResult> MemberDetails(string id)
+        {
+            await PopulateViewBags();
+            var member = await _service.MemberService.GetMemberByUserIdAsync(id);
+
+            if (member == null)
+            {
+                return NotFound();
+            }
+
+            ViewBag.member = member;
+
+            return View();
+        }
 
         public async Task<IActionResult> LicensedMembers()
         {

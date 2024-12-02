@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using MLS_Digital_Management_System_Front_End.Core.DTOs.Attachment;
 
 namespace MLS_Digital_Management_System_Front_End.Core.DTOs.User;
 
@@ -21,4 +22,5 @@ public class ReadUserDTO{
         public DateOnly LastLogin { get; set; }
         public DateOnly CreatedDate { get; set; }
         public string FullName { get; set; }
+        public List<ReadAttachmentDTO> ProfilePictures { get; set; } = new List<ReadAttachmentDTO>();
 }

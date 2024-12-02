@@ -41,11 +41,22 @@
 
     <div class="col-12 col-md-4">
         @{
-            var profilePicture = ViewBag.member.User.ProfilePictures[0];
+            var profilePicture = ViewBag.member.User.ProfilePictures?.Count > 0 
+                ? ViewBag.member.User.ProfilePictures[0] 
+                : null;
         }
-        <a href="@profilePicture.FilePath" data-lightbox="image-1" class="d-flex justify-content-center align-items-center">
-            <img src="@profilePicture.FilePath" alt="cpd poster" class="w-75 h-75" />
-        </a>
+        @if (profilePicture != null)
+        {
+            <a href="@profilePicture.FilePath" data-lightbox="image-1" class="d-flex justify-content-center align-items-center">
+                <img src="@profilePicture.FilePath" alt="Profile picture" class="w-75 h-75" />
+            </a>
+        }
+        else
+        {
+            <div class="d-flex justify-content-center align-items-center">
+                <img src="~/assets/images/profile/user-1.jpg" alt="Default profile picture" class="w-75 h-75" />
+            </div>
+        }
     </div>
 </div>
 

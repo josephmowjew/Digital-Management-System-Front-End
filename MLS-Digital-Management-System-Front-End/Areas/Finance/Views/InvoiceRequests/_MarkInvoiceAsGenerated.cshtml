@@ -1,0 +1,29 @@
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="markAsGeneratedModalLabel">Mark Invoice as Generated</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form id="markAsGeneratedForm" enctype="multipart/form-data">
+                <input type="hidden" id="invoiceRequestId" name="invoiceRequestId" value="@Model" />
+
+                <div class="form-group mb-3">
+                    <label for="invoiceNumber" class="form-label">Invoice Number</label>
+                    <input type="text" placeholder="eg. 2389" class="form-control" id="invoiceNumber" name="invoiceNumber" required>
+                    <span class="text-danger field-validation-valid" data-valmsg-for="invoiceNumber"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="invoiceFile" class="form-label">Upload Invoice</label>
+                    <input type="file" class="form-control" id="invoiceFile" name="invoiceFile" required>
+                    <span class="text-danger field-validation-valid" data-valmsg-for="invoiceFile"></span>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="submitGeneratedInvoiceBtn" name="submitGeneratedInvoiceBtn">Submit</button>
+        </div>
+    </div>
+</div>

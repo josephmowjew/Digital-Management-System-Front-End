@@ -60,11 +60,14 @@
 
     <div class="col-12 col-md-4">
         @{
-            var firstAttachment = ViewBag.training.Attachments[0];
+            var firstAttachment = ViewBag.training.Attachments?.Count > 0 ? ViewBag.training.Attachments[0] : null;
         }
-        <a href="@firstAttachment.FilePath" data-lightbox="image-1" class="d-flex justify-content-center align-items-center">
-            <img src="@firstAttachment.FilePath" alt="cpd poster" class="w-75 h-75" />
-        </a>
+        
+        @if(firstAttachment != null){
+            <a href="@firstAttachment.FilePath" data-lightbox="image-1" class="d-flex justify-content-center align-items-center">
+                <img src="@firstAttachment.FilePath" alt="cpd poster" class="w-75 h-75" />
+            </a>
+        }
     </div>
 </div>
 

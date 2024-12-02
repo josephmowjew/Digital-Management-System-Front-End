@@ -1,0 +1,131 @@
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+@{
+    ViewData["Title"] = "License";
+    Layout = "~/Areas/Member/Views/shared/_Layout.cshtml";
+
+    var host = Configuration.GetSection("APIURL")["Link"];
+}
+
+@section Styles {
+
+    <style>
+           .hidden {
+  display: none;
+}
+    </style>
+
+    <link href="~/assets/css/custom_select.css" rel="stylesheet" />
+}
+
+
+<div class="card  w-100 h-100 d-flex justify-content-center">
+    <div class="card-body">
+        <div>
+            <img src="~/assets/images/91.gif" id="spinner" />
+        </div>
+
+        <h5 class="card-title fw-semibold mb-4 text-uppercase">Your Licenses </h5>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover" id="my_table">
+                <thead>
+                    <tr>
+                        <th>
+                            Year of Practice
+                        </th>
+                        
+                        <th>
+                            Status
+                        </th>
+                       <th>
+                            License Number
+                       </th>
+                        <th>
+                            Action
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+
+    <script>
+        var datatable;
+        var tokenValue = '@ViewBag.token';
+        var host = '@host';
+    </script>
+
+    <script src="~/js/FileUploadHandler.js" asp-append-version="true"></script>
+    <script src="~/js/LicenseApplication2.js" asp-append-version="true"></script>
+    <script src="~/assets/js/custom_select.js" asp-append-version="true"></script>
+    <script>
+        $(document).ready(function () {
+            datatable = $('#my_table').DataTable({
+
+
+                "processing": true,
+                "serverSide": true,
+                "order": [[0, "desc"]],
+                ajax: {
+                    url: "@host/api/license/paged?memberId="+@ViewBag.member.Id,
+                    type: 'get',
+                    datatype: 'Json', headers: {
+                        'Authorization': 'Bearer @ViewBag.token'
+                    },
+                   
+
+                },
+                columnDefs: [
+                    {
+                        defaultContent: "",
+                        targets: "_all",
+                        'orderable': true
+                    },
+                ],
+                columns: [
+
+                    {
+                        data: "yearOfOperation.formatedDate",
+                        name: "yearOfOperation.Id",
+                        className: "text-left",
+                        "orderable": false,
+                    },
+                    {
+                        data: "status",
+                        name: "status",
+                        className: "text-left",
+                        "orderable": true,
+                    },
+                     {
+                        data: "licenseNumber",
+                        name: "licenseNumber",
+                        className: "text-left",
+                        "orderable": false,
+                    },
+                    {
+                        data: "id",
+                        name: "id",
+                        "orderable": false,
+                        render: function (data, type, row) {
+                            console.log(row);
+                            return `<a href='#' onclick='formHandler.generateCertificate("${row.id}")' type='button' class='btn btn-outline-success my-1 btn-sm'>Download</a>`;
+                        }
+                    }
+                ],
+                responsive: true,
+                "autoWidth": false,
+            });
+        });
+    </script>
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

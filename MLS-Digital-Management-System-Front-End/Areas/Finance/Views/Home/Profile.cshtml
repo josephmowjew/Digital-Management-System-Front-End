@@ -92,10 +92,24 @@
                         <span asp-validation-for="DateOfBirth" class="text-danger"></span>
                     </div>
                     <div class="mb-3">
-                        <button type="button" class="btn btn-primary" id="update_user_btn" name="update_user_btn">Update Profile</button>
-                       
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="toggleProfilePicture">
+                            <label class="form-check-label" for="toggleProfilePicture">
+                                Update Profile Picture
+                            </label>
+                        </div>
                     </div>
-                
+                    <!-- Profile picture field with initial hidden state -->
+                    <div class="mb-3" id="profilePictureSection" style="display: none;">
+                        <label asp-for="ProfilePictures">Profile Picture</label>
+                        <div class="custom-file">
+                            <input class="form-control custom-file-input" id="ProfilePictures" 
+                                accept="image/*" name="ProfilePictures" type="file">
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <button type="button" class="btn btn-primary" id="update_user_btn" name="update_user_btn">Update Profile</button>                       
                 </div>
             </form>
          </div>

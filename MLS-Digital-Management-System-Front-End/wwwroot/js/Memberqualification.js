@@ -50,18 +50,18 @@ $(function () {
                 //parse whatever comes back to html
 
                
-                    //show success message to the firm
-                    var dataTable = $('#my_table').DataTable();
+                //show success message
+                var dataTable = $('#my_table').DataTable();
 
-                    toastr.success("member qualification record added successfully")
+                toastr.success("member qualification record added successfully")
 
-                    $("#create_member_qualification_modal").modal("hide")
+                $("#create_member_qualification_modal").modal("hide")
 
-                    $("#create_member_qualification_modal form")[0].reset();
+                $("#create_member_qualification_modal form")[0].reset();
 
-                    dataTable.ajax.reload();
+                dataTable.ajax.reload();
 
-                    hideSpinner();
+                hideSpinner();
             },
             error: function (xhr, ajaxOtions, thrownError) {
                 hideSpinner();

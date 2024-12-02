@@ -75,6 +75,9 @@ namespace MLS_Digital_Management_System_Front_End.Controllers
                         new Claim(ClaimTypes.Role, authData.TokenData.Role),
                         new Claim(ClaimTypes.Email, authData.TokenData.Email),
                         new Claim("MLS-Digital-MGM", "Malawi Law Society Digital Management System"),
+
+                        // Custom claim for profile picture
+                        new Claim("ProfilePicture", authData.TokenData.ProfilePicture ?? "~/assets/images/profile/user-1.jpg"),
                     };
 
                     // Create claims identity

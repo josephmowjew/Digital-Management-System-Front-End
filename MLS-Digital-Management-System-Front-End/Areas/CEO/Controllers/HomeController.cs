@@ -53,7 +53,10 @@ namespace MLS_Digital_Management_System_Front_End.Areas.CEO.Controllers
             ViewBag.roleName = HttpContext.Request.Cookies["RoleName"];
             ViewBag.currentYear = await CurrentYearOfOperation();
             ViewBag.qualificationTypesList = await GetQualificationTypes();
+            ViewBag.countriesList = await GetCountries();
             ViewBag.proBonos = await this.GetProBonos();
+            ViewBag.identityTypesList = await GetIdentityTypes();
+            ViewBag.personalTitlesList = await GetPersonalTitles();
             ViewBag.clientsCount = await this.GetClientsCount();
             ViewBag.committeesCount = await this.GetCommittees();
             ViewBag.totalLicenseApplications = await this.GetLicenseApplications();

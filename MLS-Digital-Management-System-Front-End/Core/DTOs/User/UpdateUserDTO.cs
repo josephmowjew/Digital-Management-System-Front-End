@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using MLS_Digital_Management_System_Front_End.Core.DTOs.Attachment;
 
 namespace MLS_Digital_Management_System_Front_End.Core.DTOs.User;
 
@@ -49,12 +50,13 @@ public class UpdateUserDTO
         [Required]
         public string RoleName { get; set; }
 
-
         [Required]
         [EmailAddress]
         [StringLength(100, MinimumLength = 5)]
         public string Email { get; set; }
         public string Password { get; set; }
         public string DataInvalid { get; set; } = "true";
+
+        public List<ReadAttachmentDTO> ProfilePictures { get; set; } = new List<ReadAttachmentDTO>();
 
 }

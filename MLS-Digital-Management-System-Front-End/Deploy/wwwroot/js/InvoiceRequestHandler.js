@@ -1,24 +1,31 @@
 class InvoiceRequestHandler {
-  constructor(host, tokenValue) {
-    this.host = host;
-    this.tokenValue = tokenValue;
-    this.spinner = document.getElementById("spinner");
-    this.hideSpinner();
-    this.bindEvents();
-    this.initDataTables();
-    
+    constructor(host, tokenValue) {
+        this.host = host;
+        this.tokenValue = tokenValue;
+        this.spinner = document.getElementById("spinner");
+        this.hideSpinner();
+        this.bindEvents();
+        this.initDataTables();
+
     }
 
     bindEvents() {
-    const requestInvoiceBtn = document.querySelector("#create_invoice_request_btn");
-    if (requestInvoiceBtn) {
-        requestInvoiceBtn.addEventListener("click", this.onCreateClick.bind(this));
+        const requestInvoiceBtn = document.querySelector("#create_invoice_request_btn");
+        if (requestInvoiceBtn) {
+            requestInvoiceBtn.addEventListener("click", this.onCreateClick.bind(this));
+        }
+
+        const submitGeneratedInvoiceBtn = document.querySelector(
+            "#invoice_request_modal button[name='submitGeneratedInvoiceBtn']"
+        );
+        if (submitGeneratedInvoiceBtn) {
+            submitGeneratedInvoiceBtn.addEventListener("click", this.onSubmitGeneratedInvoice.bind(this));
+        }
     }
-  }
 
     onCreateClick() {
         this.showSpinner();
-       
+
         //get the form itself 
         var form = $("#create_invoice_request_modal form");
 
@@ -179,12 +186,6 @@ class InvoiceRequestHandler {
                     url: `${this.host}/api/InvoiceRequest/byMember`,
                     columns: [
                         {
-                            data: "customer.customerName",
-                            name: "CustomerId",
-                            className: "text-left",
-                            "orderable": false,
-                        },
-                        {
                             data: "referencedEntityType",
                             name: "referencedEntityType",
                             className: "text-left",
@@ -211,6 +212,13 @@ class InvoiceRequestHandler {
                             name: "qbInvoiceId",
                             className: "text-left",
                             "orderable": false,
+                            render: function(data, type, row){
+                                if(row.qbInvoice){
+                                    return row.qbInvoice?.InvoiceNumber
+                                }else{
+                                    return row.invoiceNumber;
+                                }
+                            }
                         },
                         {
                             data: "status",
@@ -228,6 +236,20 @@ class InvoiceRequestHandler {
                                         return "<span class='badge bg-warning bg-opacity-85 rounded-pill'>" + data + "</span>";
                                 }
                             }
+                        },
+                        {
+                            data: "attachment",
+                            name: "attachment",
+                            className: "text-left",
+                            "orderable": false,
+                            render: function(data, type, row){
+                                if(row.attachment){
+                                    return `<a href="@host@apiPrefix/${row.attachment.filePath}" target="_blank" download="${row.attachment.fileName}"> Attachment <i class="bi bi-paperclip"></i></a>`;
+                                }else{
+                                    return '';
+                                }
+                            }
+
                         },
                         {
                             data: "id",
@@ -255,6 +277,9 @@ class InvoiceRequestHandler {
                             name: "CustomerId",
                             className: "text-left",
                             "orderable": false,
+                            render: function (data, type, row) {
+                                return row.customer?.customerName ?? "<p style='color:red'>{ Missing QuickBooks Customer reference }</p>"
+                            }
                         },
                         {
                             data: "referencedEntityType",
@@ -304,7 +329,7 @@ class InvoiceRequestHandler {
 
                                 if (row.status === "Pending") {
                                     buttonsHtml += `
-                                        <button class='btn btn-warning btn-sm mx-2' onclick='invoiceRequestHandler.markAsGenerated(${data})'>Mark as Generated</button>
+                                        <button class='btn btn-warning btn-sm mx-2' onclick='invoiceRequestHandler.markAsGenerated(\`${data}\`, "${this.tokenValue}")'>Mark as Generated</button>
                                     `;
                                 } else if (row.status === "Generated") {
                                     buttonsHtml += `
@@ -326,7 +351,7 @@ class InvoiceRequestHandler {
                 'qb_invoices_table': {
                     url: `${this.host}/api/InvoiceRequest/processed`,
                     columns: [
-                        
+
                         {
                             data: "invoiceAmount",
                             name: "invoiceAmount",
@@ -344,7 +369,7 @@ class InvoiceRequestHandler {
                             render: function (data) {
                                 return data.toLocaleString('en-MW', { style: 'currency', currency: 'MWK' })
                             }
-                        },  
+                        },
                         {
                             data: "invoiceDate",
                             name: "invoiceDate",
@@ -422,67 +447,167 @@ class InvoiceRequestHandler {
         });
     }
 
-  markAsGenerated(id) {
-    this.confirmAndSendRequest(
-      "Are you sure you want to mark this invoice as generated?",
-      `${this.host}/api/InvoiceRequest/MarkAsGenerated/${id}`,
-      "Invoice marked as generated successfully",
-    );
-  }
-
-  markAsPaid(id) {
-    this.confirmAndSendRequest(
-      "Are you sure you want to mark this invoice as paid?",
-      `${this.host}/api/InvoiceRequest/MarkAsPaid/${id}`,
-      "Invoice marked as paid successfully",
-    );
-  }
-  
-  confirmAndSendRequest(message, url, successMessage) {
-    bootbox.confirm(message, (result) => {
-      if (result) {
+    markAsGenerated(id, token) {
         this.showSpinner();
-        this.sendAjaxRequest(null, "POST", url, () => {
-          this.hideSpinner();
-          toastr.success(successMessage);
-          window.location.reload();
-        });
-      }
-    });
-  }
 
-  handleResponse(data, formSelector, retryFunction) {
-      const parsedData = new DOMParser().parseFromString(data, 'text/html');
-      const isInvalid = parsedData.querySelector("input[name='DataInvalid']")?.value === "true";
-
-      if (isInvalid) {
-          document.querySelector(formSelector).innerHTML = data;
-          toastr.error(parsedData.querySelector("input[name='message']").value);
-          this.rewireFormEvents(formSelector, retryFunction);
-      } else {
-          toastr.success(parsedData.querySelector("input[name='message']").value);
-      }
-  }
-
-  sendAjaxRequest(formData, method, url, successCallback) {
-    const xhr = new XMLHttpRequest();
-    xhr.open(method, url, true);
-    xhr.setRequestHeader("Authorization", `Bearer ${this.tokenValue}`);
-    xhr.onreadystatechange = () => {
-      if (xhr.readyState === XMLHttpRequest.DONE) {
-        this.hideSpinner();
-        if (xhr.status === 200 || xhr.status === 201) {
-          successCallback(xhr.response);
-        } else {
-          toastr.error("An error occurred while processing your request");
+        if (id > 0) {
+            $.ajax({
+                url: `${this.host}/api/InvoiceRequest/${id}`,
+                type: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
+                success: (response) => {
+                    this.handleEditFormSuccess(response, id);
+                },
+                error: (xhr) => {
+                    this.hideSpinner();
+                    toastr.error('Failed to load invoice request details');
+                }
+            });
         }
-      }
-    };
-    xhr.send(formData);
-  }
+    }
+
+    handleEditFormSuccess(response, id) {
+        this.hideSpinner();
+
+        try {
+            const data = typeof response === 'string' ? JSON.parse(response) : response;
+            const editform = document.querySelector("#invoice_request_modal form");
+
+            if (!editform) {
+                toastr.error('Form not found');
+                return;
+            }
+
+            const fieldMap = this.createFieldMap(data);
+            const editformElements = editform.querySelectorAll('input, select, textarea');
+
+            editformElements.forEach(element => {
+                const fieldName = element.getAttribute('name');
+                if (!fieldName) return;
+
+                const dataKey = fieldMap[fieldName];
+
+                if (fieldName === 'invoiceRequestId') {
+                    element.value = id;
+                }
+            });
+
+            // Show modal
+            $("#invoice_request_modal").modal("show");
+        } catch (error) {
+            console.error('Error processing form data:', error);
+            toastr.error('Error processing invoice request data');
+        }
+    }
+
+    createFieldMap(data) {
+        return Object.entries(data).reduce((map, [key, value]) => {
+            const formFieldName = key.charAt(0).toUpperCase() + key.slice(1);
+            map[formFieldName] = key;
+            return map;
+        }, {});
+    }
+
+    onSubmitGeneratedInvoice() {
+        const form = document.getElementById('markAsGeneratedForm');
+        const id = document.querySelector("#invoice_request_modal form input[name='invoiceRequestId']").value;
+        const fileInput = document.querySelector("#invoice_request_modal form input[name='invoiceFile']");
+        const file = fileInput.files[0];
+
+        const formData = new FormData(form);
+        formData.append('fileUpload', file);
+
+        this.showSpinner();
+
+        $.ajax({
+            url: `${this.host}/api/InvoiceRequest/markAsGenerated/${id}`,
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            headers: {
+                'Authorization': "Bearer " + this.tokenValue
+            },
+            success: (response) => {
+                this.hideSpinner();
+                toastr.success("Invoice marked as generated successfully");
+                $('#invoice_request_modal').modal('hide');
+                form.reset();
+
+                // Reload the table
+                $('#invoices_requests').DataTable().ajax.reload();
+            },
+            error: (xhr) => {
+                this.hideSpinner();
+                if (xhr.responseText) {
+                    const errorResponse = JSON.parse(xhr.responseText);
+                    $.each(errorResponse, function (key, value) {
+                        $.each(value, function (index, message) {
+                            $(`#${key}`).siblings(".text-danger").text(message);
+                        });
+                    });
+                } else {
+                    toastr.error("An error occurred while marking the invoice as generated");
+                }
+            }
+        });
+    }
+
+    markAsPaid(id) {
+        this.confirmAndSendRequest(
+            "Are you sure you want to mark this invoice as paid?",
+            `${this.host}/api/InvoiceRequest/MarkAsPaid/${id}`,
+            "Invoice marked as paid successfully",
+        );
+    }
+
+    confirmAndSendRequest(message, url, successMessage) {
+        bootbox.confirm(message, (result) => {
+            if (result) {
+                this.showSpinner();
+                this.sendAjaxRequest(null, "POST", url, () => {
+                    this.hideSpinner();
+                    toastr.success(successMessage);
+                    window.location.reload();
+                });
+            }
+        });
+    }
+
+    handleResponse(data, formSelector, retryFunction) {
+        const parsedData = new DOMParser().parseFromString(data, 'text/html');
+        const isInvalid = parsedData.querySelector("input[name='DataInvalid']")?.value === "true";
+
+        if (isInvalid) {
+            document.querySelector(formSelector).innerHTML = data;
+            toastr.error(parsedData.querySelector("input[name='message']").value);
+            this.rewireFormEvents(formSelector, retryFunction);
+        } else {
+            toastr.success(parsedData.querySelector("input[name='message']").value);
+        }
+    }
+
+    sendAjaxRequest(formData, method, url, successCallback) {
+        const xhr = new XMLHttpRequest();
+        xhr.open(method, url, true);
+        xhr.setRequestHeader("Authorization", `Bearer ${this.tokenValue}`);
+        xhr.onreadystatechange = () => {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                this.hideSpinner();
+                if (xhr.status === 200 || xhr.status === 201) {
+                    successCallback(xhr.response);
+                } else {
+                    toastr.error("An error occurred while processing your request");
+                }
+            }
+        };
+        xhr.send(formData);
+    }
 }
 
 // Initialize the handler when the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', () => {
-  window.invoiceRequestHandler = new InvoiceRequestHandler(host, tokenValue);
+    window.invoiceRequestHandler = new InvoiceRequestHandler(host, tokenValue);
 });

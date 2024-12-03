@@ -244,7 +244,7 @@ class InvoiceRequestHandler {
                             "orderable": false,
                             render: function(data, type, row){
                                 if(row.attachment){
-                                    return `<a href="@host@apiPrefix/${row.attachment.filePath}" target="_blank" download="${row.attachment.fileName}"> Attachment <i class="bi bi-paperclip"></i></a>`;
+                                    return `<a href="${host}${apiPrefix}/${row.attachment.filePath}" target="_blank" download="${row.attachment.fileName}"> Attachment <i class="bi bi-paperclip"></i></a>`;
                                 }else{
                                     return '';
                                 }

@@ -278,13 +278,18 @@ class InvoiceRequestHandler {
                             className: "text-left",
                             "orderable": false,
                             render: function (data, type, row) {
-                                console.log(row)
                                 return row.customer?.customerName ?? row.createdBy.fullName
                             }
                         },
                         {
                             data: "createdBy.email",
                             name: "createdBy.email",
+                            className: "text-left",
+                            "orderable": false,
+                        },
+                        {
+                            data: "requestType",
+                            name: "requestType",
                             className: "text-left",
                             "orderable": false,
                         },

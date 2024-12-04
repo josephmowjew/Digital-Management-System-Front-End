@@ -1,5 +1,8 @@
 @model MLS_Digital_Management_System_Front_End.Core.DTOs.CPDTrainingRegistration.CreateCPDTrainingRegistrationDTO
 
+<!-- Add Select2 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
 <!-- Modal -->
 <div class="modal-dialog modal-md">
   <div class="modal-content">
@@ -30,6 +33,24 @@
             </div>
           </div>
           <div class="mb-3">
+            <label class="form-label">Request Type</label>
+            <select class="form-control" id="requestType" required>
+              <option value="">Please Select Request Type</option>
+              <option value="Individual">Individual</option>
+              <option value="Firm">Firm</option>
+            </select>
+          </div>
+          <div class="mb-3" id="firmMembersSection" style="display: none;">
+            <label class="form-label">Select Firm Members</label>
+            <select class="form-control select2-multiple" id="firmMembers" name="firmMembers[]" multiple style="width: 100%;" disabled>
+              <!-- Options will be populated via JavaScript -->
+            </select>
+            <small class="text-muted">Search and select multiple members</small>
+            <div class="invalid-feedback" id="firmMembersError">
+              Please select at least one firm member
+            </div>
+          </div>
+          <div class="mb-3">
             <label asp-for="AttendanceMode" class="form-label"></label>
             <select asp-for="AttendanceMode" required class="form-control">
                 <option value="">Please Select Mode Of Attendance</option>
@@ -44,7 +65,18 @@
     <div class="modal-footer">
       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
       <button type="button" class="btn btn-info" name="request_invoice_btn" id="request_invoice_btn">Request Invoice</button>
-     
     </div>
   </div>
 </div>
+
+<style>
+.select2-container--default .select2-selection--multiple {
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    min-height: 38px;
+}
+.select2-container--default.select2-container--focus .select2-selection--multiple {
+    border-color: #86b7fe;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+</style>

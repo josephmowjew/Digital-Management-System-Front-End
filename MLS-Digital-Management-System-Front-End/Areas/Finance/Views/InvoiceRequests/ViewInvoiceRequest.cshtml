@@ -55,7 +55,12 @@
         </div>
 
         <div class="row mb-3">
-            
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="form-label">Request Type</label>
+                    <p class="form-control-static">@Model.RequestType</p>
+                </div>
+            </div>
             <div class="col-md-6">
                 <div class="form-group">
                     <label class="form-label">Created Date</label>
@@ -64,10 +69,39 @@
             </div>
         </div>
 
+        @if (Model.RequestType?.ToLower() == "firm" && !string.IsNullOrEmpty(Model.FirmMembers))
+        {
+            <div class="row mb-3">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="form-label">Firm Members</label>
+                        <div class="form-control-static">
+                            @{
+                                try
+                                {
+                                    var members = System.Text.Json.JsonSerializer.Deserialize<List<dynamic>>(Model.FirmMembers);
+                                    <ul class="list-unstyled">
+                                        @foreach (var member in members)
+                                        {
+                                            <li class="mb-1"><i class="bi bi-person-circle me-2"></i> @member.GetProperty("text").GetString()</li>
+                                        }
+                                    </ul>
+                                }
+                                catch (Exception ex)
+                                {
+                                    <p class="text-muted">Unable to display firm members: @ex.Message</p>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
         <div class="row mb-3">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label class="form-label"> Invoice Description</label>
+                    <label class="form-label">Invoice Description</label>
                     <p class="form-control-static">@Model.Description</p>
                 </div>
             </div>
@@ -80,3 +114,7 @@
         </div>
     </div>
 </div>
+
+@section Styles {
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+}

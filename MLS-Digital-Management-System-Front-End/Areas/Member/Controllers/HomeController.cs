@@ -48,6 +48,8 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
             var member = await _service.MemberService.GetMemberByUserIdAsync(HttpContext.Request.Cookies["UserId"]);
 
             ViewBag.member = member;
+
+            ViewBag.memberId = member?.Id;
            
 
             return View();

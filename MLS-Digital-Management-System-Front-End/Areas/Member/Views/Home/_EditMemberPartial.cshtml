@@ -12,7 +12,7 @@
         <form asp-action="Edit">
           <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-          <input type="hidden" asp-for="Id" value="@(ViewBag.member?.Id ?? "")" />
+          <input type="hidden" asp-for="Id" value="@(ViewBag.memberId)" />
         
 
           <div class="row">

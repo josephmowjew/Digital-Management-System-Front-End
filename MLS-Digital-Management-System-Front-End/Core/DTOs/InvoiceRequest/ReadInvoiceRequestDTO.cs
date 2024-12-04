@@ -25,5 +25,7 @@ public class ReadInvoiceRequestDTO
         public DateTime CreatedDate { get; set; }
          public string? QBInvoiceId { get; set; }
         public QBInvoice QBInvoice { get; set; }
+        public string RequestType { get; set; }
+        public string? FirmMembers { get; set; }
 
     }

@@ -5,7 +5,7 @@
     Layout = "~/Areas/Member/Views/shared/_Layout.cshtml";
 
     var host = Configuration.GetSection("APIURL")["Link"];
-    var apiPrefix =  Configuration.GetSection("APISettings")["API_Prefix"];
+    var apiPrefix = Configuration.GetSection("APISettings")["API_Prefix"];
 }
 
 <div>
@@ -36,10 +36,18 @@
                 <li>
                     <strong>Fees:</strong>
                     <ul>
-                        <li class="py-1">Physical Attendance (Members): <span class="badge bg-primary bg-opacity-85">@ViewBag.training.MemberPhysicalAttendanceFee</span></li>
-                        <li class="py-1">Virtual Attendance (Members): <span class="badge bg-success bg-opacity-85">@ViewBag.training.MemberVirtualAttendanceFee</span></li>
-                        <li class="py-1">Physical Attendance (Non-Members): <span class="badge bg-warning bg-opacity-85">@ViewBag.training.NonMemberPhysicalAttendanceFee</span></li>
-                        <li class="py-1">Virtulal Attendance (Non-Members): <span class="badge bg-info bg-opacity-85">@ViewBag.training.NonMemberVirtualAttandanceFee</span></li>
+                        <li class="py-1">Physical Attendance (Members): <span
+                                class="badge bg-primary bg-opacity-85">@ViewBag.training.MemberPhysicalAttendanceFee</span>
+                        </li>
+                        <li class="py-1">Virtual Attendance (Members): <span
+                                class="badge bg-success bg-opacity-85">@ViewBag.training.MemberVirtualAttendanceFee</span>
+                        </li>
+                        <li class="py-1">Physical Attendance (Non-Members): <span
+                                class="badge bg-warning bg-opacity-85">@ViewBag.training.NonMemberPhysicalAttendanceFee</span>
+                        </li>
+                        <li class="py-1">Virtulal Attendance (Non-Members): <span
+                                class="badge bg-info bg-opacity-85">@ViewBag.training.NonMemberVirtualAttandanceFee</span>
+                        </li>
                     </ul>
                 </li>
             </ul>
@@ -47,11 +55,15 @@
 
         <div class="col-12 col-md-4">
             @{
-                var firstAttachment = ViewBag.training.Attachments[0];
+                var firstAttachment = ViewBag.training.Attachments?.Count > 0 ? ViewBag.training.Attachments[0] : null;
             }
-            <a href="@firstAttachment.FilePath" data-lightbox="image-1" class="d-flex justify-content-center align-items-center">
-                <img src="@firstAttachment.FilePath" alt="cpd poster" class="w-75 h-75" />
-            </a>
+            @if (firstAttachment != null)
+            {
+                <a href="@firstAttachment.FilePath" data-lightbox="image-1"
+                    class="d-flex justify-content-center align-items-center">
+                    <img src="@firstAttachment.FilePath" alt="cpd poster" class="w-75 h-75" />
+                </a>
+            }
         </div>
     </div>
 </div>

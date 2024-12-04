@@ -52,7 +52,7 @@
                     </div>
                     <div class="mb-3">
                         <label asp-for="Email" class="form-label"></label>
-                        <input asp-for="Email" placeholder="Enter Email" class="form-control" />
+                        <input asp-for="Email" placeholder="Enter Email" class="form-control" readonly/>
                         <span asp-validation-for="Email" class="text-danger"></span>
                     </div>
                     <div class="mb-3">
@@ -89,7 +89,7 @@
                     </div>
                     <div class="mb-3">
                         <label asp-for="PhoneNumber" class="form-label"></label>
-                        <input asp-for="PhoneNumber" class="form-control" placeholder="265999999999" />
+                        <input asp-for="PhoneNumber" class="form-control" placeholder="265999999999" readonly/>
                         <span asp-validation-for="PhoneNumber" class="text-danger"></span>
                     </div>
                     <div class="mb-3">
@@ -120,8 +120,56 @@
                     <button type="button" class="btn btn-primary" id="update_user_btn" name="update_user_btn">Update
                         Profile
                     </button>
+                    <button type="button" class="btn btn-secondary mx-2" id="change_request_btn" data-bs-toggle="modal" data-bs-target="#changeRequestModal">Change Request</button>
                 </div>
             </form>
+        </div>
+    </div>
+</div>
+
+<!-- Email Signature Modal -->
+<div class="modal fade" id="changeRequestModal" tabindex="-1">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Change Request</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="changeRequestForm">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Id" value="" />
+                    <div class="row">
+                        <div class="col-md-12 mb-3">
+                            <label class="form-label">Old Email</label>
+                            <input asp-for="Email" placeholder="Enter Email" class="form-control" readonly/>
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <label class="form-label">New Email</label>
+                            <input type="email" class="form-control" name="new_email" placeholder="johndoe@example.com" required>
+                            <span class="text-danger email-validation" data-valmsg-for="new_email"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="PhoneNumber" class="form-label">Phone Number (Old)</label>
+                            <input asp-for="PhoneNumber" class="form-control" placeholder="265999999999" readonly/>
+                            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Phone Number (New)</label>
+                            <input type="text" class="form-control" name="phone_number" placeholder="265999999999" required>
+                            <span class="text-danger phone-number-validation" data-valmsg-for="phone_number"></span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="submit_change_request_btn">Submit</button>
+            </div>
         </div>
     </div>
 </div>

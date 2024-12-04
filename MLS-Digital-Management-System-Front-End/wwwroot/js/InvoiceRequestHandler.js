@@ -278,8 +278,15 @@ class InvoiceRequestHandler {
                             className: "text-left",
                             "orderable": false,
                             render: function (data, type, row) {
-                                return row.customer?.customerName ?? "<p style='color:red'>{ Missing QuickBooks Customer reference }</p>"
+                                console.log(row)
+                                return row.customer?.customerName ?? row.createdBy.fullName
                             }
+                        },
+                        {
+                            data: "createdBy.email",
+                            name: "createdBy.email",
+                            className: "text-left",
+                            "orderable": false,
                         },
                         {
                             data: "referencedEntityType",

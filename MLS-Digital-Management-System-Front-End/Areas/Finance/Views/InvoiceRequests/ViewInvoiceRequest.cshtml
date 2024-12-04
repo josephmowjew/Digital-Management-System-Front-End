@@ -28,7 +28,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label class="form-label">Customer</label>
-                    <p class="form-control-static">@Model.Customer.CustomerName</p>
+                    <p class="form-control-static">@(Model.Customer?.CustomerName ?? "{ Missing Quickbooks customer reference }")</p>
                 </div>
             </div>
             <div class="col-md-6">

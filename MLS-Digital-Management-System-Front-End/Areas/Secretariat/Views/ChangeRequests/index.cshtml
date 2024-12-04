@@ -1,0 +1,130 @@
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+@{
+    ViewData["Title"] = "Change Requests";
+    Layout = "~/Areas/Member/Views/shared/_Layout.cshtml";
+
+    var host = Configuration.GetSection("APIURL")["Link"];
+    var apiPrefix = Configuration.GetSection("APISettings")["API_Prefix"];
+}
+
+<div>
+    <img src="~/assets/images/91.gif" id="spinner" />
+</div>
+
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title fw-semibold mb-4 text-uppercase text-center">Change Requests</h5>
+        <div class="table-responsive">
+            <table class="table table-bordered" id="change_requests">
+                <thead>
+                    <tr>
+                        <th>Member Name</th>
+                        <th>Old Email</th>
+                        <th>New Email</th>
+                        <th>Old PhoneNumber</th>
+                        <th>New PhoneNumber</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts{
+    <script>
+        var datatable;
+        var tokenValue = '@ViewBag.token';
+        var host = '@host';
+    </script>
+    <script src="~/js/ChangeRequests.js" asp-append-version="true"></script>
+    <script>
+        $(document).ready(function () {
+            datatable = $('#change_requests').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "order": [[0, "desc"]],
+                ajax: {
+                    url: "@host/api/ApplicationUserChangeRequest/paged",
+                    type: 'get',
+                    datatype: 'Json', headers: {
+                        'Authorization': 'Bearer @ViewBag.token'
+                    }
+
+                },
+                columnDefs: [
+                    {
+                        defaultContent: "",
+                        targets: "_all",
+                        'orderable': true
+                    },
+                ],
+                columns: [
+                    {
+                        data: "user.fullName",
+                        name: "user",
+                        className: "text-left",
+                        "orderable": true,
+                    },
+                    {
+                        data: "user.email",
+                        name: "user",
+                        className: "text-left",
+                        "orderable": true,
+                    },
+                    {
+                        data: "email",
+                        name: "email",
+                        className: "text-left",
+                        "orderable": false,
+                    },
+                    {
+                        data: "user.phoneNumber",
+                        name: "user",
+                        className: "text-left",
+                        "orderable": false,
+                    },
+                    {
+                        data: "phoneNumber",
+                        name: "phoneNumber",
+                        className: "text-left",
+                        "orderable": false,
+                    },
+                    {
+                        data: "status",
+                        name: "status",
+                        className: "text-left",
+                        "orderable": true,
+                    },
+                    {
+                        data: "id",
+                        name: "id",
+                        "orderable": false,
+                        render: function (data, type, row) {
+                            console.log(row.status.toLowerCase());
+                            let links = "";
+                            if (row.status.toLowerCase() == "pending") {
+                                links += "<a href='#' onclick='Approve(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='ti ti-check btn btn-outline-success my-1 btn-sm mx-1' title='approve'>Approve</a>";
+                                links += "<a href='#' onclick='DenyForm(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='btn btn-outline-danger my-1 btn-sm ti ti-hand-stop' title='deny'>Deny</a> ";
+                            }
+                            return links;
+                        }
+                    },
+                ],
+                responsive: true,
+                "autoWidth": false,
+            });
+        });
+    </script>
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

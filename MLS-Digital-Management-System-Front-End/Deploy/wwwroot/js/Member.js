@@ -80,7 +80,8 @@ $(function () {
 
 function EditMemberForm(id) {
     // Use the id from the parameter if provided, otherwise get it from the form field
-    id = id || $("#edit_member_modal input[name='Id']").val();
+    id =  $("#edit_member_modal input[name='Id']").val();
+    //console.log(userIdGlobal);
 
     // Show spinner while fetching the data
     showSpinner();

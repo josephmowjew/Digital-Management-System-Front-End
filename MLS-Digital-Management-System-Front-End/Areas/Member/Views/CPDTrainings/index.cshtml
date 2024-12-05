@@ -51,16 +51,16 @@
         {
 
 
-            @if (ViewBag.member?.CustomerId == null)
+            /*@if (ViewBag.member?.CustomerId == null)
             {
-                <button type="button" class="btn btn-info my-3">
-                    <span>Contact finance officer</span>
-                </button>
+                <div class="alert alert-success my-5">
+                    <span class="text-danger">Please contact the finance officer to update your details</span>
+                </div>
             }
             else
             {
 
-            }
+            }*/
         }
         else
         {
@@ -114,6 +114,17 @@
                 </tbody>
             </table>
         </div>
+
+        @if (ViewBag.member?.CustomerId == null)
+        {
+            <div class="alert alert-success my-5">
+                <span class="text-danger">Please contact the finance officer to update your details</span>
+            </div>
+        }
+        else
+        {
+
+        }
     </div>
 </div>
 
@@ -274,7 +285,7 @@
 
                                         } else if (!row.invoiceRequest || !row.invoiceRequest.status) {
                                             return buttons + " <a href='#' onclick='cpdTrainingHandler.invoiceForm(\"" + data + "\",\"" + JSON.stringify(row).replace(/"/g, "\\\"") + "\")' type='button' class='btn btn-outline-warning m-1 btn-sm ' title='Invoice'>Request Invoice</a>";
-                                        }else{
+                                        } else {
                                             return buttons;
                                         }
                                     }

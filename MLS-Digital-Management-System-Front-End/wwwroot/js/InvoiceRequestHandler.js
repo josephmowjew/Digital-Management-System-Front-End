@@ -430,11 +430,11 @@ class InvoiceRequestHandler {
                                     buttonsHtml += `
                                         <button class='btn btn-warning btn-sm mx-2' onclick='invoiceRequestHandler.markAsGenerated(\`${data}\`, "${this.tokenValue}")'>Mark as Generated</button>
                                     `;
-                                } else if (row.status === "Generated") {
+                                }/* else if (row.status === "Generated") {
                                     buttonsHtml += `
                                         <button class='btn btn-success btn-sm mx-2' onclick='invoiceRequestHandler.markAsPaid(${data})'>Mark as Paid</button>
                                     `;
-                                }
+                                }*/
                                 // Always add the View button with spacing
                                 buttonsHtml += `
                                     <a href='/Finance/InvoiceRequests/ViewInvoiceRequest?invoiceRequestId=${data}' class='btn btn-primary btn-sm mx-2'>View</a>

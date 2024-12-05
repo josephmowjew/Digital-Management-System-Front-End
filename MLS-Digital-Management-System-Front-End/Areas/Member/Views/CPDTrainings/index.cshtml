@@ -132,6 +132,7 @@
         var tokenValue = '@ViewBag.token';
         var host = '@host';
         var isCustomerId = @Json.Serialize(ViewBag.CustomerId);
+        var userIdGlobal = '@ViewBag.userId';
     </script>
 
     <script>
@@ -221,7 +222,7 @@
                                 }
 
                                 // Check invoice status
-                                if (row.invoiceRequest) {
+                                if (row.invoiceRequest && row.invoiceRequest.createdById == userIdGlobal) {
                                     if (row.invoiceRequest.status === "Generated") {
                                         return "<span class='badge bg-info bg-opacity-85 rounded-pill'>Invoice Generated</span>";
                                     } else if (row.invoiceRequest.status === "Pending") {
@@ -263,11 +264,14 @@
 
                                     let buttons = "<a href='/member/CPDTrainings/TrainingDetails/" + data + "' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-eye text-lg' title='show details'> View </a>";
                                     if (daysDiff >= 1) {
-                                        if (row.invoiceRequest && row.invoiceRequest.status === "Generated") {
+                                        if (row.invoiceRequest && row.invoiceRequest.status === "Generated" && row.invoiceRequest.createdById == userIdGlobal) {
                                             buttons += `<a href='#' onclick='cpdTrainingHandler.registerForm("${data}", "${JSON.stringify(row).replace(/"/g, "\\\"")}")' type='button' class='btn btn-outline-primary m-1 btn-sm ' title='register'> Register</a>`;
                                         }
+                                        if(row.invoiceRequest && row.invoiceRequest.status == "Pending" && row.invoiceRequest.createdById == userIdGlobal){
+                                            return buttons;
+                                        }
 
-                                        if (!row.invoiceRequest || row.invoiceRequest.status !== "Generated") {
+                                        if ((!row.invoiceRequest || row.invoiceRequest.status !== "Generated") && (@ViewBag.MemberId != 0)) {
                                             buttons += "<a href='#' onclick='cpdTrainingHandler.invoiceForm(\"" + data + "\",\"" + JSON.stringify(row).replace(/"/g, "\\\"") + "\")' type='button' class='btn btn-outline-warning m-1 btn-sm ' title='Invoice'>Request Invoice</a>";
                                         }
 
@@ -280,7 +284,9 @@
                                 }
                             }
                             if (memberRegistration && memberRegistration.registrationStatus === "Attended") {
-                                return `<a href='#' onclick='cpdTrainingHandler.generateCertificate(${data})' type='button' class='btn btn-outline-info m-1 btn-sm' title='Generate Certificate'>Certificate</a> <a href='/member/CPDTrainings/TrainingDetails/" + data +"' type = 'button' class='btn btn-outline-primary mx-1 btn-sm ti ti-eye text-lg' title = 'show details'> View </a>`;
+                                return `<a href='#' onclick='cpdTrainingHandler.generateCertificate(${data})' type='button' class='btn btn-outline-success m-1 btn-sm' title='Generate Certificate'>Certificate</a> <a href='/member/CPDTrainings/TrainingDetails/${data}' type = 'button' class='btn btn-outline-primary mx-1 btn-sm ti ti-eye text-lg' title = 'show details'> View </a>`;
+                            }else{
+                                return "<a href='/member/CPDTrainings/TrainingDetails/" + data +"' type = 'button' class='btn btn-outline-primary mx-1 btn-sm ti ti-eye text-lg' title = 'show details'> View </a>";
                             }
                         }
                     }

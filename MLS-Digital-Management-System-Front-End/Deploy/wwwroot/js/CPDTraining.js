@@ -11,7 +11,20 @@ class CPDTrainingHandler {
     }
     this.selectedCPDTrainingIds = []; // Initialize the array
     this.fileUploadHandler = new FileUploadHandler(`${host}`);
+    this.selectedFirmMembers = []; // Initialize selected firm members array
+   
+    // Bind modal shown event to initialize Select2
+    $(document).on('shown.bs.modal', '#cpd_invoice_modal', () => {
+      this.initializeSelect2();
+    });
 
+    // Bind Select2 change event using event delegation
+    $(document).on('change', '#firmMembers', (e) => {
+      console.log('Select2 change event triggered');
+      const selectedValues = $(e.target).val();
+      console.log('Selected values:', selectedValues);
+      this.selectedFirmMembers = selectedValues || [];
+    });
   }
 
   setupFormBehavior() {
@@ -55,7 +68,11 @@ class CPDTrainingHandler {
       requestInvoiceBtn.addEventListener("click", this.requestInvoice.bind(this));
     }
 
-
+    // Add event listener for request type change
+    const requestTypeSelect = document.querySelector("#requestType");
+    if (requestTypeSelect) {
+      requestTypeSelect.addEventListener("change", this.handleRequestTypeChange.bind(this));
+    }
   }
 
   bindCheckboxEvents() {
@@ -73,37 +90,141 @@ class CPDTrainingHandler {
     });
   }
 
+  handleRequestTypeChange(event) {
+    const requestType = event.target.value;
+    const firmMembersSection = document.querySelector("#firmMembersSection");
+    const firmMembersSelect = document.querySelector("#firmMembers");
+
+    if (requestType === "Firm") {
+      firmMembersSection.style.display = "block";
+      firmMembersSelect.disabled = false;
+      this.loadFirmMembers();
+    } else {
+      firmMembersSection.style.display = "none";
+      firmMembersSelect.disabled = true;
+      this.selectedFirmMembers = [];
+      $('#firmMembers').val(null).trigger('change');
+    }
+  }
+
+  loadFirmMembers() {
+    this.showSpinner();
+    this.sendAjaxRequest(
+      null,
+      "GET",
+      `${host}/api/Members/getFirmMembers`,
+      this.handleLoadFirmMembersSuccess.bind(this),
+      this.handleError.bind(this),
+      { 'Authorization': `Bearer ${tokenValue}` }
+    );
+  }
+
+  handleLoadFirmMembersSuccess(response) {
+    try {
+      const firmMembers = typeof response === 'string' ? JSON.parse(response) : response;
+      const $firmMembers = $('#firmMembers');
+
+      // Clear existing options and selections
+      $firmMembers.empty();
+      this.selectedFirmMembers = [];
+
+      // Add new options
+      firmMembers.forEach(member => {
+        const option = new Option(
+          member.user ? `${member.user.firstName} ${member.user.lastName}` : 'Unknown Name',
+          member.id,
+          false,
+          false
+        );
+        $(option).data('member', member);
+        $firmMembers.append(option);
+      });
+
+      // Re-initialize Select2
+      this.initializeSelect2();
+
+      // Enable the select
+      $firmMembers.prop('disabled', false).trigger('change');
+
+    } catch (error) {
+      console.error('Error handling firm members:', error);
+      this.handleError({ responseText: JSON.stringify({ error: 'Failed to load firm members' }) });
+    }
+  }
 
   requestInvoice() {
+    const requestType = $('#requestType').val();
+    if (!requestType) {
+      toastr.error("Please select a request type");
+      return;
+    }
+
+    if (requestType === "Firm") {
+      // Get selected members directly from Select2
+      const selectedMembers = $('#firmMembers').select2('data').map(item => item.id);
+      console.log('Selected members before submit:', selectedMembers);
+
+      if (!selectedMembers || selectedMembers.length === 0) {
+        toastr.error("Please select at least one firm member");
+        $('#firmMembersError').show();
+        return;
+      }
+      this.selectedFirmMembers = selectedMembers;
+      $('#firmMembersError').hide();
+    }
+
     bootbox.confirm("Are you sure you want to request an invoice?", (result) => {
       if (result) {
         this.showSpinner();
-        const trainingId = document.querySelector("#cpd_invoice_modal input[name='CPDTrainingId']").value
-
+        const trainingId = document.querySelector("#cpd_invoice_modal input[name='CPDTrainingId']").value;
 
         const formData = new FormData();
         formData.append("ReferencedEntityType", "CPDTrainings");
         formData.append("Amount", this.fee);
         formData.append("ReferencedEntityId", trainingId);
         formData.append("Description", "MLS");
+        formData.append("RequestType", requestType);
+        
+        // Add firm members if this is a firm request
+        if (requestType === "Firm" && this.selectedFirmMembers.length > 0) {
+          console.log('Sending selected members:', this.selectedFirmMembers);
+          formData.append("FirmMembers", JSON.stringify(this.selectedFirmMembers));
+        }
 
-        this.sendAjaxRequest(
-          formData,
-          "POST",
-          `${host}/api/InvoiceRequest`,
-          (response) => {
+        // Add attendance mode
+        const attendanceMode = $('#AttendanceMode').val();
+        formData.append("AttendanceMode", attendanceMode);
+
+        $.ajax({
+          url: `${host}/api/InvoiceRequest`,
+          method: 'POST',
+          data: formData,
+          processData: false,
+          contentType: false,
+          headers: {
+            'Authorization': `Bearer ${tokenValue}`
+          },
+          success: (response) => {
             this.hideSpinner();
-            //hide the quest invoice button
             document.getElementById("request_invoice_btn").style.display = "none";
             toastr.success("Invoice requested successfully");
             $("#cpd_invoice_modal").modal("hide");
+            // Optionally reload the table if you have one
+            if ($.fn.DataTable && $('#cpd_table').length) {
+              $('#cpd_table').DataTable().ajax.reload();
+            }
           },
-          this.handleError.bind(this),
-          { 'Authorization': `Bearer ${tokenValue}` }
-        );
+          error: (xhr) => {
+            this.hideSpinner();
+            const errorMessage = xhr.responseJSON?.message || "Failed to request invoice";
+            toastr.error(errorMessage);
+            console.error('Request failed:', xhr); // Debug log
+          }
+        });
       }
     });
   }
+
   markAttendance() {
     const selectedCount = this.selectedCPDTrainingIds.length;
 
@@ -675,6 +796,74 @@ class CPDTrainingHandler {
       html2pdf().from(certificateWindow.document.body).save('Certificate_of_Attendance.pdf');
     };
   }
+
+  initializeSelect2() {
+    const $firmMembers = $('#firmMembers');
+    
+    // Destroy existing Select2 instance if it exists
+    if ($firmMembers.hasClass('select2-hidden-accessible')) {
+      $firmMembers.select2('destroy');
+    }
+
+    // Initialize Select2
+    $firmMembers.select2({
+      placeholder: 'Search and select members',
+      allowClear: true,
+      width: '100%',
+      dropdownParent: $('#cpd_invoice_modal'),
+      templateResult: this.formatMemberOption.bind(this),
+      templateSelection: this.formatMemberSelection.bind(this)
+    }).on('select2:select select2:unselect', (e) => {
+      // Update selectedFirmMembers whenever selection changes
+      this.selectedFirmMembers = $firmMembers.val() || [];
+      console.log('Selection changed:', this.selectedFirmMembers);
+    });
+  }
+
+  formatMemberOption(member) {
+    if (!member.id) {
+      return member.text;
+    }
+
+    // Access the full member data from the element
+    const memberData = member.element ? $(member.element).data('member') : member;
+    if (!memberData) return member.text;
+
+    const userName = memberData.user ? 
+      `${memberData.user.firstName} ${memberData.user.lastName}` : 
+      'Unknown Name';
+
+    const licenseNumber = memberData.currentLicense ? 
+      memberData.currentLicense.licenseNumber : 
+      'No License';
+
+    return $(`
+      <div class="d-flex flex-column">
+        <strong>${userName}</strong>
+        <small class="text-muted">License: ${licenseNumber}</small>
+        ${memberData.firm ? `<small class="text-muted">Firm: ${memberData.firm.name}</small>` : ''}
+      </div>
+    `);
+  }
+
+  formatMemberSelection(member) {
+    if (!member.id) {
+      return member.text;
+    }
+
+    // Access the full member data from the element
+    const memberData = member.element ? $(member.element).data('member') : member;
+    if (!memberData) return member.text;
+
+    const userName = memberData.user ? 
+      `${memberData.user.firstName} ${memberData.user.lastName}` : 
+      'Unknown Name';
+
+    return userName;
+  }
 }
 
-window.cpdTrainingHandler = new CPDTrainingHandler();
+$(document).ready(function() {
+  window.cpdTrainingHandler = new CPDTrainingHandler();
+  
+});

@@ -351,6 +351,93 @@ $(document).ready(function () {
             }
         });
     });
+
+    $('#changeRequestModal').on('show.bs.modal', function () {
+        const form = document.getElementById('changeRequestForm');
+        form.reset();
+        $(".email-validation").text("");
+        $(".phone-number-validation").text("");
+
+        showSpinner();
+
+        $.ajax({
+            url: `${host}/api/Users/` + userIdGlobal,
+            type: 'GET',
+            headers: {
+                'Authorization': `Bearer ${tokenValue}`
+            },
+            success: function (data) {
+                if (data) {
+                    Object.keys(data).forEach(key => {
+                        const elementName = key.charAt(0).toUpperCase() + key.slice(1);
+                        const element = form.querySelector(`[name="${elementName}"]`);
+                        
+                        if (element && element.type !== 'file') {
+                            element.value = data[key];
+                        }
+                    });
+                }
+                hideSpinner();
+            },
+            error: function (xhr) {
+                hideSpinner();
+                if (xhr.status !== 404) {
+                    toastr.error('Failed to fetch existing user data');
+                }
+            }
+        });
+    });
+
+    $("#submit_change_request_btn").click(function () {
+        $(".email-validation").text("");
+        $(".phone-number-validation").text("");
+
+        const form = document.getElementById('changeRequestForm');
+        
+        // Create JSON object instead of FormData
+        const requestData = {
+            userId: userIdGlobal,  // Make sure this global variable is available
+            Email: form.elements['new_email'].value,
+            PhoneNumber: form.elements['phone_number'].value
+        };
+
+        $.ajax({
+            url: `${host}/api/ApplicationUserChangeRequest`,
+            type: 'POST',
+            data: JSON.stringify(requestData),  // Convert to JSON string
+            contentType: 'application/json',    // Set content type to JSON
+            headers: {
+                'Authorization': `Bearer ${tokenValue}`
+            },
+            success: function (response) {
+                toastr.success('Change request sent successfully');
+                $('#changeRequestModal').modal('hide');
+                form.reset();
+            },
+            error: function (xhr) {
+                if (xhr.status === 400) {
+                    try {
+                        const errorResponse = JSON.parse(xhr.responseText);
+                        $.each(errorResponse, function (key, value) {
+                            if (Array.isArray(value)) {
+                                value.forEach(message => {
+                                    const elementName = key.charAt(0).toUpperCase() + key.slice(1);
+                                    const validationSpan = $(`[data-valmsg-for="${elementName}"]`);
+                                    if (validationSpan.length) {
+                                        validationSpan.text(message);
+                                    }
+                                });
+                            }
+                        });
+                    } catch (e) {
+                        toastr.error('Failed to send change request');
+                    }
+                } else {
+                    toastr.error('Failed to send change request');
+                }
+            }
+        });
+    });
 });
 
 // Add this function

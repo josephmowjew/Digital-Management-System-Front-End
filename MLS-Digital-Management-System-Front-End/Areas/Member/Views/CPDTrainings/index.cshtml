@@ -207,7 +207,6 @@
                         name: "cpdTrainingRegistration",
                         orderable: false,
                         render: function (data, type, row) {
-                            console.log(row)
                             const registration = row.cpdTrainingRegistration.find(reg => reg.memberId === @ViewBag.MemberId);
                             if (!registration) {
                                 const dueDate = row.registrationDueDate ? new Date(Date.parse(row.registrationDueDate)) : null;

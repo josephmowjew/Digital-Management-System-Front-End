@@ -12,22 +12,24 @@
     <img src="~/assets/images/91.gif" id="spinner" />
 </div>
 
-@if (ViewBag.membership) {
-    @if (ViewBag.member?.CustomerId == null){
-        <button type="button" class="btn btn-info my-3">
-            Contact finance Officer
-        </button>
-    }else{
-        <button type="button" class="btn btn-info my-3" data-bs-toggle="modal" data-bs-target="#create_invoice_request_modal">
+@if (ViewBag.membership)
+{
+    @if (ViewBag.member?.CustomerId != null)
+    {
+                <button type="button" class="btn btn-info my-3" data-bs-toggle="modal" data-bs-target="#create_invoice_request_modal">
             Request Invoice
         </button>
     }
-}else{
-    <a asp-area="Member" asp-action="ViewMember" asp-controller="Home" class="btn btn-warning my-3">Complete Membership Details</a>
+}
+else
+{
+    <a asp-area="Member" asp-action="ViewMember" asp-controller="Home" class="btn btn-warning my-3">Complete Membership
+        Details</a>
 }
 
 <!-- Modal -->
-<div class="modal fade" id="create_invoice_request_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="create_invoice_request_modal" tabindex="-1" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
     <partial name="_CreateInvoiceRequestPartial" />
 </div>
 <div class="card">
@@ -52,6 +54,13 @@
     </div>
 </div>
 
+@if (ViewBag.member?.CustomerId == null)
+    {
+        <div class="alert alert-success my-5">
+            <span class="text-danger">Please contact the finance officer to update your details</span>
+        </div>
+    }
+
 @section Scripts {
     <script>
         var tokenValue = '@ViewBag.token';
@@ -60,7 +69,7 @@
         var cpdTrainingId = 0;
     </script>
     <script src="~/js/InvoiceRequestHandler.js" asp-append-version="true"></script>
-   
+
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }

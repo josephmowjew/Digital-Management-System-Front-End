@@ -207,6 +207,7 @@
                         name: "cpdTrainingRegistration",
                         orderable: false,
                         render: function (data, type, row) {
+                            console.log(row);
                             const registration = row.cpdTrainingRegistration.find(reg => reg.memberId === @ViewBag.MemberId);
                             if (!registration) {
                                 const dueDate = row.registrationDueDate ? new Date(Date.parse(row.registrationDueDate)) : null;
@@ -287,8 +288,6 @@
                                             if (row.isFree != true && (row.invoiceRequest == null || row.invoiceRequest.customerId != memberCustomerId)) {
                                                 buttons += "<a href='#' onclick='cpdTrainingHandler.invoiceForm(\"" + data + "\",\"" + JSON.stringify(row).replace(/"/g, "\\\"") + "\")' type='button' class='btn btn-outline-warning m-1 btn-sm ' title='Invoice'>Request Invoice</a>";
                                             }
-
-                                            buttons += "<a href='/member/CPDTrainings/TrainingDetails/" + data + "' type = 'button' class='btn btn-outline-success m-1 btn-sm ti ti-eye text-lg' title = 'show details'> View </a>";
 
                                             return buttons;
 

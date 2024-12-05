@@ -33,10 +33,24 @@
         <div>
             <img src="~/assets/images/91.gif" id="spinner" />
         </div>
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-info my-3" data-bs-toggle="modal" data-bs-target="#create_cpd_modal">
-            Add New CPD Training
-        </button>
+
+        <div class="justify-content-between d-flex">
+            <button type="button" class="btn btn-info my-3" data-bs-toggle="modal" data-bs-target="#create_cpd_modal">
+                Add New CPD Training
+            </button>
+            <div>
+                <input type="file" id="excelFile" accept=".xlsx, .xls" style="display: none;">
+                <button id="uploadExcelBtn" class="btn btn-success my-3 mx-1">Upload CPD Units Excel</button>
+                <div class="progress mt-2" style="display: none; height: 25px;">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+                        style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <div id="processingMessage" class="mt-2" style="display: none;">
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    Processing uploaded data. Please wait...
+                </div>
+            </div>
+        </div>
 
         <!-- Modal -->
         <div class="modal fade" id="create_cpd_modal" tabindex="-1" aria-labelledby="exampleModalLabel"
@@ -155,17 +169,94 @@
                         name: "id",
                         "orderable": false,
                         render: function (data, type, row) {
+                            console.log(row);
                             return `
-                                <a href='#' onclick='cpdTrainingHandler.editForm(${data},"${tokenValue}")' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-pencil' title='edit' >Edit</a> 
-                                <a href='#' type='button' onclick='cpdTrainingHandler.delete(${data}, "${tokenValue}")' title='delete' class='ti ti-trash red-icon btn btn-outline-danger btn-sm my-1 mx-1'>Delete</a>
-                                <a href='/Secretariat/CPDTrainings/TrainingDetails/${data}' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-eye text-lg' title='show details' > View</a>
-                            `
+                                    <a href='#' onclick='cpdTrainingHandler.editForm(${data},"${tokenValue}")' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-pencil' title='edit' >Edit</a> 
+                                    <a href='#' type='button' onclick='cpdTrainingHandler.delete(${data}, "${tokenValue}")' title='delete' class='ti ti-trash red-icon btn btn-outline-danger btn-sm my-1 mx-1'>Delete</a>
+                                    <a href='/Secretariat/CPDTrainings/TrainingDetails/${data}' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-eye text-lg' title='show details' > View</a>
+                                `
                         }
                     }
                 ],
                 responsive: true,
                 "autoWidth": false,
             });
+
+
+            $('#uploadExcelBtn').click(function () {
+                $('#excelFile').click();
+            });
+
+            $('#excelFile').change(function (e) {
+                var file = e.target.files[0];
+                if (file) {
+                    if (validateExcelFile(file)) {
+                        $('#uploadExcelBtn').prop('disabled', true).text('Uploading...');
+                        showSpinner();
+                        $('.progress').show();
+                        $('#processingMessage').hide();
+
+                        uploadExcelFile(file, host, tokenValue)
+                            .done(function (response) {
+                                toastr.success(response);
+                                $('#processingMessage').text('Bulk insertion process has started. You will receive an email when it\'s completed.');
+                                $('#processingMessage').show();
+                            })
+                            .fail(function (xhr, status, error) {
+                                toastr.error('Error starting bulk registration: ' + xhr.responseText);
+                            })
+                            .always(function () {
+                                hideSpinner();
+                                $('#uploadExcelBtn').prop('disabled', false).text('Upload Excel');
+                                $('.progress').hide();
+                            });
+                    } else {
+                        toastr.error('Please select a valid Excel file (.xlsx or .xls)');
+                    }
+                }
+            });
+
+            function validateExcelFile(file) {
+                var validExtensions = ['xlsx', 'xls'];
+                var fileName = file.name;
+                var fileExtension = fileName.split('.').pop().toLowerCase();
+                return validExtensions.indexOf(fileExtension) > -1;
+            }
+
+            function uploadExcelFile(file, host, tokenValue) {
+                var formData = new FormData();
+                formData.append('uploadedFile', file);  // Change 'file' to 'uploadedFile'
+
+                return $.ajax({
+                    url: host + '/api/CPDUnitsEarned/bulk-register',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    headers: {
+                        'Authorization': 'Bearer ' + tokenValue
+                    },
+                    xhr: function () {
+                        var xhr = new window.XMLHttpRequest();
+                        xhr.upload.addEventListener("progress", function (evt) {
+                            if (evt.lengthComputable) {
+                                var percentComplete = evt.loaded / evt.total;
+                                $('.progress-bar').width(percentComplete * 100 + '%');
+                            }
+                        }, false);
+                        return xhr;
+                    }
+                });
+            }
+
+            // Add these functions if they don't exist in User.js
+            function showSpinner() {
+                $('#spinner').show();
+            }
+
+            function hideSpinner() {
+                $('#spinner').hide();
+            }
         });
     </script>
 

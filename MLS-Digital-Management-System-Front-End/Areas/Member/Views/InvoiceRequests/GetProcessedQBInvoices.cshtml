@@ -15,13 +15,27 @@
     <div class="card-body">
         <h5 class="card-title fw-semibold mb-4 text-uppercase text-center">Processed Invoices</h5>
         <div class="table-responsive">
-            <table class="table table-bordered" id="qb_invoices_table">
+            <!--<table class="table table-bordered" id="qb_invoices_table">
                 <thead>
                     <tr>
                         <th>Amount</th>
                         <th>Unpaid Amount</th>
                         <th>Date Requested</th>
                         <th>Invoice Type</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>-->
+            <table class="table table-bordered" id="invoices_requested_processed_table">
+                <thead>
+                    <tr>
+                        <th>Service</th>
+                        <th>Date Requested</th>
+                        <th>Invoice No.</th>
+                        <th>Status</th>
+                        <th>Attachment</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -35,6 +49,7 @@
 @section Scripts{
     <script>
         var tokenValue = '@ViewBag.token';
+        var apiPrefix = '@apiPrefix';
         var host = '@host';
         var cpdTrainingId = 0;
     </script>

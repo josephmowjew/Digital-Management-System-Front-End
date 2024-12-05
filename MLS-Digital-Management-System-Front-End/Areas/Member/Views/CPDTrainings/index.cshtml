@@ -121,10 +121,6 @@
                 <span class="text-danger">Please contact the finance officer to update your details</span>
             </div>
         }
-        else
-        {
-
-        }
     </div>
 </div>
 
@@ -207,7 +203,6 @@
                         name: "cpdTrainingRegistration",
                         orderable: false,
                         render: function (data, type, row) {
-                            console.log(row);
                             const registration = row.cpdTrainingRegistration.find(reg => reg.memberId === @ViewBag.MemberId);
                             if (!registration) {
                                 const dueDate = row.registrationDueDate ? new Date(Date.parse(row.registrationDueDate)) : null;
@@ -257,52 +252,31 @@
                         render: function (data, type, row) {
                             const dueDate = new Date(row.registrationDueDate);
                             const today = new Date();
-                            const dueDateOnly = dueDate.getDate();
-                            const todayOnly = today.getDate();
                             var memberRegistration = row.cpdTrainingRegistration.find(registration => registration.memberId == @ViewBag.MemberId);
                             if (!memberRegistration) {
                                 const dueDate = row.registrationDueDate ? new Date(Date.parse(row.registrationDueDate)) : null;
                                 const today = new Date();
 
                                 if (dueDate) {
-                                    // Calculate the time difference in milliseconds
                                     const timeDiff = dueDate.getTime() - today.getTime();
-                                    // Convert the time difference from milliseconds to days
                                     const daysDiff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
 
-                                    var memberCustomerId = '@ViewBag.member?.CustomerId';
-
-                                    let buttons = "<a href='/member/CPDTrainings/TrainingDetails/" + data + "' type = 'button' class='btn btn-outline-primary mx-1 btn-sm ti ti-eye text-lg' title = 'show details'> View </a>";
+                                    let buttons = "<a href='/member/CPDTrainings/TrainingDetails/" + data + "' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-eye text-lg' title='show details'> View </a>";
                                     if (daysDiff >= 1) {
-                                        if (isCustomerId) {
-
-
-                                            if (row.isFree == false && row.invoiceRequestId == null) {
-
-
-                                            } else {
-                                                buttons += `<a href='#' onclick='cpdTrainingHandler.registerForm("${data}", "${JSON.stringify(row).replace(/"/g, "\\\"")}")' type='button' class='btn btn-outline-primary m-1 btn-sm ' title='register'> Register</a>`;
-
-                                            }
-
-                                            if (row.isFree != true && (row.invoiceRequest == null || row.invoiceRequest.customerId != memberCustomerId)) {
-                                                buttons += "<a href='#' onclick='cpdTrainingHandler.invoiceForm(\"" + data + "\",\"" + JSON.stringify(row).replace(/"/g, "\\\"") + "\")' type='button' class='btn btn-outline-warning m-1 btn-sm ' title='Invoice'>Request Invoice</a>";
-                                            }
-
-                                            return buttons;
-
-                                        } else if (!row.invoiceRequest || !row.invoiceRequest.status) {
-                                            return buttons + " <a href='#' onclick='cpdTrainingHandler.invoiceForm(\"" + data + "\",\"" + JSON.stringify(row).replace(/"/g, "\\\"") + "\")' type='button' class='btn btn-outline-warning m-1 btn-sm ' title='Invoice'>Request Invoice</a>";
-                                        } else {
-                                            return buttons;
+                                        if (row.invoiceRequest && row.invoiceRequest.status === "Generated") {
+                                            buttons += `<a href='#' onclick='cpdTrainingHandler.registerForm("${data}", "${JSON.stringify(row).replace(/"/g, "\\\"")}")' type='button' class='btn btn-outline-primary m-1 btn-sm ' title='register'> Register</a>`;
                                         }
-                                    }
-                                    else {
+
+                                        if (!row.invoiceRequest || row.invoiceRequest.status !== "Generated") {
+                                            buttons += "<a href='#' onclick='cpdTrainingHandler.invoiceForm(\"" + data + "\",\"" + JSON.stringify(row).replace(/"/g, "\\\"") + "\")' type='button' class='btn btn-outline-warning m-1 btn-sm ' title='Invoice'>Request Invoice</a>";
+                                        }
+
+                                        return buttons;
+                                    } else {
                                         return buttons;
                                     }
-                                }
-                                else {
-                                    return "<a href='/member/CPDTrainings/TrainingDetails/" + data + "' type = 'button' class='btn btn-outline-primary mx-1 btn-sm ti ti-eye text-lg' title = 'show details'> View </a>";
+                                } else {
+                                    return "<a href='/member/CPDTrainings/TrainingDetails/" + data + "' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-eye text-lg' title='show details'> View </a>";
                                 }
                             }
                             if (memberRegistration && memberRegistration.registrationStatus === "Attended") {

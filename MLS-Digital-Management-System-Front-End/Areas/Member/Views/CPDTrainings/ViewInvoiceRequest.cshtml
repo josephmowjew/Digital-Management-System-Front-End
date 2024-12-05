@@ -28,14 +28,15 @@
         <div class="row mb-3">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label class="form-label">Customer</label>
-                    <p class="form-control-static">@Model.Customer.CustomerName</p>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
                     <label class="form-label">Status</label>
                     <p class="form-control-static">@Model.Status</p>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="form-label">Created Date</label>
+                    <p class="form-control-static">@Model.CreatedDate</p>
                 </div>
             </div>
         </div>
@@ -56,16 +57,6 @@
         </div>
 
         <div class="row mb-3">
-            
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label class="form-label">Created Date</label>
-                    <p class="form-control-static">@Model.CreatedDate</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="row mb-3">
             <div class="col-md-6">
                 <div class="form-group">
                     <label class="form-label">Invoice Description</label>
@@ -74,8 +65,8 @@
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    <label class="form-label">QB Invoice Id</label>
-                    <p class="form-control-static">@Model.QBInvoice?.InvoiceNumber</p>
+                    <label class="form-label">Invoice Number</label>
+                    <p class="form-control-static">@Model.InvoiceNumber</p>
                 </div>
             </div>
         </div>

@@ -27,5 +27,6 @@ public class ReadInvoiceRequestDTO
         public QBInvoice QBInvoice { get; set; }
         public string RequestType { get; set; }
         public string? FirmMembers { get; set; }
+        public string? InvoiceNumber { get; set; }
 
     }

@@ -356,14 +356,24 @@ class CPDTrainingHandler {
       memberVirtualAttendanceFee,
       nonMemberPhysicalAttendanceFee,
       nonMemberVirtualAttandanceFee,
-      invoiceRequestId,
-      invoiceRequest,
+      //invoiceRequestId,
+      invoiceRequests,
     } = trainingData;
+
+    
+    // Filter invoiceRequests based on createdById
+    const filteredInvoiceRequests = trainingData.invoiceRequests?.filter(request => request.createdById === userIdGlobal);
+    console.log(filteredInvoiceRequests);
+    
+    // Use the first matching invoiceRequest if available
+    const invoiceRequest = filteredInvoiceRequests?.length > 0 ? filteredInvoiceRequests[0] : null;
+
+    console.log(invoiceRequest?.id ?? 0);
 
 
 
     //set the value of an element with a specified id InvoiceRequestId to the incoming invoiceRequestId making sure the value is not null
-    invoiceRequestIdInput.value = invoiceRequestId;
+    invoiceRequestIdInput.value = invoiceRequest?.id ?? 0;
 
 
 
@@ -374,14 +384,17 @@ class CPDTrainingHandler {
 
 
     const displayFee = (invoiceRequest) => {
+      //console.log(invoiceRequest);
 
       let ParentinvoiceData = JSON.parse(invoiceRequest);
 
+      //console.log(ParentinvoiceData)
 
 
-      let invoiceData = ParentinvoiceData.invoiceRequest;
+      let invoiceData = ParentinvoiceData.invoiceRequests?.filter(request => request.createdById === userIdGlobal);
+      console.log(invoiceData[0]);
       //set the fee to the class member
-      let fee = invoiceData.amount;
+      let fee = invoiceData[0].amount;
 
 
 

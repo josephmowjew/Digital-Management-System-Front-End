@@ -204,6 +204,7 @@
                         name: "cpdTrainingRegistration",
                         orderable: false,
                         render: function (data, type, row) {
+                            console.log(row)
                             const registration = row.cpdTrainingRegistration.find(reg => reg.memberId === @ViewBag.MemberId);
                             if (!registration) {
                                 const dueDate = row.registrationDueDate ? new Date(Date.parse(row.registrationDueDate)) : null;
@@ -251,6 +252,7 @@
                         name: "id",
                         "orderable": false,
                         render: function (data, type, row) {
+                            //console.log(row)
                             const dueDate = new Date(row.registrationDueDate);
                             const today = new Date();
                             var memberRegistration = row.cpdTrainingRegistration.find(registration => registration.memberId == @ViewBag.MemberId);
@@ -264,14 +266,21 @@
 
                                     let buttons = "<a href='/member/CPDTrainings/TrainingDetails/" + data + "' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-eye text-lg' title='show details'> View </a>";
                                     if (daysDiff >= 1) {
-                                        if (row.invoiceRequest && row.invoiceRequest.status === "Generated" && row.invoiceRequest.createdById == userIdGlobal) {
-                                            buttons += `<a href='#' onclick='cpdTrainingHandler.registerForm("${data}", "${JSON.stringify(row).replace(/"/g, "\\\"")}")' type='button' class='btn btn-outline-primary m-1 btn-sm ' title='register'> Register</a>`;
-                                        }
-                                        if(row.invoiceRequest && row.invoiceRequest.status == "Pending" && row.invoiceRequest.createdById == userIdGlobal){
-                                            return buttons;
+                                        // Loop through all invoice requests
+                                        let userInvoiceRequest = row.invoiceRequests?.find(req => req.createdById == userIdGlobal);
+                                        if (userInvoiceRequest) {
+
+                                            if (userInvoiceRequest.status === "Generated") {
+                                                buttons += `<a href='#' onclick='cpdTrainingHandler.registerForm("${data}", "${JSON.stringify(row).replace(/"/g, "\\\"")}")' type='button' class='btn btn-outline-primary m-1 btn-sm ' title='register'> Register</a>`;
+                                            } else if (userInvoiceRequest.status === "Pending") {
+                                                return buttons; // Return buttons if invoice is pending
+                                            }
                                         }
 
-                                        if ((!row.invoiceRequest || row.invoiceRequest.status !== "Generated") && (@ViewBag.MemberId != 0)) {
+                                         // Check if the training is free
+                                        if (row.isFree) { // {{ edit_1 }}
+                                            buttons += `<a href='#' onclick='cpdTrainingHandler.registerForm("${data}", "${JSON.stringify(row).replace(/"/g, "\\\"")}")' type='button' class='btn btn-outline-primary m-1 btn-sm ' title='register'> Register for Free</a>`; // {{ edit_2 }}
+                                        } else if ((!userInvoiceRequest || userInvoiceRequest.status !== "Generated") && (@ViewBag.MemberId != 0)) {
                                             buttons += "<a href='#' onclick='cpdTrainingHandler.invoiceForm(\"" + data + "\",\"" + JSON.stringify(row).replace(/"/g, "\\\"") + "\")' type='button' class='btn btn-outline-warning m-1 btn-sm ' title='Invoice'>Request Invoice</a>";
                                         }
 
@@ -285,7 +294,7 @@
                             }
                             if (memberRegistration && memberRegistration.registrationStatus === "Attended") {
                                 return `<a href='#' onclick='cpdTrainingHandler.generateCertificate(${data})' type='button' class='btn btn-outline-success m-1 btn-sm' title='Generate Certificate'>Certificate</a> <a href='/member/CPDTrainings/TrainingDetails/${data}' type = 'button' class='btn btn-outline-primary mx-1 btn-sm ti ti-eye text-lg' title = 'show details'> View </a>`;
-                            }else{
+                            } else {
                                 return "<a href='/member/CPDTrainings/TrainingDetails/" + data +"' type = 'button' class='btn btn-outline-primary mx-1 btn-sm ti ti-eye text-lg' title = 'show details'> View </a>";
                             }
                         }

@@ -80,7 +80,7 @@ $(function () {
 
 function EditMemberForm(id) {
     // Use the id from the parameter if provided, otherwise get it from the form field
-    id =  $("#edit_member_modal input[name='Id']").val();
+    id = $("#edit_member_modal input[name='Id']").val();
     //console.log(userIdGlobal);
 
     // Show spinner while fetching the data
@@ -238,12 +238,45 @@ function UpdateMember() {
 
                     const elementName = key.charAt(0).toUpperCase() + key.slice(1); // Replace with the desired element name
                     const element = $("#edit_member_modal").find("form :input[name='" + elementName + "']");
-                    console.log(element)
+                    //console.log(element)
                     element.siblings("span.text-danger").text(message);
                     //$("#edit_member_modal input[name='" + key+']').siblings("span.text-danger").text(message);
                 });
             });
         }
+
+    });
+}
+
+function Delete(id, token) {
+
+    bootbox.confirm("Are you sure you want to delete this member from the system?", function (result) {
+
+
+        if (result) {
+            $.ajax({
+                url: `${host}/api/users/` + id,
+                type: 'DELETE',
+                headers: {
+                    'Authorization': "Bearer " + token
+                }
+
+            }).done(function (data) {
+
+
+                toastr.success("Member has been deleted sucessfully")
+
+                datatable.ajax.reload();
+
+
+            }).fail(function (response) {
+
+                toastr.error(response.responseText)
+
+                datatable.ajax.reload();
+            });
+        }
+
 
     });
 }

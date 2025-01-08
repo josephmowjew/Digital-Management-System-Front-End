@@ -15,8 +15,49 @@
                     <div>
                         <h5 class="mb-1">@ViewBag.Training.Subject</h5>
                         <div>
-                            <p>To: Roles[Human Resources, Complaints], Departments[Members, Executive]</p>
+                            <p><strong>To:</strong></p>
+
+                            <!-- Display Roles -->
+                            <p>
+                                <strong>Roles:</strong>
+                                @if (ViewBag.Training.TargetedRoles != null && ViewBag.Training.TargetedRoles.Count > 0)
+                                {
+                                    foreach (var role in ViewBag.Training.TargetedRoles)
+                                    {
+                                        @role
+                                        if (role!=ViewBag.Training.TargetedRoles[ViewBag.Training.TargetedRoles.Count-1])
+                                        {
+                                            <span>,</span>
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    <span>No roles specified.</span>
+                                }
+                            </p>
+
+                            <!-- Display Departments -->
+                            <p>
+                                <strong>Departments:</strong>
+                                @if (ViewBag.Training.TargetedDepartments != null && ViewBag.Training.TargetedDepartments.Count > 0)
+                                {
+                                    foreach (var department in ViewBag.Training.TargetedDepartments)
+                                    {
+                                        @department
+                                        if (department != ViewBag.Training.TargetedDepartments[ViewBag.Training.TargetedDepartments.Count - 1])
+                                        {
+                                            <span>,</span>
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    <span>No departments specified.</span>
+                                }
+                            </p>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -25,7 +66,7 @@
             <div class="col-md-12">
                 <div class="mb-3 p-4 bg-light">
                     <label class="fw-bold mb-3">Message</label>
-                    <p class="mb-0">@ViewBag.Training.Body</p>
+                    <p class="mb-0">@Html.Raw(ViewBag.Training.Body)</p>
                 </div>
             </div>
         </div>

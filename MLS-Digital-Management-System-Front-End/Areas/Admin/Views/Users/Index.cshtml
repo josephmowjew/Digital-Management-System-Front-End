@@ -4,7 +4,7 @@
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Admin/Views/shared/_Layout.cshtml";
 
-     var host = Configuration.GetSection("APIURL")["Link"];
+    var host = Configuration.GetSection("APIURL")["Link"];
 }
 
 
@@ -15,19 +15,23 @@
         <button type="button" class="btn btn-info my-3" data-bs-toggle="modal" data-bs-target="#create_user_modal">
             Create User
         </button>
-        <a asp-action="UnconfirmedUsers" asp-area="Admin" asp-controller="Users" class="btn btn-warning my-3 mx-1">View Unconfirmed Users</a>
-        <a asp-action="SuspendedUsers" asp-area="Admin" asp-controller="Users" class="btn btn-danger my-3 ">View Suspended Users</a>
+        <a asp-action="UnconfirmedUsers" asp-area="Admin" asp-controller="Users" class="btn btn-warning my-3 mx-1">View
+            Unconfirmed Users</a>
+        <a asp-action="SuspendedUsers" asp-area="Admin" asp-controller="Users" class="btn btn-danger my-3 ">View
+            Suspended Users</a>
         <!-- Modal -->
-        <div class="modal fade" id="create_user_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="create_user_modal" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
             <partial name="_CreateUserPartial" />
         </div>
 
-        <div class="modal fade" id="edit_user_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="edit_user_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
             <partial name="_EditUserPartial" />
         </div>
 
         <h5 class="card-title fw-semibold mb-4 text-uppercase">Available Active Users</h5>
-       
+
         <div class="table-responsive">
             <table class="table table-bordered " id="my_table">
                 <thead>
@@ -73,104 +77,105 @@
 </div>
 
 
-       @section Scripts{
+@section Scripts {
 
-        <script>
-            var datatable;
-            var tokenValue = '@ViewBag.token';
-            var host = '@host';
-        </script>
+    <script>
+        var datatable;
+        var tokenValue = '@ViewBag.token';
+        var host = '@host';
+    </script>
 
-        <script src="~/js/User.js" asp-append-version="true"></script>
-        <script>
-            $(document).ready(function () {
-                datatable = $('#my_table').DataTable({
+    <script src="~/js/User.js" asp-append-version="true"></script>
+    <script>
+        $(document).ready(function () {
+            datatable = $('#my_table').DataTable({
 
 
-                    "processing": true,
-                    "serverSide": true,
-                    "order": [[0, "desc"]],
-                    ajax: {
+                "processing": true,
+                "serverSide": true,
+                "order": [[0, "desc"]],
+                ajax: {
                     url: "@host/api/Users/paged",
-                        type: 'get',
-                        datatype: 'Json',headers: {
-                                        'Authorization': 'Bearer @ViewBag.token'
-                                    }
+                    type: 'get',
+                    datatype: 'Json', headers: {
+                        'Authorization': 'Bearer @ViewBag.token'
+                    }
 
-                  },
-                    columnDefs: [
-                        {
-                            defaultContent: "",
-                            targets: "_all",
-                            'orderable': true
-                        },
-                    ],
-                    columns: [
-                        {
-                            data: "firstName",
-                            name: "firstName",
-                            className: "text-left",
-                            "orderable": true,
-                        },
-                        {
-                            data: "lastName",
-                            name: "lastName",
-                            className: "text-left",
-                            "orderable": true,
-                        },
-                        {
-                            data: "gender",
-                            name: "gender",
-                            className: "text-left",
-                            "orderable": true,
-                        },
-                        {
-                            data: "email",
-                            name: "email",
-                            className: "text-left",
-                            "orderable": true,
-                        },
-                        {
-                            data: "phoneNumber",
-                            name: "contact",
-                            className: "text-left",
-                            "orderable": true,
-                        },
-                         {
-                            data: "roleName",
-                            name: "role",
-                            className: "text-left",
-                            "orderable": true,
-                        },
+                },
+                columnDefs: [
+                    {
+                        defaultContent: "",
+                        targets: "_all",
+                        'orderable': true
+                    },
+                ],
+                columns: [
+                    {
+                        data: "firstName",
+                        name: "firstName",
+                        className: "text-left",
+                        "orderable": true,
+                    },
+                    {
+                        data: "lastName",
+                        name: "lastName",
+                        className: "text-left",
+                        "orderable": true,
+                    },
+                    {
+                        data: "gender",
+                        name: "gender",
+                        className: "text-left",
+                        "orderable": true,
+                    },
+                    {
+                        data: "email",
+                        name: "email",
+                        className: "text-left",
+                        "orderable": true,
+                    },
+                    {
+                        data: "phoneNumber",
+                        name: "contact",
+                        className: "text-left",
+                        "orderable": true,
+                    },
+                    {
+                        data: "roleName",
+                        name: "role",
+                        className: "text-left",
+                        "orderable": true,
+                    },
 
-                        
-                         {
-                            data: "createdDate",
-                            name: "createdDate",
-                            className: "text-left",
-                            "orderable": true,
-                        },
-                        {
-                            data: "lastLogin",
-                            name: "lastLogin",
-                            className: "text-left",
-                            "orderable": true,
-                        },
-                        {
-                            data: "id",
-                            name: "id",
-                            "orderable": false,
-                            render: function (data) {
-                                return "<a href='#' onclick='EditForm(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-pencil' title='edit' > Edit</a><a href='#' type='button' onclick='Delete(\"" + data + "\",\"" + tokenValue + "\")' title='delete' class='ti ti-trash red-icon btn btn-outline-danger my-1 btn-sm' > Delete</a>"
-                            }                     }
-                    ],
-                    responsive: true,
-                    "autoWidth": false,
-                });
+
+                    {
+                        data: "createdDate",
+                        name: "createdDate",
+                        className: "text-left",
+                        "orderable": true,
+                    },
+                    {
+                        data: "lastLogin",
+                        name: "lastLogin",
+                        className: "text-left",
+                        "orderable": true,
+                    },
+                    {
+                        data: "id",
+                        name: "id",
+                        "orderable": false,
+                        render: function (data) {
+                            return "<a href='#' onclick='EditForm(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-pencil' title='edit' > Edit</a><a href='#' type='button' onclick='Delete(\"" + data + "\",\"" + tokenValue + "\")' title='delete' class='ti ti-trash red-icon btn btn-outline-danger my-1 btn-sm' > Delete</a>"
+                        }
+                    }
+                ],
+                responsive: true,
+                "autoWidth": false,
             });
-        </script>
+        });
+    </script>
 
-            @{
+    @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-        }
+}

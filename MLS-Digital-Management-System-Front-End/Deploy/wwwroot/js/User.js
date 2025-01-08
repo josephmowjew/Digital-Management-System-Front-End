@@ -522,7 +522,7 @@ function updateMember(token) {
     $.ajax({
         url: `${host}/api/users/` + id,
         type: 'PUT',
-        data: formDataJson,
+        data: JSON.stringify(formData),
         contentType: 'application/json',
         headers: {
             'Authorization': "Bearer " + token

@@ -442,7 +442,6 @@ class CPDTrainingHandler {
     const trainingIdInput = cpdRegisterform.querySelector('input[name="CPDTrainingId"]');
     trainingIdInput.value = trainingId;
 
-    // Log the trainingId for debugging purposes
     const trainingData = JSON.parse(trainingFee);
 
     // Destructure the different fees from the trainingFee object

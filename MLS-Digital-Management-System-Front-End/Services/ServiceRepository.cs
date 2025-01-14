@@ -12,6 +12,7 @@ public class ServiceRepository : IServiceRepository
     private  HttpClient _httpClient;
     private  IUserService _userService;
     private  IIdentityTypeService _identityTypeService;
+    private IInstitutionTypeService _institutionTypeService;
     private ITitleService _titleService;
     private IRoleService _roleService;
     private IDepartmentService _departmentService;
@@ -62,6 +63,7 @@ public class ServiceRepository : IServiceRepository
 
             // Update properties that rely on _httpClient
             _identityTypeService = new IdentityTypeService(_httpClient);
+            _institutionTypeService = new InstitutionTypeService(_httpClient);
             _titleService = new TitleService(_httpClient);
             _roleService = new RoleService(_httpClient);
             _authenticationService = new AuthenticationService(_httpClient);
@@ -113,6 +115,7 @@ public class ServiceRepository : IServiceRepository
     }
     
     public IIdentityTypeService IdentityTypeService => _identityTypeService ??= new IdentityTypeService(_httpClient);
+    public IInstitutionTypeService InstitutionTypeService => _institutionTypeService ??= new InstitutionTypeService(_httpClient);
     public ITitleService TitleService => _titleService??= new TitleService(_httpClient);
     public IRoleService RoleService => _roleService ??= new RoleService(_httpClient);
     public IAuthenticationService AuthenticationService => _authenticationService ??= new AuthenticationService(_httpClient);

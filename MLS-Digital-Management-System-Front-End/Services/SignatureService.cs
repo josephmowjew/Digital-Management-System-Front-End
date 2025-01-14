@@ -26,4 +26,18 @@ public class SignatureService : ISignatureService
             throw new InvalidOperationException($"Failed to get signature with ID {id}.");
         }
     }
+
+    public async Task<ReadSignatureDTO> GetSignatureByNameAsync(string name)
+    {
+        var response = await _httpClient.GetAsync($"api/Signatures/signature/{name}");
+        if (response.IsSuccessStatusCode)
+        {
+            var responseData = await response.Content.ReadFromJsonAsync<ReadSignatureDTO>();
+            return responseData;
+        }
+        else
+        {
+            throw new InvalidOperationException($"Failed to get signature with name {name}.");
+        }
+    }
 }

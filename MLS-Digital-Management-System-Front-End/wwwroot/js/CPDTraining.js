@@ -507,9 +507,6 @@ class CPDTrainingHandler {
     $("#cpd_invoice_modal").modal("show");
   }
 
-
-
-
   delete(id, token) {
     bootbox.confirm("Are you sure you want to delete this CPD Training from the system?", result => {
       if (result) {

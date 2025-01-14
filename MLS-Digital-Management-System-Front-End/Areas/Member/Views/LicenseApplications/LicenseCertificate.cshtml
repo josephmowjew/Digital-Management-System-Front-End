@@ -20,8 +20,8 @@
             min-height: 100vh;
         }
         .certificate {
-            width: 800px;
-            height: 600px;
+            width: 900px;
+            height: 700px;
             background-color: #fff;
             border: 1px solid #949494;
             position: relative;
@@ -95,10 +95,10 @@
         .logo {
             width: 100px;
             height: 100px;
-            margin-bottom: 20px;
+            margin-bottom: 0px;
         }
         h1 {
-            font-size: 24px;
+            font-size: 22px;
             margin-bottom: 20px;
         }
         .details {
@@ -110,7 +110,12 @@
             margin-top: 0px;
         }
         .signature-image{
-            width: 50px;
+            width: 80px;
+            height: 50px;
+            margin: 0;
+        }
+        .secretary-signature-image{
+            width: 100px;
             height: 50px;
             margin: 0;
         }
@@ -173,6 +178,19 @@
             cursor: pointer;
             font-size: 16px;
         }
+        .italic-text {
+            font-style: italic;
+            font-size: 14px;
+        }
+        .license-number {
+            position: absolute;
+            top: 20px; /* Adjust as needed */
+            left: 20px; /* Adjust as needed */
+            font-size: 16px; /* Adjust font size */
+            font-weight: bold;
+            color: black; /* Change color if needed */
+            z-index: 3; /* Ensure it appears above other elements */
+        }
     </style>
 </head>
 <body>
@@ -226,15 +244,19 @@
             </div>
         </div>
         <div class="content">
-            <div class="logo-container">
+            <div class="license-number">No. @ViewBag.license.LicenseNumber</div>
+            <div class="logo-container" style="margin-bottom: 45px;">
                 <img src="/assets/images/logos/cropped-mls-logo-clear-192x192.png" alt="The Malawi Law Society" class="logo">
+                <div>
+                    <h2 style="font-size: 16px;">MALAWI LAW SOCIETY</h2>
+                </div>
             </div>
             <h1>ANNUAL LEGAL PRACTITIONER'S LICENCE</h1>
-            <p>(Issued under Section 30 of the Legal Education and Legal Practitioners Act, 2017)</p>
+            <p class="italic-text">(Issued under Section 30 of the Legal Education and Legal Practitioners Act, 2017)</p>
             <div class="details">
-                <p>WE HEREBY CERTIFY that <strong id="recipientName">@ViewBag.license.Member.User.FullName</strong></p>
-                <p>of <strong>@ViewBag.license.Member.Firm.Name</strong></p>
-                <p>is licenced to act as Legal Practitioner in the Malawi Supreme Court of Appeal, High Court of Malawi<br>and all Courts Subordinate thereto until @ViewBag.license.ExpiryDate.ToString("MMMM dd, yyyy")</p>
+                <p>WE HEREBY CERTIFY that <br/><br/><strong id="recipientName" style="font-size: 20px;">@ViewBag.license.Member.User.FullName</strong></p>
+                <p>of <strong>@ViewBag.license.Member.Firm.Name <br/> <span style="font-size: 14px;">(@ViewBag.license.Member.Firm.PostalAddress)</span></strong></p>
+                <p style="font-size: 15px;">is licenced to act as Legal Practitioner in the Malawi Supreme Court of Appeal, High Court of Malawi<br>and all Courts Subordinate thereto until @ViewBag.license.ExpiryDate.ToString("MMMM dd, yyyy")</p>
             </div>
             <div class="signature">
                 <div>
@@ -250,10 +272,10 @@
                     @if (ViewBag.license.Attachments.Count > 0)
                     {
                         var firstAttachment = ViewBag.license.Attachments[0];
-                        <img src="@firstAttachment.FilePath" alt="signature" class="signature-image"/>
+                        <img src="@firstAttachment.FilePath" alt="signature" class="secretary-signature-image"/>
                     }
-                    <p>____________________</p>
-                    <p>Secretary</p>
+                    <p>____________________
+                    <br/>Secretary</p>
                 </div>
             </div>
 

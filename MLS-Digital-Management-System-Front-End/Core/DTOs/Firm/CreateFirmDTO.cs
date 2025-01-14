@@ -36,5 +36,7 @@ public class CreateFirmDTO
     [StringLength(maximumLength: 15)]
     [Display(Name = "Secondary Phone Number")]
     public string SecondaryPhoneNumber { get; set; }
+    [Required]
+    public int InstitutionTypeId { get; set; }
     public string DataInvalid { get; set; } = "true";
 }

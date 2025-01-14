@@ -1,7 +1,7 @@
 ﻿@using Microsoft.Extensions.Configuration
 @inject IConfiguration Configuration
 @{
-    ViewData["Title"] = "Firms";
+    ViewData["Title"] = "Institution Types";
     Layout = "~/Areas/CEO/Views/shared/_Layout.cshtml";
 
     var host = Configuration.GetSection("APIURL")["Link"];
@@ -16,24 +16,24 @@
         </div>
         <!-- Button trigger modal -->
         <button type="button" class="btn btn-info my-3" data-bs-toggle="modal" data-bs-target="#create_firm_modal">
-            Create
+            Create Institution Type
         </button>
 
         <!-- Modal -->
         <div class="modal fade" id="create_firm_modal" tabindex="-1" aria-labelledby="exampleModalLabel"
             aria-hidden="true">
-            <partial name="_CreateFirmPartial" />
+            <partial name="_CreateInstitutionTypePartial" />
         </div>
 
         <div class="modal fade" id="edit_firm_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
             aria-hidden="true">
-            <partial name="_EditFirmPartial" />
+            <partial name="_EditInstitutionTypePartial" />
         </div>
         <div class="modal fade" id="deny_firm_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
             aria-hidden="true">
             <partial name="_DenyFormPartial" />
         </div>
-        <h5 class="card-title fw-semibold mb-4 text-uppercase">Available Active Firms / Institutions</h5>
+        <h5 class="card-title fw-semibold mb-4 text-uppercase">Available Institution Types</h5>
 
         <div class="table-responsive">
             <table class="table table-bordered " id="my_table">
@@ -43,24 +43,7 @@
                             Name
                         </th>
                         <th>
-                            Type
-                        <th>
-                            Postal Address
-                        </th>
-                        <th>
-                            Physical Address
-                        </th>
-                        <th>
-                            Primary Contact Person
-                        </th>
-                        <th>
-                            Primary Phone Number
-                        </th>
-                        <th>
-                            Secondary Contact Person
-                        </th>
-                        <th>
-                            Secondary Phone Number
+                            Date Created
                         </th>
                         <th>
                             Status
@@ -68,7 +51,6 @@
                         <th>
                             Action
                         </th>
-
                     </tr>
                 </thead>
                 <tbody>
@@ -87,7 +69,7 @@
         var host = "@host";
     </script>
 
-    <script src="~/js/Firm.js" asp-append-version="true"></script>
+    <script src="~/js/InstitutionType.js" asp-append-version="true"></script>
     <script>
         $(document).ready(function () {
             datatable = $('#my_table').DataTable({
@@ -97,7 +79,7 @@
                 "serverSide": true,
                 "order": [[0, "desc"]],
                 ajax: {
-                    url: "@host/api/Firms/paged",
+                    url: "@host/api/InstitutionTypes/paged",
                     type: 'get',
                     datatype: 'Json', headers: {
                         'Authorization': 'Bearer @ViewBag.token'
@@ -120,46 +102,24 @@
                         "orderable": true,
                     },
                     {
-                        data: "institutionType.name",
-                        name: "institutionType",
+                        data: "createdDate",
+                        name: "createdDate",
                         className: "text-left",
                         "orderable": true,
-                    },
-                    {
-                        data: "postalAddress",
-                        name: "postalAddress",
-                        className: "text-left",
-                        "orderable": true,
-                    },
-                    {
-                        data: "physicalAddress",
-                        name: "physicalAddress",
-                        className: "text-left",
-                        "orderable": true,
-                    },
-                    {
-                        data: "primaryContactPerson",
-                        name: "primaryContactPerson",
-                        className: "text-left",
-                        "orderable": true,
-                    },
-                    {
-                        data: "primaryPhoneNumber",
-                        name: "primaryPhoneNumber",
-                        className: "text-left",
-                        "orderable": true,
-                    },
-                    {
-                        data: "secondaryContactPerson",
-                        name: "secondaryContactPerson",
-                        className: "text-left",
-                        "orderable": true,
-                    },
-                    {
-                        data: "secondaryPhoneNumber",
-                        name: "secondaryPhoneNumber",
-                        className: "text-left",
-                        "orderable": true,
+                        render: function(data, type, row) {
+                            // Create a new Date object from the raw date string
+                            const date = new Date(data);
+                            // Format the date to a more readable format
+                            return date.toLocaleDateString('en-US', {
+                                year: 'numeric',
+                                month: 'long',
+                                day: 'numeric',
+                                hour: '2-digit',
+                                minute: '2-digit',
+                                second: '2-digit',
+                                hour12: true // Change to false for 24-hour format
+                            });
+                        }
                     },
                     {
                         data: "status",

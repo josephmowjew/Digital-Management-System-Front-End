@@ -40,6 +40,8 @@ public class UpdateFirmDTO
     
     [Display(Name = "Customer QuickBooks Id")]
     public string CustomerId { get; set; }
+    [Required]
+    public int InstitutionTypeId { get; set; }
 
     public string DataInvalid { get; set; } = "true";
 }

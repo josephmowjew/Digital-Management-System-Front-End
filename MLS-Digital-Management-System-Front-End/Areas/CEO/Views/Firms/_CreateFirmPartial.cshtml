@@ -4,43 +4,53 @@
 
 <div class="modal-dialog modal-lg">
     <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Create Firm</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="DataInvalid" />
-                <div class="row row-cols-lg-1">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Create Firm</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="DataInvalid" />
+                <div class="row row-cols-lg-2">
                     <div class="mb-3">
                         <label asp-for="Name" class="form-label"></label>
-                        <input asp-for="Name" placeholder="Enter Firm Name" class="form-control" />
+                        <textarea asp-for="Name" placeholder="Enter Firm Name" class="form-control"></textarea>
                         <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="InstitutionTypeId" class="form-label">Institution Type</label>
+                        <select required asp-for="InstitutionTypeId" asp-items="@ViewBag.institutionTypesList"
+                            class="form-control"></select>
+                        <span asp-validation-for="InstitutionTypeId" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="row row-cols-lg-2">
                     <div class="mb-3">
                         <label asp-for="PrimaryContactPerson" class="form-label"></label>
-                        <input asp-for="PrimaryContactPerson" placeholder="Enter Primary Contact Person" class="form-control" />
+                        <input asp-for="PrimaryContactPerson" placeholder="Enter Primary Contact Person"
+                            class="form-control" />
                         <span asp-validation-for="PrimaryContactPerson" class="text-danger"></span>
                     </div>
                     <div class="mb-3">
                         <label asp-for="PrimaryPhoneNumber" class="form-label"></label>
-                        <input asp-for="PrimaryPhoneNumber" placeholder="Enter Primary Phone Number" class="form-control" />
+                        <input asp-for="PrimaryPhoneNumber" placeholder="Enter Primary Phone Number"
+                            class="form-control" />
                         <span asp-validation-for="PrimaryPhoneNumber" class="text-danger"></span>
                     </div>
-                    
+
                     <div class="mb-3">
                         <label asp-for="SecondaryContactPerson" class="form-label"></label>
-                        <input asp-for="SecondaryContactPerson" placeholder="Enter Secondary Contact Person" class="form-control" />
+                        <input asp-for="SecondaryContactPerson" placeholder="Enter Secondary Contact Person"
+                            class="form-control" />
                         <span asp-validation-for="SecondaryContactPerson" class="text-danger"></span>
                     </div>
-              
-                   
+
+
                     <div class="mb-3">
                         <label asp-for="SecondaryPhoneNumber" class="form-label"></label>
-                        <input asp-for="SecondaryPhoneNumber" class="form-control" placeholder="Enter Secondary Phone Number" />
+                        <input asp-for="SecondaryPhoneNumber" class="form-control"
+                            placeholder="Enter Secondary Phone Number" />
                         <span asp-validation-for="SecondaryPhoneNumber" class="text-danger"></span>
                     </div>
                     <div class="mb-3">
@@ -48,21 +58,21 @@
                         <input asp-for="PhysicalAddress" class="form-control" placeholder="Enter Physical Address" />
                         <span asp-validation-for="PhysicalAddress" class="text-danger"></span>
                     </div>
-                  
+
                     <div class="mb-3">
                         <label asp-for="PostalAddress" class="form-label"></label>
                         <input asp-for="PostalAddress" class="form-control" placeholder="Enter Postal Address" />
                         <span asp-validation-for="PostalAddress" class="text-danger"></span>
                     </div>
-                   
-                </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" id="create_firm_btn" name="create_firm_btn">Create Firm</button>
-           
-      </div>
-    </div>
-  </div>
 
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="create_firm_btn" name="create_firm_btn">Create
+                Firm</button>
+
+        </div>
+    </div>
+</div>

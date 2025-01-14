@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using MLS_Digital_Management_System_Front_End.Core.DTOs.InstitutionType;
 using MLS_Digital_Management_System_Front_End.Core.DTOs.User;
 
 namespace MLS_Digital_Management_System_Front_End.Core.DTOs.Firm;
@@ -29,4 +30,6 @@ public class ReadFirmDTO
     public string? CustomerId { get; set; }
 
     public ICollection<ReadUserDTO> Users { get; set; }
+    public int? InstitutionTypeId { get; set; }
+    public ReadInstitutionTypeDTO InstitutionType { get; set; }
 }

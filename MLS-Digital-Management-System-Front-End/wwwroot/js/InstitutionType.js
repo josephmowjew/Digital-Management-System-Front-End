@@ -25,7 +25,7 @@ $(function () {
         //send the request
 
         $.ajax({
-            url:  `${host}/api/Firms`,
+            url:  `${host}/api/InstitutionTypes` ,
             type: 'POST',
             data: JSON.stringify(formData), // Convert formData object to JSON string
             contentType: 'application/json', // Set content type to JSON
@@ -43,7 +43,7 @@ $(function () {
                 //show success message to the firm
                 var dataTable = $('#my_table').DataTable();
 
-                toastr.success("New Firm added successfully")
+                toastr.success("New Institution Type added successfully")
 
                 $("#create_firm_modal").modal("hide")
 
@@ -146,7 +146,7 @@ function EditForm(id,token, area = "") {
         }
 
         // Iterate over the form elements and populate values dynamically
-        $("#edit_firm_modal form").find('input, textarea, select').each(function (index, element) {
+        $("#edit_firm_modal form").find('input, select').each(function(index, element) {
             var field = $(element);
             var fieldName = field.attr('name');
             var dataKey = fieldMap[fieldName]; // Get corresponding key from data
@@ -448,8 +448,8 @@ function upDateFirm(token) {
     // Stringify the formDataObject
     const formDataJson = JSON.stringify(formDataObject);
 
-    console.log(formDataJson);
 
+   
     //send the request
 
     $.ajax({

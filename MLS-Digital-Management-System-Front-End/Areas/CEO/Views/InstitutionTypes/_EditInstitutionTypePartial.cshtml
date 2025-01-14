@@ -11,17 +11,11 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <input type="hidden" asp-for="DataInvalid" />
-                <div class="row row-cols-lg-2">
+                <div class="row row-cols-lg-1">
                     <div class="mb-3">
                         <label asp-for="Name" class="form-label"></label>
-                        <textarea asp-for="Name" placeholder="Enter Firm Name" class="form-control"></textarea>
+                        <input asp-for="Name" placeholder="Enter Firm Name" class="form-control" />
                         <span asp-validation-for="Name" class="text-danger"></span>
-                    </div>
-                    <div class="mb-3">
-                        <label asp-for="InstitutionTypeId" class="form-label">Institution Type</label>
-                        <select required asp-for="InstitutionTypeId" asp-items="@ViewBag.institutionTypesList"
-                            class="form-control"></select>
-                        <span asp-validation-for="InstitutionTypeId" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="row row-cols-lg-2">

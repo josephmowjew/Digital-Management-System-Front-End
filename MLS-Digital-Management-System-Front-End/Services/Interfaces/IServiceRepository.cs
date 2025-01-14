@@ -5,6 +5,7 @@ public interface IServiceRepository{
     public string Token { get; set; }
     IUserService UserService { get; }
     IIdentityTypeService IdentityTypeService {get; }
+    IInstitutionTypeService InstitutionTypeService { get; }
     ITitleService TitleService { get; }
     IRoleService RoleService { get; }
     IDepartmentService DepartmentService { get; }

@@ -266,6 +266,22 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ0VPXFZpZXdzXEhvbWVcUHJvZmlsZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/arthu/Documents/Work/MLS project/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/CEO/Views/InstitutionTypes/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ0VPXFZpZXdzXEluc3RpdHV0aW9uVHlwZXNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/arthu/Documents/Work/MLS project/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/CEO/Views/InstitutionTypes/_CreateInstitutionTypePartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ0VPXFZpZXdzXEluc3RpdHV0aW9uVHlwZXNcX0NyZWF0ZUluc3RpdHV0aW9uVHlwZVBhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/arthu/Documents/Work/MLS project/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/CEO/Views/InstitutionTypes/_DenyFormPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ0VPXFZpZXdzXEluc3RpdHV0aW9uVHlwZXNcX0RlbnlGb3JtUGFydGlhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/arthu/Documents/Work/MLS project/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/CEO/Views/InstitutionTypes/_EditInstitutionTypePartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ0VPXFZpZXdzXEluc3RpdHV0aW9uVHlwZXNcX0VkaXRJbnN0aXR1dGlvblR5cGVQYXJ0aWFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/arthu/Documents/Work/MLS project/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/CEO/Views/LicenseApplications/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ0VPXFZpZXdzXExpY2Vuc2VBcHBsaWNhdGlvbnNcRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 

@@ -1,3 +1,5 @@
+let selectedUserIds = []; // Initialize the array to hold selected user IDs
+
 $(function () {
 
     hideSpinner();
@@ -8,6 +10,24 @@ $(function () {
     //add event listener to the edit button
 
     var editFirmButton = $("#edit_member_btn").unbind().click(EditMemberForm);
+
+    // Bind change event to checkboxes
+    $('#members_table').on('change', '.memberCheckbox', function () {
+        const userId = $(this).data('id'); // Get the user ID from the checkbox data attribute
+        const isChecked = $(this).is(':checked');
+
+        if (isChecked) {
+            // Add user ID to the array if checked
+            if (!selectedUserIds.includes(userId)) {
+                selectedUserIds.push(userId);
+            }
+        } else {
+            // Remove user ID from the array if unchecked
+            selectedUserIds = selectedUserIds.filter(id => id !== userId);
+        }
+
+        console.log('Selected User IDs:', selectedUserIds); // For debugging
+    });
 
     function OnMemberCreateClick() {
 
@@ -303,5 +323,78 @@ function hideSpinner() {
     }
 }
 
+function markAsLicensed() {
+    const selectedCount = selectedUserIds.length; // Use the initialized array
 
+    if (selectedCount < 1) {
+        bootbox.alert("You cannot proceed to mark members as licensed with no selected members.");
+    } else {
+        bootbox.confirm(`Do you want to proceed with marking the selected ${selectedCount} members as licensed?`, (result) => {
+            if (result) {
+                const formData = new FormData();
+                formData.append('memberIds', JSON.stringify(selectedUserIds)); // Use the selectedUserIds array
 
+                this.sendAjaxRequest(
+                    formData,
+                    "POST",
+                    `${host}/api/License/MarkAsLicensed`, // Update with the correct endpoint
+                    this.handleMarkLicensedSuccess.bind(this),
+                    this.handleError.bind(this),
+                    { 'Authorization': `Bearer ${tokenValue}` }
+                );
+            }
+        });
+    }
+}
+
+function handleMarkLicensedSuccess() {
+    this.hideSpinner();
+    toastr.success("Members marked as licensed successfully");
+    const dataTable = $('#members_table').DataTable(); // Assuming you have a DataTable for members
+    dataTable.ajax.reload();
+    this.selectedCPDTrainingIds = []; // Clear the selected IDs
+}
+
+function handleError(xhr) {
+    this.hideSpinner();
+    const errorResponse = JSON.parse(xhr.responseText);
+    $.each(errorResponse, (key, value) => {
+        $.each(value, (index, message) => {
+            const elementName = key
+                ? key.charAt(0).toUpperCase() + key.slice(1)
+                : null;
+            const element = elementName
+                ? document.querySelector(
+                    `#create_cpd_modal form input[name="${elementName}"]`
+                )
+                : null;
+
+            if (element) {
+                const errorSpan = element.nextElementSibling;
+                if (errorSpan && errorSpan.classList.contains("text-danger")) {
+                    errorSpan.textContent = message;
+                } else {
+                    const newErrorSpan = document.createElement("span");
+                    newErrorSpan.textContent = message;
+                    newErrorSpan.classList.add("text-danger");
+                    element.after(newErrorSpan);
+                }
+            }
+        });
+    });
+}
+function sendAjaxRequest(formData, method, url, successCallback, errorCallback) {
+    const xhr = new XMLHttpRequest();
+    xhr.open(method, url, true);
+    xhr.setRequestHeader("Authorization", `Bearer ${tokenValue}`);
+    xhr.onreadystatechange = () => {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200 || xhr.status === 201) {
+                successCallback(xhr.response);
+            } else {
+                errorCallback(xhr);
+            }
+        }
+    };
+    xhr.send(formData);
+}

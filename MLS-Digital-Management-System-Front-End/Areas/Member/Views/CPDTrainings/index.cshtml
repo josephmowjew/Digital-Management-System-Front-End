@@ -270,7 +270,7 @@
                                         if (userInvoiceRequest) {
 
                                             if (userInvoiceRequest.status === "Generated") {
-                                                buttons += `<a href='#' onclick='cpdTrainingHandler.registerForm("${data}", "${JSON.stringify(row).replace(/"/g, "\\\"")}")' type='button' class='btn btn-outline-primary m-1 btn-sm ' title='register'> Register</a>`;
+                                                buttons += `<a href='#' onclick='cpdTrainingHandler.registerForm("${data}", ${JSON.stringify(JSON.stringify(row))})' type='button' class='btn btn-outline-primary m-1 btn-sm ' title='register'> Register</a>`;
                                             } else if (userInvoiceRequest.status === "Pending") {
                                                 return buttons; // Return buttons if invoice is pending
                                             }
@@ -278,9 +278,9 @@
 
                                          // Check if the training is free
                                         if (row.isFree) { // {{ edit_1 }}
-                                            buttons += `<a href='#' onclick='cpdTrainingHandler.registerForm("${data}", "${JSON.stringify(row).replace(/"/g, "\\\"")}")' type='button' class='btn btn-outline-primary m-1 btn-sm ' title='register'> Register for Free</a>`;
+                                            buttons += `<a href='#' onclick='cpdTrainingHandler.registerForm("${data}", ${JSON.stringify(JSON.stringify(row))})' type='button' class='btn btn-outline-primary m-1 btn-sm ' title='register'> Register for Free</a>`;
                                         } else if ((!userInvoiceRequest || userInvoiceRequest.status !== "Generated") && (@ViewBag.MemberId != 0)) {
-                                            buttons += `<a href='#' onclick='cpdTrainingHandler.invoiceForm("${data}", "${JSON.stringify(row).replace(/"/g, "\\\"")}")' type='button' class='btn btn-outline-warning m-1 btn-sm ' title='Invoice'>Request Invoice</a>`;
+                                            buttons += `<a href='#' onclick='cpdTrainingHandler.invoiceForm("${data}", ${JSON.stringify(JSON.stringify(row))})' type='button' class='btn btn-outline-warning m-1 btn-sm ' title='Invoice'>Request Invoice</a>`;
                                         }
 
                                         return buttons;

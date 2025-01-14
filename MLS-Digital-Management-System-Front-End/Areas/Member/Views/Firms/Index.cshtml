@@ -4,48 +4,58 @@
     ViewData["Title"] = "Firms";
     Layout = "~/Areas/Member/Views/shared/_Layout.cshtml";
 
-     var host = Configuration.GetSection("APIURL")["Link"];
+    var host = Configuration.GetSection("APIURL")["Link"];
 }
 
 
 
 <div class="card">
     <div class="card-body">
-         <div>
+        <div>
             <img src="~/assets/images/91.gif" id="spinner" />
         </div>
 
-        @if(ViewBag.membership){
+        @if (ViewBag.membership)
+        {
             <!-- Button trigger modal -->
             <button type="button" class="btn btn-info my-3" data-bs-toggle="modal" data-bs-target="#create_firm_modal">
                 Create Firm
             </button>
 
             <!-- Modal -->
-            <div class="modal fade" id="create_firm_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal fade" id="create_firm_modal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
                 <partial name="_CreateFirmPartial" />
             </div>
 
-            <div class="modal fade" id="edit_firm_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal fade" id="edit_firm_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
                 <partial name="_EditFirmPartial" />
             </div>
 
-            <div class="modal fade" id="levy_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal fade" id="levy_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
                 <partial name="_CreateLevyDeclarationPartial" />
             </div>
-        }else{
-            <a asp-area="Member" asp-action="ViewMember" asp-controller="Home" class="btn btn-warning my-3">Complete Membership Details</a>
         }
-        
+        else
+        {
+            <a asp-area="Member" asp-action="ViewMember" asp-controller="Home" class="btn btn-warning my-3">Complete
+                Membership Details</a>
+        }
+
 
         <h5 class="card-title fw-semibold mb-4 text-uppercase">Available Active Firms</h5>
-       
+
         <div class="table-responsive">
             <table class="table table-bordered " id="my_table">
                 <thead>
                     <tr>
                         <th>
                             Name
+                        </th>
+                        <th>
+                            Type
                         </th>
                         <th>
                             Postal Address
@@ -59,7 +69,7 @@
                         <th>
                             Primary Phone Number
                         </th>
-                         <th>
+                        <th>
                             Status
                         </th>
                         <th>
@@ -76,77 +86,83 @@
 </div>
 
 
-       @section Scripts{
+@section Scripts {
 
-        <script>
-            var datatable;
-            var tokenValue = '@ViewBag.token';
-            var host = '@host';
-        </script>
+    <script>
+        var datatable;
+        var tokenValue = '@ViewBag.token';
+        var host = '@host';
+    </script>
 
-        <script src="~/js/Firm.js" asp-append-version="true"></script>
-        <script>
-            $(document).ready(function () {
-                datatable = $('#my_table').DataTable({
+    <script src="~/js/Firm.js" asp-append-version="true"></script>
+    <script>
+        $(document).ready(function () {
+            datatable = $('#my_table').DataTable({
 
 
-                    "processing": true,
-                    "serverSide": true,
-                    "order": [[0, "desc"]],
-                    ajax: {
+                "processing": true,
+                "serverSide": true,
+                "order": [[0, "desc"]],
+                ajax: {
                     url: "@host/api/Firms/paged",
-                        type: 'get',
-                        datatype: 'Json',headers: {
-                                        'Authorization': 'Bearer @ViewBag.token'
-                                    },
+                    type: 'get',
+                    datatype: 'Json', headers: {
+                        'Authorization': 'Bearer @ViewBag.token'
+                    },
 
 
-                  },
-                    columnDefs: [
-                        {
-                            defaultContent: "",
-                            targets: "_all",
-                            'orderable': true
-                        },
-                    ],
-                    columns: [
-                        {
-                            data: "name",
-                            name: "name",
-                            className: "text-left",
-                            "orderable": true,
-                        },                      
-                           {
-                            data: "postalAddress",
-                            name: "postalAddress",
-                            className: "text-left",
-                            "orderable": true,
-                        },
-                           {
-                            data: "physicalAddress",
-                            name: "physicalAddress",
-                            className: "text-left",
-                            "orderable": true,
-                        },
-                           {
-                            data: "primaryContactPerson",
-                            name: "primaryContactPerson",
-                            className: "text-left",
-                            "orderable": true,
-                        },
-                           {
-                            data: "primaryPhoneNumber",
-                            name: "primaryPhoneNumber",
-                            className: "text-left",
-                            "orderable": true,
-                        },
-                        {
-                            data: "status",
-                            name: "status",
-                            className: "text-left",
-                            "orderable": false,
-                        },
-                        {
+                },
+                columnDefs: [
+                    {
+                        defaultContent: "",
+                        targets: "_all",
+                        'orderable': true
+                    },
+                ],
+                columns: [
+                    {
+                        data: "name",
+                        name: "name",
+                        className: "text-left",
+                        "orderable": true,
+                    },
+                    {
+                        data: "institutionType.name",
+                        name: "institutionType",
+                        className: "text-left",
+                        "orderable": true,
+                    },                    
+                    {
+                        data: "postalAddress",
+                        name: "postalAddress",
+                        className: "text-left",
+                        "orderable": true,
+                    },
+                    {
+                        data: "physicalAddress",
+                        name: "physicalAddress",
+                        className: "text-left",
+                        "orderable": true,
+                    },
+                    {
+                        data: "primaryContactPerson",
+                        name: "primaryContactPerson",
+                        className: "text-left",
+                        "orderable": true,
+                    },
+                    {
+                        data: "primaryPhoneNumber",
+                        name: "primaryPhoneNumber",
+                        className: "text-left",
+                        "orderable": true,
+                    },
+                    {
+                        data: "status",
+                        name: "status",
+                        className: "text-left",
+                        "orderable": false,
+                    },
+                    {
                         data: "id",
                         name: "id",
                         "orderable": false,
@@ -154,27 +170,29 @@
                             var declareLevyButton = "";
                             //console.log('@ViewBag.member.User.Id');
                             if (row.status.toLowerCase() === "pending") {
-                                return "<a href='#' onclick='EditForm(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-pencil text-lg' title='edit' >Edit</a><a href='#' type='button' onclick='Delete(\"" + data + "\",\"" + tokenValue + "\")' title='delete' class='btn btn-outline-danger my-1 btn-sm ti ti-trash red-icon' >Delete</a>"
-                            } else {
-                                if('@ViewBag.member.User.Id' == row.createdById){
-                                    declareLevyButton += row.customerId ? 
-                                    "<a href='#' onclick='LevyForm(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='btn btn-outline-success m-1 btn-sm' title='declare levy'>Declare Levy</a> <a href='#' onclick='EditForm(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-pencil text-lg' title='edit' >Edit</a>" 
-                                    : "";
+                                if ('@ViewBag.member.User.Id' == row.createdById) {
+                                    return "<a href='#' onclick='EditForm(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-pencil text-lg' title='edit' >Edit</a><a href='#' type='button' onclick='Delete(\"" + data + "\",\"" + tokenValue + "\")' title='delete' class='btn btn-outline-danger my-1 btn-sm ti ti-trash red-icon' >Delete</a>";
                                 }
-                                
+                            } else {
+                                if ('@ViewBag.member.User.Id' == row.createdById) {
+                                    declareLevyButton += row.customerId ?
+                                        "<a href='#' onclick='LevyForm(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='btn btn-outline-success m-1 btn-sm' title='declare levy'>Declare Levy</a> <a href='#' onclick='EditForm(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-pencil text-lg' title='edit' >Edit</a>"
+                                        : "";
+                                }
+
                                 return declareLevyButton +
                                     "<a href='/member/Firms/FirmDetails/" + data + "' class='btn btn-outline-warning mx-1 btn-sm' title='details'>Details</a>";
                             }
                         }
                     }
-                    ],
-                    responsive: true,
-                    "autoWidth": false,
-                });
+                ],
+                responsive: true,
+                "autoWidth": false,
             });
-        </script>
+        });
+    </script>
 
-            @{
+    @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-        }
+}

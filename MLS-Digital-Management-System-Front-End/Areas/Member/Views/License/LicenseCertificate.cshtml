@@ -166,18 +166,29 @@
             top: 20px;
             right: 20px;
             padding: 10px 20px;
-            background-color: #4CAF50;
+            background-color: red;
             color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
         }
+
+        .license-number {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 16px;
+            color: black;
+            z-index: 3;
+        }
     </style>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
     <button id="downloadButton" disabled>Download Certificate</button>
     <div class="certificate">
+        <div class="license-number">License Number: @ViewBag.license.LicenseNumber</div>
         <div class="logo-background"></div>
         <div class="background-text" id="backgroundText"></div>
         <div class="bottom-background">
@@ -230,7 +241,7 @@
                 <img src="/assets/images/logos/cropped-mls-logo-clear-192x192.png" alt="The Malawi Law Society" class="logo">
             </div>
             <h1>ANNUAL LEGAL PRACTITIONER'S LICENCE</h1>
-            <p>(Issued under Section 30 of the Legal Education and Legal Practitioners Act, 2017)</p>
+            <p class="italic">(Issued under Section 30 of the Legal Education and Legal Practitioners Act, 2017)</p>
             <div class="details">
                 <p>WE HEREBY CERTIFY that <strong id="recipientName">@ViewBag.license.Member.User.FullName</strong></p>
                 <p>of <strong>@ViewBag.license.Member.Firm.Name</strong></p>

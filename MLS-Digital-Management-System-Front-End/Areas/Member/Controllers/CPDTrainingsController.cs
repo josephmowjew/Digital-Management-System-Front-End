@@ -107,11 +107,26 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
         {
             await PopulateViewBags();
 
+            await Signature();
+
             var training = await _service.CpdTrainingService.GetCpdTrainingByIdAsync(Id);
             ViewBag.training = training;
             return View();
         }
 
+        public async Task<IActionResult> Signature()
+        {
+            await PopulateViewBags();
 
+            string presidentSignatureName = "President Signature";
+            string sealName = "Seal";
+
+            var presidentSignature = await _service.SignatureService.GetSignatureByNameAsync(presidentSignatureName);   
+            ViewBag.presidentSignature = presidentSignature;
+
+            var seal = await _service.StampService.GetStampByNameAsync(sealName);
+            ViewBag.seal = seal;
+            return View();
+        }
     }
 }

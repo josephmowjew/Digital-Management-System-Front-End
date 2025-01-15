@@ -1,0 +1,183 @@
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+@{
+    ViewData["Title"] = "Members";
+    Layout = "~/Areas/Secretariat/Views/shared/_Layout.cshtml";
+
+    var host = Configuration.GetSection("APIURL")["Link"];
+    var apiPrefix = Configuration.GetSection("APISettings")["API_Prefix"];
+}
+
+<div>
+    <img src="~/assets/images/91.gif" id="spinner" />
+</div>
+
+<div class="d-flex justify-content-between align-items-center mb-5">
+    <div>
+        <a asp-action="index" asp-controller="members" asp-area="secretariat" class="btn btn-secondary p-1">
+            <i class="bi bi-chevron-double-left"></i>
+            Back
+        </a>
+    </div>
+</div>
+
+<div class="row mb-4 px-3">
+    <div class="col-12 col-md-8">
+        <div class="py-2">
+            <h1 class="fs-4">
+                Member Name: @ViewBag.member.User.FullName
+            </h1>
+        </div>
+        <ul style="list-style-type: disc; padding-left">
+            <li><strong>Gender: </strong> @ViewBag.member.User.Gender</li>
+            <li><strong>Postal Address: </strong>@ViewBag.member.PostalAddress</li>
+            <li><strong>Email: </strong>@ViewBag.member.User.Email</li>
+            <li><strong>Permanent Address: </strong>@ViewBag.member.PermanentAddress</li>
+            <li><strong>Residential Address: </strong>@ViewBag.member.ResidentialAddress</li>
+            <li><strong>Date of Admission: </strong>@ViewBag.member.DateOfAdmissionToPractice</li>
+            <li><strong>Firm: </strong> </li>
+        </ul>
+    </div>
+
+    <div class="col-12 col-md-4">
+        @{
+            var profilePicture = ViewBag.member.User.ProfilePictures?.Count > 0 
+                ? ViewBag.member.User.ProfilePictures[0] 
+                : null;
+        }
+        @if (profilePicture != null)
+        {
+            <a href="@profilePicture.FilePath" data-lightbox="image-1" class="d-flex justify-content-center align-items-center">
+                <img src="@profilePicture.FilePath" alt="Profile picture" class="w-75 h-75" />
+            </a>
+        }
+        else
+        {
+            <div class="d-flex justify-content-center align-items-center">
+                <img src="~/assets/images/profile/user-1.jpg" alt="Default profile picture" class="w-75 h-75" />
+            </div>
+        }
+    </div>
+</div>
+
+<div class="card ">
+    <div class="card-body">
+
+        <h5 class="card-title fw-semibold mb-4 text-uppercase text-center fs-4">Member Licenses</h5>
+
+        <div class="table-responsive">
+            <table class="table table-bordered " id="my_table">
+                <thead>
+                    <tr>
+                        <th>
+                            Member Name
+                        </th>
+                        <th>
+                            License Status
+                        </th>
+                        <th>
+                            License Number
+                        </th>
+                        <th>
+                            Expiry Date
+                        </th>
+                        <th>
+                            Action
+                        </th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+
+    <script>
+        var datatable;
+        var tokenValue = '@ViewBag.token';
+        var host = '@host';
+    </script>
+    <script src="~/js/User.js" asp-append-version="true"></script>
+    <script>
+        $(document).ready(function () {
+            datatable = $('#my_table').DataTable({
+
+
+                "processing": true,
+                "serverSide": true,
+                "order": [[0, "desc"]],
+                ajax: {
+                    url: "@host/api/license/paged?memberId=" + @ViewBag.member.Id,
+                    type: 'get',
+                    datatype: 'Json', headers: {
+                        'Authorization': 'Bearer @ViewBag.token'
+                    },
+                   
+
+                },
+                columnDefs: [
+                    {
+                        defaultContent: "",
+                        targets: "_all",
+                        'orderable': true
+                    },
+                ],
+                columns: [
+                    {
+                        data: "member.user.fullName",
+                        name: "member",
+                        className: "text-left",
+                        "orderable": false,
+                    },
+                    {
+                        data: "status",
+                        name: "status",
+                        className: "text-left",
+                        "orderable": false,
+                    },
+                    {
+                        data: "licenseNumber",
+                        name: "licenseNumber",
+                        className: "text-left",
+                        "orderable": false,
+                    },
+                    {
+                        data: "expiryDate",
+                        name: "expiryDate",
+                        className: "text-left",
+                        "orderable": true,
+                        render: function (data, type, row) {
+                            if (!data) return "N/A";
+                            const date = new Date(data);
+                            const formattedDate = date.toLocaleDateString('en-GB', {
+                                day: '2-digit',
+                                month: '2-digit',
+                                year: 'numeric'
+                            });
+                            return formattedDate;
+                        }
+                    },
+                    {
+                        data: "id",
+                        name: "id",
+                        "orderable": false,
+                        render: function (data, type, row) {
+                            console.log(row);
+                            return "<a href='LicenseApplications/Details/" + data + "' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-eye text-lg' title='show details' > Download</a>"
+                        }
+                    }
+                ],
+                responsive: true,
+                "autoWidth": false,
+            });
+        });
+    </script>
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

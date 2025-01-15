@@ -19,7 +19,7 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
             _service = serviceRepository;
         }
         public async Task<IActionResult> Index()
-        {   
+        {
             string token = this.GetToken();
             this._service.Token = token;
             ViewBag.summedUnits = await this.GetSummedCPDUnits();
@@ -50,7 +50,8 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
             ViewBag.member = member;
 
             ViewBag.memberId = member?.Id;
-           
+
+            ViewBag.firms = await this.GetAllFirms();
 
             return View();
         }
@@ -80,7 +81,7 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
 
         private async Task PopulateViewBagsMinimal()
         {
-             //get the token
+            //get the token
             string token = this.GetToken();
             ViewBag.token = token;
             this._service.Token = token;
@@ -94,15 +95,15 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
 
         private string GetToken()
         {
-             return AuthHelper.GetToken(HttpContext);
-            
+            return AuthHelper.GetToken(HttpContext);
+
         }
         private async Task<List<SelectListItem>> GetIdentityTypes()
         {
             List<SelectListItem> identityTypes = new() { new SelectListItem() { Text = "---Select Identity Type---", Value = "" } };
 
             //get identity types from remote
-            var identityTypesFromRemote =  await this._service.IdentityTypeService.GetAllIdentityTypesAsync();
+            var identityTypesFromRemote = await this._service.IdentityTypeService.GetAllIdentityTypesAsync();
 
             if (identityTypesFromRemote != null)
             {
@@ -114,12 +115,12 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
 
             return identityTypes;
         }
-         private async Task<List<SelectListItem>> GetQualificationTypes()
+        private async Task<List<SelectListItem>> GetQualificationTypes()
         {
             List<SelectListItem> qualificationTypesList = new() { new SelectListItem() { Text = "---Select Qualification Type---", Value = "" } };
 
             //get identity types from remote
-            var qualificationTypeFromRemote =  (await this._service.QualificationTypeService.GetAllAsync()).ToList();
+            var qualificationTypeFromRemote = (await this._service.QualificationTypeService.GetAllAsync()).ToList();
 
             if (qualificationTypeFromRemote != null)
             {
@@ -132,12 +133,27 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
             return qualificationTypesList;
         }
 
+        private async Task<List<SelectListItem>> GetAllFirms()
+        {
+            List<SelectListItem> firmsList = new() { new SelectListItem() { Text = "---Select Firm---", Value = "" } };
+
+            var firmsFromRemote = await this._service.FirmService.GetAllFirmsAsync();
+            if (firmsFromRemote != null)
+            {
+                firmsFromRemote.ForEach(f =>
+                {
+                    firmsList.Add(new SelectListItem() { Text = f.Name, Value = f.Id.ToString() });
+                });
+            }
+            return firmsList;
+        }
+
 
         private async Task<List<SelectListItem>> GetPersonalTitles()
         {
             List<SelectListItem> personalTitlesList = new() { new SelectListItem() { Text = "---Select Title---", Value = "" } };
             //get identity types from remote
-            var titlesFromRemote =  await this._service.TitleService.GetAllTitlesAsync();
+            var titlesFromRemote = await this._service.TitleService.GetAllTitlesAsync();
 
             if (titlesFromRemote != null)
             {
@@ -153,7 +169,7 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
         {
             List<SelectListItem> rolesList = new() { new SelectListItem() { Text = "---Select Role---", Value = "" } };
             //get identity types from remote
-            var rolesFromRemote =  await this._service.RoleService.GetAllRolesAsync();
+            var rolesFromRemote = await this._service.RoleService.GetAllRolesAsync();
 
             if (rolesFromRemote != null)
             {
@@ -169,7 +185,7 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
         {
             List<SelectListItem> departmentsList = new() { new SelectListItem() { Text = "---Select Departments---", Value = "" } };
             //get identity types from remote
-            var departmentsFromRemote =  await this._service.DepartmentService.GetAllDepartmentsAsync();
+            var departmentsFromRemote = await this._service.DepartmentService.GetAllDepartmentsAsync();
 
             if (departmentsFromRemote != null)
             {
@@ -184,7 +200,7 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
         {
             List<SelectListItem> countriesList = new() { new SelectListItem() { Text = "---Select Country---", Value = "" } };
             //get countries  from remote
-            var countriesFromRemote =  await this._service.CountryService.GetCountries();
+            var countriesFromRemote = await this._service.CountryService.GetCountries();
 
             if (countriesFromRemote != null)
             {
@@ -200,11 +216,11 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
         {
             var member = await _service.MemberService.GetMemberByUserIdAsync(HttpContext.Request.Cookies["UserId"]);
 
-            if(member == null)
+            if (member == null)
             {
-               return 0;
+                return 0;
             }
-            
+
             //get member record to pass to the view
             var summedUnits = await _service.CpdUnitsEarnedService.GetCpdSummedUnitsEarnedById(member.Id);
 
@@ -234,9 +250,9 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
 
         private async Task<ReadYearOfOperationDTO> CurrentYearOfOperation()
         {
-           return await _service.YearOfOperationService.GetCurrentYearOfOperationAsync();
+            return await _service.YearOfOperationService.GetCurrentYearOfOperationAsync();
         }
-       
-    
+
+
     }
 }

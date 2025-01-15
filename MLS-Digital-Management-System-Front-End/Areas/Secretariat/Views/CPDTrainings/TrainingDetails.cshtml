@@ -1,11 +1,12 @@
 ﻿@using Microsoft.Extensions.Configuration
+@using System.Globalization
 @inject IConfiguration Configuration
 @{
     ViewData["Title"] = "CPD Trainings";
     Layout = "~/Areas/Secretariat/Views/shared/_Layout.cshtml";
 
     var host = Configuration.GetSection("APIURL")["Link"];
-    var apiPrefix =  Configuration.GetSection("APISettings")["API_Prefix"];
+    var apiPrefix = Configuration.GetSection("APISettings")["API_Prefix"];
 }
 
 <div>
@@ -22,8 +23,9 @@
 
     <div class="row gap-0">
         <div class="col-6">
-            <a href='#' onclick='cpdTrainingHandler.editForm(@ViewBag.training.Id, "@ViewBag.token")' class='btn btn-outline-primary btn-sm ti ti-pencil' title='edit'>Edit</a>
-            
+            <a href='#' onclick='cpdTrainingHandler.editForm(@ViewBag.training.Id, "@ViewBag.token")'
+                class='btn btn-outline-primary btn-sm ti ti-pencil' title='edit'>Edit</a>
+
         </div>
     </div>
 </div>
@@ -49,10 +51,22 @@
             <li>
                 <strong>Fees:</strong>
                 <ul>
-                    <li class="py-1">Physical Attendance (Members): <span class="badge bg-primary bg-opacity-85">@ViewBag.training.MemberPhysicalAttendanceFee</span></li>
-                    <li class="py-1">Virtual Attendance (Members): <span class="badge bg-success bg-opacity-85">@ViewBag.training.MemberVirtualAttendanceFee</span></li>
-                    <li class="py-1">Physical Attendance (Non-Members): <span class="badge bg-warning bg-opacity-85">@ViewBag.training.NonMemberPhysicalAttendanceFee</span></li>
-                    <li class="py-1">Virtulal Attendance (Non-Members): <span class="badge bg-info bg-opacity-85">@ViewBag.training.NonMemberVirtualAttandanceFee</span></li>
+                    <li class="py-1">Physical Attendance (Members): <span
+                            class="badge bg-primary bg-opacity-85">@ViewBag.training.MemberPhysicalAttendanceFee.ToString("C",
+                            new CultureInfo("en-MW") { NumberFormat = { CurrencySymbol = "MWK" } })</span>
+                    </li>
+                    <li class="py-1">Virtual Attendance (Members): <span
+                            class="badge bg-success bg-opacity-85">@ViewBag.training.MemberVirtualAttendanceFee.ToString("C",
+                            new CultureInfo("en-MW") { NumberFormat = { CurrencySymbol = "MWK" } })</span>
+                    </li>
+                    <li class="py-1">Physical Attendance (Non-Members): <span
+                            class="badge bg-warning bg-opacity-85">@ViewBag.training.NonMemberPhysicalAttendanceFee.ToString("C",
+                            new CultureInfo("en-MW") { NumberFormat = { CurrencySymbol = "MWK" } })</span>
+                    </li>
+                    <li class="py-1">Virtual Attendance (Non-Members): <span
+                            class="badge bg-info bg-opacity-85">@ViewBag.training.NonMemberVirtualAttandanceFee.ToString("C",
+                            new CultureInfo("en-MW") { NumberFormat = { CurrencySymbol = "MWK" } })</span>
+                    </li>
                 </ul>
             </li>
         </ul>
@@ -62,9 +76,11 @@
         @{
             var firstAttachment = ViewBag.training.Attachments?.Count > 0 ? ViewBag.training.Attachments[0] : null;
         }
-        
-        @if(firstAttachment != null){
-            <a href="@firstAttachment.FilePath" data-lightbox="image-1" class="d-flex justify-content-center align-items-center">
+
+        @if (firstAttachment != null)
+        {
+            <a href="@firstAttachment.FilePath" data-lightbox="image-1"
+                class="d-flex justify-content-center align-items-center">
                 <img src="@firstAttachment.FilePath" alt="cpd poster" class="w-75 h-75" />
             </a>
         }
@@ -104,7 +120,8 @@
         </div>
     </div>
     <div class="card-footer">
-        <button type="button" class="btn btn-success my-3" onclick="cpdTrainingHandler.markAttendance()">Mark Attendance</button>
+        <button type="button" class="btn btn-success my-3" onclick="cpdTrainingHandler.markAttendance()">Mark
+            Attendance</button>
     </div>
 </div>
 

@@ -189,6 +189,15 @@ class InvoiceRequestHandler {
                             name: "CustomerId",
                             className: "text-left",
                             "orderable": false,
+                            render: function (data, type, row) {
+                                return row.customer?.customerName ?? row.createdBy.fullName
+                            }
+                        },
+                        {
+                            data: "firm.name",
+                            name: "Firm",
+                            className: "text-left",
+                            "orderable": false,
                         },
                         {
                             data: "referencedEntity.title",
@@ -275,6 +284,12 @@ class InvoiceRequestHandler {
                         {
                             data: "referencedEntityType",
                             name: "referencedEntityType",
+                            className: "text-left",
+                            "orderable": false,
+                        },
+                        {
+                            data: "firm.name",
+                            name: "Firm",
                             className: "text-left",
                             "orderable": false,
                         },
@@ -371,6 +386,12 @@ class InvoiceRequestHandler {
                         {
                             data: "createdBy.email",
                             name: "createdBy.email",
+                            className: "text-left",
+                            "orderable": false,
+                        },
+                        {
+                            data: "firm.name",
+                            name: "Firm",
                             className: "text-left",
                             "orderable": false,
                         },

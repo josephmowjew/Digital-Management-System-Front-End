@@ -49,6 +49,7 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
             string token = AuthHelper.GetToken(HttpContext);
             ViewBag.token = token;
             this._service.Token = token;
+            ViewBag.institutionTypesList = await GetInstitutionTypes();
         }
 
         private async Task<List<SelectListItem>> GetAllMembersAsync()
@@ -62,13 +63,31 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
             {
                 memberListFromRemote.ForEach(member =>
                 {
-                    if(member.CustomerId != null){
+                    /*if(member.CustomerId != null){
                         membersList.Add(new SelectListItem() { Text = member.User.FullName, Value = member.Id.ToString() });
-                    }
+                    }*/
+                    membersList.Add(new SelectListItem() { Text = member.User.FullName, Value = member.Id.ToString() });
                 });
             }
 
             return membersList;
+        }
+        private async Task<List<SelectListItem>> GetInstitutionTypes()
+        {
+            List<SelectListItem> institutionTypes = new() { new SelectListItem() { Text = "---Select Institution Type---", Value = "" } };
+
+            //get institution types from remote
+            var institutionTypesFromRemote =  await this._service.InstitutionTypeService.GetAllInstitutionTypesAsync();
+
+            if (institutionTypesFromRemote != null)
+            {
+                institutionTypesFromRemote.ForEach(idType =>
+                {
+                    institutionTypes.Add(new SelectListItem() { Text = idType.Name, Value = idType.Id.ToString() });
+                });
+            }
+
+            return institutionTypes;
         }
     }
 }

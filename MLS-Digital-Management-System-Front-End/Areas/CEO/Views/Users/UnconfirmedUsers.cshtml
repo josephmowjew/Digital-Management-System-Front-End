@@ -11,7 +11,8 @@
 <div class="card">
     <div class="card-body">
         <a asp-action="Index" asp-area="ceo" asp-controller="Users" class="btn btn-success my-3 mx-1">View Active User Accounts</a>
-        <a asp-action="SuspendedUsers" asp-area="ceo" asp-controller="Users" class="btn btn-danger my-3 ">View Suspended Users</a>
+        <a asp-action="SuspendedUsers" asp-area="ceo" asp-controller="Users" class="btn btn-danger my-3 mx-1">View Suspended Users</a>
+        <a asp-action="MembersWithMissingRecords" asp-area="ceo" asp-controller="Users" class="btn btn-primary my-3 mx-1">Members Missing Records</a>
         <h5 class="card-title fw-semibold mb-4 text-uppercase">Unconfirmed Users</h5>
        
         <div class="table-responsive">
@@ -36,16 +37,12 @@
                         <th>
                             Role
                         </th>
-
                         <th>
                             Date Added
                         </th>
-
-                      
                         <th>
                             Action
                         </th>
-
                     </tr>
                 </thead>
                 <tbody>

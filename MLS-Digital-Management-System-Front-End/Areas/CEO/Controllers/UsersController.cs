@@ -40,6 +40,14 @@ namespace MLS_Digital_Management_System_Front_End.Areas.CEO.Controllers
             return View();
         }
 
+        [HttpGet]
+        public async Task<IActionResult> MembersWithMissingRecords()
+        {
+            await PopulateViewBags();
+
+            return View();
+        }
+
 
 
         private async Task PopulateViewBags()

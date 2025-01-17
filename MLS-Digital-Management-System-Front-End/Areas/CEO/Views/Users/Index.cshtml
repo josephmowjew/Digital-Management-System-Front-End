@@ -16,7 +16,8 @@
             Create User
         </button>
         <a asp-action="UnconfirmedUsers" asp-area="ceo" asp-controller="Users" class="btn btn-warning my-3 mx-1">View Unconfirmed Users</a>
-        <a asp-action="SuspendedUsers" asp-area="ceo" asp-controller="Users" class="btn btn-danger my-3 ">View Suspended Users</a>
+        <a asp-action="SuspendedUsers" asp-area="ceo" asp-controller="Users" class="btn btn-danger my-3 mx-1">View Suspended Users</a>
+        <a asp-action="MembersWithMissingRecords" asp-area="ceo" asp-controller="Users" class="btn btn-success my-3 mx-1">Members Missing Records</a>
         <!-- Modal -->
         <div class="modal fade" id="create_user_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <partial name="_CreateUserPartial" />

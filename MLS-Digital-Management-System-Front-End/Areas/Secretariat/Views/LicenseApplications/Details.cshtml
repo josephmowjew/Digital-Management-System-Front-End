@@ -405,13 +405,125 @@
                     </dd>
                 </div>
                 }
+                @if(!Model.FirstApplicationForLicense){
+                <div class="item">
+                    <dt>Valid Annual Professional Indemnity Insurance Cover</dt>
+                    <dd>
+                        <span class="status-label @(Model.HasValidAnnualProfessionalIndemnityInsuranceCover ? "status-yes" : "status-no")">
+                            @(Model.HasValidAnnualProfessionalIndemnityInsuranceCover ? "Yes" : "No")
+                        </span>
+                        @if (Model.HasValidAnnualProfessionalIndemnityInsuranceCover && Model.Attachments.Any(a => a.PropertyName.Contains("ValidAnnualProfessionalIndemnityInsuranceCoverAttachment")))
+                        {
+                            <button class="collapsible">Attachments</button>
+                            <div class="content attachment-container">
+                                @foreach (var attachment in Model.Attachments.Where(a => a.PropertyName.Contains("ValidAnnualProfessionalIndemnityInsuranceCoverAttachment")))
+                                {
+                                    <div class="attachment-card">
+                                        <i class="fa fa-paperclip"></i> @attachment.FileName
+                                        <a href="@attachment.FilePath" target="_blank" class="btn btn-primary btn-sm">View Attachment</a>
+                                    </div>
+                                }
+                            </div>
+                        }
+                        else if(!Model.HasValidAnnualProfessionalIndemnityInsuranceCover && !string.IsNullOrEmpty(Model.ExplanationForNoProfessionalIndemnityInsuranceCover)){
+                            <div class="my-3 text-warning"><strong>Explanation:</strong>
+                                <span class=text-muted>@Model.ExplanationForNoProfessionalIndemnityInsuranceCover</span>
+                            </div>
+                        
+                        }
+                    </dd>
+                </div>
+                }
+                @if(!Model.FirstApplicationForLicense){
+                <div class="item">
+                    <dt>Submitted Valid Tax Clearance Certificate</dt>
+                    <dd>
+                        <span class="status-label @(Model.SubmittedValidTaxClearanceCertificate ? "status-yes" : "status-no")">
+                            @(Model.SubmittedValidTaxClearanceCertificate ? "Yes" : "No")
+                        </span>
+                        @if (Model.SubmittedValidTaxClearanceCertificate && Model.Attachments.Any(a => a.PropertyName.Contains("SubmittedValidTaxClearanceCertificateeAttachment")))
+                        {
+                            <button class="collapsible">Attachments</button>
+                            <div class="content attachment-container">
+                                @foreach (var attachment in Model.Attachments.Where(a => a.PropertyName.Contains("SubmittedValidTaxClearanceCertificateAttachment")))
+                                {
+                                    <div class="attachment-card">
+                                        <i class="fa fa-paperclip"></i> @attachment.FileName
+                                        <a href="@attachment.FilePath" target="_blank" class="btn btn-primary btn-sm">View Attachment</a>
+                                    </div>
+                                }
+                            </div>
+                        }
+                        else if(!Model.SubmittedValidTaxClearanceCertificate && !string.IsNullOrEmpty(Model.ExplanationForNoValidTaxClearanceCertificate)){
+                            <div class="my-3 text-warning"><strong>Explanation:</strong>
+                                <span class=text-muted>@Model.ExplanationForNoValidTaxClearanceCertificate</span>
+                            </div>
+                        }
+                    </dd>
+                </div>
+                }
+                @if(!Model.FirstApplicationForLicense){
+                <div class="item">
+                    <dt>Submitted Accountant's Certificate</dt>
+                    <dd>
+                        <span class="status-label @(Model.SubmittedAccountantsCertificate ? "status-yes" : "status-no")">
+                            @(Model.SubmittedAccountantsCertificate ? "Yes" : "No")
+                        </span>
+                        @if (Model.SubmittedAccountantsCertificate && Model.Attachments.Any(a => a.PropertyName.Contains("SubmittedAccountantsCertificateAttachment")))
+                        {
+                            <button class="collapsible">Attachments</button>
+                            <div class="content attachment-container">
+                                @foreach (var attachment in Model.Attachments.Where(a => a.PropertyName.Contains("SubmittedAccountantsCertificateAttachment")))
+                                {
+                                    <div class="attachment-card">
+                                        <i class="fa fa-paperclip"></i> @attachment.FileName
+                                        <a href="@attachment.FilePath" target="_blank" class="btn btn-primary btn-sm">View Attachment</a>
+                                    </div>
+                                }
+                            </div>
+                        }
+                        else if(!Model.SubmittedAccountantsCertificate && !string.IsNullOrEmpty(Model.ExplanationForNoAccountantsCertificate)){
+                            <div class="my-3 text-warning"><strong>Explanation:</strong>
+                                <span class=text-muted>@Model.ExplanationForNoAccountantsCertificate</span>
+                            </div>
+                        }
+                    </dd>
+                </div>
+                }
+                @if(!Model.FirstApplicationForLicense){
+                <div class="item">
+                    <dt>Complied With Penalties Imposed Under The Act</dt>
+                    <dd>
+                        <span class="status-label @(Model.CompliedWithPenaltiesImposedUnderTheAct ? "status-yes" : "status-no")">
+                            @(Model.CompliedWithPenaltiesImposedUnderTheAct ? "Yes" : "No")
+                        </span>
+                        @if (Model.CompliedWithPenaltiesImposedUnderTheAct && Model.Attachments.Any(a => a.PropertyName.Contains("CompliedWithPenaltiesImposedUnderTheActAttachment")))
+                        {
+                            <button class="collapsible">Attachments</button>
+                            <div class="content attachment-container">
+                                @foreach (var attachment in Model.Attachments.Where(a => a.PropertyName.Contains("CompliedWithPenaltiesImposedUnderTheActAttachment")))
+                                {
+                                    <div class="attachment-card">
+                                        <i class="fa fa-paperclip"></i> @attachment.FileName
+                                        <a href="@attachment.FilePath" target="_blank" class="btn btn-primary btn-sm">View Attachment</a>
+                                    </div>
+                                }
+                            </div>
+                        }
+                        else if(!Model.CompliedWithPenaltiesImposedUnderTheAct && !string.IsNullOrEmpty(Model.ExplanationForNoComplianceWithPenalties)){
+                            <div class="my-3 text-warning"><strong>Explanation:</strong>
+                                <span class=text-muted>@Model.ExplanationForNoComplianceWithPenalties</span>
+                            </div>
+                        }
+                    </dd>
+                </div>
+                }
                 @if(Model.ApplicationStatus !="Denied" && Model.ApplicationStatus !="Approved" && Model.CurrentApprovalLevel.Department.Name.Equals("Administration and Operations", StringComparison.OrdinalIgnoreCase)){
                     <div class="item">
                         <button id="approve_license_application_btn"  class="btn btn-success" onclick="formHandler.acceptApplication('@Model.Id')">Verify Application</button>
                         <button id="reject_license_application_btn" class="btn btn-danger" onclick="formHandler.denyForm('@Model.Id')">Deny Application</button>
                     </div>
                 }
-                
                 <div class="item">
                     <div>
                         <img src="~/assets/images/91.gif" id="spinner" />

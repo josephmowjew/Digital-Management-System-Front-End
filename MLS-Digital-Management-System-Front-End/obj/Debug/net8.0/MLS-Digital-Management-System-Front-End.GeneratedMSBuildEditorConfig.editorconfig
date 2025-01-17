@@ -442,6 +442,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ0VPXFZpZXdzXFVzZXJzXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/arthu/Documents/Work/MLS project/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/CEO/Views/Users/MembersWithMissingRecords.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ0VPXFZpZXdzXFVzZXJzXE1lbWJlcnNXaXRoTWlzc2luZ1JlY29yZHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/arthu/Documents/Work/MLS project/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/CEO/Views/Users/SuspendedUsers.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ0VPXFZpZXdzXFVzZXJzXFN1c3BlbmRlZFVzZXJzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 

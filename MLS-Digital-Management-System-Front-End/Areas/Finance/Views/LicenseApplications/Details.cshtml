@@ -143,7 +143,7 @@
     <link rel="stylesheet" href="https://unpkg.com/bs-brain@2.0.4/tutorials/timelines/timeline-2/assets/css/timeline-2.css">
 }
 
-<a asp-action="index" asp-controller="LicenseApplications" asp-area="Secretariat" class="btn btn-secondary">Back To Appliactions</a>
+<a asp-action="index" asp-controller="LicenseApplications" asp-area="Finance" class="btn btn-secondary">Back To Applications</a>
 
  <div class="modal fade" id="deny_license_application_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <partial name="_DenyFormPartial" />
@@ -518,7 +518,7 @@
                     </dd>
                 </div>
                 }
-                @if(Model.ApplicationStatus !="Denied" && Model.ApplicationStatus !="Approved" && Model.CurrentApprovalLevel.Department.Name.Equals("Administration and Operations", StringComparison.OrdinalIgnoreCase)){
+                @if(Model.ApplicationStatus !="Denied" && Model.ApplicationStatus !="Approved" && Model.CurrentApprovalLevel.Department.Name.Equals("Finance", StringComparison.OrdinalIgnoreCase)){
                     <div class="item">
                         <button id="approve_license_application_btn"  class="btn btn-success" onclick="formHandler.acceptApplication('@Model.Id')">Verify Application</button>
                         <button id="reject_license_application_btn" class="btn btn-danger" onclick="formHandler.denyForm('@Model.Id')">Deny Application</button>

@@ -22,6 +22,8 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Executive.Controllers
             string token = AuthHelper.GetToken(HttpContext);;
             this._service.Token = token;
             ViewBag.currentYear = await CurrentYearOfOperation();
+
+            await PopulateViewBags();
             
             return View();
         }
@@ -52,6 +54,10 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Executive.Controllers
             ViewBag.countriesList = await GetCountries();
             ViewBag.qualificationTypesList = await GetQualificationTypes();
             ViewBag.currentYear = await CurrentYearOfOperation();
+            ViewBag.totalMembers = await this.GetMembersCount();
+            ViewBag.firmCount = await this.GetFirmsCount();
+            ViewBag.proBonos = await this.GetProBonos();
+            ViewBag.totalLicenseApplications = await this.GetLicenseApplications();
         }
 
         private async Task<ReadYearOfOperationDTO> CurrentYearOfOperation()
@@ -173,11 +179,31 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Executive.Controllers
             return summedUnits;
         }
 
+        private async Task<int> GetMembersCount()
+        {
+            var memberCount = await _service.MemberService.GetMembersCount();
+            return memberCount;
+        }
 
+        private async Task<int> GetLicenseApplications()
+        {
+            var totalLicenseApplications = await _service.LicenseApplicationService.GetLicenseApplicationsTotal();
 
+            return totalLicenseApplications;
+        }
 
+         private async Task<int> GetFirmsCount()
+        {
+            var firmCount = await _service.FirmService.GetFirmsCount();
 
+            return firmCount;
+        }
 
+        private async Task<int> GetProBonos()
+        {
+            var proBonoCount = await _service.ProBonoService.GetProBonoCountAsync();
 
+            return proBonoCount;
+        }
     }
 }

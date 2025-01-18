@@ -36,7 +36,7 @@
 </div>
 
 
-@section Scripts{
+@section Scripts {
     <script>
         var datatable;
         var tokenValue = '@ViewBag.token';
@@ -68,13 +68,16 @@
                         targets: "_all",
                         'orderable': true
                     },
-                ], 
+                ],
                 columns: [
                     {
                         data: "customer.customerName",
                         name: "CustomerId",
                         className: "text-left",
                         "orderable": false,
+                        render: function (data, type, row) {
+                            return row.customer?.customerName ?? row.createdBy.fullName
+                        }
                     },
                     {
                         data: "referencedEntity.title",
@@ -133,8 +136,8 @@
 
                             // Always add the View button with spacing
                             buttonsHtml += `
-                            <a href='ViewInvoiceRequest?invoiceRequestId=${data}' class='btn btn-primary btn-sm mx-2'>View</a>
-                        `;
+                                <a href='ViewInvoiceRequest?invoiceRequestId=${data}' class='btn btn-primary btn-sm mx-2'>View</a>
+                            `;
 
                             buttonsHtml += `</div>`;
 

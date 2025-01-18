@@ -50,6 +50,15 @@ class InvoiceRequestHandler {
             name: "CustomerId",
             className: "text-left",
             "orderable": false,
+            render: function (data, type, row) {
+              return row.customer?.customerName ?? row.createdBy.fullName
+            }
+          },
+          {
+            data: "firm.name",
+            name: "Firm",
+            className: "text-left",
+            "orderable": false,
           },
           {
             data: "referencedEntity.title",
@@ -63,7 +72,7 @@ class InvoiceRequestHandler {
             className: "text-left",
             orderable: true,
             render: function (data) {
-              return  data.toLocaleString('en-MW', { style: 'currency', currency: 'MWK' })
+              return data.toLocaleString('en-MW', { style: 'currency', currency: 'MWK' })
             }
           },
           {
@@ -104,42 +113,42 @@ class InvoiceRequestHandler {
             name: "id",
             "orderable": false,
             render: (data, type, row) => {
-                let buttonsHtml = `<div class="d-flex justify-content-center">`;
-        
-                if (row.status === "Pending") {
-                    buttonsHtml += `
+              let buttonsHtml = `<div class="d-flex justify-content-center">`;
+
+              if (row.status === "Pending") {
+                buttonsHtml += `
                         <button class='btn btn-warning btn-sm mx-2' onclick='invoiceRequestHandler.markAsGenerated(${data})'>Mark as Generated</button>
                     `;
-                } else if (row.status === "Generated") {
-                    buttonsHtml += `
+              } else if (row.status === "Generated") {
+                buttonsHtml += `
                         <button class='btn btn-success btn-sm mx-2' onclick='invoiceRequestHandler.markAsPaid(${data})'>Mark as Paid</button>
                     `;
-                }
-        
-                // Always add the View button with spacing
-                buttonsHtml += `
+              }
+
+              // Always add the View button with spacing
+              buttonsHtml += `
                     <a href='ViewInvoiceRequest?invoiceRequestId=${data}' class='btn btn-primary btn-sm mx-2'>View</a>
                 `;
-        
-                buttonsHtml += `</div>`;
-                
-                return buttonsHtml;
+
+              buttonsHtml += `</div>`;
+
+              return buttonsHtml;
             }
-        }
-        
-        
+          }
+
+
         ],
         responsive: true,
         "autoWidth": false,
         dom: 'Bfrtip', // Add this line
         buttons: [ // Add this block
-            {
-              extend: 'excelHtml5',
-                title: 'Invoice Requests',
-                exportOptions: {
-                    columns: ':not(:last-child)' // Exclude the last column (Actions column)
-                }
+          {
+            extend: 'excelHtml5',
+            title: 'Invoice Requests',
+            exportOptions: {
+              columns: ':not(:last-child)' // Exclude the last column (Actions column)
             }
+          }
         ]
       });
     });

@@ -258,7 +258,6 @@
                         name: "id",
                         "orderable": false,
                         render: function (data, type, row) {
-                            console.log(row)
                             const dueDate = new Date(row.registrationDueDate);
                             const today = new Date();
                             var memberRegistration = row.cpdTrainingRegistration.find(registration => registration.memberId == @ViewBag.MemberId);

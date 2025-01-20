@@ -16,6 +16,10 @@
             <div class="mb-4">
                 <a asp-action="Index" asp-area="secretariat" asp-controller="Members" class="btn btn-primary my-3 mx-1">All</a>
                 <a asp-action="UnlicensedMembers" asp-area="secretariat" asp-controller="Members" class="btn btn-warning my-3 ">Unlicensed</a>
+                <a asp-action="MembersWithMissingRecords" asp-area="secretariat" asp-asp-controller="Members" 
+                    class="btn btn-danger my-3 mx-1">
+                    Missing Records
+                </a>
             </div>
         </div>
         <div class="table-responsive">

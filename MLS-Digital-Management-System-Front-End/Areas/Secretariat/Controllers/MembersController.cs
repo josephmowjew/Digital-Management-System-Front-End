@@ -21,6 +21,14 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Secretariat.Controllers
             await PopulateViewBags();
             return View();
         }
+
+        [HttpGet]
+        public async Task<IActionResult> MembersWithMissingRecords()
+        {
+            await PopulateViewBags();
+
+            return View();
+        }
         public async Task<IActionResult> MemberDetails(string id)
         {
             await PopulateViewBags();

@@ -1,40 +1,32 @@
 @using Microsoft.Extensions.Configuration
 @inject IConfiguration Configuration
 @{
-    ViewData["Title"] = "Members";
-    Layout = "~/Areas/Secretariat/Views/shared/_Layout.cshtml";
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/CEO/Views/shared/_Layout.cshtml";
     var host = Configuration.GetSection("APIURL")["Link"];
 }
 
-<div>
-    <img src="~/assets/images/91.gif" id="spinner" />
-</div>
+
 
 <div class="card">
     <div class="card-body">
         <div class="justify-content-between d-flex">
-            <h5 class="card-title fw-semibold mb-4 text-uppercase">Unlicensed Members</h5>
+            <h5 class="card-title fw-semibold mb-4 text-uppercase">Members with Missing Records</h5>
 
             <div class="mb-4">
                 <a asp-action="Index" asp-area="secretariat" asp-controller="Members"
                     class="btn btn-primary my-3 mx-1">All</a>
                 <a asp-action="LicensedMembers" asp-area="secretariat" asp-controller="Members"
-                    class="btn btn-success my-3 mx-1">Licensed</a>
-                <a asp-action="MembersWithMissingRecords" asp-area="secretariat" asp-asp-controller="Members" 
-                    class="btn btn-danger my-3 mx-1">
-                    Missing Records
-                </a>  
-                <button type="button" class="btn btn-warning my-3 mx-2"
-                        onclick="markAsLicensed()">Mark As Licensed</button>
+                    class="btn btn-success my-3 ">Licensed</a>
+                <a asp-action="UnlicensedMembers" asp-area="secretariat" asp-controller="Members"
+                    class="btn btn-warning my-3 ">Unlicensed</a>
             </div>
         </div>
+
         <div class="table-responsive">
-            <table class="table table-bordered " id="members_table">
+            <table class="table table-bordered " id="my_table">
                 <thead>
                     <tr>
-                        <th>
-
-                        </th>
                         <th>
                             First Name
                         </th>
@@ -49,6 +41,9 @@
                         </th>
                         <th>
                             Contact
+                        </th>
+                        <th>
+                            Date Added
                         </th>
                     </tr>
                 </thead>
@@ -68,20 +63,19 @@
         var host = '@host';
     </script>
 
-    <script src="~/js/Member.js" asp-append-version="true"></script>
+    <script src="~/js/User.js" asp-append-version="true"></script>
     <script>
         $(document).ready(function () {
-            datatable = $('#members_table').DataTable({
+            datatable = $('#my_table').DataTable({
 
 
                 "processing": true,
                 "serverSide": true,
                 "order": [[0, "desc"]],
                 ajax: {
-                    url: `${host}/api/Members/getUnlicensedMembers`,
+                    url: `${host}/api/Users/getMembersWithMissingMemberRecord`,
                     type: 'get',
-                    datatype: 'Json',
-                    headers: {
+                    datatype: 'Json', headers: {
                         'Authorization': 'Bearer @ViewBag.token'
                     }
 
@@ -95,45 +89,50 @@
                 ],
                 columns: [
                     {
-                        data: "userId",
-                        name: "userId",
-                        className: "text-center",
-                        orderable: false,
-                        defaultContent: "",
-                        render: function (data, type, row) {
-                            return `<input type="checkbox" class="memberCheckbox" data-id="${row.userId}">`;
+                        data: "firstName",
+                        name: "firstName",
+                        className: "text-left",
+                        "orderable": true,
+                    },
+                    {
+                        data: "lastName",
+                        name: "lastName",
+                        className: "text-left",
+                        "orderable": true,
+                    },
+                    {
+                        data: "gender",
+                        name: "gender",
+                        className: "text-left",
+                        "orderable": true,
+                    },
+                    {
+                        data: "email",
+                        name: "email",
+                        className: "text-left",
+                        "orderable": true,
+                    },
+                    {
+                        data: "phoneNumber",
+                        name: "contact",
+                        className: "text-left",
+                        "orderable": true,
+                    },
+                    {
+                        data: "createdDate",
+                        name: "createdDate",
+                        className: "text-left",
+                        "orderable": true,
+                    },
+
+                    /*{
+                        data: "id",
+                        name: "id",
+                        "orderable": false,
+                        render: function (data) {
+                            return "<a href='#' onclick='Reactivate(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='ti ti-check btn btn-outline-primary' title='activate'> Activate</a> "
                         }
-                    },
-                    {
-                        data: "user.firstName",
-                        name: "user",
-                        className: "text-left",
-                        "orderable": true,
-                    },
-                    {
-                        data: "user.lastName",
-                        name: "user",
-                        className: "text-left",
-                        "orderable": true,
-                    },
-                    {
-                        data: "user.gender",
-                        name: "user",
-                        className: "text-left",
-                        "orderable": true,
-                    },
-                    {
-                        data: "user.email",
-                        name: "user",
-                        className: "text-left",
-                        "orderable": true,
-                    },
-                    {
-                        data: "user.phoneNumber",
-                        name: "user",
-                        className: "text-left",
-                        "orderable": true,
-                    },
+                    }*/
                 ],
                 responsive: true,
                 "autoWidth": false,

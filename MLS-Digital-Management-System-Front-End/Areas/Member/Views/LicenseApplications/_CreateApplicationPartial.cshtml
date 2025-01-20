@@ -2,205 +2,308 @@
 
 <!-- Modal -->
 <div class="modal-dialog modal-lg">
-  <div class="modal-content">
-    <div class="modal-header">
-      
-            
-            @if(ViewBag.hasPreviousLicenseApplication)
+    <div class="modal-content">
+        <div class="modal-header">
+
+
+            @if (ViewBag.hasPreviousLicenseApplication)
             {
-               <h5 class="modal-title" id="exampleModalLabel"> Renew License Application</h5>
-            }else{
+                <h5 class="modal-title" id="exampleModalLabel"> Renew License Application</h5>
+            }
+            else
+            {
                 <h5 class="modal-title" id="exampleModalLabel">New License Application</h5>
             }
-        </h5>
-      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-    </div>
-
-    <div class="modal-body">
-    <form id="myForm" asp-action="Create">
-        <input asp-for="Id" type="hidden"/>
-        <ul class="nav nav-tabs" id="myTab" role="tablist">
-        
-            <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="financial-tab" data-bs-toggle="tab" data-bs-target="#financial" type="button" role="tab" aria-controls="financial" aria-selected="true">Financial Contributions</button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="professional-tab" data-bs-toggle="tab" data-bs-target="#professional" type="button" role="tab" aria-controls="professional" aria-selected="false">Professional Requirements</button>
-            </li>
-        </ul>
-        <div class="tab-content" id="myTabContent mt-3">
-
-            <div class="tab-pane fade show active" id="financial" role="tabpanel" aria-labelledby="financial-tab">
-                <div id="tab1" class="tab-content mt-3">
-                <!-- Financial Contributions fields -->
-                    <div class="mb-3 form-check">
-                        <input type="checkbox" asp-for="ObtainedLeaveToRenewLicenseOutOfTime" class="form-check-input">
-                        <label class="form-check-label" for="ObtainedLeaveToRenewLicenseOutOfTime">Obtained Leave To Renew License Out Of Time</label>
-                        <div class="mt-3">
-                            <label for="ObtainedLeaveToRenewLicenseOutOfTimeAttachment" class="form-label">Enter Reason </label>
-                            <input asp-for="ObtainedLeaveToRenewLicenseOutOfTimeAttachment" type="file" class="form-control" />
-                        </div>
-                    </div>
-                      <div class="mb-3 form-check">
-                        <input type="checkbox" asp-for="PerformedFullMandatoryProBonoWork" class="form-check-input">
-                        <label class="form-check-label" for="PerformedFullMandatoryProBonoWork">Performed Full Mandatory Pro Bono Work</label>
-                        <div class="mt-3">
-                            <label for="PerformedFullMandatoryProBonoWorkAttachment" class="form-label">Enter Attachment for Performing Full Mandatory ProBono Work </label>
-                            <input asp-for="PerformedFullMandatoryProBonoWorkAttachment" type="file" class="form-control" />
-                        </div>
-                    </div>
-                    <div class="mb-3 form-check">
-                        <input type="checkbox" asp-for="PaidAnnualSubscriptionToSociety" class="form-check-input">
-                        <label class="form-check-label" for="PaidAnnualSubscriptionToSociety">Paid Annual Subscription To Society</label>
-                        <div class="mt-3">
-                            <label for="PaidAnnualSubscriptionToSocietyAttachment" class="form-label">Annual Subscription To Society Attachment</label>
-                            <input asp-for="PaidAnnualSubscriptionToSocietyAttachment" type="file" class="form-control" />
-                        </div>
-                    </div>
-                     <div class="mb-3">
-                        <label for="ExplanationForNoAnnualSubscriptionToSociety" class="form-label">Explanation For Not Paying Annual Subscription</label>
-                        <textarea  asp-for="ExplanationForNoAnnualSubscriptionToSociety" placeholder="Enter Explanation For Not Paying Annual Subscription" class="form-control" ></textarea>
-                    </div>
-
-                    <div class="mb-3 form-check">
-                        <input type="checkbox" class="form-check-input" asp-for="MadeContributionToFidelityFund">
-                        <label class="form-check-label" for="MadeContributionToFidelityFund">Made Contribution To Fidelity Fund</label>
-                        <div class="mt-3">
-                            <label for="MadeContributionToFidelityFundAttachment" class="form-label">Contribution To Fidelity Fund Attachment</label>
-                            <input asp-for="MadeContributionToFidelityFundAttachment" type="file" class="form-control" />
-                        </div>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="ExplanationForNoContributionToFidelityFund" class="form-label">Explanation For No Contribution To Fidelity Fund</label>
-                        <textarea  asp-for="ExplanationForNoContributionToFidelityFund" placeholder="Enter Explanation For No Contribution To Fidelity Fund" class="form-control" ></textarea>
-                    </div>
-
-                    <div class="mb-3 form-check">
-                        <input type="checkbox" class="form-check-input" asp-for="RemittedSocietysLevy" >
-                        <label class="form-check-label" for="RemittedSocietysLevy">Remitted Society's Levy</label>
-                        <div class="mt-3">
-                            <label for="RemittedSocietysLevyAttachment" class="form-label">Remitted Society's Levy Attachment</label>
-                            <input asp-for="RemittedSocietysLevyAttachment" type="file" class="form-control" />
-                        </div>
-                        
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="ExplanationForNoSocietysLevy" class="form-label">Explanation For No Society's Levy</label>
-                        <textarea asp-for="ExplanationForNoSocietysLevy" placeholder="Enter Explanation For No Society's Levy" class="form-control"></textarea>
-                    </div>
-
-                    <div class="mb-3 form-check">
-                        <input type="checkbox" class="form-check-input" asp-for="MadeContributionToMLSBuildingProjectFund">
-                        <label class="form-check-label" for="MadeContributionToMLSBuildingProjectFund">Made Contribution To MLS Building Project Fund</label>
-                        <div class="mt-3">
-                            <label for="MadeContributionToMLSBuildingProjectFundAttachment" class="form-label">Contribution To MLS Building Project Fund Attachment</label>
-                            <input asp-for="MadeContributionToMLSBuildingProjectFundAttachment" type="file" class="form-control" />
-                        </div>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="ExplanationForNoContributionToMLSBuildingProjectFund" class="form-label">Explanation For No Contribution To MLS Building Project Fund</label>
-                        <textarea asp-for="ExplanationForNoContributionToMLSBuildingProjectFund" placeholder="Enter Explanation For No Contribution To MLS Building Project Fund" class="form-control"></textarea>
-                    </div>
-                </div>
-            </div>
-            <div class="tab-pane fade" id="professional" role="tabpanel" aria-labelledby="professional-tab">
-
-                <div id="tab2" class="tab-content mt-3">
-                <!-- Professional Requirements fields -->
-                
-
-                <div class="mb-3 form-check">
-                    <input type="checkbox" class="form-check-input" asp-for="HasValidAnnualProfessionalIndemnityInsuranceCover">
-                    <label class="form-check-label" for="HasValidAnnualProfessionalIndemnityInsuranceCover">Has Valid Annual Professional Indemnity Insurance Cover</label>
-                    <div class="mt-3">
-                        <label for="HasValidAnnualProfessionalIndemnityInsuranceCoverAttachment" class="form-label">Valid Annual Professional Indemnity Insurance Cover Attachment</label>
-                        <input asp-for="HasValidAnnualProfessionalIndemnityInsuranceCoverAttachment" type="file" class="form-control" />
-                    </div>
-                </div>
-
-                <div class="mb-3">
-                    <label for="ExplanationForNoProfessionalIndemnityInsuranceCover" class="form-label">Explanation For No Professional Indemnity Insurance Cover</label>
-                    <textarea asp-for="ExplanationForNoProfessionalIndemnityInsuranceCover" placeholder="Enter Explanation For No Professional Indemnity Insurance Cover" class="form-control"></textarea>
-                </div>
-
-                <div class="mb-3 form-check">
-                    <input type="checkbox" class="form-check-input" asp-for="SubmittedValidTaxClearanceCertificate">
-                    <label class="form-check-label" for="SubmittedValidTaxClearanceCertificate">Submitted Valid Tax Clearance Certificate</label>
-                    <div class="mt-3">
-                        <label for="SubmittedValidTaxClearanceCertificateAttachment" class="form-label">Valid Tax Clearance Certificate Attachment</label>
-                        <input asp-for="SubmittedValidTaxClearanceCertificateAttachment" type="file" class="form-control" />
-                    </div>
-                </div>
-
-                <div class="mb-3">
-                    <label for="ExplanationForNoValidTaxClearanceCertificate" class="form-label">Explanation For No Valid Tax Clearance Certificate</label>
-                    <textarea asp-for="ExplanationForNoValidTaxClearanceCertificate" placeholder="Enter Explanation For No Valid Tax Clearance Certificate" class="form-control"></textarea>
-                </div>
-
-                <div class="mb-3 form-check">
-                    <input type="checkbox" class="form-check-input" asp-for="SubmittedAccountantsCertificate">
-                    <label class="form-check-label" for="SubmittedAccountantsCertificate">Submitted Accountant's Certificate</label>
-                    <div class="mt-3">
-                        <label for="SubmittedAccountantsCertificateAttachment" class="form-label">Accountant's Certificate Attachment</label>
-                        <input asp-for="SubmittedAccountantsCertificateAttachment" type="file" class="form-control" />
-                    </div>
-                </div>
-
-                <div class="mb-3">
-                    <label for="ExplanationForNoAccountantsCertificate" class="form-label">Explanation For No Accountant's Certificate</label>
-                    <textarea asp-for="ExplanationForNoAccountantsCertificate" placeholder="Enter Explanation For No Accountant's Certificate" class="form-control"></textarea>
-                </div>
-
-                <div class="mb-3 form-check">
-                    <input type="checkbox" class="form-check-input" asp-for="CompliedWithPenaltiesImposedUnderTheAct">
-                    <label class="form-check-label" for="CompliedWithPenaltiesImposedUnderTheAct">Complied With Penalties Imposed Under The Act</label>
-                    <div class="mt-3">
-                        <label for="CompliedWithPenaltiesImposedUnderTheActAttachment" class="form-label">Complied With Penalties Imposed Under The Act Attachment</label>
-                        <input asp-for="CompliedWithPenaltiesImposedUnderTheActAttachment" type="file" class="form-control" />
-                    </div>
-                </div>
-
-                <div class="mb-3">
-                    <label for="ExplanationForNoComplianceWithPenalties" class="form-label">Explanation For No Compliance With Penalties</label>
-                    <textarea asp-for="ExplanationForNoComplianceWithPenalties" placeholder="Enter Explanation For No Compliance With Penalties" class="form-control"></textarea>
-                </div>
-                <div>
-                    
-                </div>
-                <div class="mb-3 form-check">
-                    <input type="checkbox" class="form-check-input" asp-for="CertificateOfAdmission">
-                    <label class="form-check-label" for="CertificateOfAdmission">Submitted Certificate Of Admission</label>
-                    <div class="mt-3">
-                        <label for="CertificateOfAdmissionAttachment" class="form-label">Certificate Of Admission Attachment</label>
-                        <input asp-for="CertificateOfAdmissionAttachment" type="file" class="form-control" />
-                    </div>
-                </div>
-
-                <div class="mb-3 ">
-                    <label for="ExplanationForNotSubmittingCertificateOfAdmission" class="form-label">Explanation For Not Submitting Certificate Of Admission</label>
-                    <textarea asp-for="ExplanationForNotSubmittingCertificateOfAdmission" placeholder="Enter Explanation For Not Submitting Certificate Of Admission" class="form-control"></textarea>
-                </div>
-                  <div class="mb-3">
-                        <label asp-for="FirmId" class="form-label"></label>
-                        <select required asp-for="FirmId" asp-items="@ViewBag.firmsList" class="form-control"></select>
-                        <span asp-validation-for="FirmId" class="text-danger"></span>
-                  </div>
-                </div>
-            </div>
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-    </form>
+
+        <div class="modal-body">
+            <form id="myForm" asp-action="Create">
+                <input asp-for="Id" type="hidden" />
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="financial-tab" data-bs-toggle="tab"
+                            data-bs-target="#financial" type="button" role="tab" aria-controls="financial"
+                            aria-selected="true">Financial Contributions</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="professional-tab" data-bs-toggle="tab"
+                            data-bs-target="#professional" type="button" role="tab" aria-controls="professional"
+                            aria-selected="false">Professional Requirements</button>
+                    </li>
+                </ul>
+                <div class="tab-content" id="myTabContent mt-3">
+
+                    <div class="tab-pane fade show active" id="financial" role="tabpanel"
+                        aria-labelledby="financial-tab">
+                        <div id="tab1" class="tab-content mt-3">
+                            <!-- Financial Contributions fields -->
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" asp-for="ObtainedLeaveToRenewLicenseOutOfTime"
+                                    class="form-check-input">
+                                <label class="form-check-label" for="ObtainedLeaveToRenewLicenseOutOfTime">Obtained
+                                    Leave To Renew License Out Of Time</label>
+                                <div class="mt-3">
+                                    <label for="ObtainedLeaveToRenewLicenseOutOfTimeAttachment"
+                                        class="form-label">Upload Attachment for Leave Obtained</label>
+                                    <input asp-for="ObtainedLeaveToRenewLicenseOutOfTimeAttachment" type="file"
+                                        class="form-control" />
+                                </div>
+                            </div>
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" asp-for="PerformedFullMandatoryProBonoWork"
+                                    class="form-check-input">
+                                <label class="form-check-label" for="PerformedFullMandatoryProBonoWork">Performed Full
+                                    Mandatory Pro Bono Work</label>
+                                <div class="mt-3">
+                                    <label for="PerformedFullMandatoryProBonoWorkAttachment" class="form-label">Upload
+                                        Attachment for Performing Full Mandatory ProBono Work </label>
+                                    <input asp-for="PerformedFullMandatoryProBonoWorkAttachment" type="file"
+                                        class="form-control" />
+                                </div>
+                            </div>
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" asp-for="PaidAnnualSubscriptionToSociety"
+                                    class="form-check-input">
+                                <label class="form-check-label" for="PaidAnnualSubscriptionToSociety">Paid Annual
+                                    Subscription To Society</label>
+                                <div class="mt-3">
+                                    <label for="PaidAnnualSubscriptionToSocietyAttachment" class="form-label">Annual
+                                        Subscription To Society Attachment</label>
+                                    <input asp-for="PaidAnnualSubscriptionToSocietyAttachment" type="file"
+                                        class="form-control" />
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="ExplanationForNoAnnualSubscriptionToSociety" class="form-label">Explanation
+                                    For Not Paying Annual Subscription</label>
+                                <textarea asp-for="ExplanationForNoAnnualSubscriptionToSociety"
+                                    placeholder="Enter Explanation For Not Paying Annual Subscription"
+                                    class="form-control"></textarea>
+                            </div>
+
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" class="form-check-input"
+                                    asp-for="MadeContributionToFidelityFund">
+                                <label class="form-check-label" for="MadeContributionToFidelityFund">Made Contribution
+                                    To Fidelity Fund</label>
+                                <div class="mt-3">
+                                    <label for="MadeContributionToFidelityFundAttachment"
+                                        class="form-label">Contribution To Fidelity Fund Attachment</label>
+                                    <input asp-for="MadeContributionToFidelityFundAttachment" type="file"
+                                        class="form-control" />
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="ExplanationForNoContributionToFidelityFund" class="form-label">Explanation
+                                    For No Contribution To Fidelity Fund</label>
+                                <textarea asp-for="ExplanationForNoContributionToFidelityFund"
+                                    placeholder="Enter Explanation For No Contribution To Fidelity Fund"
+                                    class="form-control"></textarea>
+                            </div>
+
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" class="form-check-input" asp-for="RemittedSocietysLevy">
+                                <label class="form-check-label" for="RemittedSocietysLevy">Remitted Society's
+                                    Levy</label>
+                                <div class="mt-3">
+                                    <label for="RemittedSocietysLevyAttachment" class="form-label">Remitted Society's
+                                        Levy Attachment</label>
+                                    <input asp-for="RemittedSocietysLevyAttachment" type="file" class="form-control" />
+                                </div>
+
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="ExplanationForNoSocietysLevy" class="form-label">Explanation For No
+                                    Society's Levy</label>
+                                <textarea asp-for="ExplanationForNoSocietysLevy"
+                                    placeholder="Enter Explanation For No Society's Levy"
+                                    class="form-control"></textarea>
+                            </div>
+
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" class="form-check-input"
+                                    asp-for="MadeContributionToMLSBuildingProjectFund">
+                                <label class="form-check-label" for="MadeContributionToMLSBuildingProjectFund">Made
+                                    Contribution To MLS Building Project Fund</label>
+                                <div class="mt-3">
+                                    <label for="MadeContributionToMLSBuildingProjectFundAttachment"
+                                        class="form-label">Contribution To MLS Building Project Fund Attachment</label>
+                                    <input asp-for="MadeContributionToMLSBuildingProjectFundAttachment" type="file"
+                                        class="form-control" />
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="ExplanationForNoContributionToMLSBuildingProjectFund"
+                                    class="form-label">Explanation For No Contribution To MLS Building Project
+                                    Fund</label>
+                                <textarea asp-for="ExplanationForNoContributionToMLSBuildingProjectFund"
+                                    placeholder="Enter Explanation For No Contribution To MLS Building Project Fund"
+                                    class="form-control"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="professional" role="tabpanel" aria-labelledby="professional-tab">
+
+                        <div id="tab2" class="tab-content mt-3">
+                            <!-- Professional Requirements fields -->
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" class="form-check-input" asp-for="AttainedMinimumNumberOfCLEUnits">
+                                <label class="form-check-label" for="AttainedMinimumNumberOfCLEUnits">Attained Minimum Number Of CLE Units</label>
+                                <div class="mt-3">
+                                    <label for="AttainedMinimumNumberOfCLEUnitsAttachment" class="form-label">CLE Units Attachment</label>
+                                    <input asp-for="AttainedMinimumNumberOfCLEUnitsAttachment" type="file"
+                                        class="form-control" />
+                                </div>
+                            </div>
+
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" class="form-check-input" asp-for="RenewedLicensePreviousYear">
+                                <label class="form-check-label" for="AttainedMinimumNumberOfCLEUnits">Renewed License Previous Year</label>
+                            </div>
+
+                            <div class="mb-3 ">
+                                <label for="ExplanationForNotSubmittingCertificateOfAdmission"
+                                    class="form-label">Explanation For Not Submitting Certificate Of Admission</label>
+                                <textarea asp-for="ExplanationForNotSubmittingCertificateOfAdmission"
+                                    placeholder="Enter Explanation For Not Submitting Certificate Of Admission"
+                                    class="form-control"></textarea>
+                            </div>
+
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" class="form-check-input"
+                                    asp-for="HasValidAnnualProfessionalIndemnityInsuranceCover">
+                                <label class="form-check-label"
+                                    for="HasValidAnnualProfessionalIndemnityInsuranceCover">Has Valid Annual
+                                    Professional Indemnity Insurance Cover</label>
+                                <div class="mt-3">
+                                    <label for="HasValidAnnualProfessionalIndemnityInsuranceCoverAttachment"
+                                        class="form-label">Valid Annual Professional Indemnity Insurance Cover
+                                        Attachment</label>
+                                    <input asp-for="HasValidAnnualProfessionalIndemnityInsuranceCoverAttachment"
+                                        type="file" class="form-control" />
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="ExplanationForNoProfessionalIndemnityInsuranceCover"
+                                    class="form-label">Explanation For No Professional Indemnity Insurance Cover</label>
+                                <textarea asp-for="ExplanationForNoProfessionalIndemnityInsuranceCover"
+                                    placeholder="Enter Explanation For No Professional Indemnity Insurance Cover"
+                                    class="form-control"></textarea>
+                            </div>
+
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" class="form-check-input"
+                                    asp-for="SubmittedValidTaxClearanceCertificate">
+                                <label class="form-check-label" for="SubmittedValidTaxClearanceCertificate">Submitted
+                                    Valid Tax Clearance Certificate</label>
+                                <div class="mt-3">
+                                    <label for="SubmittedValidTaxClearanceCertificateAttachment"
+                                        class="form-label">Valid Tax Clearance Certificate Attachment</label>
+                                    <input asp-for="SubmittedValidTaxClearanceCertificateAttachment" type="file"
+                                        class="form-control" />
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="ExplanationForNoValidTaxClearanceCertificate" class="form-label">Explanation
+                                    For No Valid Tax Clearance Certificate</label>
+                                <textarea asp-for="ExplanationForNoValidTaxClearanceCertificate"
+                                    placeholder="Enter Explanation For No Valid Tax Clearance Certificate"
+                                    class="form-control"></textarea>
+                            </div>
+
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" class="form-check-input"
+                                    asp-for="SubmittedAccountantsCertificate">
+                                <label class="form-check-label" for="SubmittedAccountantsCertificate">Submitted
+                                    Accountant's Certificate</label>
+                                <div class="mt-3">
+                                    <label for="SubmittedAccountantsCertificateAttachment"
+                                        class="form-label">Accountant's Certificate Attachment</label>
+                                    <input asp-for="SubmittedAccountantsCertificateAttachment" type="file"
+                                        class="form-control" />
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="ExplanationForNoAccountantsCertificate" class="form-label">Explanation For
+                                    No Accountant's Certificate</label>
+                                <textarea asp-for="ExplanationForNoAccountantsCertificate"
+                                    placeholder="Enter Explanation For No Accountant's Certificate"
+                                    class="form-control"></textarea>
+                            </div>
+
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" class="form-check-input"
+                                    asp-for="CompliedWithPenaltiesImposedUnderTheAct">
+                                <label class="form-check-label" for="CompliedWithPenaltiesImposedUnderTheAct">Complied
+                                    With Penalties Imposed Under The Act</label>
+                                <div class="mt-3">
+                                    <label for="CompliedWithPenaltiesImposedUnderTheActAttachment"
+                                        class="form-label">Complied With Penalties Imposed Under The Act
+                                        Attachment</label>
+                                    <input asp-for="CompliedWithPenaltiesImposedUnderTheActAttachment" type="file"
+                                        class="form-control" />
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="ExplanationForNoComplianceWithPenalties" class="form-label">Explanation For
+                                    No Compliance With Penalties</label>
+                                <textarea asp-for="ExplanationForNoComplianceWithPenalties"
+                                    placeholder="Enter Explanation For No Compliance With Penalties"
+                                    class="form-control"></textarea>
+                            </div>
+                            <div>
+
+                            </div>
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" class="form-check-input" asp-for="CertificateOfAdmission">
+                                <label class="form-check-label" for="CertificateOfAdmission">Submitted Certificate Of
+                                    Admission</label>
+                                <div class="mt-3">
+                                    <label for="CertificateOfAdmissionAttachment" class="form-label">Certificate Of
+                                        Admission Attachment</label>
+                                    <input asp-for="CertificateOfAdmissionAttachment" type="file"
+                                        class="form-control" />
+                                </div>
+                            </div>
+
+                            <div class="mb-3 ">
+                                <label for="ExplanationForNotSubmittingCertificateOfAdmission"
+                                    class="form-label">Explanation For Not Submitting Certificate Of Admission</label>
+                                <textarea asp-for="ExplanationForNotSubmittingCertificateOfAdmission"
+                                    placeholder="Enter Explanation For Not Submitting Certificate Of Admission"
+                                    class="form-control"></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label asp-for="FirmId" class="form-label"></label>
+                                <select required asp-for="FirmId" asp-items="@ViewBag.firmsList"
+                                    class="form-control"></select>
+                                <span asp-validation-for="FirmId" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-warning" id="save_application_btn" name="save_application_btn">Save
+                Draft</button>
+            @* <button type="button" class="btn btn-success" id="resume_application_btn" name="resume_application_btn">Resume Application</button> *@
+            <button type="button" class="btn btn-primary" id="create_application_btn"
+                name="create_application_btn">Submit Application</button>
+        </div>
 
     </div>
-
-    <div class="modal-footer">
-      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-      <button type="button" class="btn btn-warning" id="save_application_btn" name="save_application_btn">Save Draft</button>
-      @* <button type="button" class="btn btn-success" id="resume_application_btn" name="resume_application_btn">Resume Application</button> *@
-      <button type="button" class="btn btn-primary" id="create_application_btn" name="create_application_btn">Submit Application</button>
-    </div>
-
-  </div>
 </div>

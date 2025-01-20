@@ -319,7 +319,7 @@
             </p>
             <div class="details">
                 <p>WE HEREBY CERTIFY that <br /><br /><strong id="recipientName"
-                        style="font-size: 20px;">@ViewBag.license.Member.User.FirstName @ViewBag.license.Member.User.OtherName @ViewBag.license.Member.User.LastName</strong></p>
+                        style="font-size: 20px;">@ViewBag.license.Member.User.FirstName @(ViewBag.license.Member.User.OtherName ?? "" ) @ViewBag.license.Member.User.LastName</strong></p>
                 <p>of <strong>@ViewBag.license.Member.Firm.Name <br /> <span
                             style="font-size: 14px;">@ViewBag.license.Member.Firm.PostalAddress</span></strong></p>
                 <p style="font-size: 15px;">is licenced to act as Legal Practitioner in the Malawi Supreme Court of

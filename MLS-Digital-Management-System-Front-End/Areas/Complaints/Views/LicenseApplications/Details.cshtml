@@ -402,6 +402,19 @@
                             </div>
                         
                         }
+                        else if (Model.AttainedMinimumNumberOfCLEUnits && Model.Attachments.Any(a => a.PropertyName.Contains("AttainedMinimumNumberOfCLEUnitsAttachment")))
+                        {
+                            <button class="collapsible">Attachments</button>
+                            <div class="content attachment-container">
+                                @foreach (var attachment in Model.Attachments.Where(a => a.PropertyName.Contains("AttainedMinimumNumberOfCLEUnitsAttachment")))
+                                {
+                                    <div class="attachment-card">
+                                        <i class="fa fa-paperclip"></i> @attachment.FileName
+                                        <a href="@attachment.FilePath" target="_blank" class="btn btn-primary btn-sm">View Attachment</a>
+                                    </div>
+                                }
+                            </div>
+                        }
                     </dd>
                 </div>
                 }
@@ -485,34 +498,6 @@
                         else if(!Model.SubmittedAccountantsCertificate && !string.IsNullOrEmpty(Model.ExplanationForNoAccountantsCertificate)){
                             <div class="my-3 text-warning"><strong>Explanation:</strong>
                                 <span class=text-muted>@Model.ExplanationForNoAccountantsCertificate</span>
-                            </div>
-                        }
-                    </dd>
-                </div>
-                }
-                @if(!Model.FirstApplicationForLicense){
-                <div class="item">
-                    <dt>Complied With Penalties Imposed Under The Act</dt>
-                    <dd>
-                        <span class="status-label @(Model.CompliedWithPenaltiesImposedUnderTheAct ? "status-yes" : "status-no")">
-                            @(Model.CompliedWithPenaltiesImposedUnderTheAct ? "Yes" : "No")
-                        </span>
-                        @if (Model.CompliedWithPenaltiesImposedUnderTheAct && Model.Attachments.Any(a => a.PropertyName.Contains("CompliedWithPenaltiesImposedUnderTheActAttachment")))
-                        {
-                            <button class="collapsible">Attachments</button>
-                            <div class="content attachment-container">
-                                @foreach (var attachment in Model.Attachments.Where(a => a.PropertyName.Contains("CompliedWithPenaltiesImposedUnderTheActAttachment")))
-                                {
-                                    <div class="attachment-card">
-                                        <i class="fa fa-paperclip"></i> @attachment.FileName
-                                        <a href="@attachment.FilePath" target="_blank" class="btn btn-primary btn-sm">View Attachment</a>
-                                    </div>
-                                }
-                            </div>
-                        }
-                        else if(!Model.CompliedWithPenaltiesImposedUnderTheAct && !string.IsNullOrEmpty(Model.ExplanationForNoComplianceWithPenalties)){
-                            <div class="my-3 text-warning"><strong>Explanation:</strong>
-                                <span class=text-muted>@Model.ExplanationForNoComplianceWithPenalties</span>
                             </div>
                         }
                     </dd>

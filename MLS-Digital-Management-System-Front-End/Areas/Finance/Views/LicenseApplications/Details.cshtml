@@ -492,27 +492,28 @@
                 }
                 @if(!Model.FirstApplicationForLicense){
                 <div class="item">
-                    <dt>Complied With Penalties Imposed Under The Act</dt>
+                    <dt>Attained Minimum Number of CLE Units</dt>
                     <dd>
-                        <span class="status-label @(Model.CompliedWithPenaltiesImposedUnderTheAct ? "status-yes" : "status-no")">
-                            @(Model.CompliedWithPenaltiesImposedUnderTheAct ? "Yes" : "No")
+                        <span class="status-label @(Model.AttainedMinimumNumberOfCLEUnits ? "status-yes" : "status-no")">
+                            @(Model.AttainedMinimumNumberOfCLEUnits ? "Yes" : "No")
                         </span>
-                        @if (Model.CompliedWithPenaltiesImposedUnderTheAct && Model.Attachments.Any(a => a.PropertyName.Contains("CompliedWithPenaltiesImposedUnderTheActAttachment")))
+                        @if(!Model.AttainedMinimumNumberOfCLEUnits && !string.IsNullOrEmpty(Model.ExplanationForNoMinimumNumberOfCLEUnits)){
+                            <div class="my-3 text-warning"><strong>Explanation:</strong>
+                                <span class=text-muted>@Model.ExplanationForNoMinimumNumberOfCLEUnits</span>
+                            </div>
+                        
+                        }
+                        else if (Model.AttainedMinimumNumberOfCLEUnits && Model.Attachments.Any(a => a.PropertyName.Contains("AttainedMinimumNumberOfCLEUnitsAttachment")))
                         {
                             <button class="collapsible">Attachments</button>
                             <div class="content attachment-container">
-                                @foreach (var attachment in Model.Attachments.Where(a => a.PropertyName.Contains("CompliedWithPenaltiesImposedUnderTheActAttachment")))
+                                @foreach (var attachment in Model.Attachments.Where(a => a.PropertyName.Contains("AttainedMinimumNumberOfCLEUnitsAttachment")))
                                 {
                                     <div class="attachment-card">
                                         <i class="fa fa-paperclip"></i> @attachment.FileName
                                         <a href="@attachment.FilePath" target="_blank" class="btn btn-primary btn-sm">View Attachment</a>
                                     </div>
                                 }
-                            </div>
-                        }
-                        else if(!Model.CompliedWithPenaltiesImposedUnderTheAct && !string.IsNullOrEmpty(Model.ExplanationForNoComplianceWithPenalties)){
-                            <div class="my-3 text-warning"><strong>Explanation:</strong>
-                                <span class=text-muted>@Model.ExplanationForNoComplianceWithPenalties</span>
                             </div>
                         }
                     </dd>

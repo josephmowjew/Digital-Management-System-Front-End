@@ -1378,6 +1378,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU2VjcmV0YXJpYXRcVmlld3NcTWVtYmVyc1xtZW1iZXJEZXRhaWxzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/arthu/Documents/Work/MLS project/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Secretariat/Views/Members/MembersWithMissingRecords.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU2VjcmV0YXJpYXRcVmlld3NcTWVtYmVyc1xNZW1iZXJzV2l0aE1pc3NpbmdSZWNvcmRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/arthu/Documents/Work/MLS project/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Secretariat/Views/Members/unlicensedMembers.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU2VjcmV0YXJpYXRcVmlld3NcTWVtYmVyc1x1bmxpY2Vuc2VkTWVtYmVycy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 

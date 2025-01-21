@@ -334,9 +334,9 @@ function upDateUser(token) {
     var authenticationToken = $("#edit_user_modal input[name='__RequestVerificationToken']").val();
 
     //get the form itself 
-    var form = $("#edit_user_modal form");
+    var form = $("#edit_user_modal form")[0];
 
-    var formData = {};
+    var formData = new FormData(form);
 
     // Iterate over the form's elements and build the formData object dynamically
     $(form).find('input, select, textarea').each(function (index, element) {
@@ -361,8 +361,9 @@ function upDateUser(token) {
     $.ajax({
         url: `${host}/api/users/` + id,
         type: 'PUT',
-        data: formDataJson,
-        contentType: 'application/json',
+        data: formData,
+        processData: false, // Set processData to false to prevent automatic serialization
+        contentType: false,
         headers: {
             'Authorization': "Bearer " + token
         },
@@ -494,9 +495,9 @@ function updateMember(token) {
     var authenticationToken = $("#edit_user_modal input[name='__RequestVerificationToken']").val();
 
     //get the form itself 
-    var form = $("#edit_user_modal form");
+    var form = $("#edit_user_modal form")[0];
 
-    var formData = {};
+    var formData = new FormData(form);
 
     // Iterate over the form's elements and build the formData object dynamically
     $(form).find('input, select, textarea').each(function (index, element) {
@@ -511,6 +512,8 @@ function updateMember(token) {
     // Convert formData object to an array of key-value pairs
     const formDataEntries = Object.entries(formData);
 
+    //console.log(formDataEntries)
+
     // Convert the array of key-value pairs back to an object
     const formDataObject = Object.fromEntries(formDataEntries);
 
@@ -522,8 +525,9 @@ function updateMember(token) {
     $.ajax({
         url: `${host}/api/users/` + id,
         type: 'PUT',
-        data: JSON.stringify(formData),
-        contentType: 'application/json',
+        data: formData,
+        processData: false, // Set processData to false to prevent automatic serialization
+        contentType: false,
         headers: {
             'Authorization': "Bearer " + token
         },
@@ -544,8 +548,7 @@ function updateMember(token) {
 
             $("#edit_user_modal").modal("hide");
 
-            //dataTable.ajax.reload();
-            location.reload();
+            dataTable.ajax.reload();
         },
         error: function (xhr, ajaxOtions, thrownError) {
 

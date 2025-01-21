@@ -40,7 +40,6 @@ $(function () {
             // Skip the file input as we've handled it separately
             if (fieldName && field.attr('type') !== 'file') {
                 var fieldValue = field.val();
-                console.log(field.attr('name'));
                 formData.append(fieldName, fieldValue);
             }
         });

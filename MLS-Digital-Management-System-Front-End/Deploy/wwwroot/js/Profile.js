@@ -129,9 +129,13 @@ function EditForm(id) {
         $("#update_user_form form").find('input, select').each(function (index, element) {
             var field = $(element);
             var fieldName = field.attr('name');
-            var dataKey = fieldMap[fieldName]; // Get corresponding key from data
-            var fieldValue = data[dataKey]; // Get value from data based on key
-            field.val(fieldValue); // Set field value
+            
+            // Skip the profile picture field
+            if (fieldName !== 'ProfilePictures') {
+                var dataKey = fieldMap[fieldName]; // Get corresponding key from data
+                var fieldValue = data[dataKey]; // Get value from data based on key
+                field.val(fieldValue); // Set field value
+            }
         });
         // Set additional fields like DateOfBirth
         var currentDate = new Date(data.dateOfBirth);

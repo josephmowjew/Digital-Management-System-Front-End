@@ -50,7 +50,7 @@ function Approve(id, token) {
 
             }).fail(function (response) {
 
-                toastr.error("failed to activate user")
+                toastr.error("failed to approve change request")
 
                 datatable.ajax.reload();
             });

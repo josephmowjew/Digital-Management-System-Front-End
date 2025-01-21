@@ -86,8 +86,6 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
 
             var hasPreviousLicenseApplication = await this._service.LicenseApplicationService.CheckIfPreviousApplicationExists(userId);
             return hasPreviousLicenseApplication;
-
-
         }
 
         private async Task<List<ReadLicenseApprovalHistoryDTO>> GetLicenseApprovalHistory(int id)

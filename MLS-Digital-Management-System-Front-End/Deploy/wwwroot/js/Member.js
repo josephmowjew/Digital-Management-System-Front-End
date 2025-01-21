@@ -25,8 +25,6 @@ $(function () {
             // Remove user ID from the array if unchecked
             selectedUserIds = selectedUserIds.filter(id => id !== userId);
         }
-
-        console.log('Selected User IDs:', selectedUserIds); // For debugging
     });
 
     function OnMemberCreateClick() {

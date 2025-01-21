@@ -47,9 +47,9 @@
                 margin-bottom: 20px;
             }
             .logo {
-                width: 100px;
-                height: 100px;
-                object-fit: contain;
+                width: 90px;
+                height: 90px;
+                object-fit: cover;
             }
             h1 {
                 color: #d4af37;
@@ -94,7 +94,7 @@
             }
             .signature img {
                 width: 100px;
-                height: 70px;
+                height: 60px;
             }
             .seal {
                 text-align: center;
@@ -132,7 +132,7 @@
                 <h1>CERTIFICATE</h1>
                 <p class="subtitle">OF ATTENDANCE</p>
                 <p class="title_header">THIS CERTIFICATE IS PRESENTED TO</p>
-                <p class="recipient" id="recipientName"><strong>@ViewBag.member.User.FullName</strong></p>
+                <p class="recipient" id="recipientName"><strong>@ViewBag.member.User.FirstName @(ViewBag.member.User.OtherName ?? "") @ViewBag.member.User.LastName</strong></p>
                 <p class="description" id="description">Having attended a Continuing Professional Development Training on @ViewBag.training.Title on @ViewBag.training.DateToBeConducted.ToString("MMMM dd, yyyy") at @ViewBag.training.PhysicalVenue</p>
                 <div class="signatures">
                     <div class="signature">

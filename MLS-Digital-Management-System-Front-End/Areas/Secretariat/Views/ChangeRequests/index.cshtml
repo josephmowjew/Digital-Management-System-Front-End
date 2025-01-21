@@ -26,6 +26,7 @@
                         <th>Old PhoneNumber</th>
                         <th>New PhoneNumber</th>
                         <th>Status</th>
+                        <th>Rejection Reason</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -104,11 +105,16 @@
                         "orderable": true,
                     },
                     {
+                        data: "rejectionReason",
+                        name: "rejectionReason",
+                        className: "text-left",
+                        "orderable": true,
+                    },
+                    {
                         data: "id",
                         name: "id",
                         "orderable": false,
                         render: function (data, type, row) {
-                            console.log(row.status.toLowerCase());
                             let links = "";
                             if (row.status.toLowerCase() == "pending") {
                                 links += "<a href='#' onclick='Approve(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='ti ti-check btn btn-outline-success my-1 btn-sm mx-1' title='approve'>Approve</a>";

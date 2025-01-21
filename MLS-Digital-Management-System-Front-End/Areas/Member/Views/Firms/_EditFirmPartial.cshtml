@@ -3,7 +3,7 @@
 <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Edit Firm</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Edit Firm/Institution</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -16,6 +16,13 @@
                         <label asp-for="Name" class="form-label"></label>
                         <input asp-for="Name" placeholder="Enter Firm Name" class="form-control" />
                         <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="InstitutionTypeId" class="form-label">Institution Type</label>
+                        <select required asp-for="InstitutionTypeId" asp-items="@ViewBag.institutionTypesList"
+                            class="form-control"></select>
+                        <span asp-validation-for="InstitutionTypeId" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="row row-cols-lg-2">

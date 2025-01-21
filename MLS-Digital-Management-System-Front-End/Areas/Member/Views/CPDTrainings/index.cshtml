@@ -133,6 +133,7 @@
         var host = '@host';
         var isCustomerId = @Json.Serialize(ViewBag.CustomerId);
         var userIdGlobal = '@ViewBag.userId';
+        var memberIdGlobal = '@ViewBag.memberId';
     </script>
 
     <script>
@@ -204,7 +205,6 @@
                         name: "cpdTrainingRegistration",
                         orderable: false,
                         render: function (data, type, row) {
-                            console.log(row)
                             const registration = row.cpdTrainingRegistration.find(reg => reg.memberId === @ViewBag.MemberId);
                             if (!registration) {
                                 const dueDate = row.registrationDueDate ? new Date(Date.parse(row.registrationDueDate)) : null;
@@ -221,12 +221,18 @@
                                         return "<span class='badge bg-danger bg-opacity-85 rounded-pill'>Registration Closed</span>";
                                     }
                                 }
+                                // Loop through all invoice requests
+                                let userInvoiceRequest = row.invoiceRequests?.find(req => req.createdById == userIdGlobal);
+
+                                // Check if the member is in the firm members list for a firm request
+                                let firmInvoiceRequest = row.invoiceRequests?.find(req => req.requestType === "Firm" && req.firmMembers.includes(@ViewBag.MemberId+""));
+
 
                                 // Check invoice status
-                                if (row.invoiceRequest && row.invoiceRequest.createdById == userIdGlobal) {
-                                    if (row.invoiceRequest.status === "Generated") {
+                                if ((userInvoiceRequest && userInvoiceRequest.createdById == userIdGlobal) || (firmInvoiceRequest)) {
+                                    if ((userInvoiceRequest?.status === "Generated") || (firmInvoiceRequest?.status === "Generated")) {
                                         return "<span class='badge bg-info bg-opacity-85 rounded-pill'>Invoice Generated</span>";
-                                    } else if (row.invoiceRequest.status === "Pending") {
+                                    } else if ((userInvoiceRequest?.status === "Pending") || (firmInvoiceRequest?.status === "Pending")) {
                                         return "<span class='badge bg-warning bg-opacity-85 rounded-pill'>Invoice Pending</span>";
                                     }
                                 }
@@ -252,7 +258,6 @@
                         name: "id",
                         "orderable": false,
                         render: function (data, type, row) {
-                            //console.log(row)
                             const dueDate = new Date(row.registrationDueDate);
                             const today = new Date();
                             var memberRegistration = row.cpdTrainingRegistration.find(registration => registration.memberId == @ViewBag.MemberId);
@@ -268,20 +273,24 @@
                                     if (daysDiff >= 1) {
                                         // Loop through all invoice requests
                                         let userInvoiceRequest = row.invoiceRequests?.find(req => req.createdById == userIdGlobal);
-                                        if (userInvoiceRequest) {
 
-                                            if (userInvoiceRequest.status === "Generated") {
-                                                buttons += `<a href='#' onclick='cpdTrainingHandler.registerForm("${data}", "${JSON.stringify(row).replace(/"/g, "\\\"")}")' type='button' class='btn btn-outline-primary m-1 btn-sm ' title='register'> Register</a>`;
-                                            } else if (userInvoiceRequest.status === "Pending") {
+                                        // Check if the member is in the firm members list for a firm request
+                                        let firmInvoiceRequest = row.invoiceRequests?.find(req => req.requestType === "Firm" && req.firmMembers.includes(@ViewBag.MemberId+""));
+
+                                        if (userInvoiceRequest || firmInvoiceRequest) {
+
+                                            if ((userInvoiceRequest?.status === "Generated")|| (firmInvoiceRequest?.status === "Generated")) {
+                                                buttons += `<a href='#' onclick='cpdTrainingHandler.registerForm("${data}", ${JSON.stringify(JSON.stringify(row))})' type='button' class='btn btn-outline-primary m-1 btn-sm ' title='register'> Register</a>`;
+                                            } else if ((userInvoiceRequest?.status === "Pending") || (firmInvoiceRequest?.status === "Pending")) {
                                                 return buttons; // Return buttons if invoice is pending
                                             }
                                         }
 
                                          // Check if the training is free
-                                        if (row.isFree) { // {{ edit_1 }}
-                                            buttons += `<a href='#' onclick='cpdTrainingHandler.registerForm("${data}", "${JSON.stringify(row).replace(/"/g, "\\\"")}")' type='button' class='btn btn-outline-primary m-1 btn-sm ' title='register'> Register for Free</a>`; // {{ edit_2 }}
-                                        } else if ((!userInvoiceRequest || userInvoiceRequest.status !== "Generated") && (@ViewBag.MemberId != 0)) {
-                                            buttons += "<a href='#' onclick='cpdTrainingHandler.invoiceForm(\"" + data + "\",\"" + JSON.stringify(row).replace(/"/g, "\\\"") + "\")' type='button' class='btn btn-outline-warning m-1 btn-sm ' title='Invoice'>Request Invoice</a>";
+                                        if (row.isFree) {
+                                            buttons += `<a href='#' onclick='cpdTrainingHandler.registerForm("${data}", ${JSON.stringify(JSON.stringify(row))})' type='button' class='btn btn-outline-primary m-1 btn-sm ' title='register'> Register for Free</a>`;
+                                        } else if (((!userInvoiceRequest || userInvoiceRequest.status !== "Generated") && ( !firmInvoiceRequest || firmInvoiceRequest?.status !== "Generated")) && (@ViewBag.MemberId != 0)) {
+                                            buttons += `<a href='#' onclick='cpdTrainingHandler.invoiceForm("${data}", ${JSON.stringify(JSON.stringify(row))})' type='button' class='btn btn-outline-warning m-1 btn-sm ' title='Invoice'>Request Invoice</a>`;
                                         }
 
                                         return buttons;

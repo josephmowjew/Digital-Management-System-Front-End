@@ -39,6 +39,12 @@
               <input asp-for="DateOfAdmissionToPractice" class="form-control" placeholder="Enter Date of Admission to Practice"/>
               <span asp-validation-for="DateOfAdmissionToPractice" class="text-danger"></span>  
             </div>
+
+            <div class="mb-3 col-md-6">
+              <label asp-for="FirmId" class="form-label">Firm/Institution/NGO</label>
+              <select asp-for="FirmId" asp-items="@ViewBag.firms" class="form-control"></select>
+              <span asp-validation-for="FirmId" class="text-danger"></span>
+            </div>
           </div>
           
         </form>
@@ -48,9 +54,6 @@
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
         <button type="button" name="update_member_btn"  id="update_member_btn"  class="btn btn-primary">Update Member</button>    
       </div>
-    
-    
-
   </div>
 </div>
 

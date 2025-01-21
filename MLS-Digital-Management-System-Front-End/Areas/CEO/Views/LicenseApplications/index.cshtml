@@ -10,9 +10,9 @@
 @section Styles {
 
     <style>
-           .hidden {
-  display: none;
-}
+        .hidden {
+            display: none;
+        }
     </style>
 
     <link href="~/assets/css/custom_select.css" rel="stylesheet" />
@@ -21,9 +21,9 @@
 
 <div class="card  w-100 h-100 d-flex justify-content-center">
     <div class="card-body">
-      
+
         <!-- Button trigger modal -->
-    
+
 
         <h5 class="card-title fw-semibold mb-4 text-uppercase">Available Applications </h5>
 
@@ -37,7 +37,7 @@
                         <th>
                             Practicing Year
                         </th>
-                         <th>
+                        <th>
                             Approval Level
                         </th>
                         <th>
@@ -49,6 +49,7 @@
                         <th>
                             License No.
                         </th>
+                        <th>Date Submitted</th>
                         <th>
                             Action
                         </th>
@@ -62,7 +63,7 @@
 </div>
 
 
-@section Scripts{
+@section Scripts {
 
     <script>
         var datatable;
@@ -83,7 +84,7 @@
                         'Authorization': 'Bearer @ViewBag.token'
                     },
 
-                   
+
 
                 },
                 columnDefs: [
@@ -131,12 +132,27 @@
                         "orderable": true,
                     },
                     {
+                        data: "dateSubmitted",
+                        name: "dateSubmitted",
+                        className: "text-left",
+                        render: function (data, type, row) {
+                            if (data) {
+                                return new Date(data).toLocaleDateString('en-US', {
+                                    year: 'numeric',
+                                    month: 'long',
+                                    day: 'numeric'
+                                });
+                            }
+                            return "";
+                        }
+                    },
+                    {
                         data: "id",
                         name: "id",
                         "orderable": false,
                         render: function (data, type, row) {
-                                    return "<a href='LicenseApplications/Details/" + data + "' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-eye text-lg' title='show details' > Show Details</a>"
-                                }
+                            return "<a href='LicenseApplications/Details/" + data + "' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-eye text-lg' title='show details' > Show Details</a>"
+                        }
                     }
                 ],
                 responsive: true,

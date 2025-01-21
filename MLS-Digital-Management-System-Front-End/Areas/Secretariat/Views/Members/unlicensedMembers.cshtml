@@ -19,7 +19,11 @@
                 <a asp-action="Index" asp-area="secretariat" asp-controller="Members"
                     class="btn btn-primary my-3 mx-1">All</a>
                 <a asp-action="LicensedMembers" asp-area="secretariat" asp-controller="Members"
-                    class="btn btn-success my-3 ">Licensed</a>
+                    class="btn btn-success my-3 mx-1">Licensed</a>
+                <a asp-action="MembersWithMissingRecords" asp-area="secretariat" asp-asp-controller="Members" 
+                    class="btn btn-danger my-3 mx-1">
+                    Missing Records
+                </a>  
                 <button type="button" class="btn btn-warning my-3 mx-2"
                         onclick="markAsLicensed()">Mark As Licensed</button>
             </div>

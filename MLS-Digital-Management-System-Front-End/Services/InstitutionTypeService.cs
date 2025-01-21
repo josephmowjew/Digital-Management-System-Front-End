@@ -27,7 +27,7 @@ public class InstitutionTypeService : IInstitutionTypeService
         }
         else
         {
-            throw new InvalidOperationException("Invalid credentials .");
+            throw new InvalidOperationException("Failed to retrieve institution types");
         }
     }
 

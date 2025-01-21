@@ -8,4 +8,5 @@ public class UpdateInstitutionTypeDTO
     [Required]
     [StringLength(maximumLength: 100)]
     public string Name { get; set; }
+    public string DataInvalid { get; set; } = "true";
 }

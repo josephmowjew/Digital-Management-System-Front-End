@@ -50,6 +50,9 @@
                             License No.
                         </th>
                         <th>
+                            Date Submitted
+                        </th>
+                        <th>
                             Action
                         </th>
                     </tr>
@@ -130,6 +133,21 @@
                         name: "license.licenseNumber",
                         className: "text-left",
                         "orderable": true,
+                    },
+                    {
+                        data: "dateSubmitted",
+                        name: "dateSubmitted",
+                        className: "text-left",
+                        render: function (data, type, row) {
+                            if (data) {
+                                return new Date(data).toLocaleDateString('en-US', {
+                                    year: 'numeric',
+                                    month: 'long',
+                                    day: 'numeric'
+                                });
+                            }
+                            return "";
+                        }
                     },
                     {
                         data: "id",

@@ -1,4 +1,5 @@
 ﻿@using Microsoft.Extensions.Configuration
+@using System.Globalization
 @inject IConfiguration Configuration
 @{
     ViewData["Title"] = "CPD Trainings";
@@ -52,16 +53,20 @@
                 <strong>Fees:</strong>
                 <ul>
                     <li class="py-1">Physical Attendance (Members): <span
-                            class="badge bg-primary bg-opacity-85">@ViewBag.training.MemberPhysicalAttendanceFee</span>
+                            class="badge bg-primary bg-opacity-85">@ViewBag.training.MemberPhysicalAttendanceFee.ToString("C",
+                            new CultureInfo("en-MW") { NumberFormat = { CurrencySymbol = "MWK" } })</span>
                     </li>
                     <li class="py-1">Virtual Attendance (Members): <span
-                            class="badge bg-success bg-opacity-85">@ViewBag.training.MemberVirtualAttendanceFee</span>
+                            class="badge bg-success bg-opacity-85">@ViewBag.training.MemberVirtualAttendanceFee.ToString("C",
+                            new CultureInfo("en-MW") { NumberFormat = { CurrencySymbol = "MWK" } })</span>
                     </li>
                     <li class="py-1">Physical Attendance (Non-Members): <span
-                            class="badge bg-warning bg-opacity-85">@ViewBag.training.NonMemberPhysicalAttendanceFee</span>
+                            class="badge bg-warning bg-opacity-85">@ViewBag.training.NonMemberPhysicalAttendanceFee.ToString("C",
+                            new CultureInfo("en-MW") { NumberFormat = { CurrencySymbol = "MWK" } })</span>
                     </li>
-                    <li class="py-1">Virtulal Attendance (Non-Members): <span
-                            class="badge bg-info bg-opacity-85">@ViewBag.training.NonMemberVirtualAttandanceFee</span>
+                    <li class="py-1">Virtual Attendance (Non-Members): <span
+                            class="badge bg-info bg-opacity-85">@ViewBag.training.NonMemberVirtualAttandanceFee.ToString("C",
+                            new CultureInfo("en-MW") { NumberFormat = { CurrencySymbol = "MWK" } })</span>
                     </li>
                 </ul>
             </li>

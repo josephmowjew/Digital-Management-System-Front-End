@@ -48,8 +48,17 @@ class AuthHandler {
             console.error("Reset password form not found");
             return;
         }
-    
+
         const formData = new FormData(form);
+        const password = formData.get("Password");
+
+        // Validate password
+        if (!this.validatePassword(password)) {
+            toastr.error("Password must be at least 8 characters long and include an uppercase letter, a lowercase letter, a number, and a special character.");
+            return;
+        }
+    
+        //const formData = new FormData(form);
     
         // Convert FormData to JSON
         const plainFormData = Object.fromEntries(formData.entries());
@@ -68,9 +77,14 @@ class AuthHandler {
     
             this.handleResponse(data, "#resetPasswordForm", this.resetPassword.bind(this));
         } catch (error) {
-            console.error(`Error: ${error}`);
+            //console.error(`Error: ${error}`);
         }
-    }   
+    }
+    
+    validatePassword(password) {
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+        return passwordRegex.test(password);
+    }
     
     async changePassword() {
         const form = document.querySelector("#changePasswordForm")

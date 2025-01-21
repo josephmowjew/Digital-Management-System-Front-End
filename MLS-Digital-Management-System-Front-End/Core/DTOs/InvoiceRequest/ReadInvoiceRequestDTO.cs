@@ -1,3 +1,4 @@
+using MLS_Digital_Management_System_Front_End.Core.DTOs.Firm;
 using MLS_Digital_Management_System_Front_End.Core.DTOs.User;
 using MLS_Digital_Management_System_Front_End.Core.DTOs.YearOfOperation;
 using MLS_Digital_Management_System_Front_End.Core.Models;
@@ -28,5 +29,7 @@ public class ReadInvoiceRequestDTO
         public string RequestType { get; set; }
         public string? FirmMembers { get; set; }
         public string? InvoiceNumber { get; set; }
+        public int? FirmId { get; set; }
+        public ReadFirmDTO Firm { get; set; }
 
     }

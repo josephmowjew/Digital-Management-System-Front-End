@@ -362,41 +362,34 @@ class CPDTrainingHandler {
 
     
     // Filter invoiceRequests based on createdById
-    const filteredInvoiceRequests = trainingData.invoiceRequests?.filter(request => request.createdById === userIdGlobal);
-    console.log(filteredInvoiceRequests);
+    const filteredInvoiceRequests = trainingData.invoiceRequests?.filter(request => {
+      const firmMembers = JSON.parse(request.firmMembers || '[]');
+      return request.createdById === userIdGlobal || firmMembers.includes(memberIdGlobal);
+    });
     
     // Use the first matching invoiceRequest if available
     const invoiceRequest = filteredInvoiceRequests?.length > 0 ? filteredInvoiceRequests[0] : null;
 
-    console.log(invoiceRequest?.id ?? 0);
+    //console.log(invoiceRequest?.id ?? 0);
 
 
 
     //set the value of an element with a specified id InvoiceRequestId to the incoming invoiceRequestId making sure the value is not null
     invoiceRequestIdInput.value = invoiceRequest?.id ?? 0;
 
-
-
-
     // Check if all fees are zero or null
     const isFree = (invoiceRequest == null || invoiceRequest.amount < 1);
 
-
-
     const displayFee = (invoiceRequest) => {
-      //console.log(invoiceRequest);
 
       let ParentinvoiceData = JSON.parse(invoiceRequest);
 
-      //console.log(ParentinvoiceData)
-
-
-      let invoiceData = ParentinvoiceData.invoiceRequests?.filter(request => request.createdById === userIdGlobal);
-      console.log(invoiceData[0]);
+      let invoiceData = ParentinvoiceData.invoiceRequests?.filter(request => {
+        const firmMembers = JSON.parse(request.firmMembers || '[]');
+        return request.createdById === userIdGlobal || firmMembers.includes(memberIdGlobal);
+      });
       //set the fee to the class member
       let fee = invoiceData[0].amount;
-
-
 
       const amountElement = cpdRegisterform.querySelector("#cpd_training_amount");
       const requestInvoiceButton = document.querySelector("#request_invoice_btn");
@@ -442,7 +435,6 @@ class CPDTrainingHandler {
     const trainingIdInput = cpdRegisterform.querySelector('input[name="CPDTrainingId"]');
     trainingIdInput.value = trainingId;
 
-    // Log the trainingId for debugging purposes
     const trainingData = JSON.parse(trainingFee);
 
     // Destructure the different fees from the trainingFee object

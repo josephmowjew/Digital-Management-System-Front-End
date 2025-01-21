@@ -448,8 +448,6 @@ function upDateFirm(token) {
     // Stringify the formDataObject
     const formDataJson = JSON.stringify(formDataObject);
 
-    console.log(formDataJson);
-
     //send the request
 
     $.ajax({

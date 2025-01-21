@@ -4,6 +4,7 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,6 +20,7 @@
             align-items: center;
             min-height: 100vh;
         }
+
         .certificate {
             width: 900px;
             height: 700px;
@@ -27,6 +29,7 @@
             position: relative;
             overflow: hidden;
         }
+
         .logo-background {
             position: absolute;
             top: 0;
@@ -40,6 +43,7 @@
             opacity: 0.2;
             z-index: 1;
         }
+
         .background-text {
             position: absolute;
             top: 0;
@@ -52,29 +56,33 @@
             z-index: 1;
             display: flex;
             flex-wrap: wrap;
-            justify-content: space-between; /* Added this line */
+            justify-content: space-between;
+            /* Added this line */
             overflow: hidden;
             padding: 5px;
             pointer-events: none;
         }
+
         .background-text span {
             white-space: nowrap;
             margin-bottom: 2px;
         }
+
         .bottom-background {
             position: absolute;
             bottom: 0;
             left: 0;
             right: 0;
             height: 50%;
-            background: linear-gradient(to top, 
-            #a69670 0%,
-            #d3c7a5 25%,
-            #d3c7a5 50%,
-            transparent 100%);
+            background: linear-gradient(to top,
+                    #a69670 0%,
+                    #d3c7a5 25%,
+                    #d3c7a5 50%,
+                    transparent 100%);
             z-index: 1;
             overflow: hidden;
         }
+
         .noise-overlay {
             position: absolute;
             top: 0;
@@ -86,42 +94,56 @@
             mix-blend-mode: overlay;
             pointer-events: none;
         }
+
         .content {
             position: relative;
             z-index: 2;
             padding: 40px;
             text-align: center;
         }
+
         .logo {
             width: 100px;
             height: 100px;
             margin-bottom: 0px;
         }
+
         h1 {
             font-size: 22px;
             margin-bottom: 20px;
         }
+
         .details {
             margin-bottom: 40px;
         }
+
         .signature {
             display: flex;
             justify-content: space-between;
             margin-top: 0px;
         }
-        .signature-image{
-            width: 80px;
-            height: 50px;
-            margin: 0;
-        }
-        .secretary-signature-image{
+
+        .signature-image {
             width: 100px;
             height: 50px;
             margin: 0;
         }
+
+        .signature p {
+            margin-top: -30px;
+            /* Adjust this value as needed */
+        }
+
+        .secretary-signature-image {
+            width: 70px;
+            height: 50px;
+            margin: 0;
+        }
+
         .signature div {
             text-align: center;
         }
+
         .logo-background {
             position: absolute;
             top: 0;
@@ -135,6 +157,7 @@
             opacity: 0.1;
             z-index: 2;
         }
+
         .hexagon-container {
             position: absolute;
             bottom: 0;
@@ -145,17 +168,21 @@
             flex-direction: column;
             justify-content: flex-end;
         }
+
         .row {
             display: flex;
             justify-content: space-around;
             width: 100%;
             margin-bottom: 1%;
         }
+
         .hexagon {
             width: 30%;
-            padding-bottom: 34.64%; /* 30% * sqrt(3) / 2 */
+            padding-bottom: 34.64%;
+            /* 30% * sqrt(3) / 2 */
             position: relative;
         }
+
         .hexagon svg {
             position: absolute;
             width: 100%;
@@ -178,21 +205,44 @@
             cursor: pointer;
             font-size: 16px;
         }
+
         .italic-text {
             font-style: italic;
             font-size: 14px;
         }
+
+        .seal {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: -20px;
+            /* Adjust as needed */
+        }
+
+        .seal-image {
+            width: 250px;
+            /* Adjust size as needed */
+            height: 150px;
+            /* Adjust size as needed */
+        }
+
         .license-number {
             position: absolute;
-            top: 20px; /* Adjust as needed */
-            left: 20px; /* Adjust as needed */
-            font-size: 16px; /* Adjust font size */
+            top: 20px;
+            /* Adjust as needed */
+            left: 20px;
+            /* Adjust as needed */
+            font-size: 16px;
+            /* Adjust font size */
             font-weight: bold;
-            color: black; /* Change color if needed */
-            z-index: 3; /* Ensure it appears above other elements */
+            color: black;
+            /* Change color if needed */
+            z-index: 3;
+            /* Ensure it appears above other elements */
         }
     </style>
 </head>
+
 <body>
     <button id="downloadButton" disabled>Download Certificate</button>
     <div class="certificate">
@@ -204,40 +254,52 @@
                 <div class="row">
                     <div class="hexagon">
                         <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                            <polygon points="100,10 190,50 190,150 100,190 10,150 10,50" fill="none" stroke="white" stroke-width="4" stroke-opacity="0.2"/>
-                            <polygon points="100,20 180,57 180,143 100,180 20,143 20,57" fill="none" stroke="white" stroke-width="2" stroke-opacity="0.2"/>
+                            <polygon points="100,10 190,50 190,150 100,190 10,150 10,50" fill="none" stroke="white"
+                                stroke-width="4" stroke-opacity="0.2" />
+                            <polygon points="100,20 180,57 180,143 100,180 20,143 20,57" fill="none" stroke="white"
+                                stroke-width="2" stroke-opacity="0.2" />
                         </svg>
                     </div>
                     <div class="hexagon">
                         <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                            <polygon points="100,10 190,50 190,150 100,190 10,150 10,50" fill="none" stroke="white" stroke-width="1" stroke-opacity="0.2"/>
-                            <polygon points="100,20 180,57 180,143 100,180 20,143 20,57" fill="none" stroke="white" stroke-width="1" stroke-opacity="0.2"/>
+                            <polygon points="100,10 190,50 190,150 100,190 10,150 10,50" fill="none" stroke="white"
+                                stroke-width="1" stroke-opacity="0.2" />
+                            <polygon points="100,20 180,57 180,143 100,180 20,143 20,57" fill="none" stroke="white"
+                                stroke-width="1" stroke-opacity="0.2" />
                         </svg>
                     </div>
                     <div class="hexagon">
                         <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                            <polygon points="100,10 190,50 190,150 100,190 10,150 10,50" fill="none" stroke="white" stroke-width="1" stroke-opacity="0.2"/>
-                            <polygon points="100,20 180,57 180,143 100,180 20,143 20,57" fill="none" stroke="white" stroke-width="1" stroke-opacity="0.2"/>
+                            <polygon points="100,10 190,50 190,150 100,190 10,150 10,50" fill="none" stroke="white"
+                                stroke-width="1" stroke-opacity="0.2" />
+                            <polygon points="100,20 180,57 180,143 100,180 20,143 20,57" fill="none" stroke="white"
+                                stroke-width="1" stroke-opacity="0.2" />
                         </svg>
                     </div>
                 </div>
                 <div class="row">
                     <div class="hexagon">
                         <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                            <polygon points="100,10 190,50 190,150 100,190 10,150 10,50" fill="none" stroke="white" stroke-width="1" stroke-opacity="0.2"/>
-                            <polygon points="100,20 180,57 180,143 100,180 20,143 20,57" fill="none" stroke="white" stroke-width="1" stroke-opacity="0.2"/>
+                            <polygon points="100,10 190,50 190,150 100,190 10,150 10,50" fill="none" stroke="white"
+                                stroke-width="1" stroke-opacity="0.2" />
+                            <polygon points="100,20 180,57 180,143 100,180 20,143 20,57" fill="none" stroke="white"
+                                stroke-width="1" stroke-opacity="0.2" />
                         </svg>
                     </div>
                     <div class="hexagon">
                         <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                            <polygon points="100,10 190,50 190,150 100,190 10,150 10,50" fill="none" stroke="white" stroke-width="1" stroke-opacity="0.2"/>
-                            <polygon points="100,20 180,57 180,143 100,180 20,143 20,57" fill="none" stroke="white" stroke-width="1" stroke-opacity="0.2"/>
+                            <polygon points="100,10 190,50 190,150 100,190 10,150 10,50" fill="none" stroke="white"
+                                stroke-width="1" stroke-opacity="0.2" />
+                            <polygon points="100,20 180,57 180,143 100,180 20,143 20,57" fill="none" stroke="white"
+                                stroke-width="1" stroke-opacity="0.2" />
                         </svg>
                     </div>
                     <div class="hexagon">
                         <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                            <polygon points="100,10 190,50 190,150 100,190 10,150 10,50" fill="none" stroke="white" stroke-width="1" stroke-opacity="0.2"/>
-                            <polygon points="100,20 180,57 180,143 100,180 20,143 20,57" fill="none" stroke="white" stroke-width="1" stroke-opacity="0.2"/>
+                            <polygon points="100,10 190,50 190,150 100,190 10,150 10,50" fill="none" stroke="white"
+                                stroke-width="1" stroke-opacity="0.2" />
+                            <polygon points="100,20 180,57 180,143 100,180 20,143 20,57" fill="none" stroke="white"
+                                stroke-width="1" stroke-opacity="0.2" />
                         </svg>
                     </div>
                 </div>
@@ -246,36 +308,55 @@
         <div class="content">
             <div class="license-number">No. @ViewBag.license.LicenseNumber</div>
             <div class="logo-container" style="margin-bottom: 45px;">
-                <img src="/assets/images/logos/cropped-mls-logo-clear-192x192.png" alt="The Malawi Law Society" class="logo">
+                <img src="/assets/images/logos/cropped-mls-logo-clear-192x192.png" alt="The Malawi Law Society"
+                    class="logo">
                 <div>
                     <h2 style="font-size: 16px;">MALAWI LAW SOCIETY</h2>
                 </div>
             </div>
             <h1>ANNUAL LEGAL PRACTITIONER'S LICENCE</h1>
-            <p class="italic-text">(Issued under Section 30 of the Legal Education and Legal Practitioners Act, 2017)</p>
+            <p class="italic-text">(Issued under Section 30 of the Legal Education and Legal Practitioners Act, 2017)
+            </p>
             <div class="details">
-                <p>WE HEREBY CERTIFY that <br/><br/><strong id="recipientName" style="font-size: 20px;">@ViewBag.license.Member.User.FullName</strong></p>
-                <p>of <strong>@ViewBag.license.Member.Firm.Name <br/> <span style="font-size: 14px;">(@ViewBag.license.Member.Firm.PostalAddress)</span></strong></p>
-                <p style="font-size: 15px;">is licenced to act as Legal Practitioner in the Malawi Supreme Court of Appeal, High Court of Malawi<br>and all Courts Subordinate thereto until @ViewBag.license.ExpiryDate.ToString("MMMM dd, yyyy")</p>
+                <p>WE HEREBY CERTIFY that <br /><br /><strong id="recipientName"
+                        style="font-size: 20px;">@ViewBag.license.Member.User.FirstName @(ViewBag.license.Member.User.OtherName ?? "" ) @ViewBag.license.Member.User.LastName</strong></p>
+                <p>of <strong>@ViewBag.license.Member.Firm.Name <br /> <span
+                            style="font-size: 14px;">@ViewBag.license.Member.Firm.PostalAddress</span></strong></p>
+                <p style="font-size: 15px;">is licenced to act as Legal Practitioner in the Malawi Supreme Court of
+                    Appeal, High Court of Malawi<br>and all Courts Subordinate thereto until
+                    @ViewBag.license.ExpiryDate.ToString("MMMM dd, yyyy")</p>
             </div>
             <div class="signature">
                 <div>
                     @if (ViewBag.license.Attachments.Count > 0)
                     {
-                        var firstAttachment = ViewBag.license.Attachments[1];
-                        <img src="@firstAttachment.FilePath" alt="signature" class="signature-image"/>
+                        var firstAttachment = ViewBag.license.Attachments[2];
+                        <img src="@firstAttachment.FilePath" alt="signature" class="signature-image" />
                     }
-                    <p>____________________</p>
-                    <p>Chairman</p>
+                    <p>____________________
+                        <br />Chairman
+                    </p>
                 </div>
+
+                <div class="seal">
+                    <div>
+                        @if (ViewBag.license.Attachments.Count > 0)
+                        {
+                            var firstAttachment = ViewBag.license.Attachments[1];
+                            <img src="@firstAttachment.FilePath" alt="signature" class="seal-image" />
+                        }
+                    </div>
+                </div>
+
                 <div>
                     @if (ViewBag.license.Attachments.Count > 0)
                     {
                         var firstAttachment = ViewBag.license.Attachments[0];
-                        <img src="@firstAttachment.FilePath" alt="signature" class="secretary-signature-image"/>
+                        <img src="@firstAttachment.FilePath" alt="signature" class="secretary-signature-image" />
                     }
                     <p>____________________
-                    <br/>Secretary</p>
+                        <br />Secretary
+                    </p>
                 </div>
             </div>
 
@@ -287,7 +368,7 @@
         </div>
     </div>
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", function () {
             var container = document.getElementById('backgroundText');
             var text = 'Malawi Law Society';
             var numRepeats = 600;
@@ -302,92 +383,93 @@
     </script>
     <svg style="display: none;">
         <filter id="noise" x="0%" y="0%" width="100%" height="100%">
-            <feTurbulence type="fractalNoise" baseFrequency="0.80" numOctaves="3" stitchTiles="stitch"/>
-            <feColorMatrix type="saturate" values="0"/>
+            <feTurbulence type="fractalNoise" baseFrequency="0.80" numOctaves="3" stitchTiles="stitch" />
+            <feColorMatrix type="saturate" values="0" />
             <feComponentTransfer>
-                <feFuncR type="linear" slope="0.1"/>
-                <feFuncG type="linear" slope="0.1"/>
-                <feFuncB type="linear" slope="0.1"/>
+                <feFuncR type="linear" slope="0.1" />
+                <feFuncG type="linear" slope="0.1" />
+                <feFuncB type="linear" slope="0.1" />
             </feComponentTransfer>
-            <feBlend in="SourceGraphic" mode="overlay"/>
+            <feBlend in="SourceGraphic" mode="overlay" />
         </filter>
     </svg>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-    const element = document.querySelector('.certificate');
-    const downloadButton = document.getElementById('downloadButton');
-    const recipientName = document.getElementById('recipientName').textContent;
-    let preloadedImages = {};
+        document.addEventListener('DOMContentLoaded', function () {
+            const element = document.querySelector('.certificate');
+            const downloadButton = document.getElementById('downloadButton');
+            const recipientName = document.getElementById('recipientName').textContent;
+            let preloadedImages = {};
 
-    // Function to preload images
-    function preloadImages() {
-        const images = element.querySelectorAll('img');
-        const preloadPromises = Array.from(images).map(img => {
-            return new Promise((resolve, reject) => {
-                const newImg = new Image();
-                newImg.crossOrigin = "anonymous";  // This is important for CORS
-                newImg.onload = () => {
-                    preloadedImages[img.src] = newImg;
-                    resolve();
-                };
-                newImg.onerror = reject;
-                newImg.src = img.src;
-            });
-        });
+            // Function to preload images
+            function preloadImages() {
+                const images = element.querySelectorAll('img');
+                const preloadPromises = Array.from(images).map(img => {
+                    return new Promise((resolve, reject) => {
+                        const newImg = new Image();
+                        newImg.crossOrigin = "anonymous";  // This is important for CORS
+                        newImg.onload = () => {
+                            preloadedImages[img.src] = newImg;
+                            resolve();
+                        };
+                        newImg.onerror = reject;
+                        newImg.src = img.src;
+                    });
+                });
 
-        return Promise.all(preloadPromises);
-    }
-
-    // Function to replace image sources with preloaded images
-    function replaceImagesWithPreloaded() {
-        const images = element.querySelectorAll('img');
-        images.forEach(img => {
-            if (preloadedImages[img.src]) {
-                img.src = preloadedImages[img.src].src;
+                return Promise.all(preloadPromises);
             }
+
+            // Function to replace image sources with preloaded images
+            function replaceImagesWithPreloaded() {
+                const images = element.querySelectorAll('img');
+                images.forEach(img => {
+                    if (preloadedImages[img.src]) {
+                        img.src = preloadedImages[img.src].src;
+                    }
+                });
+            }
+
+            // Function to generate and download PDF
+            function downloadPDF() {
+                // Replace image sources before generating PDF
+                replaceImagesWithPreloaded();
+
+                const opt = {
+                    margin: 0.5,
+                    filename: `${recipientName.replace(/\s+/g, '_')}_license.pdf`,
+                    image: { type: 'jpeg', quality: 1.0 },
+                    html2canvas: {
+                        scale: 2,
+                        logging: true,
+                        useCORS: true,
+                        allowTaint: true
+                    },
+                    jsPDF: { unit: 'in', format: 'letter', orientation: 'landscape' }
+                };
+
+                html2pdf().set(opt).from(element).save();
+            }
+
+            // Preload images when the page loads
+            preloadImages().then(() => {
+                console.log('Images preloaded successfully');
+                downloadButton.disabled = false;  // Enable the download button
+            }).catch(error => {
+                console.error('Error preloading images:', error);
+                downloadButton.disabled = false;  // Enable the button anyway, in case some images loaded
+            });
+
+            // Attach click event to download button
+            downloadButton.addEventListener('click', downloadPDF);
+
+            // Initially disable the download button
+            downloadButton.disabled = true;
+
+            console.log('Script loaded, preloading images...');
         });
-    }
-
-    // Function to generate and download PDF
-    function downloadPDF() {
-        // Replace image sources before generating PDF
-        replaceImagesWithPreloaded();
-
-        const opt = {
-            margin: 0.5,
-            filename: `${recipientName.replace(/\s+/g, '_')}_license.pdf`,
-            image: { type: 'jpeg', quality: 1.0 },
-            html2canvas: { 
-                scale: 2,
-                logging: true,
-                useCORS: true,
-                allowTaint: true
-            },
-            jsPDF: { unit: 'in', format: 'letter', orientation: 'landscape' }
-        };
-
-        html2pdf().set(opt).from(element).save();
-    }
-
-    // Preload images when the page loads
-    preloadImages().then(() => {
-        console.log('Images preloaded successfully');
-        downloadButton.disabled = false;  // Enable the download button
-    }).catch(error => {
-        console.error('Error preloading images:', error);
-        downloadButton.disabled = false;  // Enable the button anyway, in case some images loaded
-    });
-
-    // Attach click event to download button
-    downloadButton.addEventListener('click', downloadPDF);
-
-    // Initially disable the download button
-    downloadButton.disabled = true;
-
-    console.log('Script loaded, preloading images...');
-});
     </script>
 </body>
+
 </html>

@@ -1,5 +1,3 @@
-
-
 class FormHandler {
     constructor() {
         this.hideSpinner();
@@ -138,6 +136,11 @@ class FormHandler {
 
     onCreateClick() {
         this.showSpinner();
+        
+        // Disable the submit button and show loading state
+        const submitButton = document.getElementById('create_application_btn');
+        submitButton.disabled = true;
+        submitButton.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Submitting...';
 
         const form = document.querySelector("#create_application_modal form");
         const errorMessages = form.querySelectorAll('.error-message');
@@ -145,6 +148,10 @@ class FormHandler {
 
         if (!form.checkValidity()) {
             this.hideSpinner();
+            // Re-enable the submit button and restore original text
+            submitButton.disabled = false;
+            submitButton.innerHTML = 'Submit Application';
+
             const invalidFields = document.querySelectorAll(':invalid');
 
             invalidFields.forEach(field => {
@@ -177,7 +184,25 @@ class FormHandler {
             formData.append("actionType", "Submit");
             formData.append("Id", id);
 
-            this.sendAjaxRequest(formData, 'POST', `${host}/api/LicenseApplications`, this.handleCreateApplicationSuccess.bind(this), this.handleError.bind(this));
+            this.sendAjaxRequest(
+                formData, 
+                'POST', 
+                `${host}/api/LicenseApplications`, 
+                (response) => {
+                    // Success callback
+                    this.handleCreateApplicationSuccess(response);
+                    // Re-enable the submit button and restore original text
+                    submitButton.disabled = false;
+                    submitButton.innerHTML = 'Submit Application';
+                }, 
+                (error) => {
+                    // Error callback
+                    this.handleError(error);
+                    // Re-enable the submit button and restore original text
+                    submitButton.disabled = false;
+                    submitButton.innerHTML = 'Submit Application';
+                }
+            );
         }
     }
 

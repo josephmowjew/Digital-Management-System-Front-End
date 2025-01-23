@@ -13,7 +13,7 @@
         body {
             font-family: Arial, sans-serif;
             margin: 0;
-            padding: 20px;
+            padding: 10px;
             background-color: #f0f0f0;
             display: flex;
             justify-content: center;
@@ -22,7 +22,7 @@
         }
 
         .certificate {
-            width: 900px;
+            width: 950px;
             height: 700px;
             background-color: #fff;
             border: 1px solid #949494;
@@ -121,6 +121,7 @@
             display: flex;
             justify-content: space-between;
             margin-top: 0px;
+            padding: 0 60px 0 60px;
         }
 
         .signature-image {
@@ -190,7 +191,7 @@
         }
 
         .issueDate {
-            margin: 0;
+            margin-top: -40px;
         }
 
         #downloadButton {
@@ -215,14 +216,14 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-top: -20px;
+            margin-top: -30px;
             /* Adjust as needed */
         }
 
         .seal-image {
-            width: 250px;
+            width: 300px;
             /* Adjust size as needed */
-            height: 150px;
+            height: 200px;
             /* Adjust size as needed */
         }
 
@@ -322,8 +323,7 @@
                         style="font-size: 20px;">@ViewBag.license.Member.User.FirstName @(ViewBag.license.Member.User.OtherName ?? "" ) @ViewBag.license.Member.User.LastName</strong></p>
                 <p>of <strong>@ViewBag.license.Member.Firm.Name <br /> <span
                             style="font-size: 14px;">@ViewBag.license.Member.Firm.PostalAddress</span></strong></p>
-                <p style="font-size: 15px;">is licenced to act as Legal Practitioner in the Malawi Supreme Court of
-                    Appeal, High Court of Malawi<br>and all Courts Subordinate thereto until
+                <p style="font-size: 15px;">is licenced to act as Legal Practitioner in the the Supreme Court of Appeal for Malawi, High Court of Malawi<br>and all Courts Subordinate thereto until
                     @ViewBag.license.ExpiryDate.ToString("MMMM dd, yyyy")</p>
             </div>
             <div class="signature">
@@ -333,7 +333,7 @@
                         var firstAttachment = ViewBag.license.Attachments[2];
                         <img src="@firstAttachment.FilePath" alt="signature" class="signature-image" />
                     }
-                    <p>____________________
+                    <p>__________
                         <br />Chairman
                     </p>
                 </div>
@@ -354,7 +354,7 @@
                         var firstAttachment = ViewBag.license.Attachments[0];
                         <img src="@firstAttachment.FilePath" alt="signature" class="secretary-signature-image" />
                     }
-                    <p>____________________
+                    <p>__________
                         <br />Secretary
                     </p>
                 </div>

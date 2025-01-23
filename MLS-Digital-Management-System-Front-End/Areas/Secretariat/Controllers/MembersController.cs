@@ -1,4 +1,3 @@
-
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using MLS_Digital_Management_System_Front_End.Helpers;
@@ -61,8 +60,6 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Secretariat.Controllers
             await PopulateViewBagsMinimal();
         }
 
-        
-
         private async Task PopulateViewBagsMinimal()
         {
             string token = AuthHelper.GetToken(HttpContext);
@@ -71,6 +68,32 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Secretariat.Controllers
             ViewBag.identityTypesList = await GetIdentityTypes();
             ViewBag.personalTitlesList = await GetPersonalTitles();
             ViewBag.countriesList = await GetCountries();
+            
+            // Get roles and departments
+            var rolesList = await GetRoles();
+            var departmentsList = await GetDepartments();
+            
+            // Explicitly set Member role as selected (case-insensitive)
+            rolesList.ForEach(r => {
+                if (string.Equals(r.Text, "member", StringComparison.OrdinalIgnoreCase)) {
+                    r.Selected = true;
+                } else {
+                    r.Selected = false;
+                }
+            });
+            ViewBag.rolesList = rolesList;
+            ViewBag.isRoleReadOnly = true;
+
+            // Set Member Department as selected (case-insensitive)
+            departmentsList.ForEach(d => {
+                if (string.Equals(d.Text, "member department", StringComparison.OrdinalIgnoreCase)) {
+                    d.Selected = true;
+                } else {
+                    d.Selected = false;
+                }
+            });
+            ViewBag.departmentsList = departmentsList;
+            ViewBag.isDepartmentReadOnly = true;
         }
 
         private async Task<List<SelectListItem>> GetIdentityTypes()
@@ -78,7 +101,7 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Secretariat.Controllers
             List<SelectListItem> identityTypes = new() { new SelectListItem() { Text = "---Select Identity Type---", Value = "" } };
 
             //get identity types from remote
-            var identityTypesFromRemote =  await this._service.IdentityTypeService.GetAllIdentityTypesAsync();
+            var identityTypesFromRemote = await this._service.IdentityTypeService.GetAllIdentityTypesAsync();
 
             if (identityTypesFromRemote != null)
             {
@@ -95,7 +118,7 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Secretariat.Controllers
         {
             List<SelectListItem> personalTitlesList = new() { new SelectListItem() { Text = "---Select Title---", Value = "" } };
             //get identity types from remote
-            var titlesFromRemote =  await this._service.TitleService.GetAllTitlesAsync();
+            var titlesFromRemote = await this._service.TitleService.GetAllTitlesAsync();
 
             if (titlesFromRemote != null)
             {
@@ -111,7 +134,7 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Secretariat.Controllers
         {
             List<SelectListItem> countriesList = new() { new SelectListItem() { Text = "---Select Country---", Value = "" } };
             //get countries  from remote
-            var countriesFromRemote =  await this._service.CountryService.GetCountries();
+            var countriesFromRemote = await this._service.CountryService.GetCountries();
 
             if (countriesFromRemote != null)
             {
@@ -121,6 +144,38 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Secretariat.Controllers
                 });
             }
             return countriesList;
+        }
+
+        private async Task<List<SelectListItem>> GetRoles()
+        {
+            List<SelectListItem> rolesList = new() { new SelectListItem() { Text = "---Select Role---", Value = "" } };
+            //get identity types from remote
+            var rolesFromRemote =  await this._service.RoleService.GetAllRolesAsync();
+
+            if (rolesFromRemote != null)
+            {
+                rolesFromRemote.ForEach(role =>
+                {
+                    rolesList.Add(new SelectListItem() { Text = role.Name, Value = role.Name.ToString() });
+                });
+            }
+            return rolesList;
+        }
+
+        private async Task<List<SelectListItem>> GetDepartments()
+        {
+            List<SelectListItem> departmentsList = new() { new SelectListItem() { Text = "---Select Departments---", Value = "" } };
+            //get identity types from remote
+            var departmentsFromRemote =  await this._service.DepartmentService.GetAllDepartmentsAsync();
+
+            if (departmentsFromRemote != null)
+            {
+                departmentsFromRemote.ForEach(department =>
+                {
+                    departmentsList.Add(new SelectListItem() { Text = department.Name, Value = department.Id.ToString() });
+                });
+            }
+            return departmentsList;
         }
     }
 }

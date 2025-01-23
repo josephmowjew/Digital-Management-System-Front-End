@@ -388,23 +388,6 @@
                     </dd>
                 </div>
                 }
-
-                @if(!Model.FirstApplicationForLicense){
-                <div class="item">
-                    <dt>Attained Minimum Number of CLE Units</dt>
-                    <dd>
-                        <span class="status-label @(Model.AttainedMinimumNumberOfCLEUnits ? "status-yes" : "status-no")">
-                            @(Model.AttainedMinimumNumberOfCLEUnits ? "Yes" : "No")
-                        </span>
-                        @if(!Model.AttainedMinimumNumberOfCLEUnits && !string.IsNullOrEmpty(Model.ExplanationForNoMinimumNumberOfCLEUnits)){
-                            <div class="my-3 text-warning"><strong>Explanation:</strong>
-                                <span class=text-muted>@Model.ExplanationForNoMinimumNumberOfCLEUnits</span>
-                            </div>
-                        
-                        }
-                    </dd>
-                </div>
-                }
                 @if(!Model.FirstApplicationForLicense){
                 <div class="item">
                     <dt>Valid Annual Professional Indemnity Insurance Cover</dt>
@@ -497,13 +480,14 @@
                         <span class="status-label @(Model.AttainedMinimumNumberOfCLEUnits ? "status-yes" : "status-no")">
                             @(Model.AttainedMinimumNumberOfCLEUnits ? "Yes" : "No")
                         </span>
+
                         @*@if(!Model.AttainedMinimumNumberOfCLEUnits && !string.IsNullOrEmpty(Model.ExplanationForNoMinimumNumberOfCLEUnits)){
                             <div class="my-3 text-warning"><strong>Explanation:</strong>
                                 <span class=text-muted>@Model.ExplanationForNoMinimumNumberOfCLEUnits</span>
                             </div>
                         
                         }*@
-                        else if (Model.AttainedMinimumNumberOfCLEUnits && Model.Attachments.Any(a => a.PropertyName.Contains("AttainedMinimumNumberOfCLEUnitsAttachment")))
+                        @if (Model.AttainedMinimumNumberOfCLEUnits && Model.Attachments.Any(a => a.PropertyName.Contains("AttainedMinimumNumberOfCLEUnitsAttachment")))
                         {
                             <button class="collapsible">Attachments</button>
                             <div class="content attachment-container">

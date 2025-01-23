@@ -509,35 +509,6 @@
                     </dd>
                 </div>
                 }
-                @if(!Model.FirstApplicationForLicense){
-                <div class="item">
-                    <dt>Attained Minimum Number of CLE Units</dt>
-                    <dd>
-                        <span class="status-label @(Model.AttainedMinimumNumberOfCLEUnits ? "status-yes" : "status-no")">
-                            @(Model.AttainedMinimumNumberOfCLEUnits ? "Yes" : "No")
-                        </span>
-                        @if(!Model.AttainedMinimumNumberOfCLEUnits && !string.IsNullOrEmpty(Model.ExplanationForNoMinimumNumberOfCLEUnits)){
-                            <div class="my-3 text-warning"><strong>Explanation:</strong>
-                                <span class=text-muted>@Model.ExplanationForNoMinimumNumberOfCLEUnits</span>
-                            </div>
-                        
-                        }
-                        else if (Model.AttainedMinimumNumberOfCLEUnits && Model.Attachments.Any(a => a.PropertyName.Contains("AttainedMinimumNumberOfCLEUnitsAttachment")))
-                        {
-                            <button class="collapsible">Attachments</button>
-                            <div class="content attachment-container">
-                                @foreach (var attachment in Model.Attachments.Where(a => a.PropertyName.Contains("AttainedMinimumNumberOfCLEUnitsAttachment")))
-                                {
-                                    <div class="attachment-card">
-                                        <i class="fa fa-paperclip"></i> @attachment.FileName
-                                        <a href="@attachment.FilePath" target="_blank" class="btn btn-primary btn-sm">View Attachment</a>
-                                    </div>
-                                }
-                            </div>
-                        }
-                    </dd>
-                </div>
-                }
                 @if(Model.ApplicationStatus !="Denied" && Model.ApplicationStatus !="Approved" && Model.CurrentApprovalLevel.Department.Name.Equals("Administration and Operations", StringComparison.OrdinalIgnoreCase)){
                     <div class="item">
                         <button id="approve_license_application_btn"  class="btn btn-success" onclick="formHandler.acceptApplication('@Model.Id')">Verify Application</button>

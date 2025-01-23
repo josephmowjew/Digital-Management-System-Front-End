@@ -37,6 +37,7 @@ public class ReadLicenseApplicationDTO
         public string ExplanationForNoFullMandatoryProBonoWork { get; set; }
         public bool AttainedMinimumNumberOfCLEUnits { get; set; }
         public string ExplanationForNoMinimumNumberOfCLEUnits { get; set; }
+        public string ExplanationForMinimumNumberOfCLEUnits { get; set; }
         public bool HasValidAnnualProfessionalIndemnityInsuranceCover { get; set; }
         public string ExplanationForNoProfessionalIndemnityInsuranceCover { get; set; }
         public bool SubmittedValidTaxClearanceCertificate { get; set; }

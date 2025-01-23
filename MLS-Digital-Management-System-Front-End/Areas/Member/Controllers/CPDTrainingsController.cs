@@ -119,7 +119,7 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
             await PopulateViewBags();
 
             string presidentSignatureName = "President Signature";
-            string sealName = "Seal";
+            string sealName = "CPD Seal";
 
             var presidentSignature = await _service.SignatureService.GetSignatureByNameAsync(presidentSignatureName);   
             ViewBag.presidentSignature = presidentSignature;

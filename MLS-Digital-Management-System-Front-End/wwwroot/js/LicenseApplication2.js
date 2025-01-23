@@ -81,9 +81,30 @@ class FormHandler {
     }
 
     toggleAttachmentField(event) {
-        const attachmentFieldName = event.target.name + 'Attachment';
+        const fieldName = event.target.name;
+        
+        if (fieldName === 'AttainedMinimumNumberOfCLEUnits') {
+            // Handle the CPDs textarea specifically
+            const explanationContainer = event.target.closest('.form-check').nextElementSibling;
+            const explanationField = explanationContainer.querySelector('textarea');
+            const explanationLabel = explanationContainer.querySelector('label');
+
+            if (event.target.checked) {
+                explanationContainer.style.display = 'block';
+                explanationField.required = true;
+                explanationLabel.style.display = 'inline-block';
+            } else {
+                explanationContainer.style.display = 'none';
+                explanationField.required = false;
+                explanationField.value = '';
+            }
+            return; // Exit the function here for this special case
+        }
+
+        // Original logic for other fields
+        const attachmentFieldName = fieldName + 'Attachment';
         const attachmentField = document.querySelector(`input[name="${attachmentFieldName}"]`);
-        const attachmentFieldLabel = attachmentField.previousElementSibling;
+        const attachmentFieldLabel = attachmentField?.previousElementSibling;
         const explanationFieldContainer = event.target.closest('.form-check').nextElementSibling;
 
         let explanationField = null;

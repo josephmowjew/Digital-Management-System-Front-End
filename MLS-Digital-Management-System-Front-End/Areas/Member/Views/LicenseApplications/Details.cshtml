@@ -396,12 +396,25 @@
                     <span class="status-label @(Model.AttainedMinimumNumberOfCLEUnits ? "status-yes" : "status-no")">
                         @(Model.AttainedMinimumNumberOfCLEUnits ? "Yes" : "No")
                     </span>
-                    @if(!Model.AttainedMinimumNumberOfCLEUnits && !string.IsNullOrEmpty(Model.ExplanationForNoMinimumNumberOfCLEUnits)){
-                        <div class="my-3 text-warning"><strong>Explanation:</strong>
-                            <span class=text-muted>@Model.ExplanationForNoMinimumNumberOfCLEUnits</span>
-                        </div>
-                    
-                    }
+                    @if (Model.AttainedMinimumNumberOfCLEUnits && Model.Attachments.Any(a => a.PropertyName.Contains("AttainedMinimumNumberOfCLEUnitsAttachment")))
+                        {
+                            <button class="collapsible">Attachments</button>
+                            <div class="content attachment-container">
+                                @foreach (var attachment in Model.Attachments.Where(a => a.PropertyName.Contains("AttainedMinimumNumberOfCLEUnitsAttachment")))
+                                {
+                                    <div class="attachment-card">
+                                        <i class="fa fa-paperclip"></i> @attachment.FileName
+                                        <a href="@attachment.FilePath" target="_blank" class="btn btn-primary btn-sm">View Attachment</a>
+                                    </div>
+                                }
+                            </div>
+                        }
+                        else if (Model.AttainedMinimumNumberOfCLEUnits && !string.IsNullOrEmpty(Model.ExplanationForMinimumNumberOfCLEUnits)){
+                            <div class="my-3 text-warning"><strong>Explanation:</strong>
+                                <span class=text-muted>@Model.ExplanationForMinimumNumberOfCLEUnits</span>
+                            </div>
+                        
+                        }
                 </dd>
             </div>
             }

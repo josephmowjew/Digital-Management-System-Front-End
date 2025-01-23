@@ -17,7 +17,14 @@
             <h5 class="card-title fw-semibold mb-4 text-uppercase">Available Members</h5>
 
             <div>
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-info my-3" data-bs-toggle="modal"
+                    data-bs-target="#create_user_modal">
+                    Create User
+                </button>
+
                 <input type="file" id="excelFile" accept=".xlsx, .xls" style="display: none;">
+
                 <button id="uploadExcelBtn" class="btn btn-primary my-3 mx-1">Upload Excel</button>
                 <div class="progress mt-2" style="display: none; height: 25px;">
                     <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
@@ -31,8 +38,14 @@
                     class="btn btn-success my-3 ">Licensed</a>
                 <a asp-action="UnlicensedMembers" asp-area="secretariat" asp-controller="Members"
                     class="btn btn-warning my-3 mx-1">Unlicensed</a>
-                 <a asp-action="MembersWithMissingRecords" asp-area="secretariat" asp-controller="Members" class="btn btn-danger my-3 mx-1">Missing Records</a>
+                <a asp-action="MembersWithMissingRecords" asp-area="secretariat" asp-controller="Members"
+                    class="btn btn-danger my-3 mx-1">Missing Records</a>
             </div>
+        </div>
+
+        <div class="modal fade" id="create_user_modal" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <partial name="_CreateMemberPartial" />
         </div>
 
         <!-- Modal -->

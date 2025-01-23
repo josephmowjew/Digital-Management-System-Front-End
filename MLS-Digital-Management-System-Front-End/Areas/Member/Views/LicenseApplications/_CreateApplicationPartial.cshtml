@@ -155,19 +155,14 @@
                             <div class="mb-3 form-check">
                                 <input type="checkbox" class="form-check-input" asp-for="AttainedMinimumNumberOfCLEUnits">
                                 <label class="form-check-label" for="AttainedMinimumNumberOfCLEUnits">Attained Minimum Number Of CLE Units</label>
-                                <div class="mt-3">
-                                    <label for="AttainedMinimumNumberOfCLEUnitsAttachment" class="form-label">CLE Units Attachment</label>
-                                    <input asp-for="AttainedMinimumNumberOfCLEUnitsAttachment" type="file"
-                                        class="form-control" />
-                                </div>
                             </div>
 
-                            <div class="mb-3 ">
-                                <label for="ExplanationForNotSubmittingCertificateOfAdmission"
-                                    class="form-label">Explanation For Not Submitting Certificate Of Admission</label>
-                                <textarea asp-for="ExplanationForNotSubmittingCertificateOfAdmission"
-                                    placeholder="Enter Explanation For Not Submitting Certificate Of Admission"
-                                    class="form-control"></textarea>
+                            <div class="mb-3" style="display: none;">
+                                <label for="ExplanationForMinimumNumberOfCLEUnits" class="form-label">Enter The CPDs Attended</label>
+                                <textarea asp-for="ExplanationForMinimumNumberOfCLEUnits"
+                                    placeholder="Enter the CPDs Attended"
+                                    class="form-control">
+                                </textarea>
                             </div>
 
                             <div class="mb-3 form-check">

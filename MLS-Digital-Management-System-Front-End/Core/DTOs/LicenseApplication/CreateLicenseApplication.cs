@@ -36,7 +36,7 @@ namespace MLS_Digital_Management_System_Front_End.Core.DTOs.LicenseApplication;
         public bool AttainedMinimumNumberOfCLEUnits { get; set; }
         [StringLength(maximumLength: 250)]
         public string ExplanationForNoMinimumNumberOfCLEUnits { get; set; }
-        public string ExplanationForMinimumNumberOfCLEUnits { get; set; }
+        public string? ExplanationForMinimumNumberOfCLEUnits { get; set; }
         public IFormFile? AttainedMinimumNumberOfCLEUnitsAttachment { get; set; }
         public bool HasValidAnnualProfessionalIndemnityInsuranceCover { get; set; }
         public IFormFile? HasValidAnnualProfessionalIndemnityInsuranceCoverAttachment { get; set; }

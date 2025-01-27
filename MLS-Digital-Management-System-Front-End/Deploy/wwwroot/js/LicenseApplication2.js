@@ -67,7 +67,11 @@ class FormHandler {
 
             explanationFields.forEach(field => {
                 field.style.display = 'block';
-                field.required = true;
+                if (field.name !== "ExplanationForMinimumNumberOfCLEUnits") {
+                    field.required = true;
+                } else {
+                    field.required = false;
+                }
                 const label = field.previousElementSibling;
                 if (label) {
                     label.style.display = 'inline-block';
@@ -82,7 +86,6 @@ class FormHandler {
 
     toggleAttachmentField(event) {
         const fieldName = event.target.name;
-        
         if (fieldName === 'AttainedMinimumNumberOfCLEUnits') {
             // Handle the CPDs textarea specifically
             const explanationContainer = event.target.closest('.form-check').nextElementSibling;
@@ -100,7 +103,6 @@ class FormHandler {
             }
             return; // Exit the function here for this special case
         }
-
         // Original logic for other fields
         const attachmentFieldName = fieldName + 'Attachment';
         const attachmentField = document.querySelector(`input[name="${attachmentFieldName}"]`);

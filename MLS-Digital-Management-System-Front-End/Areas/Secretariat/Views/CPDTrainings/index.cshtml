@@ -117,15 +117,13 @@
 
                 "processing": true,
                 "serverSide": true,
-                "order": [[0, "desc"]],
+                "order": [[2, "desc"]],
                 ajax: {
                     url: "@host/api/CPDTrainings/paged",
                     type: 'get',
                     datatype: 'Json', headers: {
                         'Authorization': 'Bearer @ViewBag.token'
                     },
-
-
 
                 },
                 columnDefs: [
@@ -152,7 +150,7 @@
                         data: "dateToBeConducted",
                         name: "dateToBeConducted",
                         className: "text-left",
-                        "orderable": false,
+                        "orderable": true,
                     },
                     {
                         data: "cpdUnitsAwarded",

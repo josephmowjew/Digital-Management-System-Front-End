@@ -24,6 +24,23 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Secretariat.Controllers
             return View();
         }
 
+        public async Task<IActionResult> ApprovedApplications()
+        {
+
+            await PopulateViewBags();
+
+            return View();
+        }
+
+        public async Task<IActionResult> DeniedApplications()
+        {
+
+            await PopulateViewBags();
+
+            return View();
+        }
+
+
         public async Task<IActionResult> Details(int id)
         {
             //get the license application record from remote 

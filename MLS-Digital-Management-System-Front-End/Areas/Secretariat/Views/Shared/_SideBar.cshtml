@@ -50,7 +50,23 @@
                 <span>
                     <i class="ti ti-cards"></i>
                 </span>
-                <span class="hide-menu">Applications</span>
+                <span class="hide-menu">Pending</span>
+            </a>
+        </li>
+        <li class="sidebar-item">
+            <a class="sidebar-link" asp-action="approvedApplications" asp-area="Secretariat" asp-controller="LicenseApplications" aria-expanded="false">
+                <span>
+                    <i class="ti ti-cards"></i>
+                </span>
+                <span class="hide-menu">Approved</span>
+            </a>
+        </li>
+        <li class="sidebar-item">
+            <a class="sidebar-link" asp-action="deniedApplications" asp-area="Secretariat" asp-controller="LicenseApplications" aria-expanded="false">
+                <span>
+                    <i class="ti ti-cards"></i>
+                </span>
+                <span class="hide-menu">Denied</span>
             </a>
         </li>
         <li class="nav-small-cap">

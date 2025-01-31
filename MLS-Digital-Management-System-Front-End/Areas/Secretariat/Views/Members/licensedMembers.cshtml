@@ -20,6 +20,7 @@
                     class="btn btn-danger my-3 mx-1">
                     Missing Records
                 </a>
+                <button id="downloadButton" class="btn btn-primary my-3 mx-1">Download</button>
             </div>
         </div>
         <div class="table-responsive">
@@ -61,7 +62,11 @@
         var host = '@host';
     </script>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
+    <script src="https://unpkg.com/jspdf-autotable@3.5.22/dist/jspdf.plugin.autotable.js"></script>
     <script src="~/js/User.js" asp-append-version="true"></script>
+    <script src="~/js/downloadsHandle.js" asp-append-version="true"></script>
+
     <script>
         $(document).ready(function () {
             datatable = $('#my_table').DataTable({

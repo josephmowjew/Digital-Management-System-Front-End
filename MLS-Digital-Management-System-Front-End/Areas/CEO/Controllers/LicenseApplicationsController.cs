@@ -43,6 +43,22 @@ namespace MLS_Digital_Management_System_Front_End.Areas.CEO.Controllers
             return View(licenseApplication);
         }
 
+        public async Task<IActionResult> ApprovedApplications()
+        {
+
+            await PopulateViewBags();
+
+            return View();
+        }
+
+        public async Task<IActionResult> DeniedApplications()
+        {
+
+            await PopulateViewBags();
+
+            return View();
+        }
+
 
         private async Task PopulateViewBags()
         {

@@ -23,12 +23,15 @@
     <div class="card-body">
 
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h5 class="card-title fw-semibold mb-4 text-uppercase">Denied Applications </h5>
             <div>
-                <a asp-action="ApprovedApplications" asp-area="secretariat" asp-controller="LicenseApplications"
-                    class="btn btn-success my-3 mx-1">Approved</a>
-                <a asp-action="Index" asp-area="secretariat" asp-controller="LicenseApplications"
+                <h5 class="card-title fw-semibold text-uppercase">Approved Applications </h5>
+            </div>
+
+            <div>
+                <a asp-action="Index" asp-area="ceo" asp-controller="LicenseApplications"
                     class="btn btn-warning my-3 mx-1">Pending</a>
+                <a asp-action="DeniedApplications" asp-area="ceo" asp-controller="LicenseApplications"
+                    class="btn btn-danger my-3 mx-1">Denied</a>
             </div>
         </div>
 
@@ -86,7 +89,7 @@
                 "serverSide": true,
                 "order": [[6, "desc"]],
                 ajax: {
-                    url: "@host/api/licenseapplications/denied/paged",
+                    url: "@host/api/licenseapplications/approved/paged",
                     type: 'get',
                     datatype: 'Json', headers: {
                         'Authorization': 'Bearer @ViewBag.token'
@@ -160,7 +163,7 @@
                         "orderable": false,
                         render: function (data, type, row) {
                             console.log(row);
-                            return "<a href='/secretariat/LicenseApplications/Details/" + data + "' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-eye text-lg' title='show details' > Show Details</a>"
+                            return "<a href='/ceo/LicenseApplications/Details/" + data + "' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-eye text-lg' title='show details' > Show Details</a>"
                         }
                     }
                 ],

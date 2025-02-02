@@ -1,4 +1,4 @@
-﻿@using Microsoft.Extensions.Configuration
+@using Microsoft.Extensions.Configuration
 @inject IConfiguration Configuration
 @{
     ViewData["Title"] = "Firms";
@@ -14,33 +14,18 @@
         <div>
             <img src="~/assets/images/91.gif" id="spinner" />
         </div>
-        <!-- Button trigger modal -->
-        <div class="d-flex justify-content-between">
-            <h5 class="card-title fw-semibold mb-4 text-uppercase">Available Firms/Institutions</h5>
-
-            <div>
-                <button type="button" class="btn btn-info my-3" data-bs-toggle="modal"
-                    data-bs-target="#create_firm_modal">
-                    Create
-                </button>
-                <a class="btn btn-warning my-3 mx-2" asp-action="PendingFirms" asp-area="Secretariat" asp-controller="Firms">Pending</a>
-                <a class="btn btn-danger my-3" asp-action="DeniedFirms" asp-area="Secretariat" asp-controller="Firms">Denied</a>
-            </div>
-        </div>
-
-        <!-- Modal -->
-        <div class="modal fade" id="create_firm_modal" tabindex="-1" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <partial name="_CreateFirmPartial" />
-        </div>
-
-        <div class="modal fade" id="edit_firm_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <partial name="_EditFirmPartial" />
-        </div>
         <div class="modal fade" id="deny_firm_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
             aria-hidden="true">
             <partial name="_DenyFormPartial" />
+        </div>
+        <div class="d-flex justify-content-between">
+            <h5 class="card-title fw-semibold mb-4 text-uppercase">Pending Firms/Institutions</h5>
+            <div>
+                <a class="btn btn-success my-3 mx-2" asp-action="Index" asp-area="Secretariat"
+                    asp-controller="Firms">Active</a>
+                <a class="btn btn-danger my-3" asp-action="DeniedFirms" asp-area="Secretariat"
+                    asp-controller="Firms">Denied</a>
+            </div>
         </div>
 
         <div class="table-responsive">
@@ -103,7 +88,7 @@
                 "serverSide": true,
                 "order": [[0, "desc"]],
                 ajax: {
-                    url: "@host/api/Firms/paged",
+                    url: "@host/api/Firms/Pending/paged",
                     type: 'get',
                     datatype: 'Json', headers: {
                         'Authorization': 'Bearer @ViewBag.token'
@@ -179,7 +164,6 @@
                                 links += "<a href='#' onclick='DenyForm(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='btn btn-outline-danger mx-1 btn-sm ti ti-hand-stop my-1' title='Deny'>Deny</a>";
 
                             }
-                            links += "<a href='#' onclick='EditForm(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-pencil' title='edit' >Edit</a> <a href='#' type='button' onclick='Delete(\"" + data + "\",\"" + tokenValue + "\")' title='delete' class='ti ti-trash red-icon btn btn-outline-danger my-1 btn-sm' >Delete</a>"
                             return links;
                         }
                     }

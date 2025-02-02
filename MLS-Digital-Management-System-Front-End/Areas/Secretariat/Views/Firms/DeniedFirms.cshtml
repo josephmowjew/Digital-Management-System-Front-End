@@ -1,4 +1,4 @@
-﻿@using Microsoft.Extensions.Configuration
+@using Microsoft.Extensions.Configuration
 @inject IConfiguration Configuration
 @{
     ViewData["Title"] = "Firms";
@@ -14,33 +14,15 @@
         <div>
             <img src="~/assets/images/91.gif" id="spinner" />
         </div>
-        <!-- Button trigger modal -->
+
         <div class="d-flex justify-content-between">
-            <h5 class="card-title fw-semibold mb-4 text-uppercase">Available Firms/Institutions</h5>
-
+            <h5 class="card-title fw-semibold mb-4 text-uppercase">Denied Firms/Institutions</h5>
             <div>
-                <button type="button" class="btn btn-info my-3" data-bs-toggle="modal"
-                    data-bs-target="#create_firm_modal">
-                    Create
-                </button>
-                <a class="btn btn-warning my-3 mx-2" asp-action="PendingFirms" asp-area="Secretariat" asp-controller="Firms">Pending</a>
-                <a class="btn btn-danger my-3" asp-action="DeniedFirms" asp-area="Secretariat" asp-controller="Firms">Denied</a>
+                <a class="btn btn-success my-3 mx-2" asp-action="Index" asp-area="Secretariat"
+                    asp-controller="Firms">Active</a>
+                <a class="btn btn-warning my-3" asp-action="PendingFirms" asp-area="Secretariat"
+                    asp-controller="Firms">Pending</a>
             </div>
-        </div>
-
-        <!-- Modal -->
-        <div class="modal fade" id="create_firm_modal" tabindex="-1" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <partial name="_CreateFirmPartial" />
-        </div>
-
-        <div class="modal fade" id="edit_firm_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <partial name="_EditFirmPartial" />
-        </div>
-        <div class="modal fade" id="deny_firm_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <partial name="_DenyFormPartial" />
         </div>
 
         <div class="table-responsive">
@@ -103,7 +85,7 @@
                 "serverSide": true,
                 "order": [[0, "desc"]],
                 ajax: {
-                    url: "@host/api/Firms/paged",
+                    url: "@host/api/Firms/denied/paged",
                     type: 'get',
                     datatype: 'Json', headers: {
                         'Authorization': 'Bearer @ViewBag.token'

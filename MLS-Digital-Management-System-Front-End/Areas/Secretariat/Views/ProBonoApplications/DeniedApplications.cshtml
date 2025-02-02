@@ -1,4 +1,4 @@
-﻿@using Microsoft.Extensions.Configuration
+@using Microsoft.Extensions.Configuration
 @inject IConfiguration Configuration
 @{
     ViewData["Title"] = "Pro Bono Applications";
@@ -19,36 +19,15 @@
         <div>
             <img src="~/assets/images/91.gif" id="spinner" />
         </div>
-        <!-- Button trigger modal -->
-        <div class="d-flex justify-content-between">
-            <button type="button" class="btn btn-info my-3" data-bs-toggle="modal"
-                data-bs-target="#create_application_modal">
-                Create Application
-            </button>
-            <a asp-action="DeniedApplications" asp-area="Secretariat" asp-controller="ProBonoApplications" class="btn btn-danger my-3">Denied</a>
-        </div>
-
-        <!-- Modal -->
-        <div class="modal fade" id="create_application_modal" tabindex="-1" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <partial name="_CreateApplicationPartial" />
-        </div>
-
-        <div class="modal fade" id="edit_application_modal" tabindex="-1" role="dialog"
-            aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <partial name="_EditApplicationPartial" />
-        </div>
-
-        <div class="modal fade" id="deny_probono_application_modal" tabindex="-1" role="dialog"
-            aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <partial name="_DenyFormPartial" />
-        </div>
         <div class="modal fade" id="view_client_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
             aria-hidden="true">
             <partial name="_ViewProBonoClientPartial" />
         </div>
 
-        <h5 class="card-title fw-semibold mb-4 text-uppercase">Available Applications</h5>
+        <div class="d-flex justify-content-between">
+            <h5 class="card-title fw-semibold mb-4 text-uppercase">Denied Applications</h5>
+            <a asp-action="Index" asp-area="Secretariat" asp-controller="ProBonoApplications" class="btn btn-warning my-3">Pending</a>
+        </div>
 
         <div class="table-responsive">
             <table class="table table-bordered " id="my_table">
@@ -78,10 +57,6 @@
                         <th>
                             Application Status
                         </th>
-                        <th>
-                            Action
-                        </th>
-
                     </tr>
                 </thead>
                 <tbody>
@@ -111,7 +86,7 @@
                 "serverSide": true,
                 "order": [[0, "desc"]],
                 ajax: {
-                    url: "@host/api/probonoapplications/paged",
+                    url: "@host/api/probonoapplications/denied/paged",
                     type: 'get',
                     datatype: 'Json', headers: {
                         'Authorization': 'Bearer @ViewBag.token'
@@ -188,21 +163,6 @@
                         name: "applicationStatus",
                         className: "text-left",
                         "orderable": true,
-                    },
-                    {
-                        data: "id",
-                        name: "id",
-                        "orderable": false,
-                        render: function (data, type, row) {
-                            let links = "";
-                            if (row.applicationStatus.toLowerCase() == "pending") {
-                                links += "<a href='#' onclick='Activate(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='btn btn-outline-success mx-1 btn-sm ti ti-check my-1 mx-1' title='activate'>Activate</a>";
-                                links += "<a href='#' onclick='DenyForm(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='btn btn-outline-danger mx-1 btn-sm ti ti-hand-stop' title='Deny'>Deny</a>";
-
-                            }
-                            //links += "<a href='#' onclick='EditForm(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-pencil' title='edit' >Edit</a> <a href='#' type='button' onclick='Delete(\"" + data + "\",\"" + tokenValue + "\")' title='delete' class='ti ti-trash red-icon btn btn-outline-danger my-1 btn-sm' >Delete</a>"
-                            return links;
-                        }
                     }
                 ], responsive: true,
                 "autoWidth": false,

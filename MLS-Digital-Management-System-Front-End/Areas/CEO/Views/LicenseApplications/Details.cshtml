@@ -333,6 +333,33 @@
                 }
 
                 <div class="item">
+                    <dt>Made Contribution to Social Welfare</dt>
+                    <dd>
+                        <span class="status-label @(Model.MadeContributionToSocialWelfare ? "status-yes" : "status-no")">
+                            @(Model.MadeContributionToSocialWelfare ? "Yes" : "No")
+                        </span>
+                        @if (Model.MadeContributionToSocialWelfare && Model.Attachments.Any(a => a.PropertyName.Contains("MadeContributionToSocialWelfareAttachment")))
+                        {
+                            <button class="collapsible">Attachments</button>
+                            <div class="content attachment-container">
+                                @foreach (var attachment in Model.Attachments.Where(a => a.PropertyName.Contains("MadeContributionToSocialWelfareAttachment")))
+                                {
+                                
+                                    <a href="@attachment.FilePath" target="_blank" class="attachment-card"> <i class="fa fa-paperclip"></i> @attachment.FileName</a>
+                                    
+                                }
+                            </div>
+                        }
+                        else if(!Model.MadeContributionToSocialWelfare && !string.IsNullOrEmpty(Model.ExplanationForNoContributionToSocialWelfare)){
+                            <div class="my-3 text-warning"><strong>Explanation:</strong>
+                                <span class=text-muted>@Model.ExplanationForNoContributionToSocialWelfare</span>
+                            </div>
+                        
+                        }
+                    </dd>
+                </div>
+
+                <div class="item">
                     <dt>Made Contribution to MLS Building Project Fund</dt>
                     <dd>
                         <span class="status-label @(Model.MadeContributionToMLSBuildingProjectFund ? "status-yes" : "status-no")">

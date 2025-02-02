@@ -48,4 +48,7 @@ namespace MLS_Digital_Management_System_Front_End.Core.DTOs.LicenseApplication;
         public bool CompliedWithPenaltiesImposedUnderTheAct { get; set; }
         [StringLength(250)]
         public string ExplanationForNoComplianceWithPenalties { get; set; }
+        public bool MadeContributionToSocialWelfare { get; set; }
+        [StringLength(maximumLength:250)]
+        public string? ExplanationForNoContributionToSocialWelfare { get; set; }
     }

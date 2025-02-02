@@ -60,7 +60,7 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
 
         private async Task<List<SelectListItem>> GetFirms()
         {
-            List<SelectListItem> firmsList = new() { new SelectListItem() { Text = "---Select Firm---", Value = "" } };
+            List<SelectListItem> firmsList = new() { new SelectListItem() { Text = "Not Applicable", Value =""  } };
 
             //get identity types from remote
             var firmsFromRemote =  await this._service.FirmService.GetAllFirmsAsync();

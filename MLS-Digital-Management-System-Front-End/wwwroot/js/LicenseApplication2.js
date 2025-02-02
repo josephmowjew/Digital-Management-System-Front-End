@@ -33,7 +33,7 @@ class FormHandler {
                         callback: (result) => {
                             if (result) {
                                 this.onSaveDraft().then(() => {
-                                   
+
                                     // Wait for a short period to allow the toast to be displayed
                                     setTimeout(() => {
                                         window.location.href = `/member/firms`;
@@ -87,12 +87,14 @@ class FormHandler {
     toggleAttachmentField(event) {
         const fieldName = event.target.name;
         if (fieldName === 'AttainedMinimumNumberOfCLEUnits') {
+
             // Handle the CPDs textarea specifically
             const explanationContainer = event.target.closest('.form-check').nextElementSibling;
             const explanationField = explanationContainer.querySelector('textarea');
             const explanationLabel = explanationContainer.querySelector('label');
 
             if (event.target.checked) {
+                console.log('checked');
                 explanationContainer.style.display = 'block';
                 explanationField.required = true;
                 explanationLabel.style.display = 'inline-block';
@@ -147,11 +149,11 @@ class FormHandler {
     bindEvents() {
         const createApplicationBtn = document.querySelector("#create_application_modal button[name='create_application_btn']");
         const saveApplicationBtn = document.querySelector("#create_application_modal button[name='save_application_btn']");
-        
+
         if (createApplicationBtn) {
             createApplicationBtn.addEventListener('click', this.onCreateClick.bind(this));
         }
-        
+
         if (saveApplicationBtn) {
             saveApplicationBtn.addEventListener('click', this.onSaveDraft.bind(this));
         }
@@ -159,7 +161,7 @@ class FormHandler {
 
     onCreateClick() {
         this.showSpinner();
-        
+
         // Disable the submit button and show loading state
         const submitButton = document.getElementById('create_application_btn');
         submitButton.disabled = true;
@@ -207,17 +209,23 @@ class FormHandler {
             formData.append("actionType", "Submit");
             formData.append("Id", id);
 
+
+            form.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+                console.log(`Submitting checkbox ${checkbox.name}: ${checkbox.checked ? 'true' : 'false'}`);
+                formData.set(checkbox.name, checkbox.checked ? 'true' : 'false');
+            });
+
             this.sendAjaxRequest(
-                formData, 
-                'POST', 
-                `${host}/api/LicenseApplications`, 
+                formData,
+                'POST',
+                `${host}/api/LicenseApplications`,
                 (response) => {
                     // Success callback
                     this.handleCreateApplicationSuccess(response);
                     // Re-enable the submit button and restore original text
                     submitButton.disabled = false;
                     submitButton.innerHTML = 'Submit Application';
-                }, 
+                },
                 (error) => {
                     // Error callback
                     this.handleError(error);
@@ -238,7 +246,7 @@ class FormHandler {
 
             // Append specific form fields to FormData
             const id = form.querySelector('input[name="Id"]').value;
-           
+
 
             const stringToBoolean = (str) => str === "True" ? true : false;
             let hasPreviousLicenseApplication = stringToBoolean(hasPreviousLicenseApplicationVar);
@@ -329,14 +337,13 @@ class FormHandler {
         this.hideSpinner();
         this.hideLicenseApplicationButtons();
         const errorResponse = JSON.parse(xhr.responseText);
-     
+
         $.each(errorResponse, (key, value) => {
             $.each(value, (index, message) => {
-                
+
                 const elementName = key ? key.charAt(0).toUpperCase() + key.slice(1) : null;
                 const element = null;
-                if(elementName != null)
-                {
+                if (elementName != null) {
                     element = document.querySelector(`#create_application_modal form :input[name="${elementName || ''}"]`);
 
                 }
@@ -351,7 +358,7 @@ class FormHandler {
                         newErrorSpan.classList.add('text-danger');
                         element.after(newErrorSpan);
                     }
-                }else{
+                } else {
                     // If elementName is null, create a new element at the bottom of the form (second tab)
                     const newErrorDiv = document.createElement('div');
                     newErrorDiv.textContent = message;
@@ -401,62 +408,84 @@ class FormHandler {
 
     handleEditFormSuccess(response) {
         this.hideSpinner();
-        const data = JSON.parse(response);  
+        const data = JSON.parse(response);
         const fieldMap = this.createFieldMap(data);
-    
-        this.formElements.forEach(element => {
-          const fieldName = element.getAttribute('name');
-          const dataKey = fieldMap[fieldName];
-          let fieldValue = data[dataKey];
-    
-          if (fieldName === "FirmId") {
-            fieldValue = (data.member.firmId !== null && data.member.firmId !== 0) ? data.member.firmId : "";
-          }
-    
-          if (element.type === 'checkbox') {
-              this.setCheckboxValue(element, fieldValue);
 
-              element.addEventListener('change', () => {
-                  // Log or handle checkbox change here
-                  this.setCheckboxValue(element, element.checked);
-              });
-              //console.log(fieldValue)
-          } else if (element.type === 'file') {
-              //this.handleFileUpload(element, data.attachments, fieldName);
-              this.fileUploadHandler.handleFileUpload(element, data.attachments, fieldName);
-              
-          } else {
-            element.value = fieldValue;
-          }
+        this.formElements.forEach(element => {
+            const fieldName = element.getAttribute('name');
+            const dataKey = fieldMap[fieldName];
+            let fieldValue = data[dataKey];
+
+            if (fieldName === "FirmId") {
+                fieldValue = (data.member.firmId !== null && data.member.firmId !== 0) ? data.member.firmId : "";
+            }
+
+            if (element.type === 'checkbox') {
+                //console.log(`Populating checkbox ${fieldName}: ${fieldValue}`);
+                this.setCheckboxValue(element, fieldValue);
+
+                // Manually trigger the toggleAttachmentField for initial state
+                if (fieldValue === true || fieldValue === 'true') {
+                    const event = new Event('change', { bubbles: true });
+                    element.dispatchEvent(event);
+                }
+
+                // Check if it is the specific checkbox
+                if (fieldName === "AttainedMinimumNumberOfCLEUnits") {
+                    const explanationFieldContainer = element.closest('.form-check').nextElementSibling;
+                    const explanationField = explanationFieldContainer.querySelector('textarea');
+
+                    if (fieldValue) {
+                        explanationFieldContainer.style.display = 'block';
+                        explanationField.required = true;
+                    } else {
+                        explanationFieldContainer.style.display = 'none';
+                        explanationField.required = false;
+                        explanationField.value = ''; // Clear text when hiding
+                    }
+                }
+
+                element.addEventListener('change', () => {
+                    //console.log(`Checkbox changed: ${element.name} = ${element.checked}`);
+                });
+            } else if (element.type === 'file') {
+                //this.handleFileUpload(element, data.attachments, fieldName);
+                this.fileUploadHandler.handleFileUpload(element, data.attachments, fieldName);
+
+            } else {
+                element.value = fieldValue;
+            }
         });
         // Reset validation
         const validator = $("#create_application_modal form").validate();
         validator.resetForm();
-    
+
         // Show modal
         $("#create_application_modal").modal("show");
     }
-    
+
     createFieldMap(data) {
         return Object.entries(data).reduce((map, [key, value]) => {
-          const formFieldName = key.charAt(0).toUpperCase() + key.slice(1);
-          map[formFieldName] = key;
-          return map;
+            const formFieldName = key.charAt(0).toUpperCase() + key.slice(1);
+            map[formFieldName] = key;
+            return map;
         }, {});
-      }
-    
+    }
+
     setCheckboxValue(checkbox, value) {
-        if (checkbox.checked !== value) { // Only update if value is different
-            checkbox.checked = value === true || value === 'true';
-            const event = new Event('change', { bubbles: true });
-            checkbox.dispatchEvent(event);
+        //console.log(`Setting checkbox ${checkbox.name}: Current=${checkbox.checked}, New=${value}`);
+
+        const newValue = value === true || value === 'true';
+        if (checkbox.checked !== newValue) {
+            checkbox.checked = newValue;
+            //console.log(`After setting: ${checkbox.name} = ${checkbox.checked}`);
         }
     }
-    
+
     handleFileUpload(fileInput, attachments, fieldName) {
         const attachment = attachments.find(attachment => attachment.propertyName === fieldName);
 
-       
+
         if (attachment) {
 
             //console.log("attachment description: ",attachment)
@@ -504,9 +533,9 @@ class FormHandler {
     }
 
     acceptApplication(id) {
-        
+
         bootbox.confirm("Are you sure you want to accept this application?", result => {
-            
+
             if (result) {
                 this.showSpinner();
                 this.hideLicenseApplicationButtons();
@@ -531,7 +560,7 @@ class FormHandler {
         denyInput.value = id;
         denyButton.removeEventListener('click', this.denyApplication.bind(this));
         denyButton.addEventListener('click', this.denyApplication.bind(this));
-        
+
         $("#deny_license_application_modal").modal("show");
     }
 
@@ -607,7 +636,7 @@ class FormHandler {
         const stringToBoolean = (str) => str === "True" ? true : false;
         let hasPreviousLicenseApplication = stringToBoolean(hasPreviousLicenseApplicationVar);
         const formElements = [...form.querySelectorAll('input, select, textarea, checkbox, label, textarea')];
-        const newApplicationList = ["CertificateOfAdmission", "ContributionToMLSBuildingProjectFund", "ContributionToFidelityFund", "AnnualSubscriptionToSociety", "FirmId"];
+        const newApplicationList = ["CertificateOfAdmission", "ContributionToMLSBuildingProjectFund", "ContributionToFidelityFund", "AnnualSubscriptionToSociety", "FirmId", "ContributionToSocialWelfare"];
 
         let applicationElements = null;
 
@@ -628,7 +657,7 @@ class FormHandler {
                 }
             });
         }
-        
+
         formElements.forEach(element => {
             if (applicationElements.includes(element)) {
                 element.hidden = false;
@@ -641,13 +670,13 @@ class FormHandler {
         });
     }
 
-    generateCertificate(licenseId){
+    generateCertificate(licenseId) {
         // Open a new window with the certificate template 
         var certificateWindow = window.open(`/member/LicenseApplications/LicenseCertificate/${licenseId}`, '_blank');
-        
+
         // Wait for the new window to load
-        certificateWindow.onload = function() {
-            
+        certificateWindow.onload = function () {
+
             // Use html2pdf to convert the certificate to PDF
             html2pdf().from(certificateWindow.document.body).save('Certificate_of_Attendance.pdf');
         };

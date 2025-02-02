@@ -128,9 +128,6 @@ function downloadLicensedMembersAsPDF() {
             'Authorization': 'Bearer ' + tokenValue
         },
         success: function(data) {
-            console.log("API Response Data:", data);
-            console.log("First member example:", data[0]);
-            
             const { jsPDF } = window.jspdf;
             const pdf = new jsPDF({
                 orientation: 'p',
@@ -156,8 +153,8 @@ function downloadLicensedMembersAsPDF() {
 
                 // Add title with styling
                 pdf.setFont("helvetica", "bold");
-                pdf.setFontSize(14);
-                pdf.text("LIST OF LICENSED LEGAL PRACTITIONERS FOR 2024-2025 PRACTICE YEAR", pageWidth/2, 140, { align: "center" });
+                pdf.setFontSize(12);
+                pdf.text(`LIST OF LICENSED LEGAL PRACTITIONERS FOR ${yearOfPractice} PRACTICE YEAR`, pageWidth/2, 140, { align: "center" });
 
                 // Table configuration
                 const columns = [

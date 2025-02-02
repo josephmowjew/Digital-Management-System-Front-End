@@ -38,88 +38,85 @@ function downloadLicensedMembersAsPDF() {
 
     // Function to generate PDF without logo
     function generatePDFWithoutLogo(data) {
+        const { jsPDF } = window.jspdf;
         const pdf = new jsPDF({
             orientation: 'p',
             unit: 'pt',
             format: 'a4',
-            compress: true
+            putOnlyUsedFonts: true
         });
         
         const pageWidth = pdf.internal.pageSize.width;
 
         // Add title with styling
         pdf.setFont("helvetica", "bold");
-        pdf.setFontSize(24);
-        pdf.text("Licensed Members", pageWidth/2, 180, { align: "left" });
-
-        // Add date with styling
-        pdf.setFont("helvetica", "normal");
-        pdf.setFontSize(12);
-        pdf.text("Generated on: " + new Date().toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-        }), pageWidth/2, 60, { align: "left" });
+        pdf.setFontSize(14);
+        pdf.text("LIST OF LICENSED LEGAL PRACTITIONERS FOR 2024-2025 PRACTICE YEAR", pageWidth/2, 60, { align: "center" });
 
         // Table configuration
         const columns = [
-            {header: 'First Name', dataKey: 'firstName'},
-            {header: 'Surname', dataKey: 'lastName'},
-            {header: 'Gender', dataKey: 'gender'},
-            {header: 'Email', dataKey: 'email'},
-            {header: 'Contact', dataKey: 'contact'}
+            {header: 'NO.', dataKey: 'no'},
+            {header: 'NAME', dataKey: 'name'},
+            {header: 'INSTITUTION/CONTACTS', dataKey: 'contacts'},
+            {header: 'ADMISSION YEAR', dataKey: 'admissionYear'},
+            {header: 'QUALIFICATION', dataKey: 'qualification'},
+            {header: 'DATE RENEWED', dataKey: 'dateRenewed'}
         ];
 
-        const rows = data.map(row => ({
-            firstName: row.user.firstName,
-            lastName: row.user.lastName,
-            gender: row.user.gender,
-            email: row.user.email,
-            contact: row.user.phoneNumber
+        // Add row numbers to the data
+        const rows = data.map((row, index) => ({
+            no: index + 1,
+            name: row.user.firstName + ' ' + (row.user.otherName ? row.user.otherName + ' ' : '') + row.user.lastName,
+            contacts: row.firm ? `${row.firm.name}, ${row.firm.postalAddress}` : (row.postalAddress || ''),
+            admissionYear: row.dateOfAdmissionToPractice ? new Date(row.dateOfAdmissionToPractice).toLocaleDateString('en-US', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric'
+            }).replace(/(\d+)/, function(match) {
+                const day = parseInt(match);
+                const suffix = ['th', 'st', 'nd', 'rd'][(day % 10 > 3 || day > 20) ? 0 : day % 10];
+                return day + suffix;
+            }) : '',
+            qualification: 'LLB (Hons)',
+            dateRenewed: ''
         }));
 
         // Add table with styling
         pdf.autoTable({
             columns: columns,
             body: rows,
-            startY: 100,
-            margin: { top: 20, right: 40, bottom: 40, left: 40 },
+            startY: 80,
+            margin: { top: 20, right: 20, bottom: 40, left: 20 },
             headStyles: {
-                fillColor: [41, 128, 185],
-                textColor: 255,
-                fontSize: 12,
-                halign: 'center',
-                fontStyle: 'bold'
+                fillColor: [255, 255, 255],
+                textColor: 0,
+                fontSize: 10,
+                fontStyle: 'bold',
+                halign: 'left',
+                cellPadding: 5
             },
             bodyStyles: {
-                fontSize: 11,
+                fontSize: 10,
                 halign: 'left',
-                textColor: 50
+                textColor: 0,
+                cellPadding: 5
             },
-            alternateRowStyles: {
-                fillColor: [245, 245, 245]
+            theme: 'grid',
+            styles: {
+                lineWidth: 0.5,
+                lineColor: [0, 0, 0]
             },
-            tableWidth: 'auto',
             columnStyles: {
-                email: { cellWidth: 'auto' },
-                contact: { cellWidth: 'auto' }
-            },
-            didDrawPage: function(data) {
-                // Add footer
-                pdf.setFontSize(10);
-                pdf.setTextColor(150);
-                pdf.text(
-                    'Page ' + data.pageNumber,
-                    data.settings.margin.left,
-                    pdf.internal.pageSize.height - 10
-                );
+                no: { cellWidth: 30 },
+                name: { cellWidth: 'auto' },
+                contacts: { cellWidth: 'auto' },
+                admissionYear: { cellWidth: 'auto' },
+                qualification: { cellWidth: 'auto' },
+                dateRenewed: { cellWidth: 'auto' }
             }
         });
 
-        // Save the PDF
-        pdf.save('licensed_members.pdf');
-
-        // Cleanup
+        pdf.save('licensed_legal_practitioners.pdf');
         document.body.removeChild(loadingMessage);
         document.head.removeChild(style);
     }
@@ -131,7 +128,18 @@ function downloadLicensedMembersAsPDF() {
             'Authorization': 'Bearer ' + tokenValue
         },
         success: function(data) {
-            // Try to load the image - adjust the path to match your ASP.NET static files location
+            console.log("API Response Data:", data);
+            console.log("First member example:", data[0]);
+            
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF({
+                orientation: 'p',
+                unit: 'pt',
+                format: 'a4',
+                putOnlyUsedFonts: true
+            });
+            
+            // Try to load the image
             const img = new Image();
             img.crossOrigin = "Anonymous";
             img.onload = function() {
@@ -142,93 +150,84 @@ function downloadLicensedMembersAsPDF() {
                 ctx.drawImage(img, 0, 0);
                 const logoData = canvas.toDataURL('image/png');
 
-                const pdf = new jsPDF({
-                    orientation: 'p',
-                    unit: 'pt',
-                    format: 'a4',
-                    compress: true
-                });
+                // Add logo centered at the top
+                const pageWidth = pdf.internal.pageSize.width;
+                pdf.addImage(logoData, 'PNG', (pageWidth - 100) / 2, 20, 100, 100);
 
-                // Add logo
-                pdf.addImage(logoData, 'PNG', 247, 40, 100, 100);
                 // Add title with styling
                 pdf.setFont("helvetica", "bold");
-                pdf.setFontSize(24);
-                pdf.text("Licensed Members Directory", 40, 180, { align: "left" });
-
-                // Add date with styling
-                pdf.setFont("helvetica", "normal");
-                pdf.setFontSize(12);
-                pdf.text("Generated on: " + new Date().toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
-                }), 40, 200, { align: "left" });
+                pdf.setFontSize(14);
+                pdf.text("LIST OF LICENSED LEGAL PRACTITIONERS FOR 2024-2025 PRACTICE YEAR", pageWidth/2, 140, { align: "center" });
 
                 // Table configuration
                 const columns = [
-                    {header: 'First Name', dataKey: 'firstName'},
-                    {header: 'Surname', dataKey: 'lastName'},
-                    {header: 'Gender', dataKey: 'gender'},
-                    {header: 'Email', dataKey: 'email'},
-                    {header: 'Contact', dataKey: 'contact'}
+                    {header: 'NO.', dataKey: 'no'},
+                    {header: 'NAME', dataKey: 'name'},
+                    {header: 'INSTITUTION/CONTACTS', dataKey: 'contacts'},
+                    {header: 'ADMISSION YEAR', dataKey: 'admissionYear'},
+                    {header: 'QUALIFICATION', dataKey: 'qualification'},
+                    {header: 'DATE RENEWED', dataKey: 'dateRenewed'}
                 ];
 
-                const rows = data.map(row => ({
-                    firstName: row.user.firstName,
-                    lastName: row.user.lastName,
-                    gender: row.user.gender,
-                    email: row.user.email,
-                    contact: row.user.phoneNumber
+                // Add row numbers to the data
+                const rows = data.map((row, index) => ({
+                    no: index + 1,
+                    name: row.user.firstName + ' ' + (row.user.otherName ? row.user.otherName + ' ' : '') + row.user.lastName,
+                    contacts: row.firm ? `${row.firm.name}, ${row.firm.postalAddress}` : (row.postalAddress || ''),
+                    admissionYear: row.dateOfAdmissionToPractice ? new Date(row.dateOfAdmissionToPractice).toLocaleDateString('en-US', {
+                        day: 'numeric',
+                        month: 'long',
+                        year: 'numeric'
+                    }).replace(/(\d+)/, function(match) {
+                        const day = parseInt(match);
+                        const suffix = ['th', 'st', 'nd', 'rd'][(day % 10 > 3 || day > 20) ? 0 : day % 10];
+                        return day + suffix;
+                    }) : '',
+                    qualification: 'LLB (Hons)',
+                    dateRenewed: ''
                 }));
 
                 // Add table with styling
                 pdf.autoTable({
                     columns: columns,
                     body: rows,
-                    startY: 230,
-                    margin: { top: 20, right: 40, bottom: 40, left: 40 },
+                    startY: 160,
+                    margin: { top: 20, right: 20, bottom: 40, left: 20 },
                     headStyles: {
-                        fillColor: [41, 128, 185],
-                        textColor: 255,
-                        fontSize: 12,
-                        halign: 'center',
-                        fontStyle: 'bold'
+                        fillColor: [255, 255, 255],
+                        textColor: 0,
+                        fontSize: 10,
+                        fontStyle: 'bold',
+                        halign: 'left',
+                        cellPadding: 5
                     },
                     bodyStyles: {
-                        fontSize: 11,
+                        fontSize: 10,
                         halign: 'left',
-                        textColor: 50
+                        textColor: 0,
+                        cellPadding: 5
                     },
-                    alternateRowStyles: {
-                        fillColor: [245, 245, 245]
+                    theme: 'grid',
+                    styles: {
+                        lineWidth: 0.5,
+                        lineColor: [0, 0, 0]
                     },
-                    tableWidth: 'auto',
                     columnStyles: {
-                        email: { cellWidth: 'auto' },
-                        contact: { cellWidth: 'auto' }
-                    },
-                    didDrawPage: function(data) {
-                        // Add footer
-                        pdf.setFontSize(10);
-                        pdf.setTextColor(150);
-                        pdf.text(
-                            'Page ' + data.pageNumber,
-                            data.settings.margin.left,
-                            pdf.internal.pageSize.height - 10
-                        );
+                        no: { cellWidth: 30 },
+                        name: { cellWidth: 'auto' },
+                        contacts: { cellWidth: 'auto' },
+                        admissionYear: { cellWidth: 'auto' },
+                        qualification: { cellWidth: 'auto' },
+                        dateRenewed: { cellWidth: 'auto' }
                     }
                 });
 
-                // Save the PDF
-                pdf.save('licensed_members.pdf');
-
-                // Cleanup
+                pdf.save('licensed_legal_practitioners.pdf');
                 document.body.removeChild(loadingMessage);
                 document.head.removeChild(style);
             };
 
-            // Handle image loading error by generating PDF without logo
+            // Handle image loading error
             img.onerror = function() {
                 console.error("Error loading logo image");
                 generatePDFWithoutLogo(data);
@@ -266,11 +265,12 @@ function downloadAttendedMembersAsPDF(cpdTrainingId) {
 
     // Function to generate PDF without logo
     function generatePDFWithoutLogo(data) {
+        const { jsPDF } = window.jspdf;
         const pdf = new jsPDF({
             orientation: 'p',
             unit: 'pt',
             format: 'a4',
-            compress: true
+            putOnlyUsedFonts: true
         });
 
         const pageWidth = pdf.internal.pageSize.width;
@@ -367,6 +367,14 @@ function downloadAttendedMembersAsPDF(cpdTrainingId) {
             'Authorization': 'Bearer ' + tokenValue
         },
         success: function(data) {
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF({
+                orientation: 'p',
+                unit: 'pt',
+                format: 'a4',
+                putOnlyUsedFonts: true
+            });
+            
             // Try to load the image
             const img = new Image();
             img.crossOrigin = "Anonymous";
@@ -377,13 +385,6 @@ function downloadAttendedMembersAsPDF(cpdTrainingId) {
                 const ctx = canvas.getContext('2d');
                 ctx.drawImage(img, 0, 0);
                 const logoData = canvas.toDataURL('image/png');
-
-                const pdf = new jsPDF({
-                    orientation: 'p',
-                    unit: 'pt',
-                    format: 'a4',
-                    compress: true
-                });
 
                 // Add logo
                 pdf.addImage(logoData, 'PNG', 247, 40, 100, 100);

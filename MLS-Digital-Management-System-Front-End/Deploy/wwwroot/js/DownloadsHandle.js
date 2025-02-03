@@ -45,22 +45,22 @@ function downloadLicensedMembersAsPDF() {
             format: 'a4',
             putOnlyUsedFonts: true
         });
-        
+
         const pageWidth = pdf.internal.pageSize.width;
 
         // Add title with styling
         pdf.setFont("helvetica", "bold");
         pdf.setFontSize(14);
-        pdf.text("LIST OF LICENSED LEGAL PRACTITIONERS FOR 2024-2025 PRACTICE YEAR", pageWidth/2, 60, { align: "center" });
+        pdf.text("LIST OF LICENSED LEGAL PRACTITIONERS FOR 2024-2025 PRACTICE YEAR", pageWidth / 2, 60, { align: "center" });
 
         // Table configuration
         const columns = [
-            {header: 'NO.', dataKey: 'no'},
-            {header: 'NAME', dataKey: 'name'},
-            {header: 'INSTITUTION/CONTACTS', dataKey: 'contacts'},
-            {header: 'ADMISSION YEAR', dataKey: 'admissionYear'},
-            {header: 'QUALIFICATION', dataKey: 'qualification'},
-            {header: 'DATE RENEWED', dataKey: 'dateRenewed'}
+            { header: 'NO.', dataKey: 'no' },
+            { header: 'NAME', dataKey: 'name' },
+            { header: 'INSTITUTION/CONTACTS', dataKey: 'contacts' },
+            { header: 'ADMISSION YEAR', dataKey: 'admissionYear' },
+            { header: 'QUALIFICATION', dataKey: 'qualification' },
+            { header: 'DATE RENEWED', dataKey: 'dateRenewed' }
         ];
 
         // Add row numbers to the data
@@ -72,13 +72,23 @@ function downloadLicensedMembersAsPDF() {
                 day: 'numeric',
                 month: 'long',
                 year: 'numeric'
-            }).replace(/(\d+)/, function(match) {
+            }).replace(/(\d+)/, function (match) {
                 const day = parseInt(match);
                 const suffix = ['th', 'st', 'nd', 'rd'][(day % 10 > 3 || day > 20) ? 0 : day % 10];
                 return day + suffix;
             }) : '',
-            qualification: 'LLB (Hons)',
-            dateRenewed: ''
+            qualification: '',
+            dateRenewed: row.licenses && row.licenses.length > 0 ?
+                row.licenses.find(license => license.status === "Active")?.createdDate ?
+                    new Date(row.licenses.find(license => license.status === "Active").createdDate).toLocaleDateString('en-US', {
+                        day: 'numeric',
+                        month: 'long',
+                        year: 'numeric'
+                    }).replace(/(\d+)/, function (match) {
+                        const day = parseInt(match);
+                        const suffix = ['th', 'st', 'nd', 'rd'][(day % 10 > 3 || day > 20) ? 0 : day % 10];
+                        return day + suffix;
+                    }) : '' : ''
         }));
 
         // Add table with styling
@@ -127,7 +137,7 @@ function downloadLicensedMembersAsPDF() {
         headers: {
             'Authorization': 'Bearer ' + tokenValue
         },
-        success: function(data) {
+        success: function (data) {
             const { jsPDF } = window.jspdf;
             const pdf = new jsPDF({
                 orientation: 'p',
@@ -135,11 +145,11 @@ function downloadLicensedMembersAsPDF() {
                 format: 'a4',
                 putOnlyUsedFonts: true
             });
-            
+
             // Try to load the image
             const img = new Image();
             img.crossOrigin = "Anonymous";
-            img.onload = function() {
+            img.onload = function () {
                 const canvas = document.createElement('canvas');
                 canvas.width = img.width;
                 canvas.height = img.height;
@@ -154,16 +164,16 @@ function downloadLicensedMembersAsPDF() {
                 // Add title with styling
                 pdf.setFont("helvetica", "bold");
                 pdf.setFontSize(12);
-                pdf.text(`LIST OF LICENSED LEGAL PRACTITIONERS FOR ${yearOfPractice} PRACTICE YEAR`, pageWidth/2, 140, { align: "center" });
+                pdf.text(`LIST OF LICENSED LEGAL PRACTITIONERS FOR ${yearOfPractice} PRACTICE YEAR`, pageWidth / 2, 140, { align: "center" });
 
                 // Table configuration
                 const columns = [
-                    {header: 'NO.', dataKey: 'no'},
-                    {header: 'NAME', dataKey: 'name'},
-                    {header: 'INSTITUTION/CONTACTS', dataKey: 'contacts'},
-                    {header: 'ADMISSION YEAR', dataKey: 'admissionYear'},
-                    {header: 'QUALIFICATION', dataKey: 'qualification'},
-                    {header: 'DATE RENEWED', dataKey: 'dateRenewed'}
+                    { header: 'NO.', dataKey: 'no' },
+                    { header: 'NAME', dataKey: 'name' },
+                    { header: 'INSTITUTION/CONTACTS', dataKey: 'contacts' },
+                    { header: 'ADMISSION YEAR', dataKey: 'admissionYear' },
+                    { header: 'QUALIFICATION', dataKey: 'qualification' },
+                    { header: 'DATE RENEWED', dataKey: 'dateRenewed' }
                 ];
 
                 // Add row numbers to the data
@@ -175,13 +185,23 @@ function downloadLicensedMembersAsPDF() {
                         day: 'numeric',
                         month: 'long',
                         year: 'numeric'
-                    }).replace(/(\d+)/, function(match) {
+                    }).replace(/(\d+)/, function (match) {
                         const day = parseInt(match);
                         const suffix = ['th', 'st', 'nd', 'rd'][(day % 10 > 3 || day > 20) ? 0 : day % 10];
                         return day + suffix;
                     }) : '',
-                    qualification: 'LLB (Hons)',
-                    dateRenewed: ''
+                    qualification: '',
+                    dateRenewed: row.licenses && row.licenses.length > 0 ?
+                        row.licenses.find(license => license.status === "Active")?.createdDate ?
+                            new Date(row.licenses.find(license => license.status === "Active").createdDate).toLocaleDateString('en-US', {
+                                day: 'numeric',
+                                month: 'long',
+                                year: 'numeric'
+                            }).replace(/(\d+)/, function (match) {
+                                const day = parseInt(match);
+                                const suffix = ['th', 'st', 'nd', 'rd'][(day % 10 > 3 || day > 20) ? 0 : day % 10];
+                                return day + suffix;
+                            }) : '' : ''
                 }));
 
                 // Add table with styling
@@ -225,13 +245,13 @@ function downloadLicensedMembersAsPDF() {
             };
 
             // Handle image loading error
-            img.onerror = function() {
+            img.onerror = function () {
                 console.error("Error loading logo image");
                 generatePDFWithoutLogo(data);
             };
             img.src = '/assets/images/logos/cropped-mls-logo-clear-192x192.png';
         },
-        error: function(err) {
+        error: function (err) {
             console.error("Error fetching data:", err);
             document.body.removeChild(loadingMessage);
             document.head.removeChild(style);
@@ -275,7 +295,7 @@ function downloadAttendedMembersAsPDF(cpdTrainingId) {
         // Add title with styling
         pdf.setFont("helvetica", "bold");
         pdf.setFontSize(24);
-        pdf.text("Attended Members for CPD Training", pageWidth/2, 180, { align: "center" });
+        pdf.text("Attended Members for CPD Training", pageWidth / 2, 180, { align: "center" });
 
         // Add date with styling
         pdf.setFont("helvetica", "normal");
@@ -284,7 +304,7 @@ function downloadAttendedMembersAsPDF(cpdTrainingId) {
             year: 'numeric',
             month: 'long',
             day: 'numeric'
-        }), pageWidth/2, 60, { align: "center" });
+        }), pageWidth / 2, 60, { align: "center" });
 
         // Add training details
         pdf.setFont("helvetica", "bold");
@@ -342,7 +362,7 @@ function downloadAttendedMembersAsPDF(cpdTrainingId) {
                 email: { cellWidth: 'auto' },
                 contact: { cellWidth: 'auto' }
             },
-            didDrawPage: function(data) {
+            didDrawPage: function (data) {
                 pdf.setFontSize(10);
                 pdf.setTextColor(150);
                 pdf.text(
@@ -363,7 +383,7 @@ function downloadAttendedMembersAsPDF(cpdTrainingId) {
         headers: {
             'Authorization': 'Bearer ' + tokenValue
         },
-        success: function(data) {
+        success: function (data) {
             const { jsPDF } = window.jspdf;
             const pdf = new jsPDF({
                 orientation: 'p',
@@ -371,11 +391,11 @@ function downloadAttendedMembersAsPDF(cpdTrainingId) {
                 format: 'a4',
                 putOnlyUsedFonts: true
             });
-            
+
             // Try to load the image
             const img = new Image();
             img.crossOrigin = "Anonymous";
-            img.onload = function() {
+            img.onload = function () {
                 const canvas = document.createElement('canvas');
                 canvas.width = img.width;
                 canvas.height = img.height;
@@ -456,7 +476,7 @@ function downloadAttendedMembersAsPDF(cpdTrainingId) {
                         email: { cellWidth: 'auto' },
                         contact: { cellWidth: 'auto' }
                     },
-                    didDrawPage: function(data) {
+                    didDrawPage: function (data) {
                         pdf.setFontSize(10);
                         pdf.setTextColor(150);
                         pdf.text(
@@ -472,13 +492,13 @@ function downloadAttendedMembersAsPDF(cpdTrainingId) {
             };
 
             // Handle image loading error by generating PDF without logo
-            img.onerror = function() {
+            img.onerror = function () {
                 console.error("Error loading logo image");
                 generatePDFWithoutLogo(data);
             };
             img.src = '/assets/images/logos/cropped-mls-logo-clear-192x192.png';
         },
-        error: function(err) {
+        error: function (err) {
             console.error("Error fetching attended members data:", err);
             document.body.removeChild(loadingMessage);
             alert("Error generating PDF for attended members. Please try again.");
@@ -494,7 +514,7 @@ if (downloadButton) {
 
 const downloadAttendedButton = document.getElementById("downloadAttendedButton");
 if (downloadAttendedButton) {
-    downloadAttendedButton.addEventListener("click", function() {
+    downloadAttendedButton.addEventListener("click", function () {
         const cpdTrainingId = this.getAttribute('data-training-id');
         console.log("Training ID:", cpdTrainingId); // Debug log
         if (!cpdTrainingId) {

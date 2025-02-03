@@ -64,6 +64,13 @@
                                         class="form-control" />
                                 </div>
                             </div>
+                            <div class="mb-3 ">
+                                <label for="ExplanationForNoFullMandatoryProBonoWork"
+                                    class="form-label">Explanation For Not Performing Mandatory Pro Bono Work</label>
+                                <textarea asp-for="ExplanationForNoFullMandatoryProBonoWork"
+                                    placeholder="Enter Explanation For Not Performing Mandatory Pro Bono Work"
+                                    class="form-control"></textarea>
+                            </div>
                             <div class="mb-3 form-check">
                                 <input type="checkbox" asp-for="PaidAnnualSubscriptionToSociety"
                                     class="form-check-input">
@@ -80,6 +87,26 @@
                                 <label for="ExplanationForNoAnnualSubscriptionToSociety" class="form-label">Explanation
                                     For Not Paying Annual Subscription</label>
                                 <textarea asp-for="ExplanationForNoAnnualSubscriptionToSociety"
+                                    placeholder="Enter Explanation For Not Paying Annual Subscription"
+                                    class="form-control"></textarea>
+                            </div>
+
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" asp-for="MadeContributionToSocialWelfare"
+                                    class="form-check-input">
+                                <label class="form-check-label" for="MadeContributionToSocialWelfare">
+                                    Paid Contribution To Social Welfare</label>
+                                <div class="mt-3">
+                                    <label for="MadeContributionToSocialWelfareAttachment" class="form-label">
+                                        Contribution To Social Welfare Attachment</label>
+                                    <input asp-for="MadeContributionToSocialWelfareAttachment" type="file"
+                                        class="form-control" />
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="ExplanationForNoContributionToSocialWelfare" class="form-label">Explanation
+                                    For No Contribution To Social Welfare</label>
+                                <textarea asp-for="ExplanationForNoContributionToSocialWelfare"
                                     placeholder="Enter Explanation For Not Paying Annual Subscription"
                                     class="form-control"></textarea>
                             </div>
@@ -274,8 +301,8 @@
                                     class="form-control"></textarea>
                             </div>
                             <div class="mb-3">
-                                <label asp-for="FirmId" class="form-label"></label>
-                                <select required asp-for="FirmId" asp-items="@ViewBag.firmsList"
+                                <label asp-for="FirmId" class="form-label">Select Firm/Institution</label>
+                                <select asp-for="FirmId" asp-items="@ViewBag.firmsList"
                                     class="form-control"></select>
                                 <span asp-validation-for="FirmId" class="text-danger"></span>
                             </div>

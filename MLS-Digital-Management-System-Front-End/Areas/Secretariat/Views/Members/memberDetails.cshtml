@@ -81,9 +81,6 @@
                         <th>
                             Expiry Date
                         </th>
-                        <th>
-                            Action
-                        </th>
                     </tr>
                 </thead>
 
@@ -161,15 +158,6 @@
                             return formattedDate;
                         }
                     },
-                    {
-                        data: "id",
-                        name: "id",
-                        "orderable": false,
-                        render: function (data, type, row) {
-                            console.log(row);
-                            return "<a href='LicenseApplications/Details/" + data + "' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-eye text-lg' title='show details' > Download</a>"
-                        }
-                    }
                 ],
                 responsive: true,
                 "autoWidth": false,

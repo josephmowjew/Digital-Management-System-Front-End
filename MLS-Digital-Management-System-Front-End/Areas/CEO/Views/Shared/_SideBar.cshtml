@@ -101,12 +101,27 @@
             <span class="hide-menu">License Management</span>
         </li>
         <li class="sidebar-item">
-            <a class="sidebar-link" asp-action="index" asp-area="CEO" asp-controller="LicenseApplications"
-                aria-expanded="false">
+            <a class="sidebar-link" asp-action="index" asp-area="ceo" asp-controller="LicenseApplications" aria-expanded="false">
                 <span>
                     <i class="ti ti-cards"></i>
                 </span>
-                <span class="hide-menu">Applications</span>
+                <span class="hide-menu">Pending</span>
+            </a>
+        </li>
+        <li class="sidebar-item">
+            <a class="sidebar-link" asp-action="approvedApplications" asp-area="ceo" asp-controller="LicenseApplications" aria-expanded="false">
+                <span>
+                    <i class="ti ti-cards"></i>
+                </span>
+                <span class="hide-menu">Approved</span>
+            </a>
+        </li>
+        <li class="sidebar-item">
+            <a class="sidebar-link" asp-action="deniedApplications" asp-area="ceo" asp-controller="LicenseApplications" aria-expanded="false">
+                <span>
+                    <i class="ti ti-cards"></i>
+                </span>
+                <span class="hide-menu">Denied</span>
             </a>
         </li>
         <li class="nav-small-cap">

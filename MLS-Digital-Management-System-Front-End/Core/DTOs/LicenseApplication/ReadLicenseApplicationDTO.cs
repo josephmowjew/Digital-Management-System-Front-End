@@ -47,5 +47,7 @@ public class ReadLicenseApplicationDTO
         public bool CompliedWithPenaltiesImposedUnderTheAct { get; set; }
         public string ExplanationForNoComplianceWithPenalties { get; set; }
         public string ExplanationForNotSubmittingCertificateOfAdmission { get; set; }
+        public bool MadeContributionToSocialWelfare { get; set; }
+        public string ExplanationForNoContributionToSocialWelfare { get; set; }
 
 }

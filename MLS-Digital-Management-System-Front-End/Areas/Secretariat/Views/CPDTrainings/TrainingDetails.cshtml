@@ -93,6 +93,9 @@
         <h5 class="card-title fw-semibold mb-4 text-uppercase text-center fs-4">Available Registered Members</h5>
 
         <div class="table-responsive">
+            <div class="d-flex justify-content-end align-items-center mb-2">
+              <button id="downloadAttendedButton" class="btn btn-primary" data-training-id="@ViewBag.training.Id">Download</button>  
+            </div>
             <table class="table table-bordered " id="cpd_table">
                 <thead>
                     <tr>
@@ -132,8 +135,16 @@
         var datatable;
         var tokenValue = '@ViewBag.token';
         var host = '@host';
+        var trainingDetails = {
+            title: '@ViewBag.training.Title',
+            venue: '@ViewBag.training.PhysicalVenue',
+            date: '@ViewBag.training.DateToBeConducted.ToString("yyyy-MM-dd")',
+            duration: '@ViewBag.training.Duration'
+        };
     </script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://unpkg.com/jspdf-autotable@3.5.22/dist/jspdf.plugin.autotable.js"></script>
+    <script src="~/js/DownloadsHandle.js" asp-append-version="true"></script>
     <script src="~/js/FileUploadHandler.js" asp-append-version="true"></script>
     <script src="~/js/CPDTraining.js" asp-append-version="true"></script>
     <script>

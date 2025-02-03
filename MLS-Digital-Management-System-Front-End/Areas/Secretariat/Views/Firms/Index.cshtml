@@ -11,26 +11,37 @@
 
 <div class="card">
     <div class="card-body">
-         <div>
+        <div>
             <img src="~/assets/images/91.gif" id="spinner" />
         </div>
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-info my-3" data-bs-toggle="modal" data-bs-target="#create_firm_modal">
-            Create Firm/Institution
-        </button>
+        <div class="d-flex justify-content-between">
+            <h5 class="card-title fw-semibold mb-4 text-uppercase">Available Firms/Institutions</h5>
+
+            <div>
+                <button type="button" class="btn btn-info my-3" data-bs-toggle="modal"
+                    data-bs-target="#create_firm_modal">
+                    Create
+                </button>
+                <a class="btn btn-warning my-3 mx-2" asp-action="PendingFirms" asp-area="Secretariat" asp-controller="Firms">Pending</a>
+                <a class="btn btn-danger my-3" asp-action="DeniedFirms" asp-area="Secretariat" asp-controller="Firms">Denied</a>
+            </div>
+        </div>
 
         <!-- Modal -->
-        <div class="modal fade" id="create_firm_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="create_firm_modal" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
             <partial name="_CreateFirmPartial" />
         </div>
 
-        <div class="modal fade" id="edit_firm_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="edit_firm_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
             <partial name="_EditFirmPartial" />
         </div>
-        <div class="modal fade" id="deny_firm_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="deny_firm_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
             <partial name="_DenyFormPartial" />
         </div>
-        <h5 class="card-title fw-semibold mb-4 text-uppercase">Available Active Firms</h5>
 
         <div class="table-responsive">
             <table class="table table-bordered " id="my_table">
@@ -57,7 +68,7 @@
                         <th>
                             Secondary Phone Number
                         </th>
-                         <th>
+                        <th>
                             Status
                         </th>
                         <th>
@@ -76,108 +87,108 @@
 
 @section Scripts {
 
-            <script>
-                var datatable;
-                var tokenValue = '@ViewBag.token';
-                var host = "@host";
-            </script>
+    <script>
+        var datatable;
+        var tokenValue = '@ViewBag.token';
+        var host = "@host";
+    </script>
 
-            <script src="~/js/Firm.js" asp-append-version="true"></script>
-            <script>
-                $(document).ready(function () {
-                    datatable = $('#my_table').DataTable({
-
-
-                        "processing": true,
-                        "serverSide": true,
-                        "order": [[0, "desc"]],
-                        ajax: {
-                        url: "@host/api/Firms/paged",
-                            type: 'get',
-                            datatype: 'Json',headers: {
-                                            'Authorization': 'Bearer @ViewBag.token'
-                                        },
+    <script src="~/js/Firm.js" asp-append-version="true"></script>
+    <script>
+        $(document).ready(function () {
+            datatable = $('#my_table').DataTable({
 
 
-                      },
-                        columnDefs: [
-                            {
-                                defaultContent: "",
-                                targets: "_all",
-                                'orderable': true
-                            },
-                        ],
-                        columns: [
-                            {
-                                data: "name",
-                                name: "name",
-                                className: "text-left",
-                                "orderable": true,
-                            },                      
-                               {
-                                data: "postalAddress",
-                                name: "postalAddress",
-                                className: "text-left",
-                                "orderable": true,
-                            },
-                               {
-                                data: "physicalAddress",
-                                name: "physicalAddress",
-                                className: "text-left",
-                                "orderable": true,
-                            },
-                               {
-                                data: "primaryContactPerson",
-                                name: "primaryContactPerson",
-                                className: "text-left",
-                                "orderable": true,
-                            },
-                               {
-                                data: "primaryPhoneNumber",
-                                name: "primaryPhoneNumber",
-                                className: "text-left",
-                                "orderable": true,
-                            },
-                               {
-                                data: "secondaryContactPerson",
-                                name: "secondaryContactPerson",
-                                className: "text-left",
-                                "orderable": true,
-                            },
-                               {
-                                data: "secondaryPhoneNumber",
-                                name: "secondaryPhoneNumber",
-                                className: "text-left",
-                                "orderable": true,
-                            },
-                            {
-                                data: "status",
-                                name: "status",
-                                className: "text-left",
-                                "orderable": false,
-                            },
+                "processing": true,
+                "serverSide": true,
+                "order": [[0, "desc"]],
+                ajax: {
+                    url: "@host/api/Firms/paged",
+                    type: 'get',
+                    datatype: 'Json', headers: {
+                        'Authorization': 'Bearer @ViewBag.token'
+                    },
 
-                           {
-                                data: "id",
-                                name: "id",
-                                "orderable": false,
-                                render: function (data, type, row) {
-                                let links = "";
-                                if (row.status.toLowerCase() == "pending") {
+
+                },
+                columnDefs: [
+                    {
+                        defaultContent: "",
+                        targets: "_all",
+                        'orderable': true
+                    },
+                ],
+                columns: [
+                    {
+                        data: "name",
+                        name: "name",
+                        className: "text-left",
+                        "orderable": true,
+                    },
+                    {
+                        data: "postalAddress",
+                        name: "postalAddress",
+                        className: "text-left",
+                        "orderable": true,
+                    },
+                    {
+                        data: "physicalAddress",
+                        name: "physicalAddress",
+                        className: "text-left",
+                        "orderable": true,
+                    },
+                    {
+                        data: "primaryContactPerson",
+                        name: "primaryContactPerson",
+                        className: "text-left",
+                        "orderable": true,
+                    },
+                    {
+                        data: "primaryPhoneNumber",
+                        name: "primaryPhoneNumber",
+                        className: "text-left",
+                        "orderable": true,
+                    },
+                    {
+                        data: "secondaryContactPerson",
+                        name: "secondaryContactPerson",
+                        className: "text-left",
+                        "orderable": true,
+                    },
+                    {
+                        data: "secondaryPhoneNumber",
+                        name: "secondaryPhoneNumber",
+                        className: "text-left",
+                        "orderable": true,
+                    },
+                    {
+                        data: "status",
+                        name: "status",
+                        className: "text-left",
+                        "orderable": false,
+                    },
+
+                    {
+                        data: "id",
+                        name: "id",
+                        "orderable": false,
+                        render: function (data, type, row) {
+                            let links = "";
+                            if (row.status.toLowerCase() == "pending") {
                                 links += "<a href='#' onclick='Activate(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='btn btn-outline-success mx-1 btn-sm ti ti-check' my-1 title='activate'>Activate</a>";
                                 links += "<a href='#' onclick='DenyForm(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='btn btn-outline-danger mx-1 btn-sm ti ti-hand-stop my-1' title='Deny'>Deny</a>";
 
-                                }
-                                  links += "<a href='#' onclick='EditForm(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-pencil' title='edit' >Edit</a> <a href='#' type='button' onclick='Delete(\"" + data + "\",\"" + tokenValue + "\")' title='delete' class='ti ti-trash red-icon btn btn-outline-danger my-1 btn-sm' >Delete</a>"
-                                return links;
-                                }
                             }
-                        ],
-                        responsive: true,
-                        "autoWidth": false,
-                    });
-                });
-            </script>
+                            links += "<a href='#' onclick='EditForm(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='btn btn-outline-primary mx-1 btn-sm ti ti-pencil' title='edit' >Edit</a> <a href='#' type='button' onclick='Delete(\"" + data + "\",\"" + tokenValue + "\")' title='delete' class='ti ti-trash red-icon btn btn-outline-danger my-1 btn-sm' >Delete</a>"
+                            return links;
+                        }
+                    }
+                ],
+                responsive: true,
+                "autoWidth": false,
+            });
+        });
+    </script>
 
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");

@@ -55,8 +55,12 @@ namespace MLS_Digital_Management_System_Front_End.Core.DTOs.LicenseApplication;
         [StringLength(maximumLength: 250)]
         public string ExplanationForNoComplianceWithPenalties { get; set; }
         [Display(Name = "Firm")]
-        public int FirmId { get; set; }
+        public int? FirmId { get; set; }
         public bool CertificateOfAdmission {get; set;}
          public IFormFile? CertificateOfAdmissionAttachment {get; set;}
         public string? ExplanationForNotSubmittingCertificateOfAdmission {get; set;}
+        public bool MadeContributionToSocialWelfare { get; set; }
+        [StringLength(maximumLength:250)]
+        public string? ExplanationForNoContributionToSocialWelfare { get; set; }
+        public IFormFile? MadeContributionToSocialWelfareAttachment { get; set; }
     }

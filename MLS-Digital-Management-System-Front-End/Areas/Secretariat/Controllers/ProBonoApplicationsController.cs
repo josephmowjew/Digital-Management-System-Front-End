@@ -89,6 +89,12 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Secretariat.Controllers
             return yearOperationsList;
         }
 
+        public async Task<IActionResult> DeniedApplications()
+        {
+            await PopulateViewBags();
+            return View();
+        }
+
 
 
     }

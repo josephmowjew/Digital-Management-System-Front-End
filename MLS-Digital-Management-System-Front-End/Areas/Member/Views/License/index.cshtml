@@ -113,7 +113,6 @@
                         name: "id",
                         "orderable": false,
                         render: function (data, type, row) {
-                            console.log(row);
                             return `<a href='#' onclick='formHandler.generateCertificate("${row.id}")' type='button' class='btn btn-outline-success my-1 btn-sm'>Download</a>`;
                         }
                     }

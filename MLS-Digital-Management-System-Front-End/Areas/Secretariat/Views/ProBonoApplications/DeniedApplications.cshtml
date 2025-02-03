@@ -1,0 +1,179 @@
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+@{
+    ViewData["Title"] = "Pro Bono Applications";
+    Layout = "~/Areas/Secretariat/Views/shared/_Layout.cshtml";
+
+    var host = Configuration.GetSection("APIURL")["Link"];
+    var apiPrefix = Configuration.GetSection("APISettings")["API_Prefix"];
+}
+
+@section Styles {
+
+    <link href="~/assets/css/custom_select.css" rel="stylesheet" />
+}
+
+
+<div class="card">
+    <div class="card-body">
+        <div>
+            <img src="~/assets/images/91.gif" id="spinner" />
+        </div>
+        <div class="modal fade" id="view_client_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <partial name="_ViewProBonoClientPartial" />
+        </div>
+
+        <div class="d-flex justify-content-between">
+            <h5 class="card-title fw-semibold mb-4 text-uppercase">Denied Applications</h5>
+            <a asp-action="Index" asp-area="Secretariat" asp-controller="ProBonoApplications" class="btn btn-warning my-3">Pending</a>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-bordered " id="my_table">
+                <thead>
+                    <tr>
+                        <th>
+                            Nature Of Dispute
+                        </th>
+                        <th>
+                            Client
+                        </th>
+                        <th>
+                            Created By
+                        </th>
+
+                        <th>
+                            Date Added
+                        </th>
+
+                        <th>
+                            Case Details
+                        </th>
+
+                        <th>
+                            Case Document
+                        </th>
+                        <th>
+                            Application Status
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+
+    <script>
+        var datatable;
+        var tokenValue = '@ViewBag.token';
+        var host = '@host';
+    </script>
+
+    <script src="~/js/ProbonoApplication.js" asp-append-version="true"></script>
+    <script src="~/assets/js/custom_select.js" asp-append-version="true"></script>
+    <script>
+        $(document).ready(function () {
+            datatable = $('#my_table').DataTable({
+
+
+                "processing": true,
+                "serverSide": true,
+                "order": [[0, "desc"]],
+                ajax: {
+                    url: "@host/api/probonoapplications/denied/paged",
+                    type: 'get',
+                    datatype: 'Json', headers: {
+                        'Authorization': 'Bearer @ViewBag.token'
+                    }
+
+                },
+                columnDefs: [
+                    {
+                        defaultContent: "",
+                        targets: "_all",
+                        'orderable': true
+                    },
+                ],
+                columns: [
+
+                    {
+                        data: "natureOfDispute",
+                        name: "natureOfDispute",
+                        className: "text-left",
+                        "orderable": true,
+                    },
+                    {
+                        data: "probonoClient.name",
+                        name: "client",
+                        className: "text-left",
+                        orderable: true,
+                        render: function (data, type, row) {
+                            return '<a href="javascript:void(0)" class="client-name">' + data + '</a>';
+                        },
+                        createdCell: function (td, cellData, rowData, row, col) {
+                            $(td).find('a.client-name').on('click', function (e) {
+                                e.preventDefault();
+                                openClientDetailsModal(rowData.probonoClient.id);
+                            });
+                        }
+                    },
+                    {
+                        data: "createdBy.fullName",
+                        name: "createdBy.fullName",
+                        className: "text-left",
+                        "orderable": false,
+                    },
+
+                    {
+                        data: "createdDate",
+                        name: "createdDate",
+                        className: "text-left",
+                        "orderable": true,
+                    },
+
+                    {
+                        data: "summaryOfDispute",
+                        name: "summaryOfDispute",
+                        className: "text-left",
+                        "orderable": true,
+                    },
+                    {
+                        data: "attachments",
+                        name: "attachments",
+                        className: "text-left",
+                        "orderable": false,
+                        render: function (data, type, row, meta) {
+                            if (data && data.length > 0) {
+                                return data.map((attachment) => {
+                                    return `<a href="@host@apiPrefix/${attachment.filePath}" target="_blank" download="${attachment.fileName}"> Attachment <i class="bi bi-paperclip"></i></a>`;
+                                }).join('<br>');
+                            } else {
+                                return '';
+                            }
+                        }
+                    },
+                    {
+                        data: "applicationStatus",
+                        name: "applicationStatus",
+                        className: "text-left",
+                        "orderable": true,
+                    }
+                ], responsive: true,
+                "autoWidth": false,
+            });
+        });
+    </script>
+
+
+
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

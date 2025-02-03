@@ -1,0 +1,180 @@
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+@{
+    ViewData["Title"] = "Firms";
+    Layout = "~/Areas/Secretariat/Views/shared/_Layout.cshtml";
+
+    var host = Configuration.GetSection("APIURL")["Link"];
+}
+
+
+
+<div class="card">
+    <div class="card-body">
+        <div>
+            <img src="~/assets/images/91.gif" id="spinner" />
+        </div>
+        <div class="modal fade" id="deny_firm_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <partial name="_DenyFormPartial" />
+        </div>
+        <div class="d-flex justify-content-between">
+            <h5 class="card-title fw-semibold mb-4 text-uppercase">Pending Firms/Institutions</h5>
+            <div>
+                <a class="btn btn-success my-3 mx-2" asp-action="Index" asp-area="Secretariat"
+                    asp-controller="Firms">Active</a>
+                <a class="btn btn-danger my-3" asp-action="DeniedFirms" asp-area="Secretariat"
+                    asp-controller="Firms">Denied</a>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-bordered " id="my_table">
+                <thead>
+                    <tr>
+                        <th>
+                            Name
+                        </th>
+                        <th>
+                            Postal Address
+                        </th>
+                        <th>
+                            Physical Address
+                        </th>
+                        <th>
+                            Primary Contact Person
+                        </th>
+                        <th>
+                            Primary Phone Number
+                        </th>
+                        <th>
+                            Secondary Contact Person
+                        </th>
+                        <th>
+                            Secondary Phone Number
+                        </th>
+                        <th>
+                            Status
+                        </th>
+                        <th>
+                            Action
+                        </th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+
+    <script>
+        var datatable;
+        var tokenValue = '@ViewBag.token';
+        var host = "@host";
+    </script>
+
+    <script src="~/js/Firm.js" asp-append-version="true"></script>
+    <script>
+        $(document).ready(function () {
+            datatable = $('#my_table').DataTable({
+
+
+                "processing": true,
+                "serverSide": true,
+                "order": [[0, "desc"]],
+                ajax: {
+                    url: "@host/api/Firms/Pending/paged",
+                    type: 'get',
+                    datatype: 'Json', headers: {
+                        'Authorization': 'Bearer @ViewBag.token'
+                    },
+
+
+                },
+                columnDefs: [
+                    {
+                        defaultContent: "",
+                        targets: "_all",
+                        'orderable': true
+                    },
+                ],
+                columns: [
+                    {
+                        data: "name",
+                        name: "name",
+                        className: "text-left",
+                        "orderable": true,
+                    },
+                    {
+                        data: "postalAddress",
+                        name: "postalAddress",
+                        className: "text-left",
+                        "orderable": true,
+                    },
+                    {
+                        data: "physicalAddress",
+                        name: "physicalAddress",
+                        className: "text-left",
+                        "orderable": true,
+                    },
+                    {
+                        data: "primaryContactPerson",
+                        name: "primaryContactPerson",
+                        className: "text-left",
+                        "orderable": true,
+                    },
+                    {
+                        data: "primaryPhoneNumber",
+                        name: "primaryPhoneNumber",
+                        className: "text-left",
+                        "orderable": true,
+                    },
+                    {
+                        data: "secondaryContactPerson",
+                        name: "secondaryContactPerson",
+                        className: "text-left",
+                        "orderable": true,
+                    },
+                    {
+                        data: "secondaryPhoneNumber",
+                        name: "secondaryPhoneNumber",
+                        className: "text-left",
+                        "orderable": true,
+                    },
+                    {
+                        data: "status",
+                        name: "status",
+                        className: "text-left",
+                        "orderable": false,
+                    },
+
+                    {
+                        data: "id",
+                        name: "id",
+                        "orderable": false,
+                        render: function (data, type, row) {
+                            let links = "";
+                            if (row.status.toLowerCase() == "pending") {
+                                links += "<a href='#' onclick='Activate(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='btn btn-outline-success mx-1 btn-sm ti ti-check' my-1 title='activate'>Activate</a>";
+                                links += "<a href='#' onclick='DenyForm(\"" + data + "\",\"" + tokenValue + "\")' type='button' class='btn btn-outline-danger mx-1 btn-sm ti ti-hand-stop my-1' title='Deny'>Deny</a>";
+
+                            }
+                            return links;
+                        }
+                    }
+                ],
+                responsive: true,
+                "autoWidth": false,
+            });
+        });
+    </script>
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

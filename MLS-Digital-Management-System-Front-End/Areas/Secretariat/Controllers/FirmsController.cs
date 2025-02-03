@@ -23,7 +23,20 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Secretariat.Controllers
 
         }
 
+        public async Task<IActionResult> PendingFirms()
+        {
 
+            await PopulateViewBags();
+            return View();
+
+        }
+        public async Task<IActionResult> DeniedFirms()
+        {
+
+            await PopulateViewBags();
+            return View();
+
+        }
          private async Task PopulateViewBags()
         {
             //get the token

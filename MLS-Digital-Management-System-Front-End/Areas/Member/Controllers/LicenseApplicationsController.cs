@@ -102,5 +102,34 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
             ViewBag.license = license;
             return View();
         }
+
+        public async Task<IActionResult> Verify(int id)
+        {
+            try
+            {
+                await PopulateViewBags();
+                var license = await _service.LicenseService.GetLicense(id);
+                
+                if (license == null)
+                {
+                    ViewBag.license = null;
+                    ViewBag.licenseStatus = "Invalid License"; // Set status for invalid license
+                    return View();
+                }
+
+                ViewBag.license = license;
+
+                // Determine the license status
+                ViewBag.licenseStatus = DateTime.UtcNow > license.ExpiryDate ? "Expired" : "Active";
+
+                return View();
+            }
+            catch (Exception ex)
+            {
+                // Log the error
+                Console.WriteLine($"Error in Verify action: {ex.Message}");
+                return View("Error");
+            }
+        }
     }
 }

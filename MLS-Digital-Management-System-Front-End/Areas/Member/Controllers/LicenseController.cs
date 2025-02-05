@@ -47,5 +47,14 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
             ViewBag.license = license;
             return View();
         }
+
+        public async Task<IActionResult> Verify(int id)
+        {
+            await PopulateViewBags();
+
+            var license = await _service.LicenseService.GetLicense(id);
+            ViewBag.license = license;
+            return View();
+        }
     }
 }

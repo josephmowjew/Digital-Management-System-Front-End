@@ -282,6 +282,14 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ0VPXFZpZXdzXEluc3RpdHV0aW9uVHlwZXNcX0VkaXRJbnN0aXR1dGlvblR5cGVQYXJ0aWFsLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/esngw/Desktop/prg/work/sparc/MLS/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/CEO/Views/LicenseApplications/ApprovedApplications.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ0VPXFZpZXdzXExpY2Vuc2VBcHBsaWNhdGlvbnNcQXBwcm92ZWRBcHBsaWNhdGlvbnMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/esngw/Desktop/prg/work/sparc/MLS/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/CEO/Views/LicenseApplications/DeniedApplications.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ0VPXFZpZXdzXExpY2Vuc2VBcHBsaWNhdGlvbnNcRGVuaWVkQXBwbGljYXRpb25zLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/esngw/Desktop/prg/work/sparc/MLS/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/CEO/Views/LicenseApplications/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ0VPXFZpZXdzXExpY2Vuc2VBcHBsaWNhdGlvbnNcRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -1058,6 +1066,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWVtYmVyXFZpZXdzXExpY2Vuc2VBcHBsaWNhdGlvbnNcTGljZW5zZUNlcnRpZmljYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/esngw/Desktop/prg/work/sparc/MLS/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Member/Views/LicenseApplications/Verify.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWVtYmVyXFZpZXdzXExpY2Vuc2VBcHBsaWNhdGlvbnNcVmVyaWZ5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/esngw/Desktop/prg/work/sparc/MLS/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Member/Views/LicenseApplications/_CreateApplicationPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWVtYmVyXFZpZXdzXExpY2Vuc2VBcHBsaWNhdGlvbnNcX0NyZWF0ZUFwcGxpY2F0aW9uUGFydGlhbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -1318,8 +1330,16 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU2VjcmV0YXJpYXRcVmlld3NcQ1BEVHJhaW5pbmdzXF9FZGl0Q1BEUGFydGlhbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/esngw/Desktop/prg/work/sparc/MLS/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Secretariat/Views/Firms/DeniedFirms.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU2VjcmV0YXJpYXRcVmlld3NcRmlybXNcRGVuaWVkRmlybXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/esngw/Desktop/prg/work/sparc/MLS/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Secretariat/Views/Firms/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU2VjcmV0YXJpYXRcVmlld3NcRmlybXNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/esngw/Desktop/prg/work/sparc/MLS/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Secretariat/Views/Firms/PendingFirms.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU2VjcmV0YXJpYXRcVmlld3NcRmlybXNcUGVuZGluZ0Zpcm1zLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/esngw/Desktop/prg/work/sparc/MLS/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Secretariat/Views/Firms/_CreateFirmPartial.cshtml]
@@ -1444,6 +1464,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/esngw/Desktop/prg/work/sparc/MLS/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Secretariat/Views/PenaltyTypes/_EditPenaltyTypePartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU2VjcmV0YXJpYXRcVmlld3NcUGVuYWx0eVR5cGVzXF9FZGl0UGVuYWx0eVR5cGVQYXJ0aWFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/esngw/Desktop/prg/work/sparc/MLS/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Secretariat/Views/ProBonoApplications/DeniedApplications.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU2VjcmV0YXJpYXRcVmlld3NcUHJvQm9ub0FwcGxpY2F0aW9uc1xEZW5pZWRBcHBsaWNhdGlvbnMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/esngw/Desktop/prg/work/sparc/MLS/MLS-Digital-Management-System-Front-End/MLS-Digital-Management-System-Front-End/Areas/Secretariat/Views/ProBonoApplications/Index.cshtml]

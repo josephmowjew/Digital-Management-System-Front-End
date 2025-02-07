@@ -12,7 +12,8 @@ class CPDTrainingHandler {
     this.selectedCPDTrainingIds = []; // Initialize the array
     this.fileUploadHandler = new FileUploadHandler(`${host}`);
     this.selectedFirmMembers = []; // Initialize selected firm members array
-   
+    //this.currentTraining = null; // Add this line
+
     // Bind modal shown event to initialize Select2
     $(document).on('shown.bs.modal', '#cpd_invoice_modal', () => {
       this.initializeSelect2();
@@ -184,7 +185,7 @@ class CPDTrainingHandler {
         formData.append("ReferencedEntityId", trainingId);
         formData.append("Description", "MLS");
         formData.append("RequestType", requestType);
-        
+
         // Add firm members if this is a firm request
         if (requestType === "Firm" && this.selectedFirmMembers.length > 0) {
           console.log('Sending selected members:', this.selectedFirmMembers);
@@ -304,35 +305,54 @@ class CPDTrainingHandler {
   }
 
   handleEditFormSuccess(response) {
-
     this.hideSpinner();
 
     const editform = document.querySelector("#edit_cpd_modal form");
     const data = JSON.parse(response);
 
-    const fieldMap = this.createFieldMap(data);
-    const editformElements = [...editform.querySelectorAll('input, select, textarea, checkbox, label, textarea')];
+    // Handle the categorization checkbox first and trigger its change event
+    const categorizationCheckbox = editform.querySelector('#isCategorizedCheck');
+    if (categorizationCheckbox) {
+      categorizationCheckbox.checked = data.isCategorizedForMembers;
+      $(categorizationCheckbox).trigger('change'); // Trigger the change event using jQuery
+    }
 
+    const editformElements = [...editform.querySelectorAll('input, select, textarea')];
     editformElements.forEach(element => {
-      const fieldName = element.getAttribute('name');
-      const dataKey = fieldMap[fieldName];
-      let fieldValue = data[dataKey];
+      if (element === categorizationCheckbox) return; // Skip the checkbox as we already handled it
 
-      if (element.type === 'checkbox') {
-        this.setCheckboxValue(element, fieldValue);
-      } else if (element.type === 'file') {
-        //this.handleFileUpload(element, data.attachments, fieldName);
+      const fieldName = element.getAttribute('name');
+      if (!fieldName) return;
+
+      // Handle different types of fields
+      if (element.type === 'file') {
         this.fileUploadHandler.handleFileUpload(element, data.attachments, fieldName);
+        return;
       }
       else if (fieldName == "CPDUnitsAwarded") {
         element.value = data.cpdUnitsAwarded;
       }
-      else {
+
+      // Convert fieldName to camelCase for matching with API response
+      const dataKey = fieldName.charAt(0).toLowerCase() + fieldName.slice(1);
+      const fieldValue = data[dataKey];
+
+      // Skip if the field is in the hidden fees section
+      const isInRegularFees = element.closest('#regularMemberFees');
+      const isInCategorizedFees = element.closest('#categorizedFees');
+
+      if ((isInRegularFees && data.isCategorizedForMembers) ||
+        (isInCategorizedFees && !data.isCategorizedForMembers)) {
+        element.value = '';
+        return;
+      }
+
+      // Set the value if it exists
+      if (fieldValue !== undefined && fieldValue !== null) {
         element.value = fieldValue;
       }
     });
 
-    // Show modal
     $("#edit_cpd_modal").modal("show");
   }
 
@@ -352,6 +372,10 @@ class CPDTrainingHandler {
 
     // Destructure the different fees from the trainingFee object
     const {
+      seniorLawyerPhysicalAttendanceFee,
+      seniorLawyerVirtualAttendanceFee,
+      juniorLawyerPhysicalAttendanceFee,
+      juniorLawyerVirtualAttendanceFee,
       memberPhysicalAttendanceFee,
       memberVirtualAttendanceFee,
       nonMemberPhysicalAttendanceFee,
@@ -360,13 +384,13 @@ class CPDTrainingHandler {
       invoiceRequests,
     } = trainingData;
 
-    
+
     // Filter invoiceRequests based on createdById
     const filteredInvoiceRequests = trainingData.invoiceRequests?.filter(request => {
       const firmMembers = JSON.parse(request.firmMembers || '[]');
       return request.createdById === userIdGlobal || firmMembers.includes(memberIdGlobal);
     });
-    
+
     // Use the first matching invoiceRequest if available
     const invoiceRequest = filteredInvoiceRequests?.length > 0 ? filteredInvoiceRequests[0] : null;
 
@@ -439,6 +463,10 @@ class CPDTrainingHandler {
 
     // Destructure the different fees from the trainingFee object
     const {
+      seniorLawyerPhysicalAttendanceFee,
+      seniorLawyerVirtualAttendanceFee,
+      juniorLawyerPhysicalAttendanceFee,
+      juniorLawyerVirtualAttendanceFee,
       memberPhysicalAttendanceFee,
       memberVirtualAttendanceFee,
       nonMemberPhysicalAttendanceFee,
@@ -446,7 +474,7 @@ class CPDTrainingHandler {
     } = trainingData;
 
     // Check if all fees are zero or null
-    const isFree = [memberPhysicalAttendanceFee, memberVirtualAttendanceFee, nonMemberPhysicalAttendanceFee, nonMemberVirtualAttandanceFee]
+    const isFree = [memberPhysicalAttendanceFee, memberVirtualAttendanceFee, nonMemberPhysicalAttendanceFee, nonMemberVirtualAttandanceFee, seniorLawyerPhysicalAttendanceFee, seniorLawyerVirtualAttendanceFee, juniorLawyerPhysicalAttendanceFee, juniorLawyerVirtualAttendanceFee]
       .every(fee => fee === null || fee <= 0);
 
     const displayFee = (fee) => {
@@ -465,21 +493,64 @@ class CPDTrainingHandler {
           requestInvoiceButton.style.display = "none"; // Hide the button for free events
         }
       } else {
-        amountElement.innerHTML = `<strong>Pending....Please select attendance mode</strong>`;
-        requestInvoiceButton.style.display = "none"; // Hide the button when amount is pending
+        if (trainingData.isCategorizedForMembers) {
+          amountElement.innerHTML = `<strong>Pending....Please select attendance mode and seniority level</strong>`;
+        } else {
+          amountElement.innerHTML = `<strong>Pending....Please select attendance mode</strong>`;
+        }
+         // Hide the button when amount is pending
       }
     };
 
     const modeOfAttendanceSelect = cpdRegisterform.querySelector('select[name="AttendanceMode"]');
     modeOfAttendanceSelect.addEventListener('change', () => {
       const selectedMode = modeOfAttendanceSelect.value;
-      let fee = 0;
-      if (selectedMode === 'Physical') {
-        fee = memberPhysicalAttendanceFee || 0;
-      } else if (selectedMode === 'Virtual') {
-        fee = memberVirtualAttendanceFee || 0;
+
+      // Check if training is categorized for members
+      if (trainingData.isCategorizedForMembers) {
+        // Show seniority level selection
+        const seniorityContainer = document.querySelector('#seniorityLevelContainer');
+        seniorityContainer.style.display = 'block';
+
+        // Reset seniority selection when mode changes
+        const senioritySelect = document.querySelector('#seniorityLevel');
+        senioritySelect.value = '';
+
+        // Display pending message until seniority is selected
+        const amountElement = document.querySelector("#cpd_training_amount");
+        amountElement.innerHTML = '<strong>Pending....Please select seniority level</strong>';
+        document.querySelector("#request_invoice_btn").style.display = "none";
+
+        // Add event listener for seniority selection
+        senioritySelect.addEventListener('change', () => {
+          const selectedSeniority = senioritySelect.value;
+          let fee = 0;
+
+          if (selectedSeniority === 'Senior') {
+            fee = selectedMode === 'Physical'
+              ? trainingData.seniorLawyerPhysicalAttendanceFee
+              : trainingData.seniorLawyerVirtualAttendanceFee;
+          } else if (selectedSeniority === 'Junior') {
+            fee = selectedMode === 'Physical'
+              ? trainingData.juniorLawyerPhysicalAttendanceFee
+              : trainingData.juniorLawyerVirtualAttendanceFee;
+          }
+
+          displayFee(fee);
+        });
+      } else {
+        // For non-categorized trainings, hide seniority container and calculate fee directly
+        const seniorityContainer = document.querySelector('#seniorityLevelContainer');
+        seniorityContainer.style.display = 'none';
+
+        let fee = 0;
+        if (selectedMode === 'Physical') {
+          fee = trainingData.memberPhysicalAttendanceFee || 0;
+        } else if (selectedMode === 'Virtual') {
+          fee = trainingData.memberVirtualAttendanceFee || 0;
+        }
+        displayFee(fee);
       }
-      displayFee(fee);
     });
 
     if (isFree) {
@@ -801,7 +872,7 @@ class CPDTrainingHandler {
 
   initializeSelect2() {
     const $firmMembers = $('#firmMembers');
-    
+
     // Destroy existing Select2 instance if it exists
     if ($firmMembers.hasClass('select2-hidden-accessible')) {
       $firmMembers.select2('destroy');
@@ -831,12 +902,12 @@ class CPDTrainingHandler {
     const memberData = member.element ? $(member.element).data('member') : member;
     if (!memberData) return member.text;
 
-    const userName = memberData.user ? 
-      `${memberData.user.firstName} ${memberData.user.lastName}` : 
+    const userName = memberData.user ?
+      `${memberData.user.firstName} ${memberData.user.lastName}` :
       'Unknown Name';
 
-    const licenseNumber = memberData.currentLicense ? 
-      memberData.currentLicense.licenseNumber : 
+    const licenseNumber = memberData.currentLicense ?
+      memberData.currentLicense.licenseNumber :
       'No License';
 
     return $(`
@@ -857,15 +928,38 @@ class CPDTrainingHandler {
     const memberData = member.element ? $(member.element).data('member') : member;
     if (!memberData) return member.text;
 
-    const userName = memberData.user ? 
-      `${memberData.user.firstName} ${memberData.user.lastName}` : 
+    const userName = memberData.user ?
+      `${memberData.user.firstName} ${memberData.user.lastName}` :
       'Unknown Name';
 
     return userName;
   }
+
+  setupFeeToggle() {
+    // Add event listener for both create and edit modals
+    $(document).on('change', '#isCategorizedCheck', function () {
+      const isChecked = $(this).is(':checked');
+      const regularFees = $('#regularMemberFees');
+      const categorizedFees = $('#categorizedFees');
+
+      if (isChecked) {
+        regularFees.hide();
+        categorizedFees.show();
+        // Update required fields
+        regularFees.find('input').prop('required', false);
+        categorizedFees.find('input').prop('required', true);
+      } else {
+        regularFees.show();
+        categorizedFees.hide();
+        // Update required fields
+        regularFees.find('input').prop('required', true);
+        categorizedFees.find('input').prop('required', false);
+      }
+    });
+  }
 }
 
-$(document).ready(function() {
+$(document).ready(function () {
   window.cpdTrainingHandler = new CPDTrainingHandler();
-  
+
 });

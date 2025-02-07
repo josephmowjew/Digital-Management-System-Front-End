@@ -572,7 +572,7 @@ class InvoiceRequestHandler {
 
         if (id > 0) {
             $.ajax({
-                url: `${this.host}/api/InvoiceRequest/MarkAsGenerated/${id}`,
+                url: `${this.host}/api/InvoiceRequest/${id}`,
                 type: 'GET',
                 headers: {
                     'Authorization': `Bearer ${token}`

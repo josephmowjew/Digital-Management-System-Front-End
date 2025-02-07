@@ -1,160 +1,235 @@
 @model MLS_Digital_Management_System_Front_End.Core.DTOs.CPDTraining.UpdateCPDTrainingDTO
 <!-- Modal -->
 <div class="modal-dialog modal-xl">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h5 class="modal-title" id="exampleModalLabel">Update CPD</h5>
-      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-    </div>
-    <div class="modal-body">
-       <form asp-action="Create">
-        <input type="hidden" asp-for="Id"/>
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="mb-3 form-check">
-                    <label asp-for="Title" class="control-label"></label>
-                    <textarea asp-for="Title" class="form-control" placeholder="Enter Title" required></textarea>
-                    <span asp-validation-for="Title" class="text-danger"></span>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="mb-3 form-check">
-                    <label asp-for="Description" class="control-label"></label>
-                    <textarea asp-for="Description" class="form-control" placeholder="Enter Description" required></textarea>
-                    <span asp-validation-for="Description" class="text-danger"></span>
-                </div>
-            </div>
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Update CPD</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-
-        <div class="row">
-            <div class="col-md-4">
-                <div class="mb-3 form-check">
-                    <label asp-for="Duration" class="control-label"></label>
-                    <input asp-for="Duration" placeholder="Enter Duration" class="form-control" required/>
-                    <span asp-validation-for="Duration" class="text-danger"></span>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="mb-3 form-check">
-                    <label asp-for="DateToBeConducted" class="control-label"></label>
-                    <input asp-for="DateToBeConducted" type="date" class="form-control" min="@DateTime.Now.ToString("yyyy-MM-dd")" required/>
-                    <span asp-validation-for="DateToBeConducted" class="text-danger"></span>
-                </div>
-            </div>
-
-           <div class="col-md-4">
-                <div class="mb-3 form-check">
-                    <label asp-for="RegistrationDueDate" class="control-label"></label>
-                    <input asp-for="RegistrationDueDate" type="date" class="form-control" min="@DateTime.Now.ToString("yyyy-MM-dd")" required/>
-                    <span asp-validation-for="RegistrationDueDate" class="text-danger"></span>
-                </div>
-            </div>
-           
-        </div>
-
-        <div class="row">
-            <div class="col-md-4">
-                <div class="mb-3 form-check">
-                    <label asp-for="CPDUnitsAwarded" class="control-label"></label>
-                    <input asp-for="CPDUnitsAwarded" placeholder="Enter Units Awarded" class="form-control" required/>
-                    <span asp-validation-for="CPDUnitsAwarded" class="text-danger"></span>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="mb-3 form-check">
-                    <label asp-for="PhysicalVenue" class="control-label"></label>
-                    <input asp-for="PhysicalVenue" placeholder="Enter Physical Venue"  class="form-control" required/>
-                    <span asp-validation-for="PhysicalVenue" class="text-danger"></span>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="mb-3 form-check">
-                    <label class="control-label">Training Poster</label>
-                    <div class="custom-file">
-                        <input class="form-control custom-file-input" id="Attachments" accept="image/*" name="Attachments" type="file" required>
+        <div class="modal-body">
+            <form asp-action="Create">
+                <input type="hidden" asp-for="Id" />
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <div class="form-check">
+                            <input asp-for="IsCategorizedForMembers" class="form-check-input" type="checkbox"
+                                id="isCategorizedCheck" />
+                            <label class="form-check-label" for="isCategorizedCheck">
+                                Categorize Members
+                            </label>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-
-        <div class="row">
-             <div class="col-md-3">
-               <div class="mb-3 form-check">
-                    <label asp-for="MemberPhysicalAttendanceFee" class="control-label"></label>
-                    <input asp-for="MemberPhysicalAttendanceFee" type="number" step="0.01" placeholder="Enter Training Fee" class="form-control" required/>
-                    <span asp-validation-for="MemberPhysicalAttendanceFee" class="text-danger"></span>
-                </div>
-            </div>
-            <div class="col-md-3">
-               <div class="mb-3 form-check">
-                    <label asp-for="MemberVirtualAttendanceFee" class="control-label"></label>
-                    <input asp-for="MemberVirtualAttendanceFee" type="number" step="0.01" placeholder="Enter Training Fee" class="form-control" required/>
-                    <span asp-validation-for="MemberVirtualAttendanceFee" class="text-danger"></span>
-                </div>
-            </div>
-             <div class="col-md-3">
-               <div class="mb-3 form-check">
-                    <label asp-for="NonMemberPhysicalAttendanceFee" class="control-label"></label>
-                    <input asp-for="NonMemberPhysicalAttendanceFee" type="number" step="0.01" placeholder="Enter Training Fee" class="form-control" required/>
-                    <span asp-validation-for="NonMemberPhysicalAttendanceFee" class="text-danger"></span>
-                </div>
-            </div>
-             <div class="col-md-3">
-               <div class="mb-3 form-check">
-                    <label asp-for="NonMemberVirtualAttandanceFee" class="control-label"></label>
-                    <input asp-for="NonMemberVirtualAttandanceFee" type="number" step="0.01" placeholder="Enter Training Fee" class="form-control" required/>
-                    <span asp-validation-for="NonMemberVirtualAttandanceFee" class="text-danger"></span>
-                </div>
-            </div>
-           
-        </div>
-
-        <div class="row">
-            <div class="col-md-6">
-                <div class="mb-3 form-check">
-                    <label asp-for="AccreditingInstitution" class="control-label"></label>
-                    <input asp-for="AccreditingInstitution" placeholder="Enter Accrediting Institution" class="form-control"/>
-                    <span asp-validation-for="AccreditingInstitution" class="text-danger"></span>
-                </div>
-
-            </div>
-
-            <div class="col-md-6">
-                <div class="mb-3 form-check">
-                    <label asp-for="AccreditingInstitutionRepresentativePosition" class="control-label">Representative Position</label>
-                    <input asp-for="AccreditingInstitutionRepresentativePosition" placeholder="Enter Representative Positon" class="form-control"/>
-                    <span asp-validation-for="AccreditingInstitutionRepresentativePosition" class="text-danger"></span>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-6">
-                <div class="mb-3 form-check">
-                    <label  class="control-label">Accrediting Institution Logo</label>
-                    <div class="custom-file">
-                        <input class="form-control custom-file-input" id="Attachments" accept="image/*" name="Attachments" type="file">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3 form-check">
+                            <label asp-for="Title" class="control-label"></label>
+                            <textarea asp-for="Title" class="form-control" placeholder="Enter Title"
+                                required></textarea>
+                            <span asp-validation-for="Title" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3 form-check">
+                            <label asp-for="Description" class="control-label"></label>
+                            <textarea asp-for="Description" class="form-control" placeholder="Enter Description"
+                                required></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="col-md-6">
-                <div class="mb-3 form-check">
-                    <label  class="control-label">Representative Signature</label>
-                    <div class="custom-file">
-                        <input class="form-control custom-file-input" id="Attachments" accept="image/*" name="Attachments" type="file">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="mb-3 form-check">
+                            <label asp-for="Duration" class="control-label"></label>
+                            <input asp-for="Duration" placeholder="Enter Duration" class="form-control" required />
+                            <span asp-validation-for="Duration" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-3 form-check">
+                            <label asp-for="DateToBeConducted" class="control-label"></label>
+                            <input asp-for="DateToBeConducted" type="date" class="form-control"
+                                min="@DateTime.Now.ToString("yyyy-MM-dd")" required />
+                            <span asp-validation-for="DateToBeConducted" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="mb-3 form-check">
+                            <label asp-for="RegistrationDueDate" class="control-label"></label>
+                            <input asp-for="RegistrationDueDate" type="date" class="form-control"
+                                min="@DateTime.Now.ToString("yyyy-MM-dd")" required />
+                            <span asp-validation-for="RegistrationDueDate" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="mb-3 form-check">
+                            <label asp-for="CPDUnitsAwarded" class="control-label"></label>
+                            <input asp-for="CPDUnitsAwarded" placeholder="Enter Units Awarded" class="form-control"
+                                required />
+                            <span asp-validation-for="CPDUnitsAwarded" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-3 form-check">
+                            <label asp-for="PhysicalVenue" class="control-label"></label>
+                            <input asp-for="PhysicalVenue" placeholder="Enter Physical Venue" class="form-control"
+                                required />
+                            <span asp-validation-for="PhysicalVenue" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-3 form-check">
+                            <label class="control-label">Training Poster</label>
+                            <div class="custom-file">
+                                <input class="form-control custom-file-input" id="Attachments" accept="image/*"
+                                    name="Attachments" type="file" required>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
 
-       </form>
+                <div id="regularMemberFees">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3 form-check">
+                                <label asp-for="MemberPhysicalAttendanceFee" class="control-label"></label>
+                                <input asp-for="MemberPhysicalAttendanceFee" type="number" step="0.01"
+                                    placeholder="Enter Training Fee" class="form-control" required />
+                                <span asp-validation-for="MemberPhysicalAttendanceFee" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3 form-check">
+                                <label asp-for="MemberVirtualAttendanceFee" class="control-label"></label>
+                                <input asp-for="MemberVirtualAttendanceFee" type="number" step="0.01"
+                                    placeholder="Enter Training Fee" class="form-control" required />
+                                <span asp-validation-for="MemberVirtualAttendanceFee" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="categorizedFees" style="display: none;">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="mb-3 form-check">
+                                <label asp-for="SeniorLawyerPhysicalAttendanceFee" class="control-label">Senior
+                                    Lawyer Physical Fee</label>
+                                <input asp-for="SeniorLawyerPhysicalAttendanceFee" type="number" step="0.01"
+                                    placeholder="Enter Training Fee" class="form-control" />
+                                <span asp-validation-for="SeniorLawyerPhysicalAttendanceFee" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="mb-3 form-check">
+                                <label asp-for="SeniorLawyerVirtualAttendanceFee" class="control-label">Senior
+                                    Lawyer Virtual Fee</label>
+                                <input asp-for="SeniorLawyerVirtualAttendanceFee" type="number" step="0.01"
+                                    placeholder="Enter Training Fee" class="form-control" />
+                                <span asp-validation-for="SeniorLawyerVirtualAttendanceFee" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="mb-3 form-check">
+                                <label asp-for="JuniorLawyerPhysicalAttendanceFee" class="control-label">Junior
+                                    Lawyer Physical Fee</label>
+                                <input asp-for="JuniorLawyerPhysicalAttendanceFee" type="number" step="0.01"
+                                    placeholder="Enter Training Fee" class="form-control" />
+                                <span asp-validation-for="JuniorLawyerPhysicalAttendanceFee" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="mb-3 form-check">
+                                <label asp-for="JuniorLawyerVirtualAttendanceFee" class="control-label">Junior
+                                    Lawyer Virtual Fee</label>
+                                <input asp-for="JuniorLawyerVirtualAttendanceFee" type="number" step="0.01"
+                                    placeholder="Enter Training Fee" class="form-control" />
+                                <span asp-validation-for="JuniorLawyerVirtualAttendanceFee" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3 form-check">
+                            <label asp-for="NonMemberPhysicalAttendanceFee" class="control-label"></label>
+                            <input asp-for="NonMemberPhysicalAttendanceFee" type="number" step="0.01"
+                                placeholder="Enter Training Fee" class="form-control" required />
+                            <span asp-validation-for="NonMemberPhysicalAttendanceFee" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3 form-check">
+                            <label asp-for="NonMemberVirtualAttandanceFee" class="control-label"></label>
+                            <input asp-for="NonMemberVirtualAttandanceFee" type="number" step="0.01"
+                                placeholder="Enter Training Fee" class="form-control" required />
+                            <span asp-validation-for="NonMemberVirtualAttandanceFee" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3 form-check">
+                            <label asp-for="AccreditingInstitution" class="control-label"></label>
+                            <input asp-for="AccreditingInstitution" placeholder="Enter Accrediting Institution"
+                                class="form-control" />
+                            <span asp-validation-for="AccreditingInstitution" class="text-danger"></span>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="mb-3 form-check">
+                            <label asp-for="AccreditingInstitutionRepresentativePosition"
+                                class="control-label">Representative
+                                Position</label>
+                            <input asp-for="AccreditingInstitutionRepresentativePosition"
+                                placeholder="Enter Representative Positon" class="form-control" />
+                            <span asp-validation-for="AccreditingInstitutionRepresentativePosition"
+                                class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3 form-check">
+                            <label class="control-label">Accrediting Institution Logo</label>
+                            <div class="custom-file">
+                                <input class="form-control custom-file-input" id="Attachments" accept="image/*"
+                                    name="Attachments" type="file">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="mb-3 form-check">
+                            <label class="control-label">Representative Signature</label>
+                            <div class="custom-file">
+                                <input class="form-control custom-file-input" id="Attachments" accept="image/*"
+                                    name="Attachments" type="file">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-warning" name="update_cpd_btn" id="update_cpd_btn">Update CPD</button>
+
+        </div>
     </div>
-     <div class="modal-footer">
-      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-      <button type="button" class="btn btn-warning" name="update_cpd_btn" id="update_cpd_btn">Update CPD</button>
-     
-    </div>
-  </div>
 </div>

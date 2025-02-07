@@ -28,7 +28,7 @@
               <i class="bi bi-exclamation-triangle text-danger" style="font-size: 2rem;"></i>
             </div>
             <div class="alert alert-danger" role="alert">
-              <p>This is a paid event, Please make sure you attach proof of payment when registering</p>
+              <p>This is a paid event, Please make sure you attach proof of payment when registering.</p>
               <p>The amount to be paid is: <span id="cpd_training_amount"></span></p>
             </div>
           </div>
@@ -58,6 +58,15 @@
                 <option value="Physical">Physical</option>
             </select>
             <span asp-validation-for="AttendanceMode" class="text-danger"></span>
+          </div>
+          <div class="mb-3" id="seniorityLevelContainer" style="display: none;">
+            <label class="form-label">Seniority Level</label>
+            <select class="form-control" id="seniorityLevel" name="SeniorityLevel" required>
+                <option value="">Please Select Seniority Level</option>
+                <option value="Senior">Senior Lawyer</option>
+                <option value="Junior">Junior Lawyer</option>
+            </select>
+            <span class="text-danger"></span>
           </div>
         </div>
       </form>

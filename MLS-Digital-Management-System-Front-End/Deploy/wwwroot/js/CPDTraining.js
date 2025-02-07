@@ -3,6 +3,7 @@ class CPDTrainingHandler {
     this.hideSpinner();
     this.bindEvents();
     this.bindCheckboxEvents();
+    this.setupFeeToggle();
     this.fee = 0
     this.form = document.querySelector("#create_cpd_modal form");
     if (this.form) {
@@ -937,10 +938,10 @@ class CPDTrainingHandler {
 
   setupFeeToggle() {
     // Add event listener for both create and edit modals
-    $(document).on('change', '#isCategorizedCheck', function () {
+    $(document).on('change', '#categorizeMemberFees', function () {
       const isChecked = $(this).is(':checked');
-      const regularFees = $('#regularMemberFees');
-      const categorizedFees = $('#categorizedFees');
+      const regularFees = $('#uncategorized-fees');
+      const categorizedFees = $('#categorized-fees');
 
       if (isChecked) {
         regularFees.hide();

@@ -13,6 +13,7 @@ public class ReadCPDTrainingDTO
     public DateTime DateToBeConducted { get; set; }
     public DateTime? RegistrationDueDate { get; set; }
     public int ProposedUnits { get; set; }
+    public bool IsCategorizedForMembers { get; set; }
     public double? SeniorLawyerPhysicalAttendanceFee { get; set; }
     public double? SeniorLawyerVirtualAttendanceFee { get; set; }
     public double? JuniorLawyerPhysicalAttendanceFee { get; set; }

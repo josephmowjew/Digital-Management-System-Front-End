@@ -24,6 +24,8 @@ public class CreateCPDTrainingDTO
     [Required]
     [Display(Name = "Proposed Units")]
     public int ProposedUnits { get; set; }
+    [Display(Name = "Categorize Members")]
+    public bool IsCategorizedForMembers { get; set; }
     [Display(Name = "Senior Lawyer Physical Attendance Fee (MWK)")]
     public double? SeniorLawyerPhysicalAttendanceFee { get; set; }
     [Display(Name = "Senior Lawyer Virtual Attendance Fee (MWK)")]

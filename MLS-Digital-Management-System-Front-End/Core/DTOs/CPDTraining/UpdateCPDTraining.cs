@@ -15,6 +15,8 @@ public class UpdateCPDTrainingDTO
     [Display(Name = "Physical Venue")]
     [StringLength(maximumLength: 250)]
     public string? PhysicalVenue { get; set; }
+    [Display(Name = "Categorize Members")]
+    public bool IsCategorizedForMembers { get; set; }
 
     [Display(Name = "Senior Lawyer Physical Attendance Fee (MWK)")]
     public double? SeniorLawyerPhysicalAttendanceFee { get; set; }

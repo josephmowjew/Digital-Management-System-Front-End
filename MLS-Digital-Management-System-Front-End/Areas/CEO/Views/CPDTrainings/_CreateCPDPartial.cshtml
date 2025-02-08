@@ -94,8 +94,8 @@
                     </div>
                 </div>
 
-                <div id="categorized-fees">
-                    <div class="row" style="display: none;">
+                <div id="categorized-fees" style="display: none;">
+                    <div class="row">
                         <div class="col-md-3">
                             <div class="mb-3 form-check">
                                 <label asp-for="SeniorLawyerPhysicalAttendanceFee" class="control-label"></label>
@@ -133,23 +133,23 @@
 
                 <div id="uncategorized-fees">
                     <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3 form-check">
-                                <label asp-for="MemberPhysicalAttendanceFee" class="control-label"></label>
-                                <input asp-for="MemberPhysicalAttendanceFee" type="number" step="0.01"
-                                    placeholder="Enter Training Fee" class="form-control" required />
-                                <span asp-validation-for="MemberPhysicalAttendanceFee" class="text-danger"></span>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-3 form-check">
-                                <label asp-for="MemberVirtualAttendanceFee" class="control-label"></label>
-                                <input asp-for="MemberVirtualAttendanceFee" type="number" step="0.01"
-                                    placeholder="Enter Training Fee" class="form-control" required />
-                                <span asp-validation-for="MemberVirtualAttendanceFee" class="text-danger"></span>
-                            </div>
+                    <div class="col-md-6">
+                        <div class="mb-3 form-check">
+                            <label asp-for="MemberPhysicalAttendanceFee" class="control-label"></label>
+                            <input asp-for="MemberPhysicalAttendanceFee" type="number" step="0.01"
+                                placeholder="Enter Training Fee" class="form-control" required />
+                            <span asp-validation-for="MemberPhysicalAttendanceFee" class="text-danger"></span>
                         </div>
                     </div>
+                    <div class="col-md-6">
+                        <div class="mb-3 form-check">
+                            <label asp-for="MemberVirtualAttendanceFee" class="control-label"></label>
+                            <input asp-for="MemberVirtualAttendanceFee" type="number" step="0.01"
+                                placeholder="Enter Training Fee" class="form-control" required />
+                            <span asp-validation-for="MemberVirtualAttendanceFee" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
                 </div>
 
                 <div class="row">

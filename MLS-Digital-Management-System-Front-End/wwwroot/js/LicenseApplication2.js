@@ -671,14 +671,50 @@ class FormHandler {
     }
 
     generateCertificate(licenseId) {
-        // Open a new window with the certificate template 
-        var certificateWindow = window.open(`/member/LicenseApplications/LicenseCertificate/${licenseId}`, '_blank');
+        this.showSpinner();
 
-        // Wait for the new window to load
-        certificateWindow.onload = function () {
+        // Create a hidden iframe
+        const iframe = document.createElement('iframe');
+        iframe.style.display = 'none';
+        document.body.appendChild(iframe);
 
-            // Use html2pdf to convert the certificate to PDF
-            html2pdf().from(certificateWindow.document.body).save('Certificate_of_Attendance.pdf');
+        // Load the certificate page in the hidden iframe
+        iframe.src = `/member/LicenseApplications/LicenseCertificate/${licenseId}`;
+
+        // Wait for iframe to load
+        iframe.onload = () => {
+            try {
+                console.log('Iframe loaded, preparing to trigger download...');
+
+                // Access the iframe's document
+                const iframeDoc = iframe.contentDocument;
+
+                // Find the download button in the iframe
+                const downloadButton = iframeDoc.getElementById('downloadButton');
+
+                if (downloadButton) {
+                    console.log('Download button found, triggering click...');
+                    downloadButton.click(); // Programmatically click the button
+                } else {
+                    console.error('Download button not found in iframe');
+                    toastr.error('Failed to find download button');
+                }
+            } catch (error) {
+                console.error('Error in iframe processing:', error);
+                toastr.error('Failed to process certificate');
+            } finally {
+                // Cleanup after ensuring download starts
+                //document.body.removeChild(iframe);
+                this.hideSpinner();
+            }
+        };
+
+        // Handle load errors
+        iframe.onerror = () => {
+            console.error('Error loading certificate page');
+            toastr.error('Failed to load certificate');
+            document.body.removeChild(iframe);
+            this.hideSpinner();
         };
     }
 }

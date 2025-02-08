@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Malawi Law Society Certificate</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -253,7 +254,7 @@
 </head>
 
 <body>
-    <button id="downloadButton" disabled>Download Certificate</button>
+    <button id="downloadButton">Download Certificate</button>
     <div class="certificate">
         <div class="license-number">No. @ViewBag.license.LicenseNumber</div>
         <div class="qr-code" id="qrCode"></div>
@@ -390,7 +391,7 @@
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const verificationUrl = `${window.location.protocol}//${window.location.host}/Member/LicenseApplications/Verify/@ViewBag.license.Id`;
-            console.log("Verification URL:", verificationUrl);
+            //console.log("Verification URL:", verificationUrl);
             
             try {
                 new QRCode(document.getElementById("qrCode"), {
@@ -401,7 +402,7 @@
                     colorLight : "#ffffff",
                     correctLevel : QRCode.CorrectLevel.H
                 });
-                console.log("QR Code generated successfully");
+                //console.log("QR Code generated successfully");
             } catch (error) {
                 console.error("Error generating QR code:", error);
             }
@@ -433,8 +434,6 @@
             <feBlend in="SourceGraphic" mode="overlay" />
         </filter>
     </svg>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const element = document.querySelector('.certificate');
@@ -473,8 +472,9 @@
 
             // Function to generate and download PDF
             function downloadPDF() {
-                // Replace image sources before generating PDF
-                replaceImagesWithPreloaded();
+                console.log('Download button clicked');
+                const element = document.querySelector('.certificate'); // Ensure this points to the correct element
+                const recipientName = document.getElementById('recipientName').textContent;
 
                 const opt = {
                     margin: 0.5,
@@ -488,13 +488,22 @@
                     },
                     jsPDF: { unit: 'in', format: 'letter', orientation: 'landscape' }
                 };
-
-                html2pdf().set(opt).from(element).save();
+                html2pdf()
+                    .set(opt)
+                    .from(element)
+                    .save()
+                    .then(() => {
+                        console.log('PDF generated and saved');
+                    })
+                    .catch(error => {
+                        console.error('Error generating PDF:', error);
+                        toastr.error('Failed to generate PDF');
+                    });
             }
 
             // Preload images when the page loads
             preloadImages().then(() => {
-                console.log('Images preloaded successfully');
+                //console.log('Images preloaded successfully');
                 downloadButton.disabled = false;  // Enable the download button
             }).catch(error => {
                 console.error('Error preloading images:', error);
@@ -507,7 +516,7 @@
             // Initially disable the download button
             downloadButton.disabled = true;
 
-            console.log('Script loaded, preloading images...');
+            //console.log('Script loaded, preloading images...');
         });
     </script>
 </body>

@@ -53,19 +53,19 @@
                 <ul>
                     @if (ViewBag.training.IsCategorizedForMembers)
                     {
-                        <li class="py-1">Physical Attendance (Senior Lawyers): <span
+                        <li class="py-1">Physical Attendance (Above 5 years at the Bar): <span
                                 class="badge bg-primary bg-opacity-85">@ViewBag.training.SeniorLawyerPhysicalAttendanceFee?.ToString("C",
                                 new CultureInfo("en-MW") { NumberFormat = { CurrencySymbol = "MWK" } })</span>
                         </li>
-                        <li class="py-1">Virtual Attendance (Senior Lawyers): <span
+                        <li class="py-1">Virtual Attendance (Above 5 years at the Bar)): <span
                                 class="badge bg-success bg-opacity-85">@ViewBag.training.SeniorLawyerVirtualAttendanceFee?.ToString("C",
                                 new CultureInfo("en-MW") { NumberFormat = { CurrencySymbol = "MWK" } })</span>
                         </li>
-                        <li class="py-1">Physical Attendance (Junior Lawyers): <span
+                        <li class="py-1">Physical Attendance (5 years & Below at the Bar)): <span
                                 class="badge bg-primary bg-opacity-85">@ViewBag.training.JuniorLawyerPhysicalAttendanceFee?.ToString("C",
                                 new CultureInfo("en-MW") { NumberFormat = { CurrencySymbol = "MWK" } })</span>
                         </li>
-                        <li class="py-1">Virtual Attendance (Junior Lawyers): <span
+                        <li class="py-1">Virtual Attendance (5 years & Below at the Bar)): <span
                                 class="badge bg-success bg-opacity-85">@ViewBag.training.JuniorLawyerVirtualAttendanceFee?.ToString("C",
                                 new CultureInfo("en-MW") { NumberFormat = { CurrencySymbol = "MWK" } })</span>
                         </li>

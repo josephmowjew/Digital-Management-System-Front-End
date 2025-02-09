@@ -3,6 +3,7 @@ class CPDTrainingHandler {
     this.hideSpinner();
     this.bindEvents();
     this.bindCheckboxEvents();
+    this.setupFeeToggle();
     this.fee = 0
     this.form = document.querySelector("#create_cpd_modal form");
     if (this.form) {
@@ -311,7 +312,7 @@ class CPDTrainingHandler {
     const data = JSON.parse(response);
 
     // Handle the categorization checkbox first and trigger its change event
-    const categorizationCheckbox = editform.querySelector('#isCategorizedCheck');
+    const categorizationCheckbox = editform.querySelector('#categorizeMemberFees');
     if (categorizationCheckbox) {
       categorizationCheckbox.checked = data.isCategorizedForMembers;
       $(categorizationCheckbox).trigger('change'); // Trigger the change event using jQuery
@@ -498,7 +499,7 @@ class CPDTrainingHandler {
         } else {
           amountElement.innerHTML = `<strong>Pending....Please select attendance mode</strong>`;
         }
-         // Hide the button when amount is pending
+        // Hide the button when amount is pending
       }
     };
 
@@ -936,11 +937,17 @@ class CPDTrainingHandler {
   }
 
   setupFeeToggle() {
-    // Add event listener for both create and edit modals
-    $(document).on('change', '#isCategorizedCheck', function () {
+    // Set initial state of required fields
+    const regularFees = $('#uncategorized-fees');
+    const categorizedFees = $('#categorized-fees');
+
+    // Make regular fees required by default
+    regularFees.find('input').prop('required', true);
+    categorizedFees.find('input').prop('required', false);
+
+    // Add event listener for checkbox changes
+    $(document).on('change', '#categorizeMemberFees', function () {
       const isChecked = $(this).is(':checked');
-      const regularFees = $('#regularMemberFees');
-      const categorizedFees = $('#categorizedFees');
 
       if (isChecked) {
         regularFees.hide();

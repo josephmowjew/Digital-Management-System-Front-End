@@ -9,6 +9,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Malawi Law Society Certificate</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -230,23 +231,31 @@
         .license-number {
             position: absolute;
             top: 20px;
-            /* Adjust as needed */
             left: 20px;
-            /* Adjust as needed */
             font-size: 16px;
-            /* Adjust font size */
             font-weight: bold;
             color: black;
-            /* Change color if needed */
             z-index: 3;
-            /* Ensure it appears above other elements */
+        }
+
+        .qr-code {
+            position: absolute;
+            top: 20px;
+            right: 40px;
+            z-index: 999;
+            background: white;
+            padding: 5px;
+            border-radius: 4px;
+            width: 100px;
+            height: 100px;
         }
     </style>
 </head>
 
 <body>
-    <button id="downloadButton" disabled>Download Certificate</button>
     <div class="certificate">
+        <div class="license-number">No. @ViewBag.license.LicenseNumber</div>
+        <div class="qr-code" id="qrCode"></div>
         <div class="logo-background"></div>
         <div class="background-text" id="backgroundText"></div>
         <div class="bottom-background">
@@ -307,7 +316,6 @@
             </div>
         </div>
         <div class="content">
-            <div class="license-number">No. @ViewBag.license.LicenseNumber</div>
             <div class="logo-container" style="margin-bottom: 45px;">
                 <img src="/assets/images/logos/cropped-mls-logo-clear-192x192.png" alt="The Malawi Law Society"
                     class="logo">
@@ -379,6 +387,30 @@
         </div>
     </div>
     <script>
+        // Disable right-click context menu
+        document.addEventListener('contextmenu', function (e) {
+            e.preventDefault();
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const verificationUrl = `${window.location.protocol}//${window.location.host}/Member/LicenseApplications/Verify/@ViewBag.license.Id`;
+            const serializedUrl = encodeURIComponent(verificationUrl);
+
+            try {
+                new QRCode(document.getElementById("qrCode"), {
+                    text: serializedUrl,
+                    width: 100,
+                    height: 100,
+                    colorDark: "#000000",
+                    colorLight: "#ffffff",
+                    correctLevel: QRCode.CorrectLevel.H
+                });
+            } catch (error) {
+            }
+        });
+    </script>
+    <script>
         document.addEventListener("DOMContentLoaded", function () {
             var container = document.getElementById('backgroundText');
             var text = 'Malawi Law Society';
@@ -408,6 +440,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            let pdfDownloaded = sessionStorage.getItem('pdfDownloaded') === 'false';
+            let hasNavigatedFromAnotherPage = sessionStorage.getItem('navigatedFromAnotherPage') === 'true';
+            let devtoolsOpen = false;
             const element = document.querySelector('.certificate');
             const downloadButton = document.getElementById('downloadButton');
             const recipientName = document.getElementById('recipientName').textContent;
@@ -442,7 +477,7 @@
                 });
             }
 
-            // Function to generate and download PDF
+            // Function to download the PDF
             function downloadPDF() {
                 // Replace image sources before generating PDF
                 replaceImagesWithPreloaded();
@@ -460,25 +495,51 @@
                     jsPDF: { unit: 'in', format: 'letter', orientation: 'landscape' }
                 };
 
-                html2pdf().set(opt).from(element).save();
+                html2pdf().set(opt).from(element).save().then(() => {
+                    setTimeout(() => {
+                        window.history.back(); // Redirect to the previous page
+                    }, 2000);
+                });
+            }
+            // Check if the user has already downloaded the PDF
+            if (hasNavigatedFromAnotherPage) {
+                console.log(hasNavigatedFromAnotherPage);
+                downloadPDF();
+                sessionStorage.setItem('navigatedFromAnotherPage', 'false');
+                
+            } else if (!hasNavigatedFromAnotherPage) {
+
             }
 
-            // Preload images when the page loads
-            preloadImages().then(() => {
-                console.log('Images preloaded successfully');
-                downloadButton.disabled = false;  // Enable the download button
-            }).catch(error => {
-                console.error('Error preloading images:', error);
-                downloadButton.disabled = false;  // Enable the button anyway, in case some images loaded
+            // Check for developer tools by monitoring window resize
+            window.addEventListener('resize', () => {
+                const isDevToolsOpen = window.outerWidth - window.innerWidth > 100 || window.outerHeight - window.innerHeight > 100;
+
+                if (isDevToolsOpen && !devtoolsOpen) {
+                    devtoolsOpen = true;
+
+                    // Log out the user immediately
+                    logoutUser();
+                    //sessionStorage.setItem('pdfDownloaded', 'true'); // Prevent further downloads
+                } else if (!isDevToolsOpen) {
+                    devtoolsOpen = false;
+                }
             });
 
-            // Attach click event to download button
-            downloadButton.addEventListener('click', downloadPDF);
+            // Function to log out the user
+            function logoutUser() {
+                const logoutLink = document.createElement('a');
+                logoutLink.href = '/home/logout';
+                logoutLink.click();
+            }
 
-            // Initially disable the download button
-            downloadButton.disabled = true;
-
-            console.log('Script loaded, preloading images...');
+            // Set the navigation flag when the user comes from another page
+            if (document.referrer != window.location.href) {
+                console.log(document.referrer)
+                sessionStorage.setItem('navigatedFromAnotherPage', 'true'); // Set the flag if the user navigated from another page
+            }else{
+                sessionStorage.setItem('navigatedFromAnotherPage', 'false');
+            }
         });
     </script>
 </body>

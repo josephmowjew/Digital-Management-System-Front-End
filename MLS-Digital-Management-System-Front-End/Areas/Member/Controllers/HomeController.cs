@@ -26,6 +26,7 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
             ViewBag.proBonoApplicationsTotal = await this.GetProBonoApplications();
             ViewBag.cpdTrainingsCount = await this.GetTotalCpdTrainings();
             ViewBag.proBonoHours = await this.GetTotalProBonoHours();
+            ViewBag.licensedMembers = await this.GetLicensedMembersCount();
             ViewBag.currentYear = await CurrentYearOfOperation();
             ViewBag.userId = HttpContext.Request.Cookies["UserId"];
             return View();
@@ -251,6 +252,12 @@ namespace MLS_Digital_Management_System_Front_End.Areas.Member.Controllers
         private async Task<ReadYearOfOperationDTO> CurrentYearOfOperation()
         {
             return await _service.YearOfOperationService.GetCurrentYearOfOperationAsync();
+        }
+
+        private async Task<int> GetLicensedMembersCount()
+        {
+            var memberCount = await _service.MemberService.GetLicensedMembersCount();
+            return memberCount;
         }
 
 

@@ -9,7 +9,7 @@ using MLS_Digital_Management_System_Front_End.Services.Interfaces;
 namespace MLS_Digital_Management_System_Front_End.Areas.Executive.Controllers
 {
     [Area("Executive")]
-    [Authorize]
+    [Authorize (Roles = "executive")]
     public class HomeController : Controller
     {
         private readonly IServiceRepository _service;

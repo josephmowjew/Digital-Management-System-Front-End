@@ -9,7 +9,7 @@ using MLS_Digital_Management_System_Front_End.Services.Interfaces;
 namespace MLS_Digital_Management_System_Front_End.Areas.Finance.Controllers
 {
     [Area("Finance")]
-    [Authorize]
+    [Authorize (Roles = "finance")]
     public class HomeController : Controller
     {
         private readonly IServiceRepository _service;
